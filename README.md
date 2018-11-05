@@ -1,6 +1,6 @@
 # PhoneInfoga
 
-Advanced information gathering tool for phone numbers.
+Advanced information gathering tool & OSINT reconnaissance for phone numbers.
 
 **This tool requires python 2.x**
 
@@ -102,3 +102,11 @@ Regular expression : `^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$`
 - https://countrycode.org/
 - http://www.countryareacode.net/en/
 - http://whitepages.fr/phonesystem/
+
+### Scanners
+- https://www.phonevalidator.com/
+- https://freecarrierlookup.com/
+- https://www.411.com/
+
+### OSINT
+- https://osintframework.com/
