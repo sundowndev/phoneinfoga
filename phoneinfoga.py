@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
-try:
-	import requests
-	import sys
-	import hashlib
-	import json
-	from bs4 import BeautifulSoup
-except:
-    print "Request library not found, please install it before proceeding\n"
-    sys.exit()
+import requests
+import sys
+import hashlib
+import json
+import argparse
+from bs4 import BeautifulSoup
+import re
+
+__version__ = '0.3-dev'
 
 print "\n \033[92m"
 print "    ___ _                       _____        __                   "
@@ -17,62 +17,144 @@ print "  / /_)/ '_ \ / _ \| '_ \ / _ \  / /\/ '_ \| |_ / _ \ / _` |/ _` |"
 print " / ___/| | | | (_) | | | |  __/\/ /_ | | | |  _| (_) | (_| | (_| |"
 print " \/    |_| |_|\___/|_| |_|\___\____/ |_| |_|_|  \___/ \__, |\__,_|"
 print "                                                      |___/       "
-print " PhoneInfoga Ver. 0.2.1                                          "
-print " Coded by Raphael Cerveaux <raphael@crvx.fr>                      "
-print "\033[94m\n\n"
+print " PhoneInfoga Ver. %s                                              " % __version__
+print " Coded by Sundowndev                                              "
+print "\033[94m\n"
 
-def help():
-	print "Usage: PhoneInfoga options \n"
-	print "       -n|--number: Phone number to search"
-	print "       -h|--help: Help command"
+parser = argparse.ArgumentParser(description=
+    "Advanced information gathering tool for phone numbers (https://github.com/sundowndev/PhoneInfoga) version %s" % __version__,
+                                 usage='%(prog)s -n <number> [options]')
 
-def getRequestSecret():
-	requestSecret = ''
-	resp = requests.get('https://numverify.com/')
-	soup = BeautifulSoup(resp.text, "html5lib")
-	for tag in soup.find_all("input", type="hidden"):
-		if tag['name'] == "scl_request_secret":
-			requestSecret = tag['value']
-			break;
-	
-	return requestSecret
+parser.add_argument('-n', '--number', metavar='number', type=str,
+                    help='The phone number to scan (E164 and International format)')
 
-def getInformations(PhoneNumber):
-	# verify input type
-	if str.isdigit(PhoneNumber) != True:
-		print("\033[31mError: please enter a valid integer.")
-		sys.exit()
+parser.add_argument('-i', '--input', metavar="input_file", type=file,
+                    help='Phone number list to scan (one per line)')
 
-	print("Fetching information for number +" + PhoneNumber + "...")
+parser.add_argument('-o', '--output', metavar="output_file", type=file,
+                    help='Output to save scan results')
 
-	apiKey = hashlib.md5(PhoneNumber + getRequestSecret()).hexdigest()
+parser.add_argument('-s', '--scanner', metavar="scanner", default="all", type=str,
+                    help='The scanner to use')
 
-	response = requests.get("https://numverify.com/php_helper_scripts/phone_api.php?secret_key=" + apiKey + "&number=" + PhoneNumber)
-	if response.content == "Unauthorized" or response.status_code != 200:
-		print("An error occured while calling the API (bad request or wrong api key).")
-		sys.exit()
+parser.add_argument('-u', '--update', action='store_true',
+                    help='Update the tool & databases')
 
-	data = json.loads(response.content)
-	
-	try:
-		data["valid"] == True
-	except:
-		print("\033[31mError: Please specify a phone number. " + PhoneNumber + " is not valid.")
-		print("Example: 14158586273\033[94m")
-		sys.exit()
-	else:
-		print "\n"
-		print "\033[1;32m1 result found for (" + data["country_prefix"] + ") " + data["local_format"]
-		print "\n"
-		print("[Country] " + data["country_name"] + "(" + data["country_code"] + ")")
-		print("[Carrier] " + data["carrier"])
-		print("[Line type] " + data["line_type"])
+args = parser.parse_args()
 
-try:
-	sys.argv[1:][0] == "-n" or sys.argv[1:][0] == "--number"
-except:
-	help()
-	sys.exit()
-else:
-	PhoneNumber = sys.argv[1:][1]
-	getInformations(PhoneNumber)
+# If any param is passed, execute help command
+if not len(sys.argv) > 1:
+    parser.print_help()
+
+if args.update:
+    print 'update'
+    sys.exit()
+
+scanners = ['any', 'all', 'ovh', 'numverify']
+
+def parseInput(file):
+    print 'parse'
+
+def saveToOutput():
+    print 'save'
+
+def isNumberValid(PhoneNumber):
+    if len(PhoneNumber) < 9 and len(PhoneNumber) > 13:
+        return False
+    elif not re.match("^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$", PhoneNumber):
+        return False
+    else:
+        return True
+
+def formatNumber(number):
+    PhoneNumber = number.replace("+", "").replace(" ", "")
+    return PhoneNumber
+
+def searchCountryCode(number):
+    #parse code
+
+    #check in json
+    print '\033[1;32m[+] Country found : France (FR)'
+
+    #check for area code
+    print '\033[1;32m[+] Area code found : Bordeaux, Limoges'
+    print '\n'
+    print '\033[1;32m[i] This is most likely a landline'
+
+    print '\n'
+
+def numverifyScan(PhoneNumber):
+    if args.scanner == 'numverify' or args.scanner == 'any':
+        return -1
+
+    print '[i] Running Numverify scan...'
+
+    requestSecret = ''
+    resp = requests.get('https://numverify.com/')
+    soup = BeautifulSoup(resp.text, "html5lib")
+    for tag in soup.find_all("input", type="hidden"):
+        if tag['name'] == "scl_request_secret":
+            requestSecret = tag['value']
+            break;
+
+    apiKey = hashlib.md5()
+    apiKey.update(PhoneNumber + requestSecret)
+    apiKey = apiKey.hexdigest()
+
+    response = requests.get("https://numverify.com/php_helper_scripts/phone_api.php?secret_key=" + apiKey + "&number=" + PhoneNumber)
+
+    if response.content == "Unauthorized" or response.status_code != 200:
+        print("An error occured while calling the API (bad request or wrong api key).")
+        sys.exit()
+
+    data = json.loads(response.content)
+
+    if data["valid"] == False:
+        print("\033[91mError: Please specify a valid phone number. " + PhoneNumber + " is not valid.")
+        print("Example: 14158586273\033[94m")
+        sys.exit()
+
+    print "Number: (" + data["country_prefix"] + ") " + data["local_format"]
+    print("Country: %s (%s)") % (data["country_name"],data["country_code"])
+    print("Location: %s") % data["location"]
+    print("Carrier: %s") % data["carrier"]
+    print("Line type: %s") % data["line_type"]
+    print "\n"
+
+def ovhScan(number):
+    if not args.scanner == 'ovh' or args.scanner == 'any':
+        return -1
+
+    print '[i] Running OVH scan...'
+    print '(!) OVH API credentials missing. Skipping.'
+
+def scanNumber(number):
+    PhoneNumber = formatNumber(number)
+
+    print("[!] ---- Fetching informations for number +" + PhoneNumber + " ---- [!]")
+    print "\n"
+
+    if not isNumberValid(PhoneNumber):
+        print("\033[91mError: number " + number + " is not valid Skipping.")
+        sys.exit()
+
+    #check dial code
+    searchCountryCode(PhoneNumber)
+    #check area code by country
+    #if found in area codes -> landline
+
+    numverifyScan(PhoneNumber)
+    ovhScan(PhoneNumber)
+
+# Verify scanner
+if not args.scanner in scanners:
+    print("\033[91mError: scanner doesn't exists.")
+    sys.exit()
+
+if args.number:
+    scanNumber(args.number)
+elif args.input:
+    print parseInput(args.input)
+
+if args.output:
+    print 'test'
