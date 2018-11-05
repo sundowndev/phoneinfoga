@@ -359,6 +359,1287 @@
     ]
   },
   {
+    "CountryCode": "US",
+    "AreaCodes": [
+      {
+        "code": "201",
+        "area": "New Jersey"
+      },
+      {
+        "code": "202",
+        "area": "District of Columbia"
+      },
+      {
+        "code": "203",
+        "area": "Connecticut"
+      },
+      {
+        "code": "204",
+        "area": "Manitoba"
+      },
+      {
+        "code": "205",
+        "area": "Alabama"
+      },
+      {
+        "code": "206",
+        "area": "Washington"
+      },
+      {
+        "code": "207",
+        "area": "Maine"
+      },
+      {
+        "code": "208",
+        "area": "Idaho"
+      },
+      {
+        "code": "209",
+        "area": "California"
+      },
+      {
+        "code": "210",
+        "area": "Texas"
+      },
+      {
+        "code": "212",
+        "area": "New York"
+      },
+      {
+        "code": "213",
+        "area": "California"
+      },
+      {
+        "code": "214",
+        "area": "Texas"
+      },
+      {
+        "code": "215",
+        "area": "Pennsylvania"
+      },
+      {
+        "code": "216",
+        "area": "Ohio"
+      },
+      {
+        "code": "217",
+        "area": "Illinois"
+      },
+      {
+        "code": "218",
+        "area": "Minnesota"
+      },
+      {
+        "code": "219",
+        "area": "Indiana"
+      },
+      {
+        "code": "224",
+        "area": "Illinois"
+      },
+      {
+        "code": "225",
+        "area": "Louisiana"
+      },
+      {
+        "code": "228",
+        "area": "Mississippi"
+      },
+      {
+        "code": "229",
+        "area": "Georgia"
+      },
+      {
+        "code": "231",
+        "area": "Michigan"
+      },
+      {
+        "code": "234",
+        "area": "Ohio"
+      },
+      {
+        "code": "239",
+        "area": "Florida"
+      },
+      {
+        "code": "240",
+        "area": "Maryland"
+      },
+      {
+        "code": "242",
+        "area": "Bahamas"
+      },
+      {
+        "code": "246",
+        "area": "Barbados"
+      },
+      {
+        "code": "248",
+        "area": "Michigan"
+      },
+      {
+        "code": "250",
+        "area": "British Columbia"
+      },
+      {
+        "code": "251",
+        "area": "Alabama"
+      },
+      {
+        "code": "252",
+        "area": "North Carolina"
+      },
+      {
+        "code": "253",
+        "area": "Washington"
+      },
+      {
+        "code": "254",
+        "area": "Texas"
+      },
+      {
+        "code": "256",
+        "area": "Alabama"
+      },
+      {
+        "code": "260",
+        "area": "Indiana"
+      },
+      {
+        "code": "262",
+        "area": "Wisconsin"
+      },
+      {
+        "code": "264",
+        "area": "Anguilla"
+      },
+      {
+        "code": "267",
+        "area": "Pennsylvania"
+      },
+      {
+        "code": "268",
+        "area": "Antigua\/Barbuda"
+      },
+      {
+        "code": "269",
+        "area": "Michigan"
+      },
+      {
+        "code": "270",
+        "area": "Kentucky"
+      },
+      {
+        "code": "276",
+        "area": "Virginia"
+      },
+      {
+        "code": "281",
+        "area": "Texas"
+      },
+      {
+        "code": "284",
+        "area": "British Virgin Islands"
+      },
+      {
+        "code": "289",
+        "area": "Ontario"
+      },
+      {
+        "code": "301",
+        "area": "Maryland"
+      },
+      {
+        "code": "302",
+        "area": "Delaware"
+      },
+      {
+        "code": "303",
+        "area": "Colorado"
+      },
+      {
+        "code": "304",
+        "area": "West Virginia"
+      },
+      {
+        "code": "305",
+        "area": "Florida"
+      },
+      {
+        "code": "306",
+        "area": "Saskatchewan"
+      },
+      {
+        "code": "307",
+        "area": "Wyoming"
+      },
+      {
+        "code": "308",
+        "area": "Nebraska"
+      },
+      {
+        "code": "309",
+        "area": "Illinois"
+      },
+      {
+        "code": "310",
+        "area": "California"
+      },
+      {
+        "code": "312",
+        "area": "Illinois"
+      },
+      {
+        "code": "313",
+        "area": "Michigan"
+      },
+      {
+        "code": "314",
+        "area": "Missouri"
+      },
+      {
+        "code": "315",
+        "area": "New York"
+      },
+      {
+        "code": "316",
+        "area": "Kansas"
+      },
+      {
+        "code": "317",
+        "area": "Indiana"
+      },
+      {
+        "code": "318",
+        "area": "Louisiana"
+      },
+      {
+        "code": "319",
+        "area": "Iowa"
+      },
+      {
+        "code": "320",
+        "area": "Minnesota"
+      },
+      {
+        "code": "321",
+        "area": "Florida"
+      },
+      {
+        "code": "323",
+        "area": "California"
+      },
+      {
+        "code": "325",
+        "area": "Texas"
+      },
+      {
+        "code": "330",
+        "area": "Ohio"
+      },
+      {
+        "code": "334",
+        "area": "Alabama"
+      },
+      {
+        "code": "336",
+        "area": "North Carolina"
+      },
+      {
+        "code": "337",
+        "area": "Louisiana"
+      },
+      {
+        "code": "339",
+        "area": "Massachusetts"
+      },
+      {
+        "code": "340",
+        "area": "US Virgin Islands"
+      },
+      {
+        "code": "345",
+        "area": "Cayman Islands"
+      },
+      {
+        "code": "347",
+        "area": "New York"
+      },
+      {
+        "code": "351",
+        "area": "Massachusetts"
+      },
+      {
+        "code": "352",
+        "area": "Florida"
+      },
+      {
+        "code": "360",
+        "area": "Washington"
+      },
+      {
+        "code": "361",
+        "area": "Texas"
+      },
+      {
+        "code": "386",
+        "area": "Florida"
+      },
+      {
+        "code": "401",
+        "area": "Rhode Island"
+      },
+      {
+        "code": "402",
+        "area": "Nebraska"
+      },
+      {
+        "code": "403",
+        "area": "Alberta"
+      },
+      {
+        "code": "404",
+        "area": "Georgia"
+      },
+      {
+        "code": "405",
+        "area": "Oklahoma"
+      },
+      {
+        "code": "406",
+        "area": "Montana"
+      },
+      {
+        "code": "407",
+        "area": "Florida"
+      },
+      {
+        "code": "408",
+        "area": "California"
+      },
+      {
+        "code": "409",
+        "area": "Texas"
+      },
+      {
+        "code": "410",
+        "area": "Maryland"
+      },
+      {
+        "code": "412",
+        "area": "Pennsylvania"
+      },
+      {
+        "code": "413",
+        "area": "Massachusetts"
+      },
+      {
+        "code": "414",
+        "area": "Wisconsin"
+      },
+      {
+        "code": "415",
+        "area": "California"
+      },
+      {
+        "code": "416",
+        "area": "Ontario"
+      },
+      {
+        "code": "417",
+        "area": "Missouri"
+      },
+      {
+        "code": "418",
+        "area": "Quebec"
+      },
+      {
+        "code": "419",
+        "area": "Ohio"
+      },
+      {
+        "code": "423",
+        "area": "Tennessee"
+      },
+      {
+        "code": "425",
+        "area": "Washington"
+      },
+      {
+        "code": "430",
+        "area": "Texas"
+      },
+      {
+        "code": "432",
+        "area": "Texas"
+      },
+      {
+        "code": "434",
+        "area": "Virginia"
+      },
+      {
+        "code": "435",
+        "area": "Utah"
+      },
+      {
+        "code": "440",
+        "area": "Ohio"
+      },
+      {
+        "code": "441",
+        "area": "Bermuda"
+      },
+      {
+        "code": "443",
+        "area": "Maryland"
+      },
+      {
+        "code": "450",
+        "area": "Quebec"
+      },
+      {
+        "code": "456",
+        "area": "NANP area"
+      },
+      {
+        "code": "469",
+        "area": "Texas"
+      },
+      {
+        "code": "473",
+        "area": "Grenada"
+      },
+      {
+        "code": "478",
+        "area": "Georgia"
+      },
+      {
+        "code": "479",
+        "area": "Arkansas"
+      },
+      {
+        "code": "480",
+        "area": "Arizona"
+      },
+      {
+        "code": "484",
+        "area": "Pennsylvania"
+      },
+      {
+        "code": "501",
+        "area": "Arkansas"
+      },
+      {
+        "code": "502",
+        "area": "Kentucky"
+      },
+      {
+        "code": "503",
+        "area": "Oregon"
+      },
+      {
+        "code": "504",
+        "area": "Louisiana"
+      },
+      {
+        "code": "505",
+        "area": "New Mexico"
+      },
+      {
+        "code": "506",
+        "area": "New Brunswick"
+      },
+      {
+        "code": "507",
+        "area": "Minnesota"
+      },
+      {
+        "code": "508",
+        "area": "Massachusetts"
+      },
+      {
+        "code": "509",
+        "area": "Washington"
+      },
+      {
+        "code": "510",
+        "area": "California"
+      },
+      {
+        "code": "512",
+        "area": "Texas"
+      },
+      {
+        "code": "513",
+        "area": "Ohio"
+      },
+      {
+        "code": "514",
+        "area": "Quebec"
+      },
+      {
+        "code": "515",
+        "area": "Iowa"
+      },
+      {
+        "code": "516",
+        "area": "New York"
+      },
+      {
+        "code": "517",
+        "area": "Michigan"
+      },
+      {
+        "code": "518",
+        "area": "New York"
+      },
+      {
+        "code": "519",
+        "area": "Ontario"
+      },
+      {
+        "code": "520",
+        "area": "Arizona"
+      },
+      {
+        "code": "530",
+        "area": "California"
+      },
+      {
+        "code": "540",
+        "area": "Virginia"
+      },
+      {
+        "code": "541",
+        "area": "Oregon"
+      },
+      {
+        "code": "551",
+        "area": "New Jersey"
+      },
+      {
+        "code": "559",
+        "area": "California"
+      },
+      {
+        "code": "561",
+        "area": "Florida"
+      },
+      {
+        "code": "562",
+        "area": "California"
+      },
+      {
+        "code": "563",
+        "area": "Iowa"
+      },
+      {
+        "code": "567",
+        "area": "Ohio"
+      },
+      {
+        "code": "570",
+        "area": "Pennsylvania"
+      },
+      {
+        "code": "571",
+        "area": "Virginia"
+      },
+      {
+        "code": "573",
+        "area": "Missouri"
+      },
+      {
+        "code": "574",
+        "area": "Indiana"
+      },
+      {
+        "code": "580",
+        "area": "Oklahoma"
+      },
+      {
+        "code": "585",
+        "area": "New York"
+      },
+      {
+        "code": "586",
+        "area": "Michigan"
+      },
+      {
+        "code": "601",
+        "area": "Mississippi"
+      },
+      {
+        "code": "602",
+        "area": "Arizona"
+      },
+      {
+        "code": "603",
+        "area": "New Hampshire"
+      },
+      {
+        "code": "604",
+        "area": "British Columbia"
+      },
+      {
+        "code": "605",
+        "area": "South Dakota"
+      },
+      {
+        "code": "606",
+        "area": "Kentucky"
+      },
+      {
+        "code": "607",
+        "area": "New York"
+      },
+      {
+        "code": "608",
+        "area": "Wisconsin"
+      },
+      {
+        "code": "609",
+        "area": "New Jersey"
+      },
+      {
+        "code": "610",
+        "area": "Pennsylvania"
+      },
+      {
+        "code": "612",
+        "area": "Minnesota"
+      },
+      {
+        "code": "613",
+        "area": "Ontario"
+      },
+      {
+        "code": "614",
+        "area": "Ohio"
+      },
+      {
+        "code": "615",
+        "area": "Tennessee"
+      },
+      {
+        "code": "616",
+        "area": "Michigan"
+      },
+      {
+        "code": "617",
+        "area": "Massachusetts"
+      },
+      {
+        "code": "618",
+        "area": "Illinois"
+      },
+      {
+        "code": "619",
+        "area": "California"
+      },
+      {
+        "code": "620",
+        "area": "Kansas"
+      },
+      {
+        "code": "623",
+        "area": "Arizona"
+      },
+      {
+        "code": "626",
+        "area": "California"
+      },
+      {
+        "code": "630",
+        "area": "Illinois"
+      },
+      {
+        "code": "631",
+        "area": "New York"
+      },
+      {
+        "code": "636",
+        "area": "Missouri"
+      },
+      {
+        "code": "641",
+        "area": "Iowa"
+      },
+      {
+        "code": "646",
+        "area": "New York"
+      },
+      {
+        "code": "647",
+        "area": "Ontario"
+      },
+      {
+        "code": "649",
+        "area": "Turks &amp; Caicos Islands"
+      },
+      {
+        "code": "650",
+        "area": "California"
+      },
+      {
+        "code": "651",
+        "area": "Minnesota"
+      },
+      {
+        "code": "660",
+        "area": "Missouri"
+      },
+      {
+        "code": "661",
+        "area": "California"
+      },
+      {
+        "code": "662",
+        "area": "Mississippi"
+      },
+      {
+        "code": "664",
+        "area": "Montserrat"
+      },
+      {
+        "code": "670",
+        "area": "CNMI"
+      },
+      {
+        "code": "671",
+        "area": "Guam"
+      },
+      {
+        "code": "678",
+        "area": "Georgia"
+      },
+      {
+        "code": "682",
+        "area": "Texas"
+      },
+      {
+        "code": "701",
+        "area": "North Dakota"
+      },
+      {
+        "code": "702",
+        "area": "Nevada"
+      },
+      {
+        "code": "703",
+        "area": "Virginia"
+      },
+      {
+        "code": "704",
+        "area": "North Carolina"
+      },
+      {
+        "code": "705",
+        "area": "Ontario"
+      },
+      {
+        "code": "706",
+        "area": "Georgia"
+      },
+      {
+        "code": "707",
+        "area": "California"
+      },
+      {
+        "code": "708",
+        "area": "Illinois"
+      },
+      {
+        "code": "709",
+        "area": "Newfoundland"
+      },
+      {
+        "code": "710",
+        "area": "US"
+      },
+      {
+        "code": "712",
+        "area": "Iowa"
+      },
+      {
+        "code": "713",
+        "area": "Texas"
+      },
+      {
+        "code": "714",
+        "area": "California"
+      },
+      {
+        "code": "715",
+        "area": "Wisconsin"
+      },
+      {
+        "code": "716",
+        "area": "New York"
+      },
+      {
+        "code": "717",
+        "area": "Pennsylvania"
+      },
+      {
+        "code": "718",
+        "area": "New York"
+      },
+      {
+        "code": "719",
+        "area": "Colorado"
+      },
+      {
+        "code": "720",
+        "area": "Colorado"
+      },
+      {
+        "code": "724",
+        "area": "Pennsylvania"
+      },
+      {
+        "code": "727",
+        "area": "Florida"
+      },
+      {
+        "code": "731",
+        "area": "Tennessee"
+      },
+      {
+        "code": "732",
+        "area": "New Jersey"
+      },
+      {
+        "code": "734",
+        "area": "Michigan"
+      },
+      {
+        "code": "740",
+        "area": "Ohio"
+      },
+      {
+        "code": "754",
+        "area": "Florida"
+      },
+      {
+        "code": "757",
+        "area": "Virginia"
+      },
+      {
+        "code": "758",
+        "area": "St. Lucia"
+      },
+      {
+        "code": "760",
+        "area": "California"
+      },
+      {
+        "code": "763",
+        "area": "Minnesota"
+      },
+      {
+        "code": "765",
+        "area": "Indiana"
+      },
+      {
+        "code": "767",
+        "area": "Dominica"
+      },
+      {
+        "code": "770",
+        "area": "Georgia"
+      },
+      {
+        "code": "772",
+        "area": "Florida"
+      },
+      {
+        "code": "773",
+        "area": "Illinois"
+      },
+      {
+        "code": "774",
+        "area": "Massachusetts"
+      },
+      {
+        "code": "775",
+        "area": "Nevada"
+      },
+      {
+        "code": "778",
+        "area": "British Columbia"
+      },
+      {
+        "code": "780",
+        "area": "Alberta"
+      },
+      {
+        "code": "781",
+        "area": "Massachusetts"
+      },
+      {
+        "code": "784",
+        "area": "St. Vincent &amp; Grenadines"
+      },
+      {
+        "code": "785",
+        "area": "Kansas"
+      },
+      {
+        "code": "786",
+        "area": "Florida"
+      },
+      {
+        "code": "787",
+        "area": "Puerto Rico"
+      },
+      {
+        "code": "801",
+        "area": "Utah"
+      },
+      {
+        "code": "802",
+        "area": "Vermont"
+      },
+      {
+        "code": "803",
+        "area": "South Carolina"
+      },
+      {
+        "code": "804",
+        "area": "Virginia"
+      },
+      {
+        "code": "805",
+        "area": "California"
+      },
+      {
+        "code": "806",
+        "area": "Texas"
+      },
+      {
+        "code": "807",
+        "area": "Ontario"
+      },
+      {
+        "code": "808",
+        "area": "Hawaii"
+      },
+      {
+        "code": "809",
+        "area": "Dominican Republic"
+      },
+      {
+        "code": "810",
+        "area": "Michigan"
+      },
+      {
+        "code": "812",
+        "area": "Indiana"
+      },
+      {
+        "code": "813",
+        "area": "Florida"
+      },
+      {
+        "code": "814",
+        "area": "Pennsylvania"
+      },
+      {
+        "code": "815",
+        "area": "Illinois"
+      },
+      {
+        "code": "816",
+        "area": "Missouri"
+      },
+      {
+        "code": "817",
+        "area": "Texas"
+      },
+      {
+        "code": "818",
+        "area": "California"
+      },
+      {
+        "code": "819",
+        "area": "Quebec"
+      },
+      {
+        "code": "828",
+        "area": "North Carolina"
+      },
+      {
+        "code": "830",
+        "area": "Texas"
+      },
+      {
+        "code": "831",
+        "area": "California"
+      },
+      {
+        "code": "832",
+        "area": "Texas"
+      },
+      {
+        "code": "843",
+        "area": "South Carolina"
+      },
+      {
+        "code": "845",
+        "area": "New York"
+      },
+      {
+        "code": "847",
+        "area": "Illinois"
+      },
+      {
+        "code": "848",
+        "area": "New Jersey"
+      },
+      {
+        "code": "850",
+        "area": "Florida"
+      },
+      {
+        "code": "856",
+        "area": "New Jersey"
+      },
+      {
+        "code": "857",
+        "area": "Massachusetts"
+      },
+      {
+        "code": "858",
+        "area": "California"
+      },
+      {
+        "code": "859",
+        "area": "Kentucky"
+      },
+      {
+        "code": "860",
+        "area": "Connecticut"
+      },
+      {
+        "code": "862",
+        "area": "New Jersey"
+      },
+      {
+        "code": "863",
+        "area": "Florida"
+      },
+      {
+        "code": "864",
+        "area": "South Carolina"
+      },
+      {
+        "code": "865",
+        "area": "Tennessee"
+      },
+      {
+        "code": "867",
+        "area": "Yukon, NW Terr., Nunavut"
+      },
+      {
+        "code": "868",
+        "area": "Trinidad &amp; Tobago"
+      },
+      {
+        "code": "869",
+        "area": "St. Kitts &amp; Nevis"
+      },
+      {
+        "code": "870",
+        "area": "Arkansas"
+      },
+      {
+        "code": "876",
+        "area": "Jamaica"
+      },
+      {
+        "code": "878",
+        "area": "Pennsylvania"
+      },
+      {
+        "code": "880",
+        "area": "NANP area"
+      },
+      {
+        "code": "881",
+        "area": "NANP area"
+      },
+      {
+        "code": "882",
+        "area": "NANP area"
+      },
+      {
+        "code": "901",
+        "area": "Tennessee"
+      },
+      {
+        "code": "902",
+        "area": "Nova Scotia"
+      },
+      {
+        "code": "903",
+        "area": "Texas"
+      },
+      {
+        "code": "904",
+        "area": "Florida"
+      },
+      {
+        "code": "905",
+        "area": "Ontario"
+      },
+      {
+        "code": "906",
+        "area": "Michigan"
+      },
+      {
+        "code": "907",
+        "area": "Alaska"
+      },
+      {
+        "code": "908",
+        "area": "New Jersey"
+      },
+      {
+        "code": "909",
+        "area": "California"
+      },
+      {
+        "code": "910",
+        "area": "North Carolina"
+      },
+      {
+        "code": "912",
+        "area": "Georgia"
+      },
+      {
+        "code": "913",
+        "area": "Kansas"
+      },
+      {
+        "code": "914",
+        "area": "New York"
+      },
+      {
+        "code": "915",
+        "area": "Texas"
+      },
+      {
+        "code": "916",
+        "area": "California"
+      },
+      {
+        "code": "917",
+        "area": "New York"
+      },
+      {
+        "code": "918",
+        "area": "Oklahoma"
+      },
+      {
+        "code": "919",
+        "area": "North Carolina"
+      },
+      {
+        "code": "920",
+        "area": "Wisconsin"
+      },
+      {
+        "code": "925",
+        "area": "California"
+      },
+      {
+        "code": "928",
+        "area": "Arizona"
+      },
+      {
+        "code": "931",
+        "area": "Tennessee"
+      },
+      {
+        "code": "936",
+        "area": "Texas"
+      },
+      {
+        "code": "937",
+        "area": "Ohio"
+      },
+      {
+        "code": "939",
+        "area": "Puerto Rico"
+      },
+      {
+        "code": "940",
+        "area": "Texas"
+      },
+      {
+        "code": "941",
+        "area": "Florida"
+      },
+      {
+        "code": "947",
+        "area": "Michigan"
+      },
+      {
+        "code": "949",
+        "area": "California"
+      },
+      {
+        "code": "952",
+        "area": "Minnesota"
+      },
+      {
+        "code": "954",
+        "area": "Florida"
+      },
+      {
+        "code": "956",
+        "area": "Texas"
+      },
+      {
+        "code": "970",
+        "area": "Colorado"
+      },
+      {
+        "code": "971",
+        "area": "Oregon"
+      },
+      {
+        "code": "972",
+        "area": "Texas"
+      },
+      {
+        "code": "973",
+        "area": "New Jersey"
+      },
+      {
+        "code": "978",
+        "area": "Massachusetts"
+      },
+      {
+        "code": "979",
+        "area": "Texas"
+      },
+      {
+        "code": "980",
+        "area": "North Carolina"
+      },
+      {
+        "code": "985",
+        "area": "Louisiana"
+      },
+      {
+        "code": "989",
+        "area": "Michigan"
+      }
+    ]
+  },
+  {
     "CountryCode": "CN",
     "AreaCodes": []
   }

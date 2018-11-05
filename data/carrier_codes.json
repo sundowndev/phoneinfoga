@@ -1,0 +1,2027 @@
+[
+  {
+    "country": "FR",
+    "carriers": [
+      {
+        "area": {
+          "code": null,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Other",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 7,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 9,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 17,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 36,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 61,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 62,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 66,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Bouygues Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 67,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 68,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 76,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Bouygues Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 77,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 78,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 79,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 87,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 148,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 149,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 180,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 181,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 182,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 183,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 214,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 218,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 222,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 230,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 234,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 236,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 244,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 245,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 246,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 249,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 250,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 252,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 253,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 256,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 261,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 272,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 276,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 277,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 278,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 285,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 290,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 310,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 345,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 351,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 352,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 354,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 355,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 357,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 358,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 359,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 370,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 371,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 372,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 373,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 411,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 413,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 415,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 420,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 422,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 426,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 427,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 430,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 434,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 443,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 456,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 457,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 463,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 469,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 480,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 481,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 482,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 483,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 484,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 486,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 487,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 488,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 489,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 516,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 517,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 519,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 524,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 531,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 533,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 535,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 540,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 547,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 564,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 567,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 579,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 581,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 582,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 587,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Clec",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 601,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 603,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 605,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 607,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 608,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 609,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 630,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 631,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 632,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 633,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 634,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 635,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 637,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 642,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 643,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 645,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 646,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 647,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 648,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 650,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Bouygues Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 653,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Bouygues Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 654,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 655,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 658,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Bouygues Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 659,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Bouygues Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 698,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Bouygues Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 699,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Bouygues Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 780,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6001,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6002,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6003,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Bouygues Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6007,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6008,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6009,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Bouygues Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6020,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6021,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6022,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6023,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6040,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6041,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6044,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6045,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6046,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6047,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6048,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6049,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6064,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6065,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6066,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6067,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6068,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6069,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6360,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6361,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6362,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6363,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6364,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6365,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6366,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6367,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6368,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6369,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6381,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6382,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6383,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6384,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6385,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6386,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6387,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6388,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6389,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6401,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6402,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6403,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6404,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6405,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6406,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6407,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6408,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6409,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6417,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6444,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Bouygues Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6445,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Bouygues Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6446,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Bouygues Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6490,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6491,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6492,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6493,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6494,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 6495,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Bouygues Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 7705,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 7706,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 7707,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 7708,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 7709,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 60041,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 60042,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Bouygues Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 60051,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 60052,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 64160,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 64161,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Orange Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 64166,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 64167,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 64168,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 64169,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 64995,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 64998,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      },
+      {
+        "area": {
+          "code": 64999,
+          "country_code": 33,
+          "country_id": 73,
+          "created_at": null,
+          "name": "France Sfr Mobile",
+          "updated_at": null
+        }
+      }
+    ]
+  }
+]
