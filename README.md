@@ -102,6 +102,7 @@ Regular expression : `^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$`
 - https://countrycode.org/
 - http://www.countryareacode.net/en/
 - http://whitepages.fr/phonesystem/
+- http://directory.didww.com/area-prefixes
 
 ### Scanners
 - https://www.phonevalidator.com/
