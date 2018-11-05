@@ -1,2 +1,6 @@
 requests
-BeautifulSoup
+sys
+hashlib
+json
+argparse
+re
