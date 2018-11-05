@@ -54,7 +54,7 @@ The tool only accepts E164 and International formats as input.
 git clone https://github.com/sundowndev/PhoneInfoga
 cd ./PhoneInfoga
 pip install -r requirements.txt
-python phoneinfoga.py -h
+python ./phoneinfoga.py -h
 ```
 
 Then set APIs credentials in `secrets.py`.
@@ -74,19 +74,19 @@ Usage: PhoneInfoga options
 
 Example :
 
-```python
+```
 python phoneinfoga.py -n 0428375448
 ```
 
 Check several numbers at once :
 
-```python
-python phoneinfoga.py -i numbers.txt -o results.txt
+```
+python ./phoneinfoga.py -i numbers.txt -o results.txt
 ```
 
 Check for a number range on OVH (just put some zeros) :
 
-```python
+```
 python phoneinfoga.py -n 0428370000 -s ovh
 ```
 
