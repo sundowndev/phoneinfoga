@@ -37,6 +37,9 @@ parser.add_argument('-o', '--output', metavar="output_file", type=file,
 parser.add_argument('-s', '--scanner', metavar="scanner", default="all", type=str,
                     help='The scanner to use')
 
+parser.add_argument('--osint', action='store_true',
+                    help='Use OSINT reconnaissance')
+
 parser.add_argument('-u', '--update', action='store_true',
                     help='Update the tool & databases')
 
@@ -50,7 +53,7 @@ if args.update:
     print 'update'
     sys.exit()
 
-scanners = ['any', 'all', 'ovh', 'numverify']
+scanners = ['any', 'all', 'numverify', 'ovh', 'whosenumber']
 
 def parseInput(file):
     print 'parse'
@@ -67,7 +70,7 @@ def isNumberValid(PhoneNumber):
         return True
 
 def formatNumber(number):
-    PhoneNumber = number.replace("+", "").replace(" ", "")
+    PhoneNumber = number.replace("+", "").replace("\n", "").replace(" ", "")
     return PhoneNumber
 
 def searchCountryCode(number):
@@ -77,17 +80,17 @@ def searchCountryCode(number):
     print '\033[1;32m[+] Country found : France (FR)'
 
     #check for area code
-    print '\033[1;32m[+] Area code found : Bordeaux, Limoges'
-    print '\n'
-    print '\033[1;32m[i] This is most likely a landline'
+    print '\033[1;32m[+] Areas found (approximate) : Bordeaux, Limoges'
 
-    print '\n'
+    #check for carrier
+    #print '\033[1;32m[+] Carrier found:  France Sfr Mobile'
+    print '\033[93m[i] This is most likely a landline, or a fixed VoIP.'
 
 def numverifyScan(PhoneNumber):
-    if args.scanner == 'numverify' or args.scanner == 'any':
+    if not args.scanner == 'numverify' and not args.scanner == 'all':
         return -1
 
-    print '[i] Running Numverify scan...'
+    print '\033[93m[i] Running Numverify scan...'
 
     requestSecret = ''
     resp = requests.get('https://numverify.com/')
@@ -104,38 +107,41 @@ def numverifyScan(PhoneNumber):
     response = requests.get("https://numverify.com/php_helper_scripts/phone_api.php?secret_key=" + apiKey + "&number=" + PhoneNumber)
 
     if response.content == "Unauthorized" or response.status_code != 200:
-        print("An error occured while calling the API (bad request or wrong api key).")
+        print("[i] An error occured while calling the API (bad request or wrong api key).")
         sys.exit()
 
     data = json.loads(response.content)
 
     if data["valid"] == False:
-        print("\033[91mError: Please specify a valid phone number. " + PhoneNumber + " is not valid.")
-        print("Example: 14158586273\033[94m")
+        print("\033[91m[!] Error: Please specify a valid phone number. Example: +6464806649\033[94m")
         sys.exit()
 
-    print "Number: (" + data["country_prefix"] + ") " + data["local_format"]
+    print "\033[1;32mNumber: (" + data["country_prefix"] + ") " + data["local_format"]
     print("Country: %s (%s)") % (data["country_name"],data["country_code"])
     print("Location: %s") % data["location"]
     print("Carrier: %s") % data["carrier"]
-    print("Line type: %s") % data["line_type"]
-    print "\n"
+    print("Line type: %s \033[94m") % data["line_type"]
 
 def ovhScan(number):
-    if not args.scanner == 'ovh' or args.scanner == 'any':
+    if not args.scanner == 'ovh' and not args.scanner == 'all':
         return -1
 
-    print '[i] Running OVH scan...'
-    print '(!) OVH API credentials missing. Skipping.'
+    print '\033[93m[i] Running OVH scan...'
+    print '(!) OVH API credentials missing. Skipping.\033[94m'
+
+def whosenumberScan(number):
+    if not args.scanner == 'whosenumber' and not args.scanner == 'all':
+        return -1
+
+    print '\033[93m[i] Running Whosenumber scan...\033[94m'
 
 def scanNumber(number):
     PhoneNumber = formatNumber(number)
 
-    print("[!] ---- Fetching informations for number +" + PhoneNumber + " ---- [!]")
-    print "\n"
+    print "\033[93m[!] ---- Fetching informations for " + PhoneNumber + " ---- [!]"
 
     if not isNumberValid(PhoneNumber):
-        print("\033[91mError: number " + number + " is not valid Skipping.")
+        print("\033[91mError: number " + number + " is not valid. Skipping.")
         sys.exit()
 
     #check dial code
@@ -145,6 +151,7 @@ def scanNumber(number):
 
     numverifyScan(PhoneNumber)
     ovhScan(PhoneNumber)
+    whosenumberScan(PhoneNumber)
 
 # Verify scanner
 if not args.scanner in scanners:
@@ -154,7 +161,10 @@ if not args.scanner in scanners:
 if args.number:
     scanNumber(args.number)
 elif args.input:
-    print parseInput(args.input)
+    for line in args.input.readlines():
+        scanNumber(line)
 
 if args.output:
-    print 'test'
+    args.output.write("Hello World")
+
+    args.output.close()
