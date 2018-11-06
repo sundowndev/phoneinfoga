@@ -45,8 +45,6 @@ The tool only accepts E164 and International formats as input.
 - ovh
 - annu
 - numverify
-- any
-- all
 
 ## Installation
 
@@ -62,14 +60,24 @@ Then set APIs credentials in `secrets.py`.
 ## Usage
 
 ```
-Usage: PhoneInfoga options 
+usage: phoneinfoga.py -n <number> [options]
 
-       -n|--number: Phone number to search
-       -i|--input: Phone number to search
-       -o|--output: Phone number to search
-       -s|--scanner: Only use a specific scanner
-       -h|--help: Help command
-       --update: Update the tool & databases
+Advanced information gathering tool for phone numbers
+(https://github.com/sundowndev/PhoneInfoga)
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -n number, --number number
+                        The phone number to scan (E164 or International
+                        format)
+  -i input_file, --input input_file
+                        Phone number list to scan (one per line)
+  -o output_file, --output output_file
+                        Output to save scan results
+  -s scanner, --scanner scanner (any to skip, default: all)
+                        The scanner to use
+  --osint               Use OSINT reconnaissance
+  -u, --update          Update the tool & databases
 ```
 
 Example :
