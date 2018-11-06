@@ -11,8 +11,7 @@ Advanced information gathering tool & OSINT reconnaissance for phone numbers.
 - Check several numbers at once
 - Set an output for result(s)
 - Check if number is from a VoIP provider
-- Get informations about special numbers
-- Phone book search
+- OSINT reconnaissance using external APIs, Google Hacking, phone books & search engines
 
 ## Formats
 
