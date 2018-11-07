@@ -106,6 +106,9 @@ This tool is MIT licensed.
 Regular expression : `^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$`
 
 - https://api.ovh.com/console/#/telephony
+  - `/telephony/number/ranges`
+  - `/telephony/number/detailedZones`
+  - `/telephony/number/specificNumbers`
 - https://countrycode.org/
 - http://www.countryareacode.net/en/
 - http://whitepages.fr/phonesystem/
