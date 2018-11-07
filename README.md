@@ -2,6 +2,8 @@
 
 Advanced information gathering tool & OSINT reconnaissance for phone numbers.
 
+The goal of this tool is to first identify basic informations such as country, area, carrier and line type on any international phone numbers with a very good accuracy, and then detect the VoIP provider or search for footprints on search engines to try identify the owner.
+
 **This tool requires python 2.x**
 
 ## Features
@@ -23,27 +25,12 @@ The tool only accepts E164 and International formats as input.
 - RFC3966: tel:+33-9-63-60-XX-XX
 - Out-of-country format from US: 011 33 9 63 60 XX XX
 
-## Number format by countries
-
-#### Europe
-
-- Belgium : 9 digits for land lines and 10 for mobile
-- Denmark : 8 digits
-- Germany : 10 digits
-- Greece : 10 digits
-- Hungary : 10 digits
-- Iceland : 10 digits
-- Ireland : 10 digits
-- Italy : 10 digits
-- Netherlands : 10 digits
-- Norway : 10 digits
-- Hungary : 10 digits
-
 ## Available scanners
 
-- ovh
-- annu
+Use `any` to disable this feature. Default value: `all`
+
 - numverify
+- ovh
 
 ## Installation
 
@@ -82,7 +69,7 @@ optional arguments:
 Example :
 
 ```
-python phoneinfoga.py -n 0428375448
+python phoneinfoga.py -n +42837544833
 ```
 
 Check several numbers at once :
@@ -94,8 +81,35 @@ python ./phoneinfoga.py -i numbers.txt -o results.txt
 Check for a number range on OVH (just put some zeros) :
 
 ```
-python phoneinfoga.py -n 0428370000 -s ovh
+python phoneinfoga.py -n +42837544833 -s ovh
 ```
+
+## Formatting
+
+E.164 formatting for phone numbers entails the following:
+
+- A + (plus) sign
+- International Country Calling code
+- Local Area code
+- Local Phone number
+
+For example, here’s a US-based number in standard local formatting: (415) 555-2671
+
+![](https://i.imgur.com/0e2SMdL.png)
+
+Here’s the same phone number in E.164 formatting: +14155552671
+
+![](https://i.imgur.com/KfrvacR.png)
+
+In the UK, and many other countries internationally, local dialing may require the addition of a '0' in front of the subscriber number. With E.164 formatting, this '0' must usually be removed.
+
+For example, here’s a UK-based number in standard local formatting: 020 7183 8750
+
+![](https://i.imgur.com/WdXKSZY.png)
+
+Here’s the same phone number in E.164 formatting: +442071838750
+
+![](https://i.imgur.com/Ovso0w2.png)
 
 ## License
 
@@ -113,6 +127,8 @@ Regular expression : `^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$`
 - http://www.countryareacode.net/en/
 - http://whitepages.fr/phonesystem/
 - http://directory.didww.com/area-prefixes
+- https://support.twilio.com/hc/en-us/articles/223183008-Formatting-International-Phone-Numbers
+- https://en.wikipedia.org/wiki/National_conventions_for_writing_telephone_numbers
 
 ### Scanners
 - https://www.phonevalidator.com/
