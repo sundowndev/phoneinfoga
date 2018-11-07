@@ -55,6 +55,11 @@ if args.update:
 
 scanners = ['any', 'all', 'numverify', 'ovh', 'whosenumber']
 
+code_info = '\033[97m[*] '
+code_warning = '\033[93m(!) '
+code_result = '\033[1;32m[+] '
+code_error = '\033[91m[!] '
+
 def parseInput(file):
     print 'parse'
 
@@ -74,23 +79,24 @@ def formatNumber(number):
     return PhoneNumber
 
 def searchCountryCode(number):
+    print code_info + 'Searching for country in format...'
     #parse code
 
     #check in json
-    print '\033[1;32m[+] Country found : France (FR)'
+    print code_result + 'Country found : France (FR)'
 
     #check for area code
-    print '\033[1;32m[+] Areas found (approximate) : Bordeaux, Limoges'
+    print code_result + 'Areas found (approximate) : Bordeaux, Limoges'
 
     #check for carrier
     #print '\033[1;32m[+] Carrier found:  France Sfr Mobile'
-    print '\033[93m[i] This is most likely a landline, or a fixed VoIP.'
+    print code_info + 'This is most likely a landline, or a fixed VoIP.'
 
 def numverifyScan(PhoneNumber):
     if not args.scanner == 'numverify' and not args.scanner == 'all':
         return -1
 
-    print '\033[93m[i] Running Numverify scan...'
+    print code_info + 'Running Numverify scan...'
 
     requestSecret = ''
     resp = requests.get('https://numverify.com/')
@@ -107,41 +113,41 @@ def numverifyScan(PhoneNumber):
     response = requests.get("https://numverify.com/php_helper_scripts/phone_api.php?secret_key=" + apiKey + "&number=" + PhoneNumber)
 
     if response.content == "Unauthorized" or response.status_code != 200:
-        print("[i] An error occured while calling the API (bad request or wrong api key).")
+        print(code_error + "An error occured while calling the API (bad request or wrong api key).")
         sys.exit()
 
     data = json.loads(response.content)
 
     if data["valid"] == False:
-        print("\033[91m[!] Error: Please specify a valid phone number. Example: +6464806649\033[94m")
+        print(code_error + "Error: Please specify a valid phone number. Example: +6464806649")
         sys.exit()
 
-    print "\033[1;32mNumber: (" + data["country_prefix"] + ") " + data["local_format"]
-    print("Country: %s (%s)") % (data["country_name"],data["country_code"])
-    print("Location: %s") % data["location"]
-    print("Carrier: %s") % data["carrier"]
-    print("Line type: %s \033[94m") % data["line_type"]
+    print(code_result + "Number: (%s) %s") % (data["country_prefix"],data["local_format"])
+    print(code_result + "Country: %s (%s)") % (data["country_name"],data["country_code"])
+    print(code_result + "Location: %s") % data["location"]
+    print(code_result + "Carrier: %s") % data["carrier"]
+    print(code_result + "Line type: %s") % data["line_type"]
 
 def ovhScan(number):
     if not args.scanner == 'ovh' and not args.scanner == 'all':
         return -1
 
-    print '\033[93m[i] Running OVH scan...'
-    print '(!) OVH API credentials missing. Skipping.\033[94m'
+    print code_info + 'Running OVH scan...'
+    print code_warning + 'OVH API credentials missing. Skipping.'
 
 def whosenumberScan(number):
     if not args.scanner == 'whosenumber' and not args.scanner == 'all':
         return -1
 
-    print '\033[93m[i] Running Whosenumber scan...\033[94m'
+    print code_info + 'Running Whosenumber scan...'
 
 def scanNumber(number):
     PhoneNumber = formatNumber(number)
 
-    print "\033[93m[!] ---- Fetching informations for " + PhoneNumber + " ---- [!]"
+    print "\033[1m\033[93m[!] ---- Fetching informations for " + PhoneNumber + " ---- [!]"
 
     if not isNumberValid(PhoneNumber):
-        print("\033[91mError: number " + number + " is not valid. Skipping.")
+        print(code_error + "Error: number " + number + " is not valid. Skipping.")
         sys.exit()
 
     #check dial code
@@ -155,7 +161,7 @@ def scanNumber(number):
 
 # Verify scanner
 if not args.scanner in scanners:
-    print("\033[91mError: scanner doesn't exists.")
+    print(code_error + "Error: scanner doesn't exists.")
     sys.exit()
 
 if args.number:
