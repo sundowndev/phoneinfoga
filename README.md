@@ -41,8 +41,6 @@ pip install -r requirements.txt
 python ./phoneinfoga.py -h
 ```
 
-Then set APIs credentials in `secrets.py`.
-
 ## Usage
 
 ```
