@@ -117,26 +117,35 @@ This tool is MIT licensed.
 
 Regular expression : `^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$`
 
+### Docs
+
+- http://whitepages.fr/phonesystem/
+- https://support.twilio.com/hc/en-us/articles/223183008-Formatting-International-Phone-Numbers
+- https://en.wikipedia.org/wiki/National_conventions_for_writing_telephone_numbers
+
+### open data
+
 - https://api.ovh.com/console/#/telephony
   - `/telephony/number/ranges`
   - `/telephony/number/detailedZones`
   - `/telephony/number/specificNumbers`
 - https://countrycode.org/
 - http://www.countryareacode.net/en/
-- http://whitepages.fr/phonesystem/
 - http://directory.didww.com/area-prefixes
-- https://support.twilio.com/hc/en-us/articles/223183008-Formatting-International-Phone-Numbers
-- https://en.wikipedia.org/wiki/National_conventions_for_writing_telephone_numbers
+- http://hs3x.com/
 
 ### Scanners
+
 - https://www.phonevalidator.com/
 - https://freecarrierlookup.com/
 - https://www.411.com/
+- https://www.washington.edu/home/peopledir/
 
 ### OSINT
+
 - https://osintframework.com/
 
-### Google hacking
+#### Google dork requests
 
 - `insubject:"+XXXXXXXXX" | insubject:"+XXXXX" | insubject:"XXXXX XXX XXX`
 - `insubject:"{number}" | intitle:"{number}"`
