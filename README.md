@@ -2,7 +2,9 @@
 
 Advanced information gathering tool & OSINT reconnaissance for phone numbers.
 
-The goal of this tool is to first identify basic informations such as country, area, carrier and line type on any international phone numbers with a very good accuracy, and then detect the VoIP provider or search for footprints on search engines to try identify the owner.
+## The project
+
+Building the most advanced tool to scan phone numbers using only free resources. The goal is to first identify basic informations such as country, area, carrier and line type on any international phone numbers with a very good accuracy, and then detect the VoIP provider or search for footprints on search engines to try identify the owner.
 
 **This tool requires python 2.x**
 
