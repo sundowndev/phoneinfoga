@@ -113,7 +113,7 @@ Here’s the same phone number in E.164 formatting: +442071838750
 
 ## License
 
-This tool is MIT licensed.
+This tool is licensed under the GNU General Public License v3.0.
 
 ## Resources
 
