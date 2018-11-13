@@ -1,13 +1,5 @@
 #!/usr/bin/env python
 
-import requests
-import sys
-import hashlib
-import json
-import argparse
-from bs4 import BeautifulSoup
-import re
-
 __version__ = '0.3-dev'
 
 print "\n \033[92m"
@@ -20,6 +12,18 @@ print "                                                      |___/       "
 print " PhoneInfoga Ver. %s                                              " % __version__
 print " Coded by Sundowndev                                              "
 print "\033[94m\n"
+
+import requests
+import sys
+import hashlib
+import json
+import argparse
+from bs4 import BeautifulSoup
+import re
+import phonenumbers
+from phonenumbers import carrier
+from phonenumbers import geocoder
+from phonenumbers import timezone
 
 parser = argparse.ArgumentParser(description=
     "Advanced information gathering tool for phone numbers (https://github.com/sundowndev/PhoneInfoga) version %s" % __version__,
@@ -60,61 +64,42 @@ code_warning = '\033[93m(!) '
 code_result = '\033[1;32m[+] '
 code_error = '\033[91m[!] '
 
-def parseInput(file):
-    print 'parse'
-
-def saveToOutput():
+def saveToOutput(output):
     print 'save'
 
-def isNumberValid(PhoneNumber):
-    if len(PhoneNumber) < 9 and len(PhoneNumber) > 13:
-        return False
-    elif not re.match("^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$", PhoneNumber):
-        return False
-    else:
-        return True
+def localScan(number):
+    print code_info + 'Running local scan...'
 
-def formatNumber(number):
     PhoneNumber = dict();
 
-    PhoneNumber['full'] = number.replace("+", "").replace("\n", "").replace(" ", "")
+    FormattedPhoneNumber = number.replace("\n", "").replace("-", "").replace(" ", "")
 
-    if re.match(r'(?:1){1}[2-9]{1}[0-9]{2}[2-9]{1}[0-9]{6}', PhoneNumber['full']):
-        countryCodeRegex = r'[0-9]{10}$'
-    elif re.match(r'(?:\+)?[0-9]{3}(?:0)?[0-9]{10}', PhoneNumber['full']):
-        countryCodeRegex = r'[0-9]{10}$'
-    elif re.match(r'(?:\+)?[0-9]{3}(?:0)?[0-9]{9}', PhoneNumber['full']):
-        countryCodeRegex = r'[0-9]{9}$'
-    elif re.match(r'(?:\+)?[0-9]{3}(?:0)?[0-9]{8}', PhoneNumber['full']):
-        countryCodeRegex = r'[0-9]{8}$'
-    elif re.match(r'(?:\+)?[0-9]{1}(?:0)?[0-9]{10}', PhoneNumber['full']):
-        countryCodeRegex = r'[0-9]{10}$'
+    try:
+        PhoneNumberObject = phonenumbers.parse(FormattedPhoneNumber, None)
+    except:
+        return False
     else:
-        print code_error + 'Unable to identify format. Ignore this scan.'
-        countryCodeRegex = r'[0-9]{9}$'
+        if not phonenumbers.is_valid_number(PhoneNumberObject):
+            return False
 
-    PhoneNumber['countryCode'] = re.sub(countryCodeRegex, '', PhoneNumber['full'])
-    PhoneNumber['number'] = PhoneNumber['full'].replace(PhoneNumber['countryCode'], '')
+        PhoneNumber['full'] = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164).replace('+', '')
+        PhoneNumber['countryCode'] = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL).split(' ')[0]
+        PhoneNumber['number'] = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164).replace(PhoneNumber['countryCode'], '')
 
-    return PhoneNumber
+        print code_result + 'Local format: (0)' + PhoneNumber['number']
+        print code_result + 'Country code: ' + PhoneNumber['countryCode']
+        print code_result + 'Location: %s' % geocoder.description_for_number(PhoneNumberObject, "en")
+        print code_result + 'Carrier:  %s' % carrier.name_for_number(PhoneNumberObject, 'en')
+        print code_result + 'Area:  %s' % geocoder.description_for_number(PhoneNumberObject, 'en')
+        #print '\033[1;32m[+] Timezone:  %s, %s' % (timezone.time_zones_for_number(PhoneNumberObject)[0],timezone.time_zones_for_number(PhoneNumberObject)[1])
+        #print code_info + 'This is most likely a landline, or a fixed VoIP.'
 
-def searchCountryCode(countryCode, number):
-    print code_info + 'Searching for country in format...'
+        if phonenumbers.is_possible_number(PhoneNumberObject):
+            print code_info + 'The number is valid and possible.'
+        else:
+            print code_warning + 'The number is valid but might not be possible.'
 
-    with open('./data/country_codes.json') as CountryCodesFile:
-        country_codes = json.load(CountryCodesFile)
-        for country in country_codes:
-            if country['dial_code'] == '+' + countryCode:
-                print code_result + 'Local format: (0)' + number
-                print code_result + 'Country code: +' + countryCode
-                print code_result + 'Country found: %s (%s)' % (country['name'],country['code'])
-
-    #check for area code
-    #print code_result + 'Areas found (approximate) : Bordeaux, Limoges'
-
-    #check for carrier
-    #print '\033[1;32m[+] Carrier found:  France Sfr Mobile'
-    #print code_info + 'This is most likely a landline, or a fixed VoIP.'
+        return PhoneNumber
 
 def numverifyScan(PhoneNumber):
     if not args.scanner == 'numverify' and not args.scanner == 'all':
@@ -244,31 +229,25 @@ def freecarrierlookupScan(countryCode, number):
     print code_result + 'MMS Gateway Address: '
 
 def scanNumber(number):
-    PhoneNumber = formatNumber(number)
+    print "\033[1m\033[93m[!] ---- Fetching informations for %s ---- [!]" % number
 
-    print "\033[1m\033[93m[!] ---- Fetching informations for (+)" + PhoneNumber['full'] + " ---- [!]"
+    print code_info + 'Parsing informations...'
 
-    print code_info + 'Parsing informations from format...'
+    PhoneNumber = localScan(number)
 
-    if not isNumberValid(PhoneNumber['full']):
+    if not PhoneNumber:
         print(code_error + "Error: number " + number + " is not valid. Skipping.")
         sys.exit()
 
-    # Check dial code
-    searchCountryCode(PhoneNumber['countryCode'], PhoneNumber['number'])
-
-    #check area code by country
-    #if found in area codes -> landline
-
     numverifyScan(PhoneNumber['full'])
-    ovhScan('fr', PhoneNumber['full'])
-    freecarrierlookupScan(PhoneNumber['countryCode'], PhoneNumber['number'])
+    ovhScan('fr', PhoneNumber['full']) # TODO: replace 1st parameter to be dynamic
+    #freecarrierlookupScan(PhoneNumber['countryCode'], PhoneNumber['number'])
     #whosenumberScan(PhoneNumber['countryCode'], PhoneNumber['number'])
     #repScan(PhoneNumber['countryCode'], PhoneNumber['number'])
 
     print '\n'
 
-# Verify scanner
+# Verify scanner option
 if not args.scanner in scanners:
     print(code_error + "Error: scanner doesn't exists.")
     sys.exit()
