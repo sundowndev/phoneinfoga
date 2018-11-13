@@ -1,6 +1,5 @@
 requests
-sys
-hashlib
-json
-argparse
-re
+ovh
+bs4
+html5lib
+phonenumbers
