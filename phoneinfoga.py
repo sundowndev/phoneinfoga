@@ -81,38 +81,33 @@ def formatNumber(number):
 
     if re.match(r'(?:1){1}[2-9]{1}[0-9]{2}[2-9]{1}[0-9]{6}', PhoneNumber['full']):
         countryCodeRegex = r'[0-9]{10}$'
-    elif len(PhoneNumber['full']) == 13:
-        countryCodeRegex = r'[0-9]{11}$'
-    elif len(PhoneNumber['full']) == 12:
+    elif re.match(r'(?:\+)?[0-9]{3}(?:0)?[0-9]{10}', PhoneNumber['full']):
         countryCodeRegex = r'[0-9]{10}$'
-    elif len(PhoneNumber['full']) == 11:
+    elif re.match(r'(?:\+)?[0-9]{3}(?:0)?[0-9]{9}', PhoneNumber['full']):
         countryCodeRegex = r'[0-9]{9}$'
-    elif len(PhoneNumber['full']) == 10:
+    elif re.match(r'(?:\+)?[0-9]{3}(?:0)?[0-9]{8}', PhoneNumber['full']):
         countryCodeRegex = r'[0-9]{8}$'
+    elif re.match(r'(?:\+)?[0-9]{1}(?:0)?[0-9]{10}', PhoneNumber['full']):
+        countryCodeRegex = r'[0-9]{10}$'
     else:
-        countryCodeRegex = r'[0-9]{7}$'
+        print code_error + 'Unable to identify format. Ignore this scan.'
+        countryCodeRegex = r'[0-9]{9}$'
 
     PhoneNumber['countryCode'] = re.sub(countryCodeRegex, '', PhoneNumber['full'])
     PhoneNumber['number'] = PhoneNumber['full'].replace(PhoneNumber['countryCode'], '')
 
     return PhoneNumber
 
-def searchCountryCode(countryCode):
+def searchCountryCode(countryCode, number):
     print code_info + 'Searching for country in format...'
 
     with open('./data/country_codes.json') as CountryCodesFile:
         country_codes = json.load(CountryCodesFile)
         for country in country_codes:
             if country['dial_code'] == '+' + countryCode:
+                print code_result + 'Local format: (0)' + number
                 print code_result + 'Country code: +' + countryCode
                 print code_result + 'Country found: %s (%s)' % (country['name'],country['code'])
-                with open('./data/area_codes.json') as AreaCodesFile:
-                    area_codes = json.load(AreaCodesFile)
-                    for area_country in area_codes:
-                        if area_country['CountryCode'] == country['code']:
-                            for area in area_country['AreaCodes']:
-                                if area == "10":
-                                    print 'y'
 
     #check for area code
     #print code_result + 'Areas found (approximate) : Bordeaux, Limoges'
@@ -251,18 +246,16 @@ def freecarrierlookupScan(countryCode, number):
 def scanNumber(number):
     PhoneNumber = formatNumber(number)
 
-    print "\033[1m\033[93m[!] ---- Fetching informations for (0)" + PhoneNumber['number'] + " ---- [!]"
+    print "\033[1m\033[93m[!] ---- Fetching informations for (+)" + PhoneNumber['full'] + " ---- [!]"
 
     print code_info + 'Parsing informations from format...'
-
-    print code_result + 'Local format: (0)' + PhoneNumber['number']
 
     if not isNumberValid(PhoneNumber['full']):
         print(code_error + "Error: number " + number + " is not valid. Skipping.")
         sys.exit()
 
     # Check dial code
-    searchCountryCode(PhoneNumber['countryCode'])
+    searchCountryCode(PhoneNumber['countryCode'], PhoneNumber['number'])
 
     #check area code by country
     #if found in area codes -> landline
