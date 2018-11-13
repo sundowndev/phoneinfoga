@@ -1,6 +1,10 @@
 # PhoneInfoga
 
-Advanced information gathering tool & OSINT reconnaissance for phone numbers.
+Advanced information gathering & OSINT reconnaissance tool for phone numbers. Designed for Social Engineering and red teaming.
+
+### Hello, friend. Next time cover your tracks.
+
+<img src="https://images.complex.com/complex/images/c_limit,w_680/f_auto,fl_lossy,pg_1,q_auto/robotophone_egpp8m/mr-robot-elliot-on-phone" width="350" />
 
 ## The project
 
