@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-__version__ = '0.3-dev'
+__version__ = '0.4-dev'
 
 print "\n \033[92m"
 print "    ___ _                       _____        __                   "
@@ -57,7 +57,7 @@ if args.update:
     print 'update'
     sys.exit()
 
-scanners = ['any', 'all', 'numverify', 'ovh', 'whosenumber', 'freecarrier', '411']
+scanners = ['any', 'all', 'numverify', 'ovh', 'voiplist']
 
 code_info = '\033[97m[*] '
 code_warning = '\033[93m(!) '
@@ -67,12 +67,15 @@ code_error = '\033[91m[!] '
 def saveToOutput(output):
     print 'save'
 
+def formatNumber(number):
+    return re.sub("(?:\+)?(?:[^[0-9]*)", "", number)
+
 def localScan(number):
     print code_info + 'Running local scan...'
 
     PhoneNumber = dict();
 
-    FormattedPhoneNumber = number.replace("\n", "").replace("-", "").replace(" ", "")
+    FormattedPhoneNumber = "+" + formatNumber(number)
 
     try:
         PhoneNumberObject = phonenumbers.parse(FormattedPhoneNumber, None)
@@ -92,7 +95,6 @@ def localScan(number):
         print code_result + 'Carrier:  %s' % carrier.name_for_number(PhoneNumberObject, 'en')
         print code_result + 'Area:  %s' % geocoder.description_for_number(PhoneNumberObject, 'en')
         #print '\033[1;32m[+] Timezone:  %s, %s' % (timezone.time_zones_for_number(PhoneNumberObject)[0],timezone.time_zones_for_number(PhoneNumberObject)[1])
-        #print code_info + 'This is most likely a landline, or a fixed VoIP.'
 
         if phonenumbers.is_possible_number(PhoneNumberObject):
             print code_info + 'The number is valid and possible.'
@@ -154,6 +156,9 @@ def numverifyScan(PhoneNumber):
     print(code_result + "Carrier: %s") % data["carrier"]
     print(code_result + "Line type: %s") % data["line_type"]
 
+    if data["line_type"] == 'landline':
+        print(code_warning + "This is most likely a landline, or a fixed VoIP.")
+
 def ovhScan(country, number):
     if not args.scanner == 'ovh' and not args.scanner == 'all':
         return -1
@@ -185,53 +190,20 @@ def repScan(countryCode, number):
     print code_info + 'Running 411.com scan...'
     print 'https://www.411.com/phone/%s-%s' % (countryCode,number)
 
-def freecarrierlookupScan(countryCode, number):
-    if not args.scanner == 'freecarrier' and not args.scanner == 'all':
-        return -1
+def voiplistScan(number):
+    print code_info + 'Running VoIP list scan...'
+    # voip search
 
-    print code_info + 'Running freecarrierlookup.com scan...'
+def osintScan(countryCode, number):
+    print code_info + 'Running OSINT scan...'
+    # OSINT recon
 
-    payload = "phonenum=%s&cc=%s" % (number,countryCode)
-    headers = {
-        'host': "freecarrierlookup.com",
-        'connection': "keep-alive",
-        'content-length': "48",
-        'accept': "application/json, text/javascript, */*; q=0.01",
-        'origin': "https://freecarrierlookup.com",
-        'x-requested-with': "XMLHttpRequest",
-        'user-agent': "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36",
-        'content-type': "application/x-www-form-urlencoded",
-        'referer': "https://freecarrierlookup.com/",
-        'accept-encoding': "gzip, deflate, br",
-        'accept-language': "en-US,en;q=0.9,fr;q=0.8,la;q=0.7,es;q=0.6,zh-CN;q=0.5,zh;q=0.4",
-        'cookie': "PHPSESSID=cdifm9u3ch2mqscdnj2pjqjfuq",
-        'cache-control': "no-cache",
-        'postman-token': "c81a7bb0-f338-c2e5-5f32-e1b94726cce5"
-    }
-
-    response = requests.request("POST", "https://freecarrierlookup.com/getcarrier.php", data=payload, headers=headers)
-
-    print response.content
-
-    data = json.loads(response.content)
-
-    if not data["status"] == "success":
-        print code_error + '0 result found.'
-        return -1
-
-    soup = BeautifulSoup(response.content, "html5lib")
-    tags = soup.find_all("p")
-
-    print code_result + 'Phone Number: ' + tags[0].string.replace('<\/p>\\n        <\/div>\\n', '')
-    print code_result + 'Carrier: ' + tags[1].string.replace('<\/p>\\n        <\/div>\\n', '')
-    print code_result + 'Is Wireless:'
-    print code_result + 'SMS Gateway Address: '
-    print code_result + 'MMS Gateway Address: '
+    # social profiles
+    # websites
+    # emails
 
 def scanNumber(number):
     print "\033[1m\033[93m[!] ---- Fetching informations for %s ---- [!]" % number
-
-    print code_info + 'Parsing informations...'
 
     PhoneNumber = localScan(number)
 
@@ -241,9 +213,10 @@ def scanNumber(number):
 
     numverifyScan(PhoneNumber['full'])
     ovhScan('fr', PhoneNumber['full']) # TODO: replace 1st parameter to be dynamic
-    #freecarrierlookupScan(PhoneNumber['countryCode'], PhoneNumber['number'])
     #whosenumberScan(PhoneNumber['countryCode'], PhoneNumber['number'])
     #repScan(PhoneNumber['countryCode'], PhoneNumber['number'])
+    voiplistScan(PhoneNumber['full'])
+    osintScan(PhoneNumber['countryCode'], PhoneNumber['full'])
 
     print '\n'
 
