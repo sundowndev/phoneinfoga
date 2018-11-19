@@ -3,3 +3,4 @@ ovh
 bs4
 html5lib
 phonenumbers
+google
