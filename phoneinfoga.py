@@ -1,29 +1,23 @@
 #!/usr/bin/env python
 
-__version__ = '0.4-dev'
+__version__ = '0.6-dev'
+
+def banner():
+    print "    ___ _                       _____        __                   "
+    print "   / _ \ |__   ___  _ __   ___  \_   \_ __  / _| ___   __ _  __ _ "
+    print "  / /_)/ '_ \ / _ \| '_ \ / _ \  / /\/ '_ \| |_ / _ \ / _` |/ _` |"
+    print " / ___/| | | | (_) | | | |  __/\/ /_ | | | |  _| (_) | (_| | (_| |"
+    print " \/    |_| |_|\___/|_| |_|\___\____/ |_| |_|_|  \___/ \__, |\__,_|"
+    print "                                                      |___/       "
+    print " PhoneInfoga Ver. %s                                              " % __version__
+    print " Coded by Sundowndev                                              "
 
 print "\n \033[92m"
-print "    ___ _                       _____        __                   "
-print "   / _ \ |__   ___  _ __   ___  \_   \_ __  / _| ___   __ _  __ _ "
-print "  / /_)/ '_ \ / _ \| '_ \ / _ \  / /\/ '_ \| |_ / _ \ / _` |/ _` |"
-print " / ___/| | | | (_) | | | |  __/\/ /_ | | | |  _| (_) | (_| | (_| |"
-print " \/    |_| |_|\___/|_| |_|\___\____/ |_| |_|_|  \___/ \__, |\__,_|"
-print "                                                      |___/       "
-print " PhoneInfoga Ver. %s                                              " % __version__
-print " Coded by Sundowndev                                              "
+banner()
 print "\033[94m\n"
 
-import requests
 import sys
-import hashlib
-import json
 import argparse
-from bs4 import BeautifulSoup
-import re
-import phonenumbers
-from phonenumbers import carrier
-from phonenumbers import geocoder
-from phonenumbers import timezone
 
 parser = argparse.ArgumentParser(description=
     "Advanced information gathering tool for phone numbers (https://github.com/sundowndev/PhoneInfoga) version %s" % __version__,
@@ -32,10 +26,10 @@ parser = argparse.ArgumentParser(description=
 parser.add_argument('-n', '--number', metavar='number', type=str,
                     help='The phone number to scan (E164 or international format)')
 
-parser.add_argument('-i', '--input', metavar="input_file", type=file,
+parser.add_argument('-i', '--input', metavar="input_file", type=argparse.FileType('r'),
                     help='Phone number list to scan (one per line)')
 
-parser.add_argument('-o', '--output', metavar="output_file", type=file,
+parser.add_argument('-o', '--output', metavar="output_file", type=argparse.FileType('w'),
                     help='Output to save scan results')
 
 parser.add_argument('-s', '--scanner', metavar="scanner", default="all", type=str,
@@ -52,20 +46,23 @@ args = parser.parse_args()
 # If any param is passed, execute help command
 if not len(sys.argv) > 1:
     parser.print_help()
+    sys.exit();
 
 if args.update:
     print 'update'
     sys.exit()
 
-scanners = ['any', 'all', 'numverify', 'ovh', 'voiplist']
+import requests
+import hashlib
+import json
+from bs4 import BeautifulSoup
+import re
+import phonenumbers
+from phonenumbers import carrier
+from phonenumbers import geocoder
+from phonenumbers import timezone
 
-code_info = '\033[97m[*] '
-code_warning = '\033[93m(!) '
-code_result = '\033[1;32m[+] '
-code_error = '\033[91m[!] '
-
-def saveToOutput(output):
-    print 'save'
+scanners = ['any', 'all', 'numverify', 'ovh']
 
 def formatNumber(number):
     return re.sub("(?:\+)?(?:[^[0-9]*)", "", number)
@@ -157,15 +154,19 @@ def numverifyScan(PhoneNumber):
     print(code_result + "Line type: %s") % data["line_type"]
 
     if data["line_type"] == 'landline':
-        print(code_warning + "This is most likely a landline, or a fixed VoIP.")
+        print(code_warning + "This is most likely a land line, or a fixed VoIP.")
+    elif data["line_type"] == 'mobile':
+        print(code_warning + "This is most likely a mobile, or a VoIP.")
 
-def ovhScan(country, number):
+def ovhScan(countryCode, number):
     if not args.scanner == 'ovh' and not args.scanner == 'all':
         return -1
 
     print code_info + 'Running OVH scan...'
 
-    querystring = {"country":country}
+    #cc
+
+    querystring = {"country":"fr"}
 
     headers = {
         'accept': "application/json",
@@ -176,46 +177,63 @@ def ovhScan(country, number):
 
     data = json.loads(response.content)
 
-def whosenumberScan(countryCode, number):
-    if not args.scanner == 'whosenumber' and not args.scanner == 'all':
-        return -1
+    if isinstance(data, list):
+        askedNumber = "0" + number.replace(number[-4:], 'xxxx')
 
-    print code_info + 'Running Whosenumber scan...'
-    print 'https://whosenumber.info/' + countryCode + number
-
-def repScan(countryCode, number):
-    if not args.scanner == '411' and not args.scanner == 'all':
-        return -1
-
-    print code_info + 'Running 411.com scan...'
-    print 'https://www.411.com/phone/%s-%s' % (countryCode,number)
-
-def voiplistScan(number):
-    print code_info + 'Running VoIP list scan...'
-    # voip search
+        for voip_number in data:
+            if voip_number['number'] == askedNumber:
+                print(code_info + "1 result found in OVH database")
+                print(code_result + "Number range: " + voip_number['number'])
+                print(code_result + "City: " + voip_number['city'])
+                print(code_result + "Zip code: " + voip_number['zipCode'] if voip_number['zipCode'] is not None else '')
 
 def osintScan(countryCode, number):
-    print code_info + 'Running OSINT scan...'
+    if not args.osint:
+        return -1
+
+    import urllib
+    from googlesearch import search
+
+    print code_info + 'Running OSINT reconnaissance...'
     # OSINT recon
 
-    # social profiles
+    # social profiles: facebook, twitter, linkedin, instagram
     # websites
     # emails
 
+    #social
+    #rep
+    #whitepages
+    #voip providers
+
+    print(code_info + "Searching for owner on 411.com...")
+    #https://www.411.com/phone/33-6-79-36-82-33
+
+    print(code_info + "Searching for reputation page on whosenumber.info...")
+    for result in search('site:whosenumber.info intext:"%s" intitle:"who called"' % number, stop=20):
+        if result:
+            print(code_result + "Found 1 result on whosenumber.info.")
+            print(code_info + "This usually means you are not the first to search about this number. Check the URL for eventual comments.")
+            print(code_result + "URL: " + result)
+
+    print(code_info + "Searching for results on hs3x.com...")
+    for result in search('site:"hs3x.com" intext:"+%s"' % number, stop=20):
+        if result:
+            print(code_result + "Found 1 result on hs3x.com.")
+            print(code_info + "This number seems to be a VoIP number from hs3x.")
+            print(code_result + "URL: " + result)
+
 def scanNumber(number):
-    print "\033[1m\033[93m[!] ---- Fetching informations for %s ---- [!]" % number
+    print code_title + "[!] ---- Fetching informations for %s ---- [!]" % formatNumber(number)
 
     PhoneNumber = localScan(number)
 
     if not PhoneNumber:
-        print(code_error + "Error: number " + number + " is not valid. Skipping.")
+        print(code_error + "Error: number " + formatNumber(number) + " is not valid. Skipping.")
         sys.exit()
 
     numverifyScan(PhoneNumber['full'])
-    ovhScan('fr', PhoneNumber['full']) # TODO: replace 1st parameter to be dynamic
-    #whosenumberScan(PhoneNumber['countryCode'], PhoneNumber['number'])
-    #repScan(PhoneNumber['countryCode'], PhoneNumber['number'])
-    voiplistScan(PhoneNumber['full'])
+    ovhScan(PhoneNumber['countryCode'], PhoneNumber['number']) # TODO: replace 1st parameter to be dynamic
     osintScan(PhoneNumber['countryCode'], PhoneNumber['full'])
 
     print '\n'
@@ -225,6 +243,21 @@ if not args.scanner in scanners:
     print(code_error + "Error: scanner doesn't exists.")
     sys.exit()
 
+if args.output:
+    code_info = '[*] '
+    code_warning = '(!) '
+    code_result = '[+] '
+    code_error = '[!] '
+    code_title = ''
+
+    sys.stdout = args.output
+else:
+    code_info = '\033[97m[*] '
+    code_warning = '\033[93m(!) '
+    code_result = '\033[1;32m[+] '
+    code_error = '\033[91m[!] '
+    code_title = '\033[1m\033[93m'
+
 if args.number:
     scanNumber(args.number)
 elif args.input:
@@ -232,6 +265,4 @@ elif args.input:
         scanNumber(line)
 
 if args.output:
-    args.output.write("Hello World")
-
     args.output.close()
