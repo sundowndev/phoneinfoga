@@ -86,12 +86,13 @@ def localScan(number):
         PhoneNumber['countryCode'] = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL).split(' ')[0]
         PhoneNumber['number'] = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164).replace(PhoneNumber['countryCode'], '')
 
-        print code_result + 'Local format: (0)' + PhoneNumber['number']
-        print code_result + 'Country code: ' + PhoneNumber['countryCode']
+        print code_result + 'Local format: (0)%s' % PhoneNumber['number']
+        print code_result + 'Country code: %s' % PhoneNumber['countryCode']
         print code_result + 'Location: %s' % geocoder.description_for_number(PhoneNumberObject, "en")
-        print code_result + 'Carrier:  %s' % carrier.name_for_number(PhoneNumberObject, 'en')
-        print code_result + 'Area:  %s' % geocoder.description_for_number(PhoneNumberObject, 'en')
-        #print '\033[1;32m[+] Timezone:  %s, %s' % (timezone.time_zones_for_number(PhoneNumberObject)[0],timezone.time_zones_for_number(PhoneNumberObject)[1])
+        print code_result + 'Carrier: %s' % carrier.name_for_number(PhoneNumberObject, 'en')
+        print code_result + 'Area: %s' % geocoder.description_for_number(PhoneNumberObject, 'en')
+        for timezoneResult in timezone.time_zones_for_number(PhoneNumberObject):
+            print code_result + 'Timezone: %s' % (timezoneResult)
 
         if phonenumbers.is_possible_number(PhoneNumberObject):
             print code_info + 'The number is valid and possible.'
@@ -137,7 +138,7 @@ def numverifyScan(PhoneNumber):
 
     if response.content == "Unauthorized" or response.status_code != 200:
         print(code_error + "An error occured while calling the API (bad request or wrong api key).")
-        sys.exit()
+        return -1
 
     data = json.loads(response.content)
 
@@ -154,9 +155,9 @@ def numverifyScan(PhoneNumber):
     print(code_result + "Line type: %s") % data["line_type"]
 
     if data["line_type"] == 'landline':
-        print(code_warning + "This is most likely a land line, or a fixed VoIP.")
+        print(code_warning + "This is most likely a land line, but it can still be a fixed VoIP.")
     elif data["line_type"] == 'mobile':
-        print(code_warning + "This is most likely a mobile, or a VoIP.")
+        print(code_warning + "This is most likely a mobile, but it can still be a VoIP.")
 
 def ovhScan(countryCode, number):
     if not args.scanner == 'ovh' and not args.scanner == 'all':
@@ -191,7 +192,6 @@ def osintScan(countryCode, number):
     if not args.osint:
         return -1
 
-    import urllib
     from googlesearch import search
 
     print code_info + 'Running OSINT reconnaissance...'
@@ -201,23 +201,21 @@ def osintScan(countryCode, number):
     # websites
     # emails
 
-    #social
-    #rep
-    #whitepages
-    #voip providers
-
+    # Whitepages
     print(code_info + "Searching for owner on 411.com...")
     #https://www.411.com/phone/33-6-79-36-82-33
 
+    # Reputation
     print(code_info + "Searching for reputation page on whosenumber.info...")
-    for result in search('site:whosenumber.info intext:"%s" intitle:"who called"' % number, stop=20):
+    for result in search('site:whosenumber.info intext:"%s" intitle:"who called"' % number, stop=1):
         if result:
             print(code_result + "Found 1 result on whosenumber.info.")
             print(code_info + "This usually means you are not the first to search about this number. Check the URL for eventual comments.")
             print(code_result + "URL: " + result)
 
+    # VoIP providers
     print(code_info + "Searching for results on hs3x.com...")
-    for result in search('site:"hs3x.com" intext:"+%s"' % number, stop=20):
+    for result in search('site:"hs3x.com" intext:"+%s"' % number, stop=1):
         if result:
             print(code_result + "Found 1 result on hs3x.com.")
             print(code_info + "This number seems to be a VoIP number from hs3x.")
