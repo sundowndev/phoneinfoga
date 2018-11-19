@@ -157,3 +157,5 @@ Regular expression : `^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$`
 - `insubject:"+XXXXXXXXX" | insubject:"+XXXXX" | insubject:"XXXXX XXX XXX`
 - `insubject:"{number}" | intitle:"{number}"`
 - `intext:"{number}" ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv | ext:txt | ext:html`
+- voip provider check: `site:"hs3x.com" intext:"+61437954897"`
+- scam number check:`site:signal-arnaques.com intext:"0682649478" intitle:" | Phone Fraud"`
