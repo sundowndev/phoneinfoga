@@ -1,7 +1,8 @@
 # Todo list
 
-- Input feature
-- Output feature
-- OVH scanner
+- Input feature: Done
+- Output feature: Done
+- OVH scanner: Done
 - Update feature
-- Offline scan
+- Offline scan: Done
+- OSINT recon
