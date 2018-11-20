@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-__version__ = '0.6-dev'
+__version__ = '0.8-dev'
 
 def banner():
     print "    ___ _                       _____        __                   "
@@ -11,10 +11,11 @@ def banner():
     print "                                                      |___/       "
     print " PhoneInfoga Ver. %s                                              " % __version__
     print " Coded by Sundowndev                                              "
+    print "\n"
 
 print "\n \033[92m"
 banner()
-print "\033[94m\n"
+print "\033[94m"
 
 import sys
 import argparse
@@ -52,15 +53,22 @@ if args.update:
     print 'update'
     sys.exit()
 
-import requests
+import time
 import hashlib
 import json
-from bs4 import BeautifulSoup
 import re
-import phonenumbers
-from phonenumbers import carrier
-from phonenumbers import geocoder
-from phonenumbers import timezone
+
+try:
+    import requests
+    from bs4 import BeautifulSoup
+    import html5lib
+    import phonenumbers
+    from phonenumbers import carrier
+    from phonenumbers import geocoder
+    from phonenumbers import timezone
+    from googlesearch import search
+except:
+    print code_error + 'Missing requirements. Try running pip install -r requirements.txt'
 
 scanners = ['any', 'all', 'numverify', 'ovh']
 
@@ -83,10 +91,13 @@ def localScan(number):
             return False
 
         PhoneNumber['full'] = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164).replace('+', '')
+        PhoneNumber['country'] = 'FR'
         PhoneNumber['countryCode'] = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL).split(' ')[0]
         PhoneNumber['number'] = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164).replace(PhoneNumber['countryCode'], '')
+        PhoneNumber['international'] = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL)
 
-        print code_result + 'Local format: (0)%s' % PhoneNumber['number']
+        print code_result + 'International format: %s' % PhoneNumber['international']
+        print code_result + 'Local format: 0%s' % PhoneNumber['number']
         print code_result + 'Country code: %s' % PhoneNumber['countryCode']
         print code_result + 'Location: %s' % geocoder.description_for_number(PhoneNumberObject, "en")
         print code_result + 'Carrier: %s' % carrier.name_for_number(PhoneNumberObject, 'en')
@@ -159,15 +170,13 @@ def numverifyScan(PhoneNumber):
     elif data["line_type"] == 'mobile':
         print(code_warning + "This is most likely a mobile, but it can still be a VoIP.")
 
-def ovhScan(countryCode, number):
+def ovhScan(country, number):
     if not args.scanner == 'ovh' and not args.scanner == 'all':
         return -1
 
     print code_info + 'Running OVH scan...'
 
-    #cc
-
-    querystring = {"country":"fr"}
+    querystring = { "country": country.lower() }
 
     headers = {
         'accept': "application/json",
@@ -187,39 +196,119 @@ def ovhScan(countryCode, number):
                 print(code_result + "Number range: " + voip_number['number'])
                 print(code_result + "City: " + voip_number['city'])
                 print(code_result + "Zip code: " + voip_number['zipCode'] if voip_number['zipCode'] is not None else '')
+                askForExit()
 
-def osintScan(countryCode, number):
+def osintScan(countryCode, number, internationalNumber):
     if not args.osint:
         return -1
 
-    from googlesearch import search
 
-    print code_info + 'Running OSINT reconnaissance...'
-    # OSINT recon
-
-    # social profiles: facebook, twitter, linkedin, instagram
-    # websites
-    # emails
+    print code_info + 'Running OSINT footprint reconnaissance...'
 
     # Whitepages
-    print(code_info + "Searching for owner on 411.com...")
-    #https://www.411.com/phone/33-6-79-36-82-33
+    print(code_info + "Generating scan URL on 411.com...")
+    print code_result + "Scan URL: https://www.411.com/phone/%s" % internationalNumber.replace('+', '').replace(' ', '-')
 
-    # Reputation
-    print(code_info + "Searching for reputation page on whosenumber.info...")
-    for result in search('site:whosenumber.info intext:"%s" intitle:"who called"' % number, stop=1):
-        if result:
-            print(code_result + "Found 1 result on whosenumber.info.")
-            print(code_info + "This usually means you are not the first to search about this number. Check the URL for eventual comments.")
-            print(code_result + "URL: " + result)
+    try:
+        # Social profiles: facebook, twitter, linkedin, instagram
+        print(code_info + "Searching for footprints on facebook.com... (limit=5)")
+        for result in search('site:facebook.com intext:"%s" | "%s"' % (number,number), stop=5):
+            if result:
+                print(code_result + "Result found: " + result)
 
-    # VoIP providers
-    print(code_info + "Searching for results on hs3x.com...")
-    for result in search('site:"hs3x.com" intext:"+%s"' % number, stop=1):
-        if result:
-            print(code_result + "Found 1 result on hs3x.com.")
-            print(code_info + "This number seems to be a VoIP number from hs3x.")
-            print(code_result + "URL: " + result)
+        print(code_info + "Searching for footprints on twitter.com... (limit=5)")
+        for result in search('site:twitter.com intext:"%s" | "%s"' % (number,number), stop=5):
+            if result:
+                print(code_result + "Result found: " + result)
+
+        print(code_info + "Searching for footprints on linkedin.com... (limit=5)")
+        for result in search('site:linkedin.com intext:"%s" | "%s"' % (number,number), stop=5):
+            if result:
+                print(code_result + "Result found: " + result)
+
+        print(code_info + "Searching for footprints on instagram.com... (limit=5)")
+        for result in search('site:instagram.com intext:"%s" | "%s"' % (number,number), stop=5):
+            if result:
+                print(code_result + "Result found: " + result)
+
+        print code_warning + "Waiting 10 sec before sending new requests to avoid being blacklisted..."
+        time.sleep(10)
+
+        # Websites
+        #
+
+        # Documents
+        print(code_info + "Searching for documents... (limit=5)")
+        for result in search('intext:"%s" | intext:"%s" ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv | ext:txt | ext:html' % (number,number), stop=5):
+            if result:
+                print(code_result + "Result found: " + result)
+
+        print code_warning + "Waiting 10 sec before sending new requests to avoid being blacklisted..."
+        time.sleep(10)
+
+        print(code_info + "Searching for documents on washington.edu... (limit=5)")
+        UWReq = search('site:washington.edu intext:"%s" | "%s"' % (number,number), stop=5)
+        if len(list(UWReq)) > 0:
+            print code_info + 'Found %s results' % len(list(UWReq))
+        for result in UWReq:
+            if result:
+                print(code_result + "Result found: " + result)
+
+        # Reputation
+        print(code_info + "Searching for reputation report on whosenumber.info... (limit=1)")
+        for result in search('site:whosenumber.info intext:"%s" intitle:"who called"' % number, stop=1):
+            if result:
+                print(code_result + "Found 1 result on whosenumber.info.")
+                print(code_info + "This usually mean you are not the first to search about this number. Check the URL for eventual comments.")
+                print(code_result + "URL: " + result)
+
+        print(code_info + "Searching for Phone Fraud footprints... (limit=5)")
+        for result in search('intitle:"Phone Fraud" intext:"%s" | "%s"' % (number,number), stop=5):
+            if result:
+                print(code_result + "Result found: " + result)
+                print(code_info + "This usually mean you are not the first to search about this number. Check the URL for eventual comments.")
+
+        # Temporary number providers
+        print(code_info + "Searching for results on hs3x.com... (limit=1)")
+        for result in search('site:"hs3x.com" intext:"+%s"' % number, stop=1):
+            if result:
+                print(code_result + "Found a temporary number provider: hs3x.com")
+                print(code_result + "URL: " + result)
+                askForExit()
+
+        print(code_info + "Searching for results on receive-sms-now.com... (limit=1)")
+        for result in search('site:"receive-sms-now.com" intext:"+%s"' % number, stop=1):
+            if result:
+                print(code_result + "Found a temporary number provider: receive-sms-now.com")
+                print(code_result + "URL: " + result)
+                askForExit()
+
+        print(code_info + "Searching for results on receive-sms-online.com... (limit=1)")
+        for result in search('site:"receive-sms-online.com" intext:"+%s"' % number, stop=1):
+            if result:
+                print(code_result + "Found a temporary number provider: receive-sms-online.com")
+                print(code_result + "URL: " + result)
+                askForExit()
+    except:
+        print code_error + 'Impossible to fetch Google search API. This usually mean you\'re temporary blacklisted.'
+
+    print(code_info + "Searching for phone number on tempophone.com...")
+    response = requests.request("GET", "https://tempophone.com/api/v1/phones")
+    data = json.loads(response.content)
+    for voip_number in data['objects']:
+        if voip_number['phone'] == formatNumber(number):
+            print(code_result + "Found a temporary number provider: tempophone.com")
+            askForExit()
+
+def askForExit():
+    if not args.output:
+        user_input = raw_input(code_info + "Continue scanning ? (Y/n): ")
+
+        if user_input.lower() == 'n':
+            print code_info + "Good bye!"
+            sys.exit()
+        else:
+            return -1
 
 def scanNumber(number):
     print code_title + "[!] ---- Fetching informations for %s ---- [!]" % formatNumber(number)
@@ -231,8 +320,8 @@ def scanNumber(number):
         sys.exit()
 
     numverifyScan(PhoneNumber['full'])
-    ovhScan(PhoneNumber['countryCode'], PhoneNumber['number']) # TODO: replace 1st parameter to be dynamic
-    osintScan(PhoneNumber['countryCode'], PhoneNumber['full'])
+    ovhScan(PhoneNumber['country'], PhoneNumber['number'])
+    osintScan(PhoneNumber['countryCode'], PhoneNumber['full'], PhoneNumber['international'])
 
     print '\n'
 
@@ -249,6 +338,7 @@ if args.output:
     code_title = ''
 
     sys.stdout = args.output
+    banner()
 else:
     code_info = '\033[97m[*] '
     code_warning = '\033[93m(!) '
