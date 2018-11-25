@@ -15,7 +15,6 @@ def banner():
 
 print "\n \033[92m"
 banner()
-print "\033[94m"
 
 import sys
 import argparse
@@ -53,12 +52,11 @@ if args.update:
     print 'update'
     sys.exit()
 
-import time
-import hashlib
-import json
-import re
-
 try:
+    import time
+    import hashlib
+    import json
+    import re
     import requests
     from bs4 import BeautifulSoup
     import html5lib
@@ -67,8 +65,12 @@ try:
     from phonenumbers import geocoder
     from phonenumbers import timezone
     from googlesearch import search
+except KeyboardInterrupt:
+    print '\033[91m[!] Exiting.'
+    sys.exit()
 except:
-    print code_error + 'Missing requirements. Try running pip install -r requirements.txt'
+    print '\033[91m[!] Missing requirements. Try running pip install -r requirements.txt'
+    sys.exit()
 
 scanners = ['any', 'all', 'numverify', 'ovh']
 
@@ -95,7 +97,7 @@ def localScan(number):
 
         countryRequest = json.loads(requests.request('GET', 'https://restcountries.eu/rest/v2/callingcode/%s' % PhoneNumber['countryCode'].replace('+', '')).content)
         PhoneNumber['country'] = countryRequest[0]['alpha2Code']
-        
+
         PhoneNumber['number'] = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164).replace(PhoneNumber['countryCode'], '')
         PhoneNumber['international'] = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL)
 
@@ -205,7 +207,6 @@ def osintScan(countryCode, number, internationalNumber):
     if not args.osint:
         return -1
 
-
     print code_info + 'Running OSINT footprint reconnaissance...'
 
     # Whitepages
@@ -305,9 +306,9 @@ def osintScan(countryCode, number, internationalNumber):
 
 def askForExit():
     if not args.output:
-        user_input = raw_input(code_info + "Continue scanning ? (Y/n): ")
+        user_input = raw_input(code_info + "Continue scanning ? (Y/n) ")
 
-        if user_input.lower() == 'n':
+        if user_input.lower() == 'n' or user_input.lower() == 'no':
             print code_info + "Good bye!"
             sys.exit()
         else:
@@ -328,32 +329,36 @@ def scanNumber(number):
 
     print '\n'
 
-# Verify scanner option
-if not args.scanner in scanners:
-    print(code_error + "Error: scanner doesn't exists.")
+try:
+    if args.output:
+        code_info = '[*] '
+        code_warning = '(!) '
+        code_result = '[+] '
+        code_error = '[!] '
+        code_title = ''
+
+        sys.stdout = args.output
+        banner()
+    else:
+        code_info = '\033[97m[*] '
+        code_warning = '\033[93m(!) '
+        code_result = '\033[1;32m[+] '
+        code_error = '\033[91m[!] '
+        code_title = '\033[1m\033[93m'
+
+    # Verify scanner option
+    if not args.scanner in scanners:
+        print(code_error + "Error: scanner doesn't exists.")
+        sys.exit()
+
+    if args.number:
+        scanNumber(args.number)
+    elif args.input:
+        for line in args.input.readlines():
+            scanNumber(line)
+
+    if args.output:
+        args.output.close()
+except KeyboardInterrupt:
+    print code_info + "Scan interrupted. Good bye!"
     sys.exit()
-
-if args.output:
-    code_info = '[*] '
-    code_warning = '(!) '
-    code_result = '[+] '
-    code_error = '[!] '
-    code_title = ''
-
-    sys.stdout = args.output
-    banner()
-else:
-    code_info = '\033[97m[*] '
-    code_warning = '\033[93m(!) '
-    code_result = '\033[1;32m[+] '
-    code_error = '\033[91m[!] '
-    code_title = '\033[1m\033[93m'
-
-if args.number:
-    scanNumber(args.number)
-elif args.input:
-    for line in args.input.readlines():
-        scanNumber(line)
-
-if args.output:
-    args.output.close()
