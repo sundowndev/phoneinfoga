@@ -139,6 +139,7 @@ Regular expression : `^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$`
 - http://www.countryareacode.net/en/
 - http://directory.didww.com/area-prefixes
 - http://hs3x.com/
+- http://www.numinfo.net/
 
 ### Scanners
 
