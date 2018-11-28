@@ -95,7 +95,7 @@ def localScan(number):
 
         countryRequest = json.loads(requests.request('GET', 'https://restcountries.eu/rest/v2/callingcode/%s' % PhoneNumber['countryCode'].replace('+', '')).content)
         PhoneNumber['country'] = countryRequest[0]['alpha2Code']
-        
+
         PhoneNumber['number'] = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164).replace(PhoneNumber['countryCode'], '')
         PhoneNumber['international'] = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL)
 
@@ -205,7 +205,6 @@ def osintScan(countryCode, number, internationalNumber):
     if not args.osint:
         return -1
 
-
     print code_info + 'Running OSINT footprint reconnaissance...'
 
     # Whitepages
@@ -229,16 +228,19 @@ def osintScan(countryCode, number, internationalNumber):
             if result:
                 print(code_result + "Result found: " + result)
 
+        print code_warning + "Waiting 10 sec before sending new requests to avoid being blacklisted..."
+        time.sleep(10)
+
         print(code_info + "Searching for footprints on instagram.com... (limit=5)")
         for result in search('site:instagram.com intext:"%s" | "%s"' % (number,number), stop=5):
             if result:
                 print(code_result + "Result found: " + result)
 
-        print code_warning + "Waiting 10 sec before sending new requests to avoid being blacklisted..."
-        time.sleep(10)
-
         # Websites
-        #
+        print(code_info + "Searching for footprints on web pages... (limit=5)")
+        for result in search('%s | intext:"%s" | intext:"%s"' % (number,number,internationalNumber), stop=5):
+            if result:
+                print(code_result + "Result found: " + result)
 
         # Documents
         print(code_info + "Searching for documents... (limit=5)")
@@ -248,14 +250,6 @@ def osintScan(countryCode, number, internationalNumber):
 
         print code_warning + "Waiting 10 sec before sending new requests to avoid being blacklisted..."
         time.sleep(10)
-
-        print(code_info + "Searching for documents on washington.edu... (limit=5)")
-        UWReq = search('site:washington.edu intext:"%s" | "%s"' % (number,number), stop=5)
-        if len(list(UWReq)) > 0:
-            print code_info + 'Found %s results' % len(list(UWReq))
-        for result in UWReq:
-            if result:
-                print(code_result + "Result found: " + result)
 
         # Reputation
         print(code_info + "Searching for reputation report on whosenumber.info... (limit=1)")
@@ -278,6 +272,9 @@ def osintScan(countryCode, number, internationalNumber):
                 print(code_result + "Found a temporary number provider: hs3x.com")
                 print(code_result + "URL: " + result)
                 askForExit()
+
+        print code_warning + "Waiting 10 sec before sending new requests to avoid being blacklisted..."
+        time.sleep(10)
 
         print(code_info + "Searching for results on receive-sms-now.com... (limit=1)")
         for result in search('site:"receive-sms-now.com" intext:"+%s"' % number, stop=1):
@@ -325,6 +322,8 @@ def scanNumber(number):
     numverifyScan(PhoneNumber['full'])
     ovhScan(PhoneNumber['country'], PhoneNumber['number'])
     osintScan(PhoneNumber['countryCode'], PhoneNumber['full'], PhoneNumber['international'])
+
+    print code_info + "Scan finished."
 
     print '\n'
 
