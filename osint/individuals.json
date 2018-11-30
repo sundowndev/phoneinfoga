@@ -1,0 +1,14 @@
+[
+  {
+    "site": "facebook.com",
+    "request": "site:\"facebook.com\" intext:\"$n\" | $n",
+    "dialCode": null,
+    "stop": 5
+  },
+  {
+    "site": "twitter.com",
+    "request": "site:\"twitter.com\" intext:\"$n\" | $n",
+    "dialCode": null,
+    "stop": 5
+  }
+]
