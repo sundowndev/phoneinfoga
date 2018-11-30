@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-__version__ = '0.8-dev'
+__version__ = '0.9-dev'
 
 def banner():
     print "    ___ _                       _____        __                   "
@@ -85,33 +85,15 @@ uagent.append("Mozilla/5.0 (Windows; U; Windows NT 5.2; en-US; rv:1.9.1.3) Gecko
 uagent.append("Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.1) Gecko/20090718 Firefox/3.5.1")
 uagent.append("Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:63.0) Gecko/20100101 Firefox/63.0")
 
-proxy=[]
-proxy.append("118.97.125.150:8080")
-proxy.append("212.23.250.46:80")
-proxy.append("197.149.128.190:42868")
-proxy.append("87.128.41.56:80",)
-proxy.append("197.149.129.252:32486")
-proxy.append("159.69.211.173:3128")
-proxy.append("197.149.128.190:44655")
-proxy.append("196.13.208.23:8080")
-proxy.append("196.13.208.22:8080")
-proxy.append("82.136.122.127:80")
-proxy.append("178.60.28.98:9999")
-proxy.append("41.60.1.102:80")
-proxy.append("212.56.139.253:80")
-
 GoogleAbuseToken = ''
 
 def search(req, stop):
     global GoogleAbuseToken
     global uagent
-    global proxy
 
-    chosenProxy = random.choice(proxy)
     chosenUserAgent = random.choice(uagent)
 
     s = requests.Session()
-    proxies = {"http": chosenProxy}
     headers = {
         'User-Agent': chosenUserAgent,
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -123,16 +105,16 @@ def search(req, stop):
         'Cookie': 'Cookie: CGIC=Ij90ZXh0L2h0bWwsYXBwbGljYXRpb24veGh0bWwreG1sLGFwcGxpY2F0aW9uL3htbDtxPTAuOSwqLyo7cT0wLjg; CONSENT=YES+RE.fr+20150809-08-0; 1P_JAR=2018-11-28-14; NID=148=aSdSHJz71rufCokaUC93nH3H7lOb8E7BNezDWV-PyyiHTXqWK5Y5hsvj7IAzhZAK04-QNTXjYoLXVu_eiAJkiE46DlNn6JjjgCtY-7Fr0I4JaH-PZRb7WFgSTjiFqh0fw2cCWyN69DeP92dzMd572tQW2Z1gPwno3xuPrYC1T64wOud1DjZDhVAZkpk6UkBrU0PBcnLWL7YdL6IbEaCQlAI9BwaxoH_eywPVyS9V; SID=uAYeu3gT23GCz-ktdGInQuOSf-5SSzl3Plw11-CwsEYY0mqJLSiv7tFKeRpB_5iz8SH5lg.; HSID=AZmH_ctAfs0XbWOCJ; SSID=A0PcRJSylWIxJYTq_; APISID=HHB2bKfJ-2ZUL5-R/Ac0GK3qtM8EHkloNw; SAPISID=wQoxetHBpyo4pJKE/A2P6DUM9zGnStpIVt; SIDCC=ABtHo-EhFAa2AJrJIUgRGtRooWyVK0bAwiQ4UgDmKamfe88xOYBXM47FoL5oZaTxR3H-eOp7-rE; OTZ=4671861_52_52_123900_48_436380; OGPC=873035776-8:; OGP=-873035776:;'
     }
 
-    if True:
+    try:
         URL = 'https://www.google.com/search?tbs=li:1&q=%s&amp;gws_rd=ssl' % (req)
-        r = s.get(URL + GoogleAbuseToken, headers=headers, proxies=proxies)
+        r = s.get(URL + GoogleAbuseToken, headers=headers)
 
         while r.status_code == 503:
             print code_warning + 'You are temporary blacklisted from Google search. Complete the captcha at the following URL and copy/paste the content of GOOGLE_ABUSE_EXEMPTION cookie : %s' % URL
             print '\n' + code_info + 'Need help ? Read the doc at https://github.com/sundowndev/PhoneInfoga'
             token = raw_input('\nGOOGLE_ABUSE_EXEMPTION=')
             GoogleAbuseToken = '&google_abuse=' + token
-            r = s.get(URL + GoogleAbuseToken, headers=headers, proxies=proxies)
+            r = s.get(URL + GoogleAbuseToken, headers=headers)
 
         soup = BeautifulSoup(r.content, 'html.parser')
         results = soup.find("div", id="search").find_all("div", class_="g")
@@ -146,12 +128,17 @@ def search(req, stop):
             if int(counter) > int(stop):
                 break
 
-            url = result.find("cite").string
+            url = result.find("a").get('href')
+            url = re.sub(r'(?:\/url\?q\=)', '', url)
+            url = re.sub(r'(?:\/url\?url\=)', '', url)
+            url = re.sub(r'(?:\&sa\=)(?:.*)', '', url)
+            url = re.sub(r'(?:\&rct\=)(?:.*)', '', url)
+
             links.append(url)
 
         return links
-    #except:
-        #print code_error + 'Failed search.'
+    except:
+        print code_error + 'Request failed. Please retry or open an issue on GitHub.'
 
 def formatNumber(number):
     return re.sub("(?:\+)?(?:[^[0-9]*)", "", number)
@@ -218,7 +205,7 @@ def numverifyScan(PhoneNumber):
         'host': "numverify.com",
         'connection': "keep-alive",
         'content-length': "49",
-        'accept': "application/json, text/javascript, */*; q=0.01",
+        'accept': "application/json",
         'origin': "https://numverify.com",
         'x-requested-with': "XMLHttpRequest",
         'user-agent': "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36",
@@ -282,6 +269,19 @@ def ovhScan(country, number):
                 print(code_result + "Zip code: " + voip_number['zipCode'] if voip_number['zipCode'] is not None else '')
                 askForExit()
 
+def osintDisposableNumScan(number):
+    dorks = json.load(open('osint/disposable_num_providers.json'))
+
+    for dork in dorks:
+        dorkRequest = dork['request'].replace('$n', number).replace('$n', number)
+
+        print(code_info + "Searching for results on %s..." % dork['site'])
+        for result in search(dorkRequest, stop=dork['stop']):
+            if result:
+                print(code_result + "Found a temporary number provider: %s" % dork['site'])
+                print(code_result + "URL: " + result)
+                askForExit()
+
 def osintScan(countryCode, number, internationalNumber):
     if not args.osint:
         return -1
@@ -292,226 +292,38 @@ def osintScan(countryCode, number, internationalNumber):
     print(code_info + "Generating scan URL on 411.com...")
     print code_result + "Scan URL: https://www.411.com/phone/%s" % internationalNumber.replace('+', '').replace(' ', '-')
 
-    if True:
-        # Social profiles: facebook, twitter, linkedin, instagram
-        print(code_info + '[Social media footprints]')
-        print(code_info + "Searching for footprints on facebook.com... (limit=5)")
-        for result in search('site:facebook.com intext:"%s" | "%s"' % (number,number), stop=5):
-            if result:
-                print(code_result + "Result found: " + result)
+    print(code_info + '---- Web pages footprints ----')
 
-        print(code_info + "Searching for footprints on twitter.com... (limit=5)")
-        for result in search('site:twitter.com intext:"%s" | "%s"' % (number,number), stop=5):
-            if result:
-                print(code_result + "Result found: " + result)
+    print(code_info + "Searching for footprints on web pages... (limit=5)")
+    for result in search('%s | intext:"%s" | intext:"%s"' % (number,number,internationalNumber), stop=5):
+        if result:
+            print(code_result + "Result found: " + result)
 
-        print(code_info + "Searching for footprints on linkedin.com... (limit=5)")
-        for result in search('site:linkedin.com intext:"%s" | "%s"' % (number,number), stop=5):
-            if result:
-                print(code_result + "Result found: " + result)
+    # Documents
+    print(code_info + "Searching for documents... (limit=5)")
+    for result in search('intext:"%s" | intext:"%s" ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv | ext:txt | ext:html' % (number,internationalNumber), stop=5):
+        if result:
+            print(code_result + "Result found: " + result)
 
-        print(code_info + "Searching for footprints on instagram.com... (limit=5)")
-        for result in search('site:instagram.com intext:"%s" | "%s"' % (number,number), stop=5):
-            if result:
-                print(code_result + "Result found: " + result)
+    print(code_info + '---- Reputation footprints ----')
 
-        # Websites
-        print(code_info + '[Web pages footprints]')
-        print(code_info + "Searching for footprints on web pages... (limit=5)")
-        for result in search('%s | intext:"%s" | intext:"%s"' % (number,number,internationalNumber), stop=5):
-            if result:
-                print(code_result + "Result found: " + result)
+    print(code_info + "Searching for reputation report on whosenumber.info...")
+    for result in search('site:whosenumber.info intext:"%s" intitle:"who called"' % number, stop=1):
+        if result:
+            print(code_result + "Found 1 result on whosenumber.info.")
+            print(code_info + "This usually mean you are not the first to search about this number. Check the URL for eventual comments.")
+            print(code_result + "URL: " + result)
 
-        # Documents
-        print(code_info + "Searching for documents... (limit=5)")
-        for result in search('intext:"%s" | intext:"%s" ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv | ext:txt | ext:html' % (number,number), stop=5):
-            if result:
-                print(code_result + "Result found: " + result)
+    print(code_info + "Searching for phone fraud footprints... (limit=5)")
+    for result in search('intitle:"Phone Fraud" intext:"%s" | "%s"' % (number,number), stop=5):
+        if result:
+            print(code_result + "Result found: " + result)
+            print(code_info + "This usually mean you are not the first to search about this number. Check the URL for eventual comments.")
 
-        # Reputation
-        print(code_info + "Searching for reputation report on whosenumber.info... (limit=1)")
-        for result in search('site:whosenumber.info intext:"%s" intitle:"who called"' % number, stop=1):
-            if result:
-                print(code_result + "Found 1 result on whosenumber.info.")
-                print(code_info + "This usually mean you are not the first to search about this number. Check the URL for eventual comments.")
-                print(code_result + "URL: " + result)
+    print(code_info + "Generating URL on scamcallfighters.com...")
+    print code_result + 'http://www.scamcallfighters.com/search-phone-%s.html' % number
 
-        print(code_info + "Searching for Phone Fraud footprints... (limit=5)")
-        for result in search('intitle:"Phone Fraud" intext:"%s" | "%s"' % (number,number), stop=5):
-            if result:
-                print(code_result + "Result found: " + result)
-                print(code_info + "This usually mean you are not the first to search about this number. Check the URL for eventual comments.")
-
-        print(code_info + "Generating URL on scamcallfighters.com...")
-        print code_result + 'http://www.scamcallfighters.com/search-phone-%s.html' % number
-
-        #print code_warning + "Waiting 10 sec before sending new requests to avoid being blacklisted..."
-        #time.sleep(10)
-
-        # Temporary number providers
-        print(code_info + '[Temporary number providers footprints]')
-        print(code_info + "Searching for results on hs3x.com... (limit=1)")
-        for result in search('site:"hs3x.com" intext:"+%s"' % number, stop=1):
-            if result:
-                print(code_result + "Found a temporary number provider: hs3x.com")
-                print(code_result + "URL: " + result)
-                askForExit()
-
-        print(code_info + "Searching for results on receive-sms-now.com... (limit=1)")
-        for result in search('site:"receive-sms-now.com" intext:"+%s"' % number, stop=1):
-            if result:
-                print(code_result + "Found a temporary number provider: receive-sms-now.com")
-                print(code_result + "URL: " + result)
-                askForExit()
-
-        print(code_info + "Searching for results on smslisten.com... (limit=1)")
-        for result in search('site:"smslisten.com" intext:"%s"' % number, stop=1):
-            if result:
-                print(code_result + "Found a temporary number provider: smslisten.com")
-                print(code_result + "URL: " + result)
-                askForExit()
-
-        print(code_info + "Searching for results on smsnumbersonline.com... (limit=1)")
-        for result in search('site:"smsnumbersonline.com" intext:"+%s"' % number, stop=1):
-            if result:
-                print(code_result + "Found a temporary number provider: smsnumbersonline.com")
-                print(code_result + "URL: " + result)
-                askForExit()
-
-        print(code_info + "Searching for results on freesmscode.com... (limit=1)")
-        for result in search('site:"freesmscode.com" intext:"+%s"' % number, stop=1):
-            if result:
-                print(code_result + "Found a temporary number provider: freesmscode.com")
-                print(code_result + "URL: " + result)
-                askForExit()
-
-        print(code_info + "Searching for results on catchsms.com... (limit=1)")
-        for result in search('site:"catchsms.com" intext:"+%s"' % number, stop=1):
-            if result:
-                print(code_result + "Found a temporary number provider: catchsms.com")
-                print(code_result + "URL: " + result)
-                askForExit()
-
-        print(code_info + "Searching for results on smstibo.com... (limit=1)")
-        for result in search('site:"smstibo.com" intext:"+%s"' % number, stop=1):
-            if result:
-                print(code_result + "Found a temporary number provider: smstibo.com")
-                print(code_result + "URL: " + result)
-                askForExit()
-
-        print(code_info + "Searching for results on smsreceiving.com... (limit=1)")
-        for result in search('site:"smsreceiving.com" intext:"+%s"' % number, stop=1):
-            if result:
-                print(code_result + "Found a temporary number provider: smsreceiving.com")
-                print(code_result + "URL: " + result)
-                askForExit()
-
-        print(code_info + "Searching for results on getfreesmsnumber.com... (limit=1)")
-        for result in search('site:"getfreesmsnumber.com" intext:"+%s"' % number, stop=1):
-            if result:
-                print(code_result + "Found a temporary number provider: getfreesmsnumber.com")
-                print(code_result + "URL: " + result)
-                askForExit()
-
-        print(code_info + "Searching for results on sellaite.com... (limit=1)")
-        for result in search('site:"sellaite.com" intext:"+%s"' % number, stop=1):
-            if result:
-                print(code_result + "Found a temporary number provider: sellaite.com")
-                print(code_result + "URL: " + result)
-                askForExit()
-
-        print(code_info + "Searching for results on receive-sms-online.info... (limit=1)")
-        for result in search('site:"receive-sms-online.info" intext:"+%s"' % number, stop=1):
-            if result:
-                print(code_result + "Found a temporary number provider: receive-sms-online.info")
-                print(code_result + "URL: " + result)
-                askForExit()
-
-        print(code_info + "Searching for results on receivesmsonline.com... (limit=1)")
-        for result in search('site:"receivesmsonline.com" intext:"+%s"' % number, stop=1):
-            if result:
-                print(code_result + "Found a temporary number provider: receivesmsonline.com")
-                print(code_result + "URL: " + result)
-                askForExit()
-
-        print(code_info + "Searching for results on receive-a-sms.com... (limit=1)")
-        for result in search('site:"receive-a-sms.com" intext:"+%s"' % number, stop=1):
-            if result:
-                print(code_result + "Found a temporary number provider: receive-a-sms.com")
-                print(code_result + "URL: " + result)
-                askForExit()
-
-        print(code_info + "Searching for results on sms-receive.net... (limit=1)")
-        for result in search('site:"sms-receive.net" intext:"+%s"' % number, stop=1):
-            if result:
-                print(code_result + "Found a temporary number provider: sms-receive.net")
-                print(code_result + "URL: " + result)
-                askForExit()
-
-        print(code_info + "Searching for results on receivefreesms.com... (limit=1)")
-        for result in search('site:"receivefreesms.com" intext:"+%s"' % number, stop=1):
-            if result:
-                print(code_result + "Found a temporary number provider: receivefreesms.com")
-                print(code_result + "URL: " + result)
-                askForExit()
-
-        print(code_info + "Searching for results on freeonlinephone.org... (limit=1)")
-        for result in search('site:"freeonlinephone.org" intext:"+%s"' % number, stop=1):
-            if result:
-                print(code_result + "Found a temporary number provider: freeonlinephone.org")
-                print(code_result + "URL: " + result)
-                askForExit()
-
-        print(code_info + "Searching for results on receive-sms.com... (limit=1)")
-        for result in search('site:"receive-sms.com" intext:"+%s"' % number, stop=1):
-            if result:
-                print(code_result + "Found a temporary number provider: receive-sms.com")
-                print(code_result + "URL: " + result)
-                askForExit()
-
-        print(code_info + "Searching for results on receivetxt.com... (limit=1)")
-        for result in search('site:"receivetxt.com" %s' % number, stop=1):
-            if result:
-                print(code_result + "Found a temporary number provider: receivetxt.com")
-                print(code_result + "URL: " + result)
-                askForExit()
-
-        print(code_info + "Searching for results on receive-smss.com... (limit=1)")
-        for result in search('site:"receive-smss.com" intext:"+%s"' % number, stop=1):
-            if result:
-                print(code_result + "Found a temporary number provider: receive-smss.com")
-                print(code_result + "URL: " + result)
-                askForExit()
-
-        print(code_info + "Searching for results on freephonenum.com... (limit=1)")
-        for result in search('site:"freephonenum.com" intext:"%s"' % number, stop=1):
-            if result:
-                print(code_result + "Found a temporary number provider: freephonenum.com")
-                print(code_result + "URL: " + result)
-                askForExit()
-
-        print(code_info + "Searching for results on receivefreesms.com... (limit=1)")
-        for result in search('site:"receivefreesms.com" intext:"%s"' % number, stop=1):
-            if result:
-                print(code_result + "Found a temporary number provider: receivefreesms.com")
-                print(code_result + "URL: " + result)
-                askForExit()
-
-        print(code_info + "Searching for results on freesmsverification.com... (limit=1)")
-        for result in search('site:"freesmsverification.com" %s' % number, stop=1):
-            if result:
-                print(code_result + "Found a temporary number provider: freesmsverification.com")
-                print(code_result + "URL: " + result)
-                askForExit()
-
-        print(code_info + "Searching for results on receive-sms-online.com... (limit=1)")
-        for result in search('site:"receive-sms-online.com" intext:"%s"' % number, stop=1):
-            if result:
-                print(code_result + "Found a temporary number provider: receive-sms-online.com")
-                print(code_result + "URL: " + result)
-                askForExit()
-    #except:
-        #print code_error + 'Impossible to fetch Google search API. This usually mean you\'re temporary blacklisted.'
+    print(code_info + '---- Temporary number providers footprints ----')
 
     print(code_info + "Searching for phone number on tempophone.com...")
     response = requests.request("GET", "https://tempophone.com/api/v1/phones")
@@ -521,15 +333,62 @@ def osintScan(countryCode, number, internationalNumber):
             print(code_result + "Found a temporary number provider: tempophone.com")
             askForExit()
 
+    osintDisposableNumScan(number)
+
+    print(code_info + '---- Social media footprints ----')
+
+    print(code_info + "Searching for footprints on facebook.com... (limit=5)")
+    for result in search('site:facebook.com intext:"%s" | "%s"' % (number,internationalNumber), stop=5):
+        if result:
+            print(code_result + "Result found: " + result)
+
+    print(code_info + "Searching for footprints on twitter.com... (limit=5)")
+    for result in search('site:twitter.com intext:"%s" | "%s"' % (number,internationalNumber), stop=5):
+        if result:
+            print(code_result + "Result found: " + result)
+
+    print(code_info + "Searching for footprints on linkedin.com... (limit=5)")
+    for result in search('site:linkedin.com intext:"%s" | "%s"' % (number,internationalNumber), stop=5):
+        if result:
+            print(code_result + "Result found: " + result)
+
+    print(code_info + "Searching for footprints on instagram.com... (limit=5)")
+    for result in search('site:instagram.com intext:"%s" | "%s"' % (number,internationalNumber), stop=5):
+        if result:
+            print(code_result + "Result found: " + result)
+
+    print(code_info + "Searching for footprints on numinfo.net... (limit=2)")
+    for result in search('site:numinfo.net intext:"%s" | "%s"' % (number,internationalNumber), stop=2):
+        if result:
+            print(code_result + "Result found: " + result)
+
+    print(code_info + "Searching for footprints on numinfo.net... (limit=2)")
+    for result in search('site:numinfo.net intext:"%s" | "%s"' % (number,internationalNumber), stop=2):
+        if result:
+            print(code_result + "Result found: " + result)
+
+    print(code_info + "Searching for footprints on sync.me... ")
+    for result in search('site:sync.me inurl:"%s" | "%s"' % (number,internationalNumber), stop=1):
+        if result:
+            print(code_result + "Result found: " + result)
+
+    print(code_info + "Generating URL on True People... ")
+    print code_result + 'https://www.truepeoplesearch.com/results?phoneno=%s' % internationalNumber
+
+    print(code_info + "Searching for footprints on whocallsyou.de... ")
+    for result in search('site:whocallsyou.de inurl:"0%s"' % (number), stop=1):
+        if result:
+            print(code_result + "Result found: " + result)
+
 def askForExit():
     if not args.output:
-        user_input = raw_input(code_info + "Continue scanning ? (Y/n) ")
+        user_input = raw_input(code_info + "Continue scanning ? (y/N) ")
 
-        if user_input.lower() == 'n' or user_input.lower() == 'no':
+        if user_input.lower() == 'y' or user_input.lower() == 'yes':
+            return -1
+        else:
             print code_info + "Good bye!"
             sys.exit()
-        else:
-            return -1
 
 def scanNumber(number):
     print code_title + "[!] ---- Fetching informations for %s ---- [!]" % formatNumber(number)
@@ -555,6 +414,10 @@ try:
         code_result = '[+] '
         code_error = '[!] '
         code_title = ''
+
+        if args.osint:
+            print '\033[91m[!] OSINT scanner is not available using output option (sorry).'
+            sys.exit()
 
         sys.stdout = args.output
         banner()
