@@ -65,7 +65,6 @@ try:
     from phonenumbers import carrier
     from phonenumbers import geocoder
     from phonenumbers import timezone
-    #from googlesearch import search
 except KeyboardInterrupt:
     print '\033[91m[!] Exiting.'
     sys.exit()
