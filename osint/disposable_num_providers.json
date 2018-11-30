@@ -90,11 +90,6 @@
     "stop": 1
   },
   {
-    "site": "receivefreesms.com",
-    "request": "site:\"receivefreesms.com\" intext:\"$n\"",
-    "stop": 1
-  },
-  {
     "site": "freesmsverification.com",
     "request": "site:\"freesmsverification.com\" $n",
     "stop": 1
