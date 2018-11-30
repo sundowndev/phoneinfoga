@@ -300,7 +300,7 @@ def osintScan(countryCode, number, internationalNumber):
 
     # Documents
     print(code_info + "Searching for documents... (limit=5)")
-    for result in search('intext:"%s" | intext:"%s" ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv | ext:txt | ext:html' % (number,internationalNumber), stop=5):
+    for result in search('intext:"%s" | intext:"%s" ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv | ext:txt' % (number,internationalNumber), stop=5):
         if result:
             print(code_result + "Result found: " + result)
 
@@ -356,11 +356,8 @@ def osintScan(countryCode, number, internationalNumber):
         if result:
             print(code_result + "Result found: " + result)
 
-    print(code_info + "Searching for footprints on numinfo.net... (limit=2)")
-    for result in search('site:numinfo.net intext:"%s" | "%s"' % (number,internationalNumber), stop=2):
-        if result:
-            print(code_result + "Result found: " + result)
-
+    print(code_info + '---- Phone books footprints ----')
+            
     print(code_info + "Searching for footprints on numinfo.net... (limit=2)")
     for result in search('site:numinfo.net intext:"%s" | "%s"' % (number,internationalNumber), stop=2):
         if result:
