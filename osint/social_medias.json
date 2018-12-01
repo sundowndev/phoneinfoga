@@ -1,14 +1,22 @@
 [
   {
     "site": "facebook.com",
-    "request": "site:\"facebook.com\" intext:\"$n\" | $n",
-    "dialCode": null,
+    "request": "site:\"facebook.com\" intext:\"$n\" | $i",
     "stop": 5
   },
   {
     "site": "twitter.com",
-    "request": "site:\"twitter.com\" intext:\"$n\" | $n",
-    "dialCode": null,
+    "request": "site:\"twitter.com\" intext:\"$n\" | $i",
+    "stop": 5
+  },
+  {
+    "site": "linkedin.com",
+    "request": "site:\"linkedin.com\" intext:\"$n\" | $i",
+    "stop": 5
+  },
+  {
+    "site": "instagram.com",
+    "request": "site:\"instagram.com\" intext:\"$n\" | $i",
     "stop": 5
   }
 ]
