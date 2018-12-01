@@ -274,10 +274,10 @@ def osintDisposableNumScan(number):
     for dork in dorks:
         dorkRequest = dork['request'].replace('$n', number).replace('$n', number)
 
-        print(code_info + "Searching for results on %s..." % dork['site'])
+        print(code_info + "Searching for footprints on %s..." % dork['site'])
         for result in search(dorkRequest, stop=dork['stop']):
             if result:
-                print(code_result + "Found a temporary number provider: %s" % dork['site'])
+                print(code_result + "Result found: %s" % dork['site'])
                 print(code_result + "URL: " + result)
                 askForExit()
 
@@ -290,6 +290,11 @@ def osintScan(countryCode, number, internationalNumber):
     # Whitepages
     print(code_info + "Generating scan URL on 411.com...")
     print code_result + "Scan URL: https://www.411.com/phone/%s" % internationalNumber.replace('+', '').replace(' ', '-')
+
+    AskingCustomPayload = raw_input(code_info + 'Would you like to use an additional format for this number ? (y/N) ')
+
+    if AskingCustomPayload == 'y':
+        customPayload = raw_input(code_info + 'Custom format: ')
 
     print(code_info + '---- Web pages footprints ----')
 
@@ -357,7 +362,7 @@ def osintScan(countryCode, number, internationalNumber):
             print(code_result + "Result found: " + result)
 
     print(code_info + '---- Phone books footprints ----')
-            
+
     print(code_info + "Searching for footprints on numinfo.net... (limit=2)")
     for result in search('site:numinfo.net intext:"%s" | "%s"' % (number,internationalNumber), stop=2):
         if result:

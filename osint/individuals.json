@@ -1,14 +1,14 @@
 [
   {
-    "site": "facebook.com",
-    "request": "site:\"facebook.com\" intext:\"$n\" | $n",
+    "site": "numinfo.net",
+    "request": "site:\"numinfo.net\" intext:\"$n\" | $i",
     "dialCode": null,
-    "stop": 5
+    "stop": 2
   },
   {
-    "site": "twitter.com",
-    "request": "site:\"twitter.com\" intext:\"$n\" | $n",
+    "site": "sync.me",
+    "request": "site:\"sync.me\" intext:\"$n\" | $i",
     "dialCode": null,
-    "stop": 5
+    "stop": 1
   }
 ]
