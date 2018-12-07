@@ -1,25 +1,22 @@
 # PhoneInfoga
 
-Advanced information gathering & OSINT reconnaissance tool for phone numbers. Designed for Social Engineering and red teaming.
-
-### Hello, friend. Next time cover your tracks.
-
-<img src="https://images.complex.com/complex/images/c_limit,w_680/f_auto,fl_lossy,pg_1,q_auto/robotophone_egpp8m/mr-robot-elliot-on-phone" width="350" />
+Information gathering & OSINT reconnaissance tool for phone numbers. Designed for Social Engineering and red teaming.
 
 ## The project
 
-Building the most advanced tool to scan phone numbers using only free resources. The goal is to first identify basic informations such as country, area, carrier and line type on any international phone numbers with a very good accuracy, and then detect the VoIP provider or search for footprints on search engines to try identify the owner.
+Building one of the most advanced tools to scan phone numbers using only free resources. The goal is to first gather basic information such as country, area, carrier and line type on any international phone numbers with a very good accuracy. Then try to determine the VoIP provider or search for footprints on search engines to try identify the owner.
 
 **This tool requires python 2.x**
 
 ## Features
 
-- Check if phone number exists
+- Check if phone number exists and is possible
 - Gather standard informations such as country, line type and carrier
 - Check several numbers at once
-- Set an output for result(s)
-- Check if number is from a VoIP provider
 - OSINT reconnaissance using external APIs, Google Hacking, phone books & search engines
+- Use custom formatting for more effective OSINT reconnaissance
+
+![](https://i.imgur.com/Gdd4FMZ.png)
 
 ## Formats
 
@@ -70,10 +67,16 @@ optional arguments:
   -u, --update          Update the tool & databases
 ```
 
-Example :
+Example (quotes are optional, use it when typing special formats) :
 
 ```
-python phoneinfoga.py -n +42837544833
+python phoneinfoga.py -n "(+42)837544833"
+```
+
+Check for a number range on OVH :
+
+```
+python phoneinfoga.py -n +42837544833 -s ovh
 ```
 
 Check several numbers at once :
@@ -82,10 +85,12 @@ Check several numbers at once :
 python ./phoneinfoga.py -i numbers.txt -o results.txt
 ```
 
-Check for a number range on OVH (just put some zeros) :
+**Note: `--osint` is not compatible with `--output` option.**
+
+Use all scanners and run OSINT reconnaissance :
 
 ```
-python phoneinfoga.py -n +42837544833 -s ovh
+python phoneinfoga.py -n +42837544833 -s all --osint
 ```
 
 ## Formatting
@@ -115,9 +120,19 @@ Here’s the same phone number in E.164 formatting: +442071838750
 
 ![](https://i.imgur.com/Ovso0w2.png)
 
+## Dealing with Google captcha
+
+PhoneInfo use a workaround to handle Google bot detection. When running OSINT scan, you will usually be blacklisted very easily by Google, which will ask the tool to complete a captcha.
+
+## Custom formatting
+
+...
+
 ## License
 
 This tool is licensed under the GNU General Public License v3.0.
+
+----
 
 ## Resources
 
