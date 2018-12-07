@@ -16,7 +16,7 @@ Building one of the most advanced tools to scan phone numbers using only free re
 - OSINT reconnaissance using external APIs, Google Hacking, phone books & search engines
 - Use custom formatting for more effective OSINT reconnaissance
 
-![](https://i.imgur.com/Gdd4FMZ.png)
+![](https://i.imgur.com/bWx79dy.png)
 
 ## Formats
 
@@ -114,15 +114,24 @@ In the UK, and many other countries internationally, local dialing may require t
 
 For example, here’s a UK-based number in standard local formatting: 020 7183 8750
 
-![](https://i.imgur.com/WdXKSZY.png)
-
 Here’s the same phone number in E.164 formatting: +442071838750
-
-![](https://i.imgur.com/Ovso0w2.png)
 
 ## Dealing with Google captcha
 
 PhoneInfo use a workaround to handle Google bot detection. When running OSINT scan, you will usually be blacklisted very easily by Google, which will ask the tool to complete a captcha.
+
+>When you search on Google using custom requests (Google Dorks), you get very easily blacklisted. So Google shows up a page where you have to complete a captcha to continue. As soon as the captcha is completed, Google create a cookie named "GOOGLE_ABUSE_EXEMPTION" which is used to whitelist your browser and IP address for some minutes. This temporary whitelist is enough to let you gather a lot of information from many sources. So I decided to add a simple user manipulation to bypass this bot detection. [...] So I'll just try make requests and wait until I get a 503 error, which means I got blacklisted. Then I ask the user to follow an URL to manually complete the captcha and copy the whitelist token to paste it in the CLI. The tool is now able to continue to scan!
+
+![](https://i.imgur.com/qbFZa1m.png)
+
+### Steps
+
+- Follow the URL
+- Open the dev tool (F12 on most browsers)
+- Go to **Storage**, then **Cookies**
+- Copy the value of the *GOOGLE_ABUSE_EXEMPTION* cookie and paste it in the CLI
+
+![](https://i.imgur.com/KkE1EM5.png)
 
 ## Custom formatting
 
