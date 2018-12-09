@@ -39,7 +39,6 @@ Use `any` to disable this feature. Default value: `all`
 git clone https://github.com/sundowndev/PhoneInfoga
 cd ./PhoneInfoga
 pip install -r requirements.txt
-python ./phoneinfoga.py -h
 ```
 
 ## Usage
