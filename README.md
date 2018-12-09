@@ -1,10 +1,8 @@
 # PhoneInfoga
 
-Information gathering & OSINT reconnaissance tool for phone numbers. Designed for Social Engineering and red teaming.
+Information gathering & OSINT reconnaissance tool for phone numbers.
 
-## The project
-
-Building one of the most advanced tools to scan phone numbers using only free resources. The goal is to first gather basic information such as country, area, carrier and line type on any international phone numbers with a very good accuracy. Then try to determine the VoIP provider or search for footprints on search engines to try identify the owner.
+One of the most advanced tools to scan phone numbers using only free resources. The goal is to first gather basic information such as country, area, carrier and line type on any international phone numbers with a very good accuracy. Then try to determine the VoIP provider or search for footprints on search engines to try identify the owner.
 
 **This tool requires python 2.x**
 
