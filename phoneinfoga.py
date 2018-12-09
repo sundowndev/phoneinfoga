@@ -84,10 +84,17 @@ uagent.append("Mozilla/5.0 (Windows; U; Windows NT 5.2; en-US; rv:1.9.1.3) Gecko
 uagent.append("Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.1) Gecko/20090718 Firefox/3.5.1")
 uagent.append("Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:63.0) Gecko/20100101 Firefox/63.0")
 
-GoogleAbuseToken = ''
+number = '' # Full number format
+localNumber = '' # Local number format
+internationalNumber = '' # International numberformat
+numberCountryCode = '' # Dial code; e.g:"+33"
+numberCountry = '' # Country; e.g:France
+
+googleAbuseToken = ''
+customFormatting = ''
 
 def search(req, stop):
-    global GoogleAbuseToken
+    global googleAbuseToken
     global uagent
 
     chosenUserAgent = random.choice(uagent)
@@ -106,14 +113,14 @@ def search(req, stop):
 
     try:
         URL = 'https://www.google.com/search?tbs=li:1&q=%s&amp;gws_rd=ssl' % (req)
-        r = s.get(URL + GoogleAbuseToken, headers=headers)
+        r = s.get(URL + googleAbuseToken, headers=headers)
 
         while r.status_code == 503:
             print code_warning + 'You are temporary blacklisted from Google search. Complete the captcha at the following URL and copy/paste the content of GOOGLE_ABUSE_EXEMPTION cookie : %s' % URL
             print '\n' + code_info + 'Need help ? Read the doc at https://github.com/sundowndev/PhoneInfoga'
             token = raw_input('\nGOOGLE_ABUSE_EXEMPTION=')
-            GoogleAbuseToken = '&google_abuse=' + token
-            r = s.get(URL + GoogleAbuseToken, headers=headers)
+            googleAbuseToken = '&google_abuse=' + token
+            r = s.get(URL + googleAbuseToken, headers=headers)
 
         soup = BeautifulSoup(r.content, 'html.parser')
         results = soup.find("div", id="search").find_all("div", class_="g")
@@ -133,21 +140,28 @@ def search(req, stop):
             url = re.sub(r'(?:\&sa\=)(?:.*)', '', url)
             url = re.sub(r'(?:\&rct\=)(?:.*)', '', url)
 
+            if re.match(r"^(/search\?q=)", url) is not None:
+                url = 'https://google.com' + url
+
             links.append(url)
 
         return links
     except:
         print code_error + 'Request failed. Please retry or open an issue on GitHub.'
 
-def formatNumber(number):
-    return re.sub("(?:\+)?(?:[^[0-9]*)", "", number)
+def formatNumber(InputNumber):
+    return re.sub("(?:\+)?(?:[^[0-9]*)", "", InputNumber)
 
-def localScan(number):
+def localScan(InputNumber):
+    global number
+    global localNumber
+    global internationalNumber
+    global numberCountryCode
+    global numberCountry
+
     print code_info + 'Running local scan...'
 
-    PhoneNumber = dict();
-
-    FormattedPhoneNumber = "+" + formatNumber(number)
+    FormattedPhoneNumber = "+" + formatNumber(InputNumber)
 
     try:
         PhoneNumberObject = phonenumbers.parse(FormattedPhoneNumber, None)
@@ -157,18 +171,18 @@ def localScan(number):
         if not phonenumbers.is_valid_number(PhoneNumberObject):
             return False
 
-        PhoneNumber['full'] = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164).replace('+', '')
-        PhoneNumber['countryCode'] = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL).split(' ')[0]
+        number = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164).replace('+', '')
+        numberCountryCode = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL).split(' ')[0]
 
-        countryRequest = json.loads(requests.request('GET', 'https://restcountries.eu/rest/v2/callingcode/%s' % PhoneNumber['countryCode'].replace('+', '')).content)
-        PhoneNumber['country'] = countryRequest[0]['alpha2Code']
+        countryRequest = json.loads(requests.request('GET', 'https://restcountries.eu/rest/v2/callingcode/%s' % numberCountryCode.replace('+', '')).content)
+        numberCountry = countryRequest[0]['alpha2Code']
 
-        PhoneNumber['number'] = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164).replace(PhoneNumber['countryCode'], '')
-        PhoneNumber['international'] = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL)
+        localNumber = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164).replace(numberCountryCode, '')
+        internationalNumber = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL)
 
-        print code_result + 'International format: %s' % PhoneNumber['international']
-        print code_result + 'Local format: 0%s' % PhoneNumber['number']
-        print code_result + 'Country code: %s' % PhoneNumber['countryCode']
+        print code_result + 'International format: %s' % internationalNumber
+        print code_result + 'Local format: 0%s' % localNumber
+        print code_result + 'Country code: %s' % numberCountryCode
         print code_result + 'Location: %s' % geocoder.description_for_number(PhoneNumberObject, "en")
         print code_result + 'Carrier: %s' % carrier.name_for_number(PhoneNumberObject, 'en')
         print code_result + 'Area: %s' % geocoder.description_for_number(PhoneNumberObject, 'en')
@@ -180,9 +194,9 @@ def localScan(number):
         else:
             print code_warning + 'The number is valid but might not be possible.'
 
-        return PhoneNumber
+def numverifyScan():
+    global number
 
-def numverifyScan(PhoneNumber):
     if not args.scanner == 'numverify' and not args.scanner == 'all':
         return -1
 
@@ -197,7 +211,7 @@ def numverifyScan(PhoneNumber):
             break;
 
     apiKey = hashlib.md5()
-    apiKey.update(PhoneNumber + requestSecret)
+    apiKey.update(number + requestSecret)
     apiKey = apiKey.hexdigest()
 
     headers = {
@@ -215,7 +229,7 @@ def numverifyScan(PhoneNumber):
         'cache-control': "no-cache"
     }
 
-    response = requests.request("GET", "https://numverify.com/php_helper_scripts/phone_api.php?secret_key=" + apiKey + "&number=" + PhoneNumber, data="", headers=headers)
+    response = requests.request("GET", "https://numverify.com/php_helper_scripts/phone_api.php?secret_key=" + apiKey + "&number=" + number, data="", headers=headers)
 
     if response.content == "Unauthorized" or response.status_code != 200:
         print(code_error + "An error occured while calling the API (bad request or wrong api key).")
@@ -240,13 +254,16 @@ def numverifyScan(PhoneNumber):
     elif data["line_type"] == 'mobile':
         print(code_warning + "This is most likely a mobile, but it can still be a VoIP.")
 
-def ovhScan(country, number):
+def ovhScan():
+    global localNumber
+    global numberCountry
+
     if not args.scanner == 'ovh' and not args.scanner == 'all':
         return -1
 
     print code_info + 'Running OVH scan...'
 
-    querystring = { "country": country.lower() }
+    querystring = { "country": numberCountry.lower() }
 
     headers = {
         'accept': "application/json",
@@ -258,7 +275,7 @@ def ovhScan(country, number):
     data = json.loads(response.content)
 
     if isinstance(data, list):
-        askedNumber = "0" + number.replace(number[-4:], 'xxxx')
+        askedNumber = "0" + localNumber.replace(localNumber[-4:], 'xxxx')
 
         for voip_number in data:
             if voip_number['number'] == askedNumber:
@@ -268,11 +285,71 @@ def ovhScan(country, number):
                 print(code_result + "Zip code: " + voip_number['zipCode'] if voip_number['zipCode'] is not None else '')
                 askForExit()
 
-def osintDisposableNumScan(number):
+def osintIndividualScan():
+    global number
+    global internationalNumber
+    global numberCountryCode
+    global customFormatting
+
+    dorks = json.load(open('osint/individuals.json'))
+
+    for dork in dorks:
+        if dork['dialCode'] is None or dork['dialCode'] == numberCountryCode:
+            if customFormatting:
+                dorkRequest = dork['request'].replace('$n', number).replace('$i', internationalNumber) + ' | intext:"%s"' % (customFormatting)
+            else:
+                dorkRequest = dork['request'].replace('$n', number).replace('$i', internationalNumber)
+
+            print(code_info + "Searching for footprints on %s..." % dork['site'])
+            for result in search(dorkRequest, stop=dork['stop']):
+                if result:
+                    print(code_result + "URL: " + result)
+        else:
+            return -1
+
+def osintReputationScan():
+    global number
+    global internationalNumber
+    global customFormatting
+
+    dorks = json.load(open('osint/reputation.json'))
+
+    for dork in dorks:
+        if customFormatting:
+            dorkRequest = dork['request'].replace('$n', number).replace('$i', internationalNumber) + ' | intext:"%s"' % (customFormatting)
+        else:
+            dorkRequest = dork['request'].replace('$n', number).replace('$i', internationalNumber)
+
+        print(code_info + "Searching for %s..." % dork['title'])
+        for result in search(dorkRequest, stop=dork['stop']):
+            if result:
+                print(code_result + "URL: " + result)
+
+def osintSocialMediaScan():
+    global number
+    global internationalNumber
+    global customFormatting
+
+    dorks = json.load(open('osint/social_medias.json'))
+
+    for dork in dorks:
+        if customFormatting:
+            dorkRequest =  dork['request'].replace('$n', number).replace('$i', internationalNumber) + ' | intext:"%s"' % (customFormatting)
+        else:
+            dorkRequest = dork['request'].replace('$n', number).replace('$i', internationalNumber)
+
+        print(code_info + "Searching for footprints on %s..." % dork['site'])
+        for result in search(dorkRequest, stop=dork['stop']):
+            if result:
+                print(code_result + "URL: " + result)
+
+def osintDisposableNumScan():
+    global number
+
     dorks = json.load(open('osint/disposable_num_providers.json'))
 
     for dork in dorks:
-        dorkRequest = dork['request'].replace('$n', number).replace('$n', number)
+        dorkRequest = dork['request'].replace('$n', number)
 
         print(code_info + "Searching for footprints on %s..." % dork['site'])
         for result in search(dorkRequest, stop=dork['stop']):
@@ -281,7 +358,14 @@ def osintDisposableNumScan(number):
                 print(code_result + "URL: " + result)
                 askForExit()
 
-def osintScan(countryCode, number, internationalNumber):
+def osintScan():
+    global number
+    global localNumber
+    global internationalNumber
+    global numberCountryCode
+    global numberCountry
+    global customFormatting
+
     if not args.osint:
         return -1
 
@@ -291,95 +375,65 @@ def osintScan(countryCode, number, internationalNumber):
     print(code_info + "Generating scan URL on 411.com...")
     print code_result + "Scan URL: https://www.411.com/phone/%s" % internationalNumber.replace('+', '').replace(' ', '-')
 
-    AskingCustomPayload = raw_input(code_info + 'Would you like to use an additional format for this number ? (y/N) ')
+    askingCustomPayload = raw_input(code_info + 'Would you like to use an additional format for this number ? (y/N) ')
 
-    if AskingCustomPayload == 'y':
-        customPayload = raw_input(code_info + 'Custom format: ')
+    if askingCustomPayload == 'y' or askingCustomPayload == 'yes':
+        customFormatting = raw_input(code_info + 'Custom format: ')
 
     print(code_info + '---- Web pages footprints ----')
 
     print(code_info + "Searching for footprints on web pages... (limit=5)")
-    for result in search('%s | intext:"%s" | intext:"%s"' % (number,number,internationalNumber), stop=5):
+    if customFormatting:
+        req = '%s | intext:"%s" | intext:"%s" | intext:"%s"' % (number,number,internationalNumber,customFormatting)
+    else:
+        req = '%s | intext:"%s" | intext:"%s"' % (number,number,internationalNumber)
+    for result in search(req, stop=5):
         if result:
             print(code_result + "Result found: " + result)
 
     # Documents
-    print(code_info + "Searching for documents... (limit=5)")
-    for result in search('intext:"%s" | intext:"%s" ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv | ext:txt' % (number,internationalNumber), stop=5):
+    print(code_info + "Searching for documents... (limit=10)")
+    if customFormatting:
+        req = 'intext:"%s" | intext:"%s" | intext:"%s" ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv | ext:txt' % (number,internationalNumber,customFormatting)
+    else:
+        req = 'intext:"%s" | intext:"%s" ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv | ext:txt' % (number,internationalNumber)
+    for result in search('intext:"%s" | intext:"%s" ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv | ext:txt' % (number,internationalNumber), stop=10):
         if result:
             print(code_result + "Result found: " + result)
 
     print(code_info + '---- Reputation footprints ----')
 
-    print(code_info + "Searching for reputation report on whosenumber.info...")
-    for result in search('site:whosenumber.info intext:"%s" intitle:"who called"' % number, stop=1):
-        if result:
-            print(code_result + "Found 1 result on whosenumber.info.")
-            print(code_info + "This usually mean you are not the first to search about this number. Check the URL for eventual comments.")
-            print(code_result + "URL: " + result)
-
-    print(code_info + "Searching for phone fraud footprints... (limit=5)")
-    for result in search('intitle:"Phone Fraud" intext:"%s" | "%s"' % (number,number), stop=5):
-        if result:
-            print(code_result + "Result found: " + result)
-            print(code_info + "This usually mean you are not the first to search about this number. Check the URL for eventual comments.")
+    osintReputationScan()
 
     print(code_info + "Generating URL on scamcallfighters.com...")
     print code_result + 'http://www.scamcallfighters.com/search-phone-%s.html' % number
 
-    print(code_info + '---- Temporary number providers footprints ----')
+    tmpNumAsk = raw_input(code_info + "Would you like to search for temporary number providers footprints ? (Y/n) ")
 
-    print(code_info + "Searching for phone number on tempophone.com...")
-    response = requests.request("GET", "https://tempophone.com/api/v1/phones")
-    data = json.loads(response.content)
-    for voip_number in data['objects']:
-        if voip_number['phone'] == formatNumber(number):
-            print(code_result + "Found a temporary number provider: tempophone.com")
-            askForExit()
+    if tmpNumAsk.lower() != 'n' and tmpNumAsk.lower() != 'no':
+        print(code_info + '---- Temporary number providers footprints ----')
 
-    osintDisposableNumScan(number)
+        print(code_info + "Searching for phone number on tempophone.com...")
+        response = requests.request("GET", "https://tempophone.com/api/v1/phones")
+        data = json.loads(response.content)
+        for voip_number in data['objects']:
+            if voip_number['phone'] == formatNumber(number):
+                print(code_result + "Found a temporary number provider: tempophone.com")
+                askForExit()
+
+        osintDisposableNumScan()
 
     print(code_info + '---- Social media footprints ----')
 
-    print(code_info + "Searching for footprints on facebook.com... (limit=5)")
-    for result in search('site:facebook.com intext:"%s" | "%s"' % (number,internationalNumber), stop=5):
-        if result:
-            print(code_result + "Result found: " + result)
-
-    print(code_info + "Searching for footprints on twitter.com... (limit=5)")
-    for result in search('site:twitter.com intext:"%s" | "%s"' % (number,internationalNumber), stop=5):
-        if result:
-            print(code_result + "Result found: " + result)
-
-    print(code_info + "Searching for footprints on linkedin.com... (limit=5)")
-    for result in search('site:linkedin.com intext:"%s" | "%s"' % (number,internationalNumber), stop=5):
-        if result:
-            print(code_result + "Result found: " + result)
-
-    print(code_info + "Searching for footprints on instagram.com... (limit=5)")
-    for result in search('site:instagram.com intext:"%s" | "%s"' % (number,internationalNumber), stop=5):
-        if result:
-            print(code_result + "Result found: " + result)
+    osintSocialMediaScan()
 
     print(code_info + '---- Phone books footprints ----')
 
-    print(code_info + "Searching for footprints on numinfo.net... (limit=2)")
-    for result in search('site:numinfo.net intext:"%s" | "%s"' % (number,internationalNumber), stop=2):
-        if result:
-            print(code_result + "Result found: " + result)
+    if numberCountryCode == '+1':
+        print(code_info + "Generating URL on True People... ")
+        print code_result + 'https://www.truepeoplesearch.com/results?phoneno=%s' % internationalNumber.replace(' ', '')
 
-    print(code_info + "Searching for footprints on sync.me... ")
-    for result in search('site:sync.me inurl:"%s" | "%s"' % (number,internationalNumber), stop=1):
-        if result:
-            print(code_result + "Result found: " + result)
-
-    print(code_info + "Generating URL on True People... ")
-    print code_result + 'https://www.truepeoplesearch.com/results?phoneno=%s' % internationalNumber
-
-    print(code_info + "Searching for footprints on whocallsyou.de... ")
-    for result in search('site:whocallsyou.de inurl:"0%s"' % (number), stop=1):
-        if result:
-            print(code_result + "Result found: " + result)
+    osintIndividualScan()
 
 def askForExit():
     if not args.output:
@@ -391,18 +445,24 @@ def askForExit():
             print code_info + "Good bye!"
             sys.exit()
 
-def scanNumber(number):
-    print code_title + "[!] ---- Fetching informations for %s ---- [!]" % formatNumber(number)
+def scanNumber(InputNumber):
+    print code_title + "[!] ---- Fetching informations for %s ---- [!]" % formatNumber(InputNumber)
 
-    PhoneNumber = localScan(number)
+    localScan(InputNumber)
 
-    if not PhoneNumber:
-        print(code_error + "Error: number " + formatNumber(number) + " is not valid. Skipping.")
+    global number
+    global localNumber
+    global internationalNumber
+    global numberCountryCode
+    global numberCountry
+
+    if not number:
+        print(code_error + "Error: number " + formatNumber(InputNumber) + " is not valid. Skipping.")
         sys.exit()
 
-    numverifyScan(PhoneNumber['full'])
-    ovhScan(PhoneNumber['country'], PhoneNumber['number'])
-    osintScan(PhoneNumber['countryCode'], PhoneNumber['full'], PhoneNumber['international'])
+    numverifyScan()
+    ovhScan()
+    osintScan()
 
     print code_info + "Scan finished."
 
@@ -443,5 +503,5 @@ try:
     if args.output:
         args.output.close()
 except KeyboardInterrupt:
-    print code_info + "Scan interrupted. Good bye!"
+    print(code_error + "Scan interrupted. Good bye!")
     sys.exit()
