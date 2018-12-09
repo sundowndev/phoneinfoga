@@ -1,11 +1,10 @@
 # Todo list
 
-- Input feature: Done
-- Output feature: Done
-- OVH scanner
-  - Search for number range
+- **Input feature: Done**
+- **Output feature: Done**
+- **OVH scanner (search for number range): Done**
 - Update feature
-- Offline scan: Done
+- **Offline scan: Done**
 - OSINT recon
   - Search for social profiles (facebook, twitter, linkedin, instagram)
   - Search for documents
