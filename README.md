@@ -127,6 +127,7 @@ PhoneInfo use a workaround to handle Google bot detection. When running OSINT sc
 ### Steps
 
 - Follow the URL
+- Complete the captcha if needed
 - Open the dev tool (F12 on most browsers)
 - Go to **Storage**, then **Cookies**
 - Copy the value of the *GOOGLE_ABUSE_EXEMPTION* cookie and paste it in the CLI
@@ -135,52 +136,8 @@ PhoneInfo use a workaround to handle Google bot detection. When running OSINT sc
 
 ## Custom formatting
 
-...
+Sometimes the phone number has footprints but is used with a different formatting. This is a problem because for example if we search for "+15417543010", we'll not find web pages that write it that way : "(541) 754–3010". So the tool use a (optional) custom formatting given by the user to find further and more accurate results.
 
 ## License
 
 This tool is licensed under the GNU General Public License v3.0.
-
-----
-
-## Resources
-
-Regular expression : `^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$`
-
-### Docs
-
-- http://whitepages.fr/phonesystem/
-- https://support.twilio.com/hc/en-us/articles/223183008-Formatting-International-Phone-Numbers
-- https://en.wikipedia.org/wiki/National_conventions_for_writing_telephone_numbers
-
-### open data
-
-- https://api.ovh.com/console/#/telephony
-  - `/telephony/number/ranges`
-  - `/telephony/number/detailedZones`
-  - `/telephony/number/specificNumbers`
-- https://countrycode.org/
-- http://www.countryareacode.net/en/
-- http://directory.didww.com/area-prefixes
-- http://hs3x.com/
-- http://www.numinfo.net/
-
-### Scanners
-
-- https://www.phonevalidator.com/
-- https://freecarrierlookup.com/
-- https://www.411.com/
-- https://www.washington.edu/home/peopledir/
-
-### OSINT
-
-- https://osintframework.com/
-- http://raidersec.blogspot.com/2012/12/automated-open-source-intelligence.html#google_api
-
-#### Google dork requests
-
-- `insubject:"+XXXXXXXXX" | insubject:"+XXXXX" | insubject:"XXXXX XXX XXX`
-- `insubject:"{number}" | intitle:"{number}"`
-- `intext:"{number}" ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv | ext:txt | ext:html`
-- voip provider check: `site:"hs3x.com" intext:"+61437954897"`
-- scam number check:`site:signal-arnaques.com intext:"0682649478" intitle:" | Phone Fraud"`
