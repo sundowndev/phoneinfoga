@@ -10,5 +10,11 @@
     "request": "site:\"sync.me\" intext:\"$n\" | $i",
     "dialCode": null,
     "stop": 1
+  },
+  {
+    "site": "whocallsyou.de",
+    "request": "site:\"whocallsyou.de\" intext:\"0$n\"",
+    "dialCode": null,
+    "stop": 1
   }
 ]
