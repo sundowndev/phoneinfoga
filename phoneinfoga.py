@@ -264,7 +264,7 @@ def ovhScan():
 
     print(code_info + 'Running OVH scan...')
 
-    querystring = { "country": numberCountry.lower() }
+    querystring = {"country": numberCountry.lower()}
 
     headers = {
         'accept': "application/json",
