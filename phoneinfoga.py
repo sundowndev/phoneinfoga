@@ -287,6 +287,17 @@ def ovhScan():
                 print((code_result + "Zip code: {}".format(voip_number['zipCode'] if voip_number['zipCode'] is not None else '')))
                 askForExit()
 
+def replaceVariables(string):
+    global number
+    global internationalNumber
+    global localNumber
+
+    string = string.replace('$n', number)
+    string = string.replace('$i', internationalNumber)
+    string = string.replace('$l', localNumber)
+
+    return string
+
 def osintIndividualScan():
     global number
     global internationalNumber
@@ -298,9 +309,9 @@ def osintIndividualScan():
     for dork in dorks:
         if dork['dialCode'] is None or dork['dialCode'] == numberCountryCode:
             if customFormatting:
-                dorkRequest = dork['request'].replace('$n', number).replace('$i', internationalNumber) + ' | intext:"{}"'.format(customFormatting)
+                dorkRequest = replaceVariables(dork['request']) + ' | intext:"{}"'.format(customFormatting)
             else:
-                dorkRequest = dork['request'].replace('$n', number).replace('$i', internationalNumber)
+                dorkRequest = replaceVariables(dork['request'])
 
             print((code_info + "Searching for footprints on {}...".format(dork['site'])))
             for result in search(dorkRequest, stop=dork['stop']):
@@ -318,9 +329,9 @@ def osintReputationScan():
 
     for dork in dorks:
         if customFormatting:
-            dorkRequest = dork['request'].replace('$n', number).replace('$i', internationalNumber) + ' | intext:"{}"'.format(customFormatting)
+            dorkRequest = replaceVariables(dork['request']) + ' | intext:"{}"'.format(customFormatting)
         else:
-            dorkRequest = dork['request'].replace('$n', number).replace('$i', internationalNumber)
+            dorkRequest = replaceVariables(dork['request'])
 
         print((code_info + "Searching for {}...".format(dork['title'])))
         for result in search(dorkRequest, stop=dork['stop']):
@@ -336,9 +347,9 @@ def osintSocialMediaScan():
 
     for dork in dorks:
         if customFormatting:
-            dorkRequest =  dork['request'].replace('$n', number).replace('$i', internationalNumber) + ' | intext:"{}"'.format(customFormatting)
+            dorkRequest = replaceVariables(dork['request']) + ' | intext:"{}"'.format(customFormatting)
         else:
-            dorkRequest = dork['request'].replace('$n', number).replace('$i', internationalNumber)
+            dorkRequest = replaceVariables(dork['request'])
 
         print((code_info + "Searching for footprints on {}...".format(dork['site'])))
         for result in search(dorkRequest, stop=dork['stop']):
@@ -351,7 +362,7 @@ def osintDisposableNumScan():
     dorks = json.load(open('osint/disposable_num_providers.json'))
 
     for dork in dorks:
-        dorkRequest = dork['request'].replace('$n', number)
+        dorkRequest = replaceVariables(dork['request'])
 
         print((code_info + "Searching for footprints on {}...".format(dork['site'])))
         for result in search(dorkRequest, stop=dork['stop']):
