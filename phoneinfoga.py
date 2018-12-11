@@ -44,17 +44,13 @@ parser.add_argument('--osint', action='store_true',
                     help='Use OSINT reconnaissance')
 
 parser.add_argument('-u', '--update', action='store_true',
-                    help='Update the tool & databases')
+                    help='Update the project')
 
 args = parser.parse_args()
 
 # If any param is passed, execute help command
 if not len(sys.argv) > 1:
     parser.print_help()
-    sys.exit()
-
-if args.update:
-    print('update')
     sys.exit()
 
 try:
@@ -74,6 +70,35 @@ except KeyboardInterrupt:
     sys.exit()
 except:
     print('\033[91m[!] Missing requirements. Try running pip install -r requirements.txt')
+    sys.exit()
+
+if args.update:
+    def download_file(url, target_path):
+        response = requests.get(url, stream=True)
+        handle = open(target_path, "wb")
+        for chunk in response.iter_content(chunk_size=512):
+            if chunk:  # filter out keep-alive new chunks
+                handle.write(chunk)
+
+    print('Updating PhoneInfoga.')
+    print('Actual version: {}'.format(__version__))
+
+    # Fetching last github tag
+    new_version = json.loads(requests.get('https://api.github.com/repos/sundowndev/PhoneInfoga/tags').content)[0]['name']
+    print('Last version: {}'.format(new_version))
+
+    osintFiles = ['disposable_num_providers.json', 'individuals.json', 'reputation.json', 'social_medias.json']
+
+    try:
+        for file in osintFiles:
+            url = 'https://raw.githubusercontent.com/sundowndev/PhoneInfoga/master/osint/{}'.format(file)
+            output_directory = 'osint/{}'.format(file)
+            download_file(url, output_directory)
+    except:
+        print('Update failed. Try using git pull.')
+        sys.exit()
+
+    print('The tool was successfully updated.')
     sys.exit()
 
 scanners = ['any', 'all', 'numverify', 'ovh']
