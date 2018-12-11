@@ -1,7 +1,7 @@
 # PhoneInfoga
 
-![](https://img.shields.io/badge/python-3.x-blue.svg)
-![](https://img.shields.io/badge/license-MIT-brightgreen.svg)
+![](https://img.shields.io/badge/python-3.7-blue.svg)
+![](https://img.shields.io/badge/license-MIT-blue.svg)
 
 Information gathering & OSINT reconnaissance tool for phone numbers.
 
@@ -129,6 +129,8 @@ PhoneInfo use a workaround to handle Google bot detection. When running OSINT sc
 - Open the dev tool (F12 on most browsers)
 - Go to **Storage**, then **Cookies**
 - Copy the value of the *GOOGLE_ABUSE_EXEMPTION* cookie and paste it in the CLI
+
+**Note: sometimes you'll need to refresh the page to get the cookie.**
 
 ![](https://i.imgur.com/KkE1EM5.png)
 
