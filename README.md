@@ -1,4 +1,6 @@
 # PhoneInfoga
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsundowndev%2FPhoneInfoga.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsundowndev%2FPhoneInfoga?ref=badge_shield)
+
 
 Information gathering & OSINT reconnaissance tool for phone numbers.
 
@@ -138,3 +140,6 @@ Sometimes the phone number has footprints but is used with a different formattin
 ## License
 
 This tool is licensed under the GNU General Public License v3.0.
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsundowndev%2FPhoneInfoga.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsundowndev%2FPhoneInfoga?ref=badge_large)
