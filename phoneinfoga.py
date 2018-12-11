@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-__version__ = '0.10-dev'
+__version__ = '1.0.0-rc1'
 
 def banner():
     print("    ___ _                       _____        __                   ")
