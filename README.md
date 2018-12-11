@@ -1,6 +1,6 @@
 # PhoneInfoga
 
-![](https://img.shields.io/badge/python-3.7-blue.svg)
+![](https://img.shields.io/badge/python-3.x-blue.svg)
 ![](https://img.shields.io/badge/license-MIT-blue.svg)
 
 Information gathering & OSINT reconnaissance tool for phone numbers.
@@ -141,3 +141,5 @@ Sometimes the phone number has footprints but is used with a different formattin
 ## License
 
 This tool is licensed under the GNU General Public License v3.0.
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsundowndev%2FPhoneInfoga.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsundowndev%2FPhoneInfoga?ref=badge_large)
