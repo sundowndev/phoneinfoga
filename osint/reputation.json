@@ -6,7 +6,7 @@
   },
   {
     "title": "phone fraud footprints",
-    "request": "intitle:\"Phone Fraud\" intext:\"$n\" | \"$n\"",
+    "request": "intitle:\"Phone Fraud\" intext:\"$n\" | intext:\"$i\"",
     "stop": 5
   }
 ]
