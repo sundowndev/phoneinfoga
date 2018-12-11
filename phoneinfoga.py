@@ -80,7 +80,7 @@ if args.update:
             if chunk:  # filter out keep-alive new chunks
                 handle.write(chunk)
 
-    print('Updating PhoneInfoga.')
+    print('Updating PhoneInfoga...')
     print('Actual version: {}'.format(__version__))
 
     # Fetching last github tag
@@ -90,10 +90,18 @@ if args.update:
     osintFiles = ['disposable_num_providers.json', 'individuals.json', 'reputation.json', 'social_medias.json']
 
     try:
+        print('[*] Updating OSINT files')
+
         for file in osintFiles:
             url = 'https://raw.githubusercontent.com/sundowndev/PhoneInfoga/master/osint/{}'.format(file)
             output_directory = 'osint/{}'.format(file)
             download_file(url, output_directory)
+
+        print('[*] Updating python script')
+
+        url = 'https://raw.githubusercontent.com/sundowndev/PhoneInfoga/master/phoneinfoga.py'
+        output_directory = 'phoneinfoga.py'
+        download_file(url, output_directory)
     except:
         print('Update failed. Try using git pull.')
         sys.exit()
