@@ -1,10 +1,11 @@
 # PhoneInfoga
 
+![](https://img.shields.io/badge/python-3.x-blue.svg)
+![](https://img.shields.io/badge/license-MIT-blue.svg)
+
 Information gathering & OSINT reconnaissance tool for phone numbers.
 
 One of the most advanced tools to scan phone numbers using only free resources. The goal is to first gather basic information such as country, area, carrier and line type on any international phone numbers with a very good accuracy. Then try to determine the VoIP provider or search for footprints on search engines to try identify the owner.
-
-**This tool requires python 2.x**
 
 ## Features
 
@@ -38,7 +39,7 @@ Use `any` to disable this feature. Default value: `all`
 ```bash
 git clone https://github.com/sundowndev/PhoneInfoga
 cd ./PhoneInfoga
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 ## Usage
@@ -129,6 +130,8 @@ PhoneInfo use a workaround to handle Google bot detection. When running OSINT sc
 - Go to **Storage**, then **Cookies**
 - Copy the value of the *GOOGLE_ABUSE_EXEMPTION* cookie and paste it in the CLI
 
+**Note: sometimes you'll need to refresh the page to get the cookie.**
+
 ![](https://i.imgur.com/KkE1EM5.png)
 
 ## Custom formatting
@@ -138,3 +141,5 @@ Sometimes the phone number has footprints but is used with a different formattin
 ## License
 
 This tool is licensed under the GNU General Public License v3.0.
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsundowndev%2FPhoneInfoga.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsundowndev%2FPhoneInfoga?ref=badge_large)
