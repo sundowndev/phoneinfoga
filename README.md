@@ -68,19 +68,19 @@ optional arguments:
 Example (quotes are optional, use it when typing special formats) :
 
 ```
-python phoneinfoga.py -n "(+42)837544833"
+python3 phoneinfoga.py -n "(+42)837544833"
 ```
 
 Check for a number range on OVH :
 
 ```
-python phoneinfoga.py -n +42837544833 -s ovh
+python3 phoneinfoga.py -n +42837544833 -s ovh
 ```
 
 Check several numbers at once :
 
 ```
-python ./phoneinfoga.py -i numbers.txt -o results.txt
+python3 ./phoneinfoga.py -i numbers.txt -o results.txt
 ```
 
 **Note: `--osint` is not compatible with `--output` option.**
@@ -88,7 +88,7 @@ python ./phoneinfoga.py -i numbers.txt -o results.txt
 Use all scanners and run OSINT reconnaissance :
 
 ```
-python phoneinfoga.py -n +42837544833 -s all --osint
+python3 phoneinfoga.py -n +42837544833 -s all --osint
 ```
 
 ## Formatting
