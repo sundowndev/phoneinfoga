@@ -15,9 +15,6 @@ except:
     print('\033[91m[!] Missing requirements. Try running python3 -m pip install -r requirements.txt')
     sys.exit()
 
-# Reset text color at exit
-atexit.register(lambda: print(Style.RESET_ALL))
-
 def banner():
     print("    ___ _                       _____        __                   ")
     print("   / _ \ |__   ___  _ __   ___  \_   \_ __  / _| ___   __ _  __ _ ")
@@ -59,6 +56,13 @@ parser.add_argument('-u', '--update', action='store_true',
                     help='Update the project')
 
 args = parser.parse_args()
+
+def resetColors():
+    if not args.output:
+        print(Style.RESET_ALL)
+
+# Reset text color at exit
+atexit.register(resetColors)
 
 # If any param is passed, execute help command
 if not len(sys.argv) > 1:

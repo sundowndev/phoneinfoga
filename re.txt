@@ -1,0 +1,23 @@
+    ___ _                       _____        __                   
+   / _ \ |__   ___  _ __   ___  \_   \_ __  / _| ___   __ _  __ _ 
+  / /_)/ '_ \ / _ \| '_ \ / _ \  / /\/ '_ \| |_ / _ \ / _` |/ _` |
+ / ___/| | | | (_) | | | |  __/\/ /_ | | | |  _| (_) | (_| | (_| |
+ \/    |_| |_|\___/|_| |_|\___\____/ |_| |_|_|  \___/ \__, |\__,_|
+                                                      |___/       
+ PhoneInfoga Ver. v1.0.0-rc2
+ Coded by Sundowndev
+
+[0m
+[!] ---- Fetching informations for 33651968838 ---- [!]
+[*] Running local scan...
+[+] International format: +33 6 51 96 88 38
+[+] Local format: 0651968838
+[+] Country code: +33
+[+] Location: France
+[+] Carrier: 
+[+] Area: France
+[+] Timezone: Europe/Paris
+[*] The number is valid and possible.
+[*] Scan finished.
+
+[0m
