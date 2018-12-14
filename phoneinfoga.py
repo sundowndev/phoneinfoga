@@ -1,6 +1,22 @@
 #!/usr/bin/env python3
 
-__version__ = '1.0.0-rc1'
+__version__ = 'v1.0.0-rc2'
+
+try:
+    from colorama import Fore, Style
+    import atexit
+    import sys
+    import argparse
+    import random
+except KeyboardInterrupt:
+    print('\033[91m[!] Exiting.')
+    sys.exit()
+except:
+    print('\033[91m[!] Missing requirements. Try running python3 -m pip install -r requirements.txt')
+    sys.exit()
+
+# Reset text color at exit
+atexit.register(lambda: print(Style.RESET_ALL))
 
 def banner():
     print("    ___ _                       _____        __                   ")
@@ -11,16 +27,10 @@ def banner():
     print("                                                      |___/       ")
     print(" PhoneInfoga Ver. {}".format(__version__))
     print(" Coded by Sundowndev")
-    print("\n")
+    print("\n" + Style.RESET_ALL)
 
-from colorama import Fore, Style
-
-print("\n " + Fore.GREEN + Style.NORMAL)
+print("\n " + Fore.WHITE + Style.NORMAL)
 banner()
-
-import sys
-import argparse
-import random
 
 if sys.version_info[0] < 3:
     print("\033[1m\033[93m(!) Please run the tool using Python 3")
@@ -72,7 +82,7 @@ except KeyboardInterrupt:
     print('\033[91m[!] Exiting.')
     sys.exit()
 except:
-    print('\033[91m[!] Missing requirements. Try running pip install -r requirements.txt')
+    print('\033[91m[!] Missing requirements. Try running python3 -m pip install -r requirements.txt')
     sys.exit()
 
 requests.packages.urllib3.disable_warnings()
