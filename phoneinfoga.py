@@ -9,10 +9,10 @@ try:
     import argparse
     import random
 except KeyboardInterrupt:
-    print('\033[91m[!] Exiting.')
+    print('[!] Exiting.')
     sys.exit()
 except:
-    print('\033[91m[!] Missing requirements. Try running python3 -m pip install -r requirements.txt')
+    print('[!] Missing requirements. Try running python3 -m pip install -r requirements.txt')
     sys.exit()
 
 def banner():
@@ -24,13 +24,12 @@ def banner():
     print("                                                      |___/       ")
     print(" PhoneInfoga Ver. {}".format(__version__))
     print(" Coded by Sundowndev")
-    print("\n" + Style.RESET_ALL)
+    print("\n")
 
-print("\n " + Fore.WHITE + Style.NORMAL)
 banner()
 
 if sys.version_info[0] < 3:
-    print("\033[1m\033[93m(!) Please run the tool using Python 3")
+    print("\033[1m\033[93m(!) Please run the tool using Python 3" + Style.RESET_ALL)
     sys.exit()
 
 parser = argparse.ArgumentParser(description=
