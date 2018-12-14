@@ -3,3 +3,5 @@ bs4
 html5lib
 phonenumbers
 argparse
+urllib3
+colorama
