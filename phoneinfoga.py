@@ -1,6 +1,19 @@
 #!/usr/bin/env python3
 
-__version__ = '1.0.0-rc1'
+__version__ = 'v1.0.0-rc2'
+
+try:
+    from colorama import Fore, Style
+    import atexit
+    import sys
+    import argparse
+    import random
+except KeyboardInterrupt:
+    print('[!] Exiting.')
+    sys.exit()
+except:
+    print('[!] Missing requirements. Try running python3 -m pip install -r requirements.txt')
+    sys.exit()
 
 def banner():
     print("    ___ _                       _____        __                   ")
@@ -13,15 +26,10 @@ def banner():
     print(" Coded by Sundowndev")
     print("\n")
 
-print("\n \033[92m")
 banner()
 
-import sys
-import argparse
-import random
-
 if sys.version_info[0] < 3:
-    print("\033[1m\033[93m(!) Please run the tool using Python 3")
+    print("\033[1m\033[93m(!) Please run the tool using Python 3" + Style.RESET_ALL)
     sys.exit()
 
 parser = argparse.ArgumentParser(description=
@@ -48,6 +56,13 @@ parser.add_argument('-u', '--update', action='store_true',
 
 args = parser.parse_args()
 
+def resetColors():
+    if not args.output:
+        print(Style.RESET_ALL)
+
+# Reset text color at exit
+atexit.register(resetColors)
+
 # If any param is passed, execute help command
 if not len(sys.argv) > 1:
     parser.print_help()
@@ -59,6 +74,7 @@ try:
     import json
     import re
     import requests
+    import urllib3
     from bs4 import BeautifulSoup
     import html5lib
     import phonenumbers
@@ -69,8 +85,16 @@ except KeyboardInterrupt:
     print('\033[91m[!] Exiting.')
     sys.exit()
 except:
-    print('\033[91m[!] Missing requirements. Try running pip install -r requirements.txt')
+    print('\033[91m[!] Missing requirements. Try running python3 -m pip install -r requirements.txt')
     sys.exit()
+
+requests.packages.urllib3.disable_warnings()
+requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += 'HIGH:!DH:!aNULL'
+try:
+    requests.packages.urllib3.contrib.pyopenssl.DEFAULT_SSL_CIPHER_LIST += 'HIGH:!DH:!aNULL'
+except AttributeError:
+    # no pyopenssl support used / needed / available
+    pass
 
 if args.update:
     def download_file(url, target_path):
@@ -512,7 +536,7 @@ def scanNumber(InputNumber):
 
     print(code_info + "Scan finished.")
 
-    print('\n')
+    print('\n' + Style.RESET_ALL)
 
 try:
     if args.output:
@@ -529,11 +553,11 @@ try:
         sys.stdout = args.output
         banner()
     else:
-        code_info = '\033[97m[*] '
-        code_warning = '\033[93m(!) '
-        code_result = '\033[1;32m[+] '
-        code_error = '\033[91m[!] '
-        code_title = '\033[1m\033[93m'
+        code_info = Fore.RESET + Style.BRIGHT + '[*] '
+        code_warning = Fore.YELLOW + Style.BRIGHT + '(!) '
+        code_result = Fore.GREEN + Style.BRIGHT + '[+] '
+        code_error = Fore.RED + Style.BRIGHT + '[!] '
+        code_title = Fore.YELLOW + Style.BRIGHT
 
     # Verify scanner option
     if not args.scanner in scanners:
