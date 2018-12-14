@@ -13,7 +13,9 @@ def banner():
     print(" Coded by Sundowndev")
     print("\n")
 
-print("\n \033[92m")
+from colorama import Fore, Style
+
+print("\n " + Fore.GREEN + Style.NORMAL)
 banner()
 
 import sys
@@ -59,6 +61,7 @@ try:
     import json
     import re
     import requests
+    import urllib3
     from bs4 import BeautifulSoup
     import html5lib
     import phonenumbers
@@ -71,6 +74,14 @@ except KeyboardInterrupt:
 except:
     print('\033[91m[!] Missing requirements. Try running pip install -r requirements.txt')
     sys.exit()
+
+requests.packages.urllib3.disable_warnings()
+requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += 'HIGH:!DH:!aNULL'
+try:
+    requests.packages.urllib3.contrib.pyopenssl.DEFAULT_SSL_CIPHER_LIST += 'HIGH:!DH:!aNULL'
+except AttributeError:
+    # no pyopenssl support used / needed / available
+    pass
 
 if args.update:
     def download_file(url, target_path):
@@ -512,7 +523,7 @@ def scanNumber(InputNumber):
 
     print(code_info + "Scan finished.")
 
-    print('\n')
+    print('\n' + Style.RESET_ALL)
 
 try:
     if args.output:
@@ -529,11 +540,11 @@ try:
         sys.stdout = args.output
         banner()
     else:
-        code_info = '\033[97m[*] '
-        code_warning = '\033[93m(!) '
-        code_result = '\033[1;32m[+] '
-        code_error = '\033[91m[!] '
-        code_title = '\033[1m\033[93m'
+        code_info = Fore.RESET + Style.BRIGHT + '[*] '
+        code_warning = Fore.YELLOW + Style.BRIGHT + '(!) '
+        code_result = Fore.GREEN + Style.BRIGHT + '[+] '
+        code_error = Fore.RED + Style.BRIGHT + '[!] '
+        code_title = Fore.YELLOW + Style.BRIGHT
 
     # Verify scanner option
     if not args.scanner in scanners:
