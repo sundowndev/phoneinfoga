@@ -3,9 +3,9 @@
 __version__ = 'v1.0.0-rc2'
 
 try:
+    import sys
     from colorama import Fore, Style
     import atexit
-    import sys
     import argparse
     import random
 except KeyboardInterrupt:
