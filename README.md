@@ -1,6 +1,7 @@
 # PhoneInfoga
 
 ![](https://img.shields.io/badge/python-3.x-blue.svg)
+![](https://img.shields.io/github/tag/SundownDEV/PhoneInfoga.svg)
 ![](https://img.shields.io/badge/license-MIT-blue.svg)
 
 Information gathering & OSINT reconnaissance tool for phone numbers.
