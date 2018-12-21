@@ -1,10 +1,10 @@
-## Inderstanding phone numbers
+### Inderstanding phone numbers
 
     http://whitepages.fr/phonesystem/
     https://support.twilio.com/hc/en-us/articles/223183008-Formatting-International-Phone-Numbers
     https://en.wikipedia.org/wiki/National_conventions_for_writing_telephone_numbers
 
-## Open data
+### Open data
 
     https://api.ovh.com/console/#/telephony
     https://countrycode.org/
@@ -13,12 +13,16 @@
     http://hs3x.com/
     http://www.numinfo.net/
 
-## Reputation / fraud
+# Data sources
+
+Both free and premium resources are included. Be careful, the listing of a data source here does not mean it has been verified or is used in the tool. Data might be false. Use it as an OSINT framework.
+
+### Reputation / fraud
 
     scamcallfighters.com
     signal-arnaques.com
     
-## Disposable numbers
+### Disposable numbers
 
     receive-sms-online.com
     receive-sms-now.com
@@ -55,7 +59,7 @@
     smslisten.com
     sms.sellaite.com
     
-## Individuals
+### Individuals
 
     Facebook
     True People
@@ -80,10 +84,10 @@
     SearchBug
     numinfo.net
     
-## Google dork examples
+### Google dork examples
 
     `insubject:"+XXXXXXXXX" | insubject:"+XXXXX" | insubject:"XXXXX XXX XXX`
-    `insubject:"{number}" | intitle:"{number}"`
-    `intext:"{number}" ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv | ext:txt | ext:html`
-    voip provider check: `site:"hs3x.com" intext:"+61437954897"`
-    scam number check:`site:signal-arnaques.com intext:"0682649478" intitle:" | Phone Fraud"`
+    `insubject:"XXXXXXXXX" | intitle:"XXXXXXXXX"`
+    `intext:"XXXXXXXXX" ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv | ext:txt | ext:html`
+    `site:"hs3x.com" intext:"+XXXXXXXXX"`
+    `site:signal-arnaques.com intext:"XXXXXXXXX" intitle:" | Phone Fraud"`
