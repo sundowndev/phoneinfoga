@@ -39,7 +39,7 @@ Use `any` to disable this feature. Default value: `all`
 
 ```bash
 git clone https://github.com/sundowndev/PhoneInfoga
-cd ./PhoneInfoga
+cd PhoneInfoga/
 python3 -m pip install -r requirements.txt
 ```
 
@@ -81,7 +81,7 @@ python3 phoneinfoga.py -n +42837544833 -s ovh
 Check several numbers at once :
 
 ```
-python3 ./phoneinfoga.py -i numbers.txt -o results.txt
+python3 phoneinfoga.py -i numbers.txt -o results.txt
 ```
 
 **Note: `--osint` is not compatible with `--output` option.**
@@ -123,21 +123,22 @@ PhoneInfo use a workaround to handle Google bot detection. When running OSINT sc
 
 ![](https://i.imgur.com/qbFZa1m.png)
 
-### Steps
-
+### How to handle captcha
 - Follow the URL
 - Complete the captcha if needed
 - Open the dev tool (F12 on most browsers)
 - Go to **Storage**, then **Cookies**
-- Copy the value of the *GOOGLE_ABUSE_EXEMPTION* cookie and paste it in the CLI
-
-**Note: sometimes you'll need to refresh the page to get the cookie.**
+- Copy the value of the *GOOGLE_ABUSE_EXEMPTION* cookie and simply paste it in the CLI
 
 ![](https://i.imgur.com/KkE1EM5.png)
 
+### Troubleshooting
+
+The cookie should be created after you complete the captcha. If there's no captcha and *GOOGLE_ABUSE_EXEMPTION* cookie, try pressing F5 to refresh the page. The cookie should've been created. If refreshing the page does not help, change the query to something different (change the number or add text). Google will not necessarily ask you to complete a captcha if your request is the exact same as the previous one, because it'll usually be cached.
+
 ## Custom formatting
 
-Sometimes the phone number has footprints but is used with a different formatting. This is a problem because for example if we search for "+15417543010", we'll not find web pages that write it that way : "(541) 754–3010". So the tool use a (optional) custom formatting given by the user to find further and more accurate results.
+Sometimes the phone number has footprints but is used with a different formatting. This is a problem because for example if we search for "+15417543010", we'll not find web pages that write it that way : "(541) 754–3010". So the tool use a (optional) custom formatting given by the user to find further and more accurate results. To use this feature properly and make the results more valuable, try to use a format that someone of the number' country would usually use to share the phone number online. For example, French people usually write numbers that way online : *06.20.30.40.50*, *06 20 30 40 50*.
 
 ## License
 
