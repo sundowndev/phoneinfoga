@@ -98,5 +98,10 @@
     "site": "receive-sms-online.com",
     "request": "site:\"receive-sms-online.com\" intext:\"$n\"",
     "stop": 1
+  },
+  {
+    "site": "smslive.co",
+    "request": "site:\"smslive.co\" intext:\"$n\"",
+    "stop": 1
   }
 ]
