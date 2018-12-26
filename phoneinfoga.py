@@ -147,7 +147,7 @@ uagent.append("Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:63.0) Gecko/20100101 F
 
 number = '' # Full number format
 localNumber = '' # Local number format
-internationalNumber = '' # International numberformat
+internationalNumber = '' # International number format
 numberCountryCode = '' # Dial code; e.g:"+33"
 numberCountry = '' # Country; e.g:France
 
