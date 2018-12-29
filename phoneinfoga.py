@@ -482,14 +482,17 @@ def osintScan():
 
     if tmpNumAsk.lower() != 'n' and tmpNumAsk.lower() != 'no':
         print((code_info + '---- Temporary number providers footprints ----'))
-
-        print((code_info + "Searching for phone number on tempophone.com..."))
-        response = requests.request("GET", "https://tempophone.com/api/v1/phones")
-        data = json.loads(response.content)
-        for voip_number in data['objects']:
-            if voip_number['phone'] == formatNumber(number):
-                print((code_result + "Found a temporary number provider: tempophone.com"))
-                askForExit()
+        
+        try:
+            print((code_info + "Searching for phone number on tempophone.com..."))
+            response = requests.request("GET", "https://tempophone.com/api/v1/phones")
+            data = json.loads(response.content)
+            for voip_number in data['objects']:
+                if voip_number['phone'] == formatNumber(number):
+                    print((code_result + "Found a temporary number provider: tempophone.com"))
+                    askForExit()
+        except:
+            print((code_error + "Unable to reach tempophone.com API. Skipping."))
 
         osintDisposableNumScan()
 
