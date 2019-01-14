@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-__version__ = 'v1.0.0-rc2'
+__version__ = 'v1.1.0-rc1'
 
 try:
     import sys
@@ -147,7 +147,7 @@ uagent.append("Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:63.0) Gecko/20100101 F
 
 number = '' # Full number format
 localNumber = '' # Local number format
-internationalNumber = '' # International numberformat
+internationalNumber = '' # International number format
 numberCountryCode = '' # Dial code; e.g:"+33"
 numberCountry = '' # Country; e.g:France
 
@@ -464,10 +464,10 @@ def osintScan():
     # Documents
     print((code_info + "Searching for documents... (limit=10)"))
     if customFormatting:
-        req = 'intext:"{}" | intext:"{}" | intext:"{}" ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv | ext:txt'.format(number,internationalNumber,customFormatting)
+        req = '[ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv | ext:txt | ext:xls && intext:"{}"]'.format(customFormatting)
     else:
-        req = 'intext:"{}" | intext:"{}" ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv | ext:txt'.format(number,internationalNumber)
-    for result in search('intext:"{}" | intext:"{}" ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv | ext:txt'.format(number,internationalNumber), stop=10):
+        req = '[ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv | ext:txt | ext:xls && intext:"{}" | intext:"{}"]'.format(number,internationalNumber)
+    for result in search(req, stop=10):
         if result:
             print((code_result + "Result found: " + result))
 
@@ -482,14 +482,17 @@ def osintScan():
 
     if tmpNumAsk.lower() != 'n' and tmpNumAsk.lower() != 'no':
         print((code_info + '---- Temporary number providers footprints ----'))
-
-        print((code_info + "Searching for phone number on tempophone.com..."))
-        response = requests.request("GET", "https://tempophone.com/api/v1/phones")
-        data = json.loads(response.content)
-        for voip_number in data['objects']:
-            if voip_number['phone'] == formatNumber(number):
-                print((code_result + "Found a temporary number provider: tempophone.com"))
-                askForExit()
+        
+        try:
+            print((code_info + "Searching for phone number on tempophone.com..."))
+            response = requests.request("GET", "https://tempophone.com/api/v1/phones")
+            data = json.loads(response.content)
+            for voip_number in data['objects']:
+                if voip_number['phone'] == formatNumber(number):
+                    print((code_result + "Found a temporary number provider: tempophone.com"))
+                    askForExit()
+        except:
+            print((code_error + "Unable to reach tempophone.com API. Skipping."))
 
         osintDisposableNumScan()
 
