@@ -1,5 +1,6 @@
 # PhoneInfoga
 
+[![Build Status](https://travis-ci.org/sundowndev/PhoneInfoga.svg?branch=master)](https://travis-ci.org/sundowndev/PhoneInfoga)
 ![](https://img.shields.io/badge/python-3-blue.svg)
 ![](https://img.shields.io/github/tag/SundownDEV/PhoneInfoga.svg)
 ![](https://img.shields.io/badge/license-MIT-blue.svg)
