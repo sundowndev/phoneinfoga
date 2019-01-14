@@ -87,6 +87,7 @@ try:
     from phonenumbers import carrier
     from phonenumbers import geocoder
     from phonenumbers import timezone
+    from urllib.parse import urlencode
 except KeyboardInterrupt:
     print('\033[91m[!] Exiting.')
     sys.exit()
@@ -118,8 +119,12 @@ if args.update:
         'https://api.github.com/repos/sundowndev/PhoneInfoga/tags').content)[0]['name']
     print('Last version: {}'.format(new_version))
 
-    osintFiles = ['disposable_num_providers.json',
-                  'individuals.json', 'reputation.json', 'social_medias.json']
+    osintFiles = [
+        'disposable_num_providers.json',
+        'individuals.json',
+        'reputation.json',
+        'social_medias.json'
+    ]
 
     try:
         print('[*] Updating OSINT files')
@@ -185,12 +190,14 @@ def search(req, stop):
         'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.7',
         'Keep-Alive': '115',
         'Connection': 'keep-alive',
+        'Cache-Control': 'no-cache',
         'Cookie': 'Cookie: CGIC=Ij90ZXh0L2h0bWwsYXBwbGljYXRpb24veGh0bWwreG1sLGFwcGxpY2F0aW9uL3htbDtxPTAuOSwqLyo7cT0wLjg; CONSENT=YES+RE.fr+20150809-08-0; 1P_JAR=2018-11-28-14; NID=148=aSdSHJz71rufCokaUC93nH3H7lOb8E7BNezDWV-PyyiHTXqWK5Y5hsvj7IAzhZAK04-QNTXjYoLXVu_eiAJkiE46DlNn6JjjgCtY-7Fr0I4JaH-PZRb7WFgSTjiFqh0fw2cCWyN69DeP92dzMd572tQW2Z1gPwno3xuPrYC1T64wOud1DjZDhVAZkpk6UkBrU0PBcnLWL7YdL6IbEaCQlAI9BwaxoH_eywPVyS9V; SID=uAYeu3gT23GCz-ktdGInQuOSf-5SSzl3Plw11-CwsEYY0mqJLSiv7tFKeRpB_5iz8SH5lg.; HSID=AZmH_ctAfs0XbWOCJ; SSID=A0PcRJSylWIxJYTq_; APISID=HHB2bKfJ-2ZUL5-R/Ac0GK3qtM8EHkloNw; SAPISID=wQoxetHBpyo4pJKE/A2P6DUM9zGnStpIVt; SIDCC=ABtHo-EhFAa2AJrJIUgRGtRooWyVK0bAwiQ4UgDmKamfe88xOYBXM47FoL5oZaTxR3H-eOp7-rE; OTZ=4671861_52_52_123900_48_436380; OGPC=873035776-8:; OGP=-873035776:;'
     }
 
     try:
-        URL = 'https://www.google.com/search?tbs=li:1&q={}&amp;gws_rd=ssl'.format(
-            req)
+        REQ = urlencode({'q': req })
+        URL = 'https://www.google.com/search?tbs=li:1&{}&amp;gws_rd=ssl'.format(
+            REQ)
         r = s.get(URL + googleAbuseToken, headers=headers)
 
         while r.status_code == 503:
@@ -515,11 +522,11 @@ def osintScan():
     # Documents
     print((code_info + "Searching for documents... (limit=10)"))
     if customFormatting:
-        req = '[ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv | ext:txt | ext:xls && intext:"{}"]'.format(
+        req = '[ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv | ext:txt | ext:xls] && [intext:"{}"]'.format(
             customFormatting)
     else:
-        req = '[ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv | ext:txt | ext:xls && intext:"{}" | intext:"{}"]'.format(
-            number, internationalNumber)
+        req = '[ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv | ext:txt | ext:xls] && [intext:"{}" | intext:"{}"]'.format(
+            internationalNumber, localNumber)
     for result in search(req, stop=10):
         if result:
             print((code_result + "Result found: " + result))
