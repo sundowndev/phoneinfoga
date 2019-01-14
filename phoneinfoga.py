@@ -566,6 +566,13 @@ def osintScan():
 
     osintIndividualScan()
 
+    retry_input = input(code_info + "Would you like to rerun OSINT scan ? (e.g to use a different format) (y/N) ")
+
+    if retry_input.lower() == 'y' or retry_input.lower() == 'yes':
+        osintScan()
+    else:
+        return -1
+
 
 def askForExit():
     if not args.output:
