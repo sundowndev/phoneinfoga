@@ -4,7 +4,7 @@
  / ___/| | | | (_) | | | |  __/\/ /_ | | | |  _| (_) | (_| | (_| |
  \/    |_| |_|\___/|_| |_|\___\____/ |_| |_|_|  \___/ \__, |\__,_|
                                                       |___/       
- PhoneInfoga Ver. v1.0.0-rc2
+ PhoneInfoga Ver. v1.1.0-rc1
  Coded by Sundowndev
 
 
@@ -28,4 +28,4 @@
 [*] Running OVH scan...
 [*] Scan finished.
 
-[0m
+
