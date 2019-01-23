@@ -308,22 +308,25 @@ def numverifyScan():
     apiKey = hashlib.md5((number + requestSecret).encode('utf-8')).hexdigest()
 
     headers = {
-        'host': "numverify.com",
-        'connection': "keep-alive",
-        'content-length': "49",
-        'accept': "application/json",
-        'origin': "https://numverify.com",
-        'x-requested-with': "XMLHttpRequest",
-        'user-agent': "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36",
-        'content-type': "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
-        'referer': "https://numverify.com/",
-        'accept-encoding': "gzip, deflate, br",
-        'accept-language': "en-US,en;q=0.9,fr;q=0.8,la;q=0.7,es;q=0.6,zh-CN;q=0.5,zh;q=0.4",
-        'cache-control': "no-cache"
+        'Host': 'numverify.com',
+        'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:64.0) Gecko/20100101 Firefox/64.0',
+        'Accept': 'application/json, text/javascript, */*; q=0.01',
+        'Accept-Language': 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Referer': 'https://numverify.com/',
+        'X-Requested-With': 'XMLHttpRequest',
+        'DNT': '1',
+        'Connection': 'keep-alive',
+        'Pragma': 'no-cache',
+        'Cache-Control': 'no-cache'
     }
 
-    response = requests.request(
+    try:
+        response = requests.request(
         "GET", "https://numverify.com/php_helper_scripts/phone_api.php?secret_key={}&number={}".format(apiKey, number), data="", headers=headers)
+    except:
+        print(code_error + 'Numverify is not available')
+        return -1
 
     if response.content == "Unauthorized" or response.status_code != 200:
         print((code_error + "An error occured while calling the API (bad request or wrong api key)."))
