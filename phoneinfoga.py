@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-__version__ = 'v1.0.0-rc2'
+__version__ = 'v1.0.0'
 
 try:
     import sys
@@ -165,11 +165,11 @@ uagent.append(
 uagent.append(
     "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:63.0) Gecko/20100101 Firefox/63.0")
 
-number = ''  # Full number format
-localNumber = ''  # Local number format
-internationalNumber = ''  # International number format
-numberCountryCode = ''  # Dial code; e.g:"+33"
-numberCountry = ''  # Country; e.g:France
+number = ''  # Full number format; e.g: 3312345678
+localNumber = ''  # Local number format; e.g: 06 12 34 56 78
+internationalNumber = ''  # International number format; e.g: +33 6 12 34 56 78
+numberCountryCode = ''  # Dial code; e.g: 33
+numberCountry = ''  # Country; e.g: fr
 
 googleAbuseToken = ''
 customFormatting = ''
