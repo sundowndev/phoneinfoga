@@ -233,7 +233,7 @@ def search(req, stop):
 
         return links
     except:
-        print(code_error + 'Request failed. Please retry or open an issue on GitHub.')
+        print(code_error + 'Request failed. Please retry or open an issue on https://github.com/sundowndev/PhoneInfoga.')
 
 
 def formatNumber(InputNumber):
@@ -265,12 +265,12 @@ def localScan(InputNumber):
             PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL).split(' ')[0]
 
         try:
-            countries = json.load(open('data/countryCodes.json'))
+            countries = json.load(open('data/CountryCodes.json'))
 
             for country in countries:
-                if (countries[country] == numberCountryCode.replace('+', '')):
-                    print(code_info + 'Country code found: {}'.format(country))
-                    numberCountry = country
+                if (country['dial_code'].replace(' ', '') == numberCountryCode):
+                    print(code_info + 'Country code found: {} ({})'.format(country['name'],country['code']))
+                    numberCountry = country['code']
                     break
         except:
             print(code_error + 'Unable to find country code.')
