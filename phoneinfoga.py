@@ -379,10 +379,13 @@ def ovhScan():
         'cache-control': "no-cache"
     }
 
-    response = requests.request(
-        "GET", "https://api.ovh.com/1.0/telephony/number/detailedZones", data="", headers=headers, params=querystring)
-
-    data = json.loads(response.content)
+    try:
+        response = requests.request(
+            "GET", "https://api.ovh.com/1.0/telephony/number/detailedZones", data="", headers=headers, params=querystring)
+        data = json.loads(response.content)
+    except:
+        print(code_error + 'OVH API is unreachable. Maybe retry later.')
+        return -1
 
     if isinstance(data, list):
         askedNumber = "0" + localNumber.replace(localNumber[-4:], 'xxxx')
