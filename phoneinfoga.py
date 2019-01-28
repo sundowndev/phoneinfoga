@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-__version__ = 'v1.1.2-rc1'
+__version__ = 'v1.0.0-rc3'
 
 try:
     import sys
@@ -195,7 +195,7 @@ def search(req, stop):
     }
 
     try:
-        REQ = urlencode({'q': req })
+        REQ = urlencode({'q': req})
         URL = 'https://www.google.com/search?tbs=li:1&{}&amp;gws_rd=ssl'.format(
             REQ)
         r = s.get(URL + googleAbuseToken, headers=headers)
@@ -264,9 +264,17 @@ def localScan(InputNumber):
         numberCountryCode = phonenumbers.format_number(
             PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL).split(' ')[0]
 
-        countryRequest = json.loads(requests.request(
-            'GET', 'https://restcountries.eu/rest/v2/callingcode/{}'.format(numberCountryCode.replace('+', ''))).content)
-        numberCountry = countryRequest[0]['alpha2Code']
+        try:
+            countries = json.load(open('data/countryCodes.json'))
+
+            for country in countries:
+                if (countries[country] == numberCountryCode.replace('+', '')):
+                    print(code_info + 'Country code found: {}'.format(country))
+                    numberCountry = country
+                    break
+        except:
+            print(code_error + 'Unable to find country code.')
+            print(numberCountry)
 
         localNumber = phonenumbers.format_number(
             PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164).replace(numberCountryCode, '')
@@ -323,7 +331,7 @@ def numverifyScan():
 
     try:
         response = requests.request(
-        "GET", "https://numverify.com/php_helper_scripts/phone_api.php?secret_key={}&number={}".format(apiKey, number), data="", headers=headers)
+            "GET", "https://numverify.com/php_helper_scripts/phone_api.php?secret_key={}&number={}".format(apiKey, number), data="", headers=headers)
     except:
         print(code_error + 'Numverify is not available')
         return -1
@@ -490,7 +498,6 @@ def osintScan():
     global localNumber
     global internationalNumber
     global numberCountryCode
-    global numberCountry
     global customFormatting
 
     if not args.osint:
@@ -576,7 +583,8 @@ def osintScan():
 
     osintIndividualScan()
 
-    retry_input = input(code_info + "Would you like to rerun OSINT scan ? (e.g to use a different format) (y/N) ")
+    retry_input = input(
+        code_info + "Would you like to rerun OSINT scan ? (e.g to use a different format) (y/N) ")
 
     if retry_input.lower() == 'y' or retry_input.lower() == 'yes':
         osintScan()
@@ -621,6 +629,7 @@ def scanNumber(InputNumber):
         print('\n' + Style.RESET_ALL)
     else:
         print('\n')
+
 
 try:
     if args.no_ansi or args.output:
