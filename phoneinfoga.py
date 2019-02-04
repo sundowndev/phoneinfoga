@@ -332,6 +332,8 @@ def numverifyScan():
     try:
         response = requests.request(
             "GET", "https://numverify.com/php_helper_scripts/phone_api.php?secret_key={}&number={}".format(apiKey, number), data="", headers=headers)
+
+        data = json.loads(response.content.decode('utf-8'))
     except:
         print(code_error + 'Numverify is not available')
         return -1
@@ -339,8 +341,6 @@ def numverifyScan():
     if response.content == "Unauthorized" or response.status_code != 200:
         print((code_error + "An error occured while calling the API (bad request or wrong api key)."))
         return -1
-
-    data = json.loads(response.content)
 
     if data["valid"] == False:
         print((code_error + "Error: Please specify a valid phone number. Example: +6464806649"))
@@ -382,7 +382,7 @@ def ovhScan():
     try:
         response = requests.request(
             "GET", "https://api.ovh.com/1.0/telephony/number/detailedZones", data="", headers=headers, params=querystring)
-        data = json.loads(response.content)
+        data = json.loads(response.content.decode('utf-8'))
     except:
         print(code_error + 'OVH API is unreachable. Maybe retry later.')
         return -1
@@ -562,7 +562,7 @@ def osintScan():
             print((code_info + "Searching for phone number on tempophone.com..."))
             response = requests.request(
                 "GET", "https://tempophone.com/api/v1/phones")
-            data = json.loads(response.content)
+            data = json.loads(response.content.decode('utf-8'))
             for voip_number in data['objects']:
                 if voip_number['phone'] == formatNumber(number):
                     print(
