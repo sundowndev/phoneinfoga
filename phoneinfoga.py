@@ -264,18 +264,6 @@ def localScan(InputNumber):
         numberCountryCode = phonenumbers.format_number(
             PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL).split(' ')[0]
 
-        try:
-            countries = json.load(open('data/CountryCodes.json'))
-
-            for country in countries:
-                if (country['dial_code'].replace(' ', '') == numberCountryCode):
-                    print(code_info + 'Country code found: {} ({})'.format(country['name'],country['code']))
-                    numberCountry = country['code']
-                    break
-        except:
-            print(code_error + 'Unable to find country code.')
-            print(numberCountry)
-
         localNumber = phonenumbers.format_number(
             PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164).replace(numberCountryCode, '')
         internationalNumber = phonenumbers.format_number(
@@ -283,11 +271,9 @@ def localScan(InputNumber):
 
         print(code_result + 'International format: {}'.format(internationalNumber))
         print(code_result + 'Local format: 0{}'.format(localNumber))
-        print(code_result + 'Country code: {}'.format(numberCountryCode))
-        print(code_result + 'Location: {}'.format(geocoder.description_for_number(PhoneNumberObject, "en")))
-        print(code_result +
-              'Carrier: {}'.format(carrier.name_for_number(PhoneNumberObject, 'en')))
-        print(code_result + 'Area: {}'.format(geocoder.description_for_number(PhoneNumberObject, 'en')))
+        print(code_result + 'Country found: {} ({})'.format(geocoder.country_name_for_number(PhoneNumberObject, "en"), numberCountryCode))
+        print(code_result + 'City/Area: {}'.format(geocoder.description_for_number(PhoneNumberObject, "en")))
+        print(code_result + 'Carrier: {}'.format(carrier.name_for_number(PhoneNumberObject, 'en')))
         for timezoneResult in timezone.time_zones_for_number(PhoneNumberObject):
             print(code_result + 'Timezone: {}'.format(timezoneResult))
 
@@ -636,13 +622,13 @@ def scanNumber(InputNumber):
 
 try:
     if args.no_ansi or args.output:
-        code_info = '[*] '
+        code_info = '[-] '
         code_warning = '(!) '
         code_result = '[+] '
         code_error = '[!] '
         code_title = ''
     else:
-        code_info = Fore.RESET + Style.BRIGHT + '[*] '
+        code_info = Fore.RESET + Style.BRIGHT + '[-] '
         code_warning = Fore.YELLOW + Style.BRIGHT + '(!) '
         code_result = Fore.GREEN + Style.BRIGHT + '[+] '
         code_error = Fore.RED + Style.BRIGHT + '[!] '
