@@ -291,9 +291,14 @@ def numverifyScan():
 
     print(code_info + 'Running Numverify.com scan...')
 
-    requestSecret = ''
-    resp = requests.get('https://numverify.com/')
-    soup = BeautifulSoup(resp.text, "html5lib")
+    try:
+        requestSecret = ''
+        resp = requests.get('https://numverify.com/')
+        soup = BeautifulSoup(resp.text, "html5lib")
+    except:
+        print(code_error + 'Numverify.com is not available')
+        return -1
+
     for tag in soup.find_all("input", type="hidden"):
         if tag['name'] == "scl_request_secret":
             requestSecret = tag['value']
@@ -321,7 +326,7 @@ def numverifyScan():
 
         data = json.loads(response.content.decode('utf-8'))
     except:
-        print(code_error + 'Numverify is not available')
+        print(code_error + 'Numverify.com is not available')
         return -1
 
     if response.content == "Unauthorized" or response.status_code != 200:
