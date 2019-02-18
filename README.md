@@ -15,14 +15,20 @@
   </a>
 </div>
 
-<div align="center">
-  <strong>Information gathering & OSINT reconnaissance tool for phone numbers</strong>
-</div>
+<h4 align="center">Information gathering & OSINT reconnaissance tool for phone numbers</h4>
 
 <h3 align="center">
   <a href="https://github.com/sundowndev/PhoneInfoga/wiki">Documentation</a> | 
   <a href="https://medium.com/@SundownDEV/phone-number-scanning-osint-recon-tool-6ad8f0cac27b">OSINT Tutorial</a>
 </h3>
+
+<div align="center">
+  <sub>For the love of investigations. Built with ❤︎ by
+  <a href="https://twitter.com/sundowndev">@sundowndev</a> and
+  <a href="https://github.com/sundowndev/PhoneInfoga/graphs/contributors">
+    contributors
+  </a>
+</div>
 
 ## About
 
