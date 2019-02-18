@@ -4,34 +4,26 @@ __version__ = 'v1.0.0'
 
 try:
     import sys
+    import signal
     from colorama import Fore, Style
     import atexit
     import argparse
     import random
-except KeyboardInterrupt:
-    print('[!] Exiting.')
-    sys.exit()
-except:
+    import time
+    import hashlib
+    import json
+    import re
+    import requests
+    import urllib3
+    from bs4 import BeautifulSoup
+    import html5lib
+    import phonenumbers
+    from phonenumbers import carrier
+    from phonenumbers import geocoder
+    from phonenumbers import timezone
+    from urllib.parse import urlencode
+except Exception as e:
     print('[!] Missing requirements. Try running python3 -m pip install -r requirements.txt')
-    sys.exit()
-
-
-def banner():
-    print("    ___ _                       _____        __                   ")
-    print("   / _ \ |__   ___  _ __   ___  \_   \_ __  / _| ___   __ _  __ _ ")
-    print("  / /_)/ '_ \ / _ \| '_ \ / _ \  / /\/ '_ \| |_ / _ \ / _` |/ _` |")
-    print(" / ___/| | | | (_) | | | |  __/\/ /_ | | | |  _| (_) | (_| | (_| |")
-    print(" \/    |_| |_|\___/|_| |_|\___\____/ |_| |_|_|  \___/ \__, |\__,_|")
-    print("                                                      |___/       ")
-    print(" PhoneInfoga Ver. {}".format(__version__))
-    print(" Coded by Sundowndev")
-    print("\n")
-
-
-banner()
-
-if sys.version_info[0] < 3:
-    print("\033[1m\033[93m(!) Please run the tool using Python 3" + Style.RESET_ALL)
     sys.exit()
 
 parser = argparse.ArgumentParser(description="Advanced information gathering tool for phone numbers (https://github.com/sundowndev/PhoneInfoga) version {}".format(__version__),
@@ -58,106 +50,22 @@ parser.add_argument('-u', '--update', action='store_true',
 parser.add_argument('--no-ansi', action='store_true',
                     help='Disable colored output')
 
+parser.add_argument('-v', '--version', action='store_true',
+                    help='Show tool version')
+
 args = parser.parse_args()
 
-
-def resetColors():
-    if not args.output:
-        print(Style.RESET_ALL)
-
-
-# Reset text color at exit
-atexit.register(resetColors)
-
-# If any param is passed, execute help command
-if not len(sys.argv) > 1:
-    parser.print_help()
-    sys.exit()
-
-try:
-    import time
-    import hashlib
-    import json
-    import re
-    import requests
-    import urllib3
-    from bs4 import BeautifulSoup
-    import html5lib
-    import phonenumbers
-    from phonenumbers import carrier
-    from phonenumbers import geocoder
-    from phonenumbers import timezone
-    from urllib.parse import urlencode
-except KeyboardInterrupt:
-    print('\033[91m[!] Exiting.')
-    sys.exit()
-except:
-    print('\033[91m[!] Missing requirements. Try running python3 -m pip install -r requirements.txt')
-    sys.exit()
-
-requests.packages.urllib3.disable_warnings()
-requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += 'HIGH:!DH:!aNULL'
-try:
-    requests.packages.urllib3.contrib.pyopenssl.DEFAULT_SSL_CIPHER_LIST += 'HIGH:!DH:!aNULL'
-except AttributeError:
-    # no pyopenssl support used / needed / available
-    pass
-
-if args.update:
-    def download_file(url, target_path):
-        response = requests.get(url, stream=True)
-        handle = open(target_path, "wb")
-        for chunk in response.iter_content(chunk_size=512):
-            if chunk:  # filter out keep-alive new chunks
-                handle.write(chunk)
-
-    print('Updating PhoneInfoga...')
-    print('Actual version: {}'.format(__version__))
-
-    # Fetching last github tag
-    new_version = json.loads(requests.get(
-        'https://api.github.com/repos/sundowndev/PhoneInfoga/tags').content)[0]['name']
-    print('Last version: {}'.format(new_version))
-
-    osintFiles = [
-        'disposable_num_providers.json',
-        'individuals.json',
-        'reputation.json',
-        'social_medias.json'
-    ]
-
-    try:
-        print('[*] Updating OSINT files')
-
-        for file in osintFiles:
-            url = 'https://raw.githubusercontent.com/sundowndev/PhoneInfoga/master/osint/{}'.format(
-                file)
-            output_directory = 'osint/{}'.format(file)
-            download_file(url, output_directory)
-
-        print('[*] Updating python script')
-
-        url = 'https://raw.githubusercontent.com/sundowndev/PhoneInfoga/master/phoneinfoga.py'
-        output_directory = 'phoneinfoga.py'
-        download_file(url, output_directory)
-    except:
-        print('Update failed. Try using git pull.')
-        sys.exit()
-
-    print('The tool was successfully updated.')
-    sys.exit()
-
-scanners = ['any', 'all', 'numverify', 'ovh']
-
 uagent = []
-uagent.append("Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0) Opera 12.14")
+uagent.append(
+    "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0) Opera 12.14")
 uagent.append(
     "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:26.0) Gecko/20100101 Firefox/26.0")
 uagent.append(
     "Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.3) Gecko/20090913 Firefox/3.5.3")
 uagent.append(
     "Mozilla/5.0 (Windows; U; Windows NT 6.1; en; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3 (.NET CLR 3.5.30729)")
-uagent.append("Mozilla/5.0 (Windows NT 6.2) AppleWebKit/535.7 (KHTML, like Gecko) Comodo_Dragon/16.1.1.0 Chrome/16.0.912.63 Safari/535.7")
+uagent.append(
+    "Mozilla/5.0 (Windows NT 6.2) AppleWebKit/535.7 (KHTML, like Gecko) Comodo_Dragon/16.1.1.0 Chrome/16.0.912.63 Safari/535.7")
 uagent.append(
     "Mozilla/5.0 (Windows; U; Windows NT 5.2; en-US; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3 (.NET CLR 3.5.30729)")
 uagent.append(
@@ -173,6 +81,36 @@ numberCountry = ''  # Country; e.g: fr
 
 googleAbuseToken = ''
 customFormatting = ''
+
+if args.no_ansi or args.output:
+    code_info = '[-] '
+    code_warning = '(!) '
+    code_result = '[+] '
+    code_error = '[!] '
+    code_title = ''
+else:
+    code_info = Fore.RESET + Style.BRIGHT + '[-] '
+    code_warning = Fore.YELLOW + Style.BRIGHT + '(!) '
+    code_result = Fore.GREEN + Style.BRIGHT + '[+] '
+    code_error = Fore.RED + Style.BRIGHT + '[!] '
+    code_title = Fore.YELLOW + Style.BRIGHT
+
+
+def banner():
+    print("    ___ _                       _____        __                   ")
+    print("   / _ \ |__   ___  _ __   ___  \_   \_ __  / _| ___   __ _  __ _ ")
+    print("  / /_)/ '_ \ / _ \| '_ \ / _ \  / /\/ '_ \| |_ / _ \ / _` |/ _` |")
+    print(" / ___/| | | | (_) | | | |  __/\/ /_ | | | |  _| (_) | (_| | (_| |")
+    print(" \/    |_| |_|\___/|_| |_|\___\____/ |_| |_|_|  \___/ \__, |\__,_|")
+    print("                                                      |___/       ")
+    print(" PhoneInfoga Ver. {}".format(__version__))
+    print(" Coded by Sundowndev")
+    print("\n")
+
+
+def resetColors():
+    if not args.output:
+        print(Style.RESET_ALL)
 
 
 def search(req, stop):
@@ -229,10 +167,11 @@ def search(req, stop):
             if re.match(r"^(?:\/search\?q\=)", url) is not None:
                 url = 'https://google.com' + url
 
-            links.append(url)
-
-        return links
-    except:
+        if links is not None:
+            return links
+        else:
+            return []
+    except Exception as e:
         print(code_error + 'Request failed. Please retry or open an issue on https://github.com/sundowndev/PhoneInfoga.')
 
 
@@ -253,7 +192,7 @@ def localScan(InputNumber):
 
     try:
         PhoneNumberObject = phonenumbers.parse(FormattedPhoneNumber, None)
-    except:
+    except Exception as e:
         return False
     else:
         if not phonenumbers.is_valid_number(PhoneNumberObject):
@@ -298,7 +237,7 @@ def numverifyScan():
         requestSecret = ''
         resp = requests.get('https://numverify.com/')
         soup = BeautifulSoup(resp.text, "html5lib")
-    except:
+    except Exception as e:
         print(code_error + 'Numverify.com is not available')
         return -1
 
@@ -328,7 +267,7 @@ def numverifyScan():
             "GET", "https://numverify.com/php_helper_scripts/phone_api.php?secret_key={}&number={}".format(apiKey, number), data="", headers=headers)
 
         data = json.loads(response.content.decode('utf-8'))
-    except:
+    except Exception as e:
         print(code_error + 'Numverify.com is not available')
         return -1
 
@@ -377,7 +316,7 @@ def ovhScan():
         response = requests.request(
             "GET", "https://api.ovh.com/1.0/telephony/number/detailedZones", data="", headers=headers, params=querystring)
         data = json.loads(response.content.decode('utf-8'))
-    except:
+    except Exception as e:
         print(code_error + 'OVH API is unreachable. Maybe retry later.')
         return -1
 
@@ -425,6 +364,7 @@ def osintIndividualScan():
 
             print(
                 (code_info + "Searching for footprints on {}...".format(dork['site'])))
+
             for result in search(dorkRequest, stop=dork['stop']):
                 if result:
                     print((code_result + "URL: " + result))
@@ -468,6 +408,7 @@ def osintSocialMediaScan():
 
         print(
             (code_info + "Searching for footprints on {}...".format(dork['site'])))
+
         for result in search(dorkRequest, stop=dork['stop']):
             if result:
                 print((code_result + "URL: " + result))
@@ -483,6 +424,7 @@ def osintDisposableNumScan():
 
         print(
             (code_info + "Searching for footprints on {}...".format(dork['site'])))
+
         for result in search(dorkRequest, stop=dork['stop']):
             if result:
                 print((code_result + "Result found: {}".format(dork['site'])))
@@ -490,7 +432,7 @@ def osintDisposableNumScan():
                 askForExit()
 
 
-def osintScan():
+def osintScan(rerun=False):
     global number
     global localNumber
     global internationalNumber
@@ -502,15 +444,16 @@ def osintScan():
 
     print(code_info + 'Running OSINT footprint reconnaissance...')
 
-    # Whitepages
-    print((code_info + "Generating scan URL on 411.com..."))
-    print(code_result + "Scan URL: https://www.411.com/phone/{}".format(
-        internationalNumber.replace('+', '').replace(' ', '-')))
+    if not rerun:
+        # Whitepages
+        print((code_info + "Generating scan URL on 411.com..."))
+        print(code_result + "Scan URL: https://www.411.com/phone/{}".format(
+            internationalNumber.replace('+', '').replace(' ', '-')))
 
-    askingCustomPayload = input(
-        code_info + 'Would you like to use an additional format for this number ? (y/N) ')
+        askingCustomPayload = input(
+            code_info + 'Would you like to use an additional format for this number ? (y/N) ')
 
-    if askingCustomPayload == 'y' or askingCustomPayload == 'yes':
+    if rerun or askingCustomPayload == 'y' or askingCustomPayload == 'yes':
         customFormatting = input(code_info + 'Custom format: ')
 
     print((code_info + '---- Web pages footprints ----'))
@@ -562,7 +505,7 @@ def osintScan():
                     print(
                         (code_result + "Found a temporary number provider: tempophone.com"))
                     askForExit()
-        except:
+        except Exception as e:
             print((code_error + "Unable to reach tempophone.com API. Skipping."))
 
         osintDisposableNumScan()
@@ -584,7 +527,7 @@ def osintScan():
         code_info + "Would you like to rerun OSINT scan ? (e.g to use a different format) (y/N) ")
 
     if retry_input.lower() == 'y' or retry_input.lower() == 'yes':
-        osintScan()
+        osintScan(True)
     else:
         return -1
 
@@ -628,19 +571,83 @@ def scanNumber(InputNumber):
         print('\n')
 
 
-try:
-    if args.no_ansi or args.output:
-        code_info = '[-] '
-        code_warning = '(!) '
-        code_result = '[+] '
-        code_error = '[!] '
-        code_title = ''
-    else:
-        code_info = Fore.RESET + Style.BRIGHT + '[-] '
-        code_warning = Fore.YELLOW + Style.BRIGHT + '(!) '
-        code_result = Fore.GREEN + Style.BRIGHT + '[+] '
-        code_error = Fore.RED + Style.BRIGHT + '[!] '
-        code_title = Fore.YELLOW + Style.BRIGHT
+def download_file(url, target_path):
+    response = requests.get(url, stream=True)
+    handle = open(target_path, "wb")
+    for chunk in response.iter_content(chunk_size=512):
+        if chunk:  # filter out keep-alive new chunks
+            handle.write(chunk)
+
+
+def updateTool():
+    print('Updating PhoneInfoga...')
+    print('Actual version: {}'.format(__version__))
+
+    # Fetching last github tag
+    new_version = json.loads(requests.get(
+        'https://api.github.com/repos/sundowndev/PhoneInfoga/tags').content)[0]['name']
+    print('Last version: {}'.format(new_version))
+
+    osintFiles = [
+        'disposable_num_providers.json',
+        'individuals.json',
+        'reputation.json',
+        'social_medias.json'
+    ]
+
+    try:
+        print('[*] Updating OSINT files')
+
+        for file in osintFiles:
+            url = 'https://raw.githubusercontent.com/sundowndev/PhoneInfoga/master/osint/{}'.format(
+                file)
+            output_directory = 'osint/{}'.format(file)
+            download_file(url, output_directory)
+
+        print('[*] Updating python script')
+
+        url = 'https://raw.githubusercontent.com/sundowndev/PhoneInfoga/master/phoneinfoga.py'
+        output_directory = 'phoneinfoga.py'
+        download_file(url, output_directory)
+    except Exception as e:
+        print('Update failed. Try using git pull.')
+        sys.exit()
+
+    print('The tool was successfully updated.')
+    sys.exit()
+
+
+def main():
+    scanners = ['any', 'all', 'numverify', 'ovh']
+
+    banner()
+
+    if sys.version_info[0] < 3:
+        print(
+            "\033[1m\033[93m(!) Please run the tool using Python 3" + Style.RESET_ALL)
+        sys.exit()
+
+    # Reset text color at exit
+    atexit.register(resetColors)
+
+    # If any param is passed, execute help command
+    if not len(sys.argv) > 1:
+        parser.print_help()
+        sys.exit()
+    elif args.version:
+        print("Version {}".format(__version__))
+        sys.exit()
+
+    requests.packages.urllib3.disable_warnings()
+    requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += 'HIGH:!DH:!aNULL'
+    try:
+        requests.packages.urllib3.contrib.pyopenssl.DEFAULT_SSL_CIPHER_LIST += 'HIGH:!DH:!aNULL'
+    except AttributeError:
+        # no pyopenssl support used / needed / available
+        pass
+
+    if args.update:
+        updateTool()
 
     if args.output:
         if args.osint:
@@ -649,7 +656,7 @@ try:
             sys.exit()
 
         sys.stdout = args.output
-        banner()
+        banner()  # Output banner again in the file
 
     # Verify scanner option
     if not args.scanner in scanners:
@@ -667,6 +674,13 @@ try:
 
     if args.output:
         args.output.close()
-except KeyboardInterrupt:
-    print(("\n" + code_error + "Scan interrupted. Good bye!"))
+
+
+def signal_handler(signal, frame):
+    print('\n[-] You pressed Ctrl+C! Exiting.')
     sys.exit()
+
+
+if __name__ == '__main__':
+    signal.signal(signal.SIGINT, signal_handler)
+    main()
