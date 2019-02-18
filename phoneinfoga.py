@@ -658,6 +658,9 @@ try:
     elif args.input:
         for line in args.input.readlines():
             scanNumber(line)
+    else:
+        parser.print_help()
+        sys.exit()
 
     if args.output:
         args.output.close()
