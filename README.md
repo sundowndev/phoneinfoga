@@ -1,15 +1,35 @@
-# PhoneInfoga
+<h1 align="center">PhoneInfoga</h1>
 
-[![Build Status](https://travis-ci.org/sundowndev/PhoneInfoga.svg?branch=master)](https://travis-ci.org/sundowndev/PhoneInfoga)
-![](https://img.shields.io/badge/python-3.6-blue.svg)
-![](https://img.shields.io/github/tag/SundownDEV/PhoneInfoga.svg)
-![](https://img.shields.io/badge/license-MIT-blue.svg)
+<div align="center">
+  <a href="https://travis-ci.org/sundowndev/PhoneInfoga">
+    <img src="https://img.shields.io/travis/sundowndev/PhoneInfoga/master.svg?style=flat-square" alt="Build Status" />
+  </a>
+  <a href="#">
+    <img src="https://img.shields.io/badge/python-3.6-blue.svg?style=flat-square" alt="Python version" />
+  </a>
+  <a href="https://github.com/sundowndev/PhoneInfoga/releases">
+    <img src="https://img.shields.io/github/tag/SundownDEV/PhoneInfoga.svg?style=flat-square" alt="Latest version" />
+  </a>
+  <a href="https://github.com/sundowndev/PhoneInfoga/blob/master/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square" alt="License" />
+  </a>
+</div>
 
-Information gathering & OSINT reconnaissance tool for phone numbers.
+<h4 align="center">Information gathering & OSINT reconnaissance tool for phone numbers</h4>
 
-One of the most advanced tools to scan phone numbers using only free resources. The goal is to first gather basic information such as country, area, carrier and line type on any international phone numbers with a very good accuracy. Then try to determine the VoIP provider or search for footprints on search engines to try identify the owner.
+<div align="center">
+  <sub>For the love of open source investigations. Built with ❤︎ by
+  <a href="https://twitter.com/sundowndev">@sundowndev</a>
+</div>
 
-### [OSINT Tutorial: Building an OSINT Reconnaissance Tool from Scratch](https://medium.com/@SundownDEV/phone-number-scanning-osint-recon-tool-6ad8f0cac27b)
+<h3 align="center">
+  <a href="https://github.com/sundowndev/PhoneInfoga/wiki">Documentation</a> | 
+  <a href="https://medium.com/@SundownDEV/phone-number-scanning-osint-recon-tool-6ad8f0cac27b">OSINT Tutorial</a>
+</h3>
+
+## About
+
+PhoneInfoga is one of the most advanced tools to scan phone numbers using only free resources. The goal is to first gather basic information such as country, area, carrier and line type on any international phone numbers with a very good accuracy. Then try to determine the VoIP provider or search for footprints on search engines to try identify the owner.
 
 ## Features
 
