@@ -271,9 +271,12 @@ def localScan(InputNumber):
 
         print(code_result + 'International format: {}'.format(internationalNumber))
         print(code_result + 'Local format: 0{}'.format(localNumber))
-        print(code_result + 'Country found: {} ({})'.format(geocoder.country_name_for_number(PhoneNumberObject, "en"), numberCountryCode))
-        print(code_result + 'City/Area: {}'.format(geocoder.description_for_number(PhoneNumberObject, "en")))
-        print(code_result + 'Carrier: {}'.format(carrier.name_for_number(PhoneNumberObject, 'en')))
+        print(code_result + 'Country found: {} ({})'.format(
+            geocoder.country_name_for_number(PhoneNumberObject, "en"), numberCountryCode))
+        print(code_result + 'City/Area: {}'.format(
+            geocoder.description_for_number(PhoneNumberObject, "en")))
+        print(code_result +
+              'Carrier: {}'.format(carrier.name_for_number(PhoneNumberObject, 'en')))
         for timezoneResult in timezone.time_zones_for_number(PhoneNumberObject):
             print(code_result + 'Timezone: {}'.format(timezoneResult))
 
