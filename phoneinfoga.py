@@ -202,20 +202,23 @@ def localScan(InputNumber):
             PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164).replace('+', '')
         numberCountryCode = phonenumbers.format_number(
             PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL).split(' ')[0]
+        numberCountry = phonenumbers.region_code_for_country_code(
+            int(numberCountryCode.replace('+', '')))
 
         localNumber = phonenumbers.format_number(
             PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164).replace(numberCountryCode, '')
         internationalNumber = phonenumbers.format_number(
             PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL)
 
+        country = geocoder.country_name_for_number(PhoneNumberObject, "en")
+        location = geocoder.description_for_number(PhoneNumberObject, "en")
+        carrierName = carrier.name_for_number(PhoneNumberObject, 'en')
+
         print(code_result + 'International format: {}'.format(internationalNumber))
         print(code_result + 'Local format: 0{}'.format(localNumber))
-        print(code_result + 'Country found: {} ({})'.format(
-            geocoder.country_name_for_number(PhoneNumberObject, "en"), numberCountryCode))
-        print(code_result + 'City/Area: {}'.format(
-            geocoder.description_for_number(PhoneNumberObject, "en")))
-        print(code_result +
-              'Carrier: {}'.format(carrier.name_for_number(PhoneNumberObject, 'en')))
+        print(code_result + 'Country found: {} ({})'.format(country, numberCountryCode))
+        print(code_result + 'City/Area: {}'.format(location))
+        print(code_result + 'Carrier: {}'.format(carrierName))
         for timezoneResult in timezone.time_zones_for_number(PhoneNumberObject):
             print(code_result + 'Timezone: {}'.format(timezoneResult))
 
@@ -544,16 +547,16 @@ def askForExit():
 
 
 def scanNumber(InputNumber):
-    print(code_title +
-          "[!] ---- Fetching informations for {} ---- [!]".format(formatNumber(InputNumber)))
-
-    localScan(InputNumber)
-
     global number
     global localNumber
     global internationalNumber
     global numberCountryCode
     global numberCountry
+
+    print(code_title +
+          "[!] ---- Fetching informations for {} ---- [!]".format(formatNumber(InputNumber)))
+
+    localScan(InputNumber)
 
     if not number:
         print((code_error + "Error: number {} is not valid. Skipping.".format(formatNumber(InputNumber))))
