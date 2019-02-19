@@ -202,8 +202,7 @@ def localScan(InputNumber):
             PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164).replace('+', '')
         numberCountryCode = phonenumbers.format_number(
             PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL).split(' ')[0]
-        numberCountry = phonenumbers.region_code_for_country_code(
-            int(numberCountryCode.replace('+', '')))
+        numberCountry = phonenumbers.region_code_for_country_code(int(numberCountryCode))
 
         localNumber = phonenumbers.format_number(
             PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164).replace(numberCountryCode, '')
