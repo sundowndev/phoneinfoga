@@ -119,7 +119,7 @@ def search(req, stop):
 
     chosenUserAgent = random.choice(uagent)
 
-    s = requests.Session()
+    reqSession = requests.Session()
     headers = {
         'User-Agent': chosenUserAgent,
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -134,19 +134,20 @@ def search(req, stop):
 
     try:
         REQ = urlencode({'q': req})
-        URL = 'https://www.google.com/search?tbs=li:1&{}&amp;gws_rd=ssl'.format(
+        URL = 'https://www.google.com/search?tbs=li:1&{}&amp;gws_rd=ssl&amp;gl=us '.format(
             REQ)
-        r = s.get(URL + googleAbuseToken, headers=headers)
+        r = reqSession.get(URL + googleAbuseToken, headers=headers)
 
-        while r.status_code == 503:
+        while r.status_code != 200:
             print(code_warning + 'You are temporary blacklisted from Google search. Complete the captcha at the following URL and copy/paste the content of GOOGLE_ABUSE_EXEMPTION cookie : {}'.format(URL))
             print('\n' + code_info +
                   'Need help ? Read https://github.com/sundowndev/PhoneInfoga/wiki')
             token = input('\nGOOGLE_ABUSE_EXEMPTION=')
             googleAbuseToken = '&google_abuse=' + token
-            r = s.get(URL + googleAbuseToken, headers=headers)
+            r = reqSession.get(URL + googleAbuseToken, headers=headers)
 
-        soup = BeautifulSoup(r.content, 'html.parser')
+        soup = BeautifulSoup(r.text, 'html5lib')
+
         results = soup.find("div", id="search").find_all("div", class_="g")
 
         links = []
@@ -167,12 +168,14 @@ def search(req, stop):
             if re.match(r"^(?:\/search\?q\=)", url) is not None:
                 url = 'https://google.com' + url
 
-        if links is not None:
-            return links
-        else:
-            return []
+            if url is not None:
+                links.append(url)
+
+        return links
     except Exception as e:
         print(code_error + 'Request failed. Please retry or open an issue on https://github.com/sundowndev/PhoneInfoga.')
+        print(e)
+        return []
 
 
 def formatNumber(InputNumber):
@@ -202,10 +205,11 @@ def localScan(InputNumber):
             PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164).replace('+', '')
         numberCountryCode = phonenumbers.format_number(
             PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL).split(' ')[0]
-        numberCountry = phonenumbers.region_code_for_country_code(int(numberCountryCode))
+        numberCountry = phonenumbers.region_code_for_country_code(
+            int(numberCountryCode))
 
         localNumber = phonenumbers.format_number(
-            PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164).replace(numberCountryCode, '')
+            PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164).replace(numberCountryCode, '0')
         internationalNumber = phonenumbers.format_number(
             PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL)
 
@@ -368,8 +372,7 @@ def osintIndividualScan():
                 (code_info + "Searching for footprints on {}...".format(dork['site'])))
 
             for result in search(dorkRequest, stop=dork['stop']):
-                if result:
-                    print((code_result + "URL: " + result))
+                print((code_result + "URL: " + result))
         else:
             return -1
 
@@ -390,8 +393,7 @@ def osintReputationScan():
 
         print((code_info + "Searching for {}...".format(dork['title'])))
         for result in search(dorkRequest, stop=dork['stop']):
-            if result:
-                print((code_result + "URL: " + result))
+            print((code_result + "URL: " + result))
 
 
 def osintSocialMediaScan():
@@ -412,8 +414,7 @@ def osintSocialMediaScan():
             (code_info + "Searching for footprints on {}...".format(dork['site'])))
 
         for result in search(dorkRequest, stop=dork['stop']):
-            if result:
-                print((code_result + "URL: " + result))
+            print((code_result + "URL: " + result))
 
 
 def osintDisposableNumScan():
@@ -428,10 +429,9 @@ def osintDisposableNumScan():
             (code_info + "Searching for footprints on {}...".format(dork['site'])))
 
         for result in search(dorkRequest, stop=dork['stop']):
-            if result:
-                print((code_result + "Result found: {}".format(dork['site'])))
-                print((code_result + "URL: " + result))
-                askForExit()
+            print((code_result + "Result found: {}".format(dork['site'])))
+            print((code_result + "URL: " + result))
+            askForExit()
 
 
 def osintScan(rerun=False):
@@ -468,8 +468,7 @@ def osintScan(rerun=False):
         req = '{} | intext:"{}" | intext:"{}"'.format(
             number, number, internationalNumber)
     for result in search(req, stop=5):
-        if result:
-            print((code_result + "Result found: " + result))
+        print((code_result + "Result found: " + result))
 
     # Documents
     print((code_info + "Searching for documents... (limit=10)"))
@@ -480,8 +479,7 @@ def osintScan(rerun=False):
         req = '[ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv | ext:txt | ext:xls] && [intext:"{}" | intext:"{}"]'.format(
             internationalNumber, localNumber)
     for result in search(req, stop=10):
-        if result:
-            print((code_result + "Result found: " + result))
+        print((code_result + "Result found: " + result))
 
     print((code_info + '---- Reputation footprints ----'))
 
