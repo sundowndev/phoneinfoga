@@ -460,14 +460,15 @@ def osintScan(rerun=False):
 
     print((code_info + '---- Web pages footprints ----'))
 
-    print((code_info + "Searching for footprints on web pages... (limit=5)"))
+    print((code_info + "Searching for footprints on web pages... (limit=10)"))
     if customFormatting:
         req = '{} | intext:"{}" | intext:"{}" | intext:"{}"'.format(
             number, number, internationalNumber, customFormatting)
     else:
         req = '{} | intext:"{}" | intext:"{}"'.format(
             number, number, internationalNumber)
-    for result in search(req, stop=5):
+
+    for result in search(req, stop=10):
         print((code_result + "Result found: " + result))
 
     # Documents
