@@ -13,5 +13,10 @@
     "title": "reputation report on findwhocallsme.com",
     "request": "site:findwhocallsme.com intext:\"$n\" | intext:\"$i\"",
     "stop": 1
+  },
+  {
+    "title": "reputation report on pagesjaunes.ca",
+    "request": "site:pagesjaunes.ca intext:\"$n\"",
+    "stop": 1
   }
 ]
