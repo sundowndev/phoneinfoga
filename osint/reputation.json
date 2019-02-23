@@ -15,8 +15,8 @@
     "stop": 1
   },
   {
-    "title": "reputation report on pagesjaunes.ca",
-    "request": "site:pagesjaunes.ca intext:\"$n\"",
+    "title": "reputation report on yellowpages.ca",
+    "request": "site:yellowpages.ca intext:\"$n\"",
     "stop": 1
   }
 ]
