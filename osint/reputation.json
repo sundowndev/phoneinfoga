@@ -18,5 +18,10 @@
     "title": "reputation report on yellowpages.ca",
     "request": "site:yellowpages.ca intext:\"$n\"",
     "stop": 1
+  },
+  {
+    "title": "reputation report on phonenumbers.ie",
+    "request": "site:phonenumbers.ie intext:\"$n\"",
+    "stop": 1
   }
 ]
