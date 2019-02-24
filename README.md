@@ -40,7 +40,7 @@ PhoneInfoga is one of the most advanced tools to scan phone numbers using only f
 - Scan several numbers at once
 - Use custom formatting for more effective OSINT reconnaissance
 
-![](https://i.imgur.com/bWx79dy.png)
+![Footprinting process](https://i.imgur.com/qCkgzz8.png)
 
 ## License
 
