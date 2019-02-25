@@ -36,7 +36,7 @@
   },
   {
     "title": "reputation report on whocalled.us",
-    "request": "site:whocalled.us inurl\"$l\"",
+    "request": "site:whocalled.us inurl:\"$l\"",
     "stop": 1
   }
 ]
