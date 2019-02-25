@@ -33,5 +33,10 @@
     "title": "reputation report on usphonesearch.net",
     "request": "site:usphonesearch.net for $l",
     "stop": 1
+  },
+  {
+    "title": "reputation report on whocalled.us",
+    "request": "site:whocalled.us inurl\"$l\"",
+    "stop": 1
   }
 ]
