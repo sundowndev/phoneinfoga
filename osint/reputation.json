@@ -28,5 +28,10 @@
     "title": "reputation report on who-calledme.com",
     "request": "site:who-calledme.com intext:\"$n\"",
     "stop": 1
+  },
+  {
+    "title": "reputation report on usphonesearch.net",
+    "request": "site:usphonesearch.net for $l",
+    "stop": 1
   }
 ]
