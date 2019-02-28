@@ -1,0 +1,17 @@
+[
+  {
+    "title": "reputation report on whosenumber.info",
+    "request": "site:whosenumber.info intext:\"$n\" intitle:\"who called\"",
+    "stop": 1
+  },
+  {
+    "title": "phone fraud footprints",
+    "request": "intitle:\"Phone Fraud\" intext:\"$i\" | intext:\"$n\" | intext:\"$l\"",
+    "stop": 5
+  },
+  {
+    "title": "reputation report on findwhocallsme.com",
+    "request": "site:findwhocallsme.com intext:\"$n\" | intext:\"$i\"",
+    "stop": 1
+  }
+]

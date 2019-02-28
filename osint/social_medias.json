@@ -1,0 +1,22 @@
+[
+  {
+    "site": "facebook.com",
+    "request": "site:\"facebook.com\" intext:\"$i\" | intext:\"$n\" | intext:\"$l\"",
+    "stop": 5
+  },
+  {
+    "site": "twitter.com",
+    "request": "site:\"twitter.com\" intext:\"$i\" | intext:\"$n\" | intext:\"$l\"",
+    "stop": 5
+  },
+  {
+    "site": "linkedin.com",
+    "request": "site:\"linkedin.com\" intext:\"$i\" | intext:\"$n\" | intext:\"$l\"",
+    "stop": 5
+  },
+  {
+    "site": "instagram.com",
+    "request": "site:\"instagram.com\" intext:\"$i\" | intext:\"$n\" | intext:\"$l\"",
+    "stop": 5
+  }
+]

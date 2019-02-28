@@ -1,0 +1,107 @@
+[
+  {
+    "site": "hs3x.com",
+    "request": "site:\"hs3x.com\" intext:\"+$n\"",
+    "stop": 1
+  },
+  {
+    "site": "receive-sms-now.com",
+    "request": "site:\"receive-sms-now.com\" intext:\"$n\"",
+    "stop": 1
+  },
+  {
+    "site": "smslisten.com",
+    "request": "site:\"smslisten.com\" intext:\"$n\"",
+    "stop": 1
+  },
+  {
+    "site": "smsnumbersonline.com",
+    "request": "site:\"smsnumbersonline.com\" intext:\"+$n\"",
+    "stop": 1
+  },
+  {
+    "site": "freesmscode.com",
+    "request": "site:\"freesmscode.com\" intext:\"+$n\"",
+    "stop": 1
+  },
+  {
+    "site": "catchsms.com",
+    "request": "site:\"catchsms.com\" intext:\"+$n\"",
+    "stop": 1
+  },
+  {
+    "site": "smstibo.com",
+    "request": "site:\"smstibo.com\" intext:\"+$n\"",
+    "stop": 1
+  },
+  {
+    "site": "smsreceiving.com",
+    "request": "site:\"smsreceiving.com\" intext:\"+$n\"",
+    "stop": 1
+  },
+  {
+    "site": "getfreesmsnumber.com",
+    "request": "site:\"getfreesmsnumber.com\" intext:\"+$n\"",
+    "stop": 1
+  },
+  {
+    "site": "sellaite.com",
+    "request": "site:\"sellaite.com\" intext:\"+$n\"",
+    "stop": 1
+  },
+  {
+    "site": "receive-sms-online.info",
+    "request": "site:\"receive-sms-online.info\" intext:\"+$n\"",
+    "stop": 1
+  },
+  {
+    "site": "receivesmsonline.com",
+    "request": "site:\"receivesmsonline.com\" intext:\"+$n\"",
+    "stop": 1
+  },
+  {
+    "site": "receive-a-sms.com",
+    "request": "site:\"receive-a-sms.com\" intext:\"+$n\"",
+    "stop": 1
+  },
+  {
+    "site": "sms-receive.net",
+    "request": "site:\"sms-receive.net\" intext:\"+$n\"",
+    "stop": 1
+  },
+  {
+    "site": "receivefreesms.com",
+    "request": "site:\"receivefreesms.com\" intext:\"+$n\"",
+    "stop": 1
+  },
+  {
+    "site": "receive-sms.com",
+    "request": "site:\"receive-sms.com\" intext:\"+$n\"",
+    "stop": 1
+  },
+  {
+    "site": "receivetxt.com",
+    "request": "site:\"receivetxt.com\" $n",
+    "stop": 1
+  },
+  {
+    "site": "freephonenum.com",
+    "request": "site:\"freephonenum.com\" intext:\"$n\"",
+    "stop": 1
+  },
+  {
+    "site": "freesmsverification.com",
+    "request": "site:\"freesmsverification.com\" $n",
+    "stop": 1
+  },
+  {
+    "site": "receive-sms-online.com",
+    "request": "site:\"receive-sms-online.com\" intext:\"$n\"",
+    "stop": 1
+  },
+  {
+    "site": "smslive.co",
+    "request": "site:\"smslive.co\" intext:\"$n\"",
+    "stop": 1
+  }
+]

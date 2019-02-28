@@ -1,0 +1,38 @@
+[
+  {
+    "site": "numinfo.net",
+    "request": "site:\"numinfo.net\" intext:\"$i\" | intext:\"$n\" | intext:\"$l\"",
+    "dialCode": null,
+    "stop": 2
+  },
+  {
+    "site": "sync.me",
+    "request": "site:\"sync.me\" intext:\"$i\" | intext:\"$n\" | intext:\"$l\"",
+    "dialCode": null,
+    "stop": 1
+  },
+  {
+    "site": "whocallsyou.de",
+    "request": "site:\"whocallsyou.de\" intext:\"0$n\"",
+    "dialCode": null,
+    "stop": 1
+  },
+  {
+    "site": "pastebin.com",
+    "request": "site:\"pastebin.com\" intext:\"$i\" | intext:\"$n\" | intext:\"$l\"",
+    "dialCode": null,
+    "stop": 5
+  },
+  {
+    "site": "whycall.me",
+    "request": "site:\"whycall.me\" intext:\"$i\" | intext:\"$n\" | intext:\"$l\"",
+    "dialCode": null,
+    "stop": 1
+  },
+  {
+    "site": "locatefamily.com",
+    "request": "site:locatefamily.com intext:\"$i\" | intext:\"$n\" | intext:\"$l\"",
+    "dialCode": null,
+    "stop": 1
+  }
+]

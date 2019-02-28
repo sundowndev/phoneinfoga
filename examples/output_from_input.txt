@@ -1,0 +1,87 @@
+    ___ _                       _____        __                   
+   / _ \ |__   ___  _ __   ___  \_   \_ __  / _| ___   __ _  __ _ 
+  / /_)/ '_ \ / _ \| '_ \ / _ \  / /\/ '_ \| |_ / _ \ / _` |/ _` |
+ / ___/| | | | (_) | | | |  __/\/ /_ | | | |  _| (_) | (_| | (_| |
+ \/    |_| |_|\___/|_| |_|\___\____/ |_| |_|_|  \___/ \__, |\__,_|
+                                                      |___/       
+ PhoneInfoga Ver. v1.0.0
+ Coded by Sundowndev
+
+
+[!] ---- Fetching informations for 8562099453217 ---- [!]
+[-] Running local scan...
+[+] International format: +856 20 99 453 217
+[+] Local format: 02099453217
+[+] Country found: Laos (+856)
+[+] City/Area: Laos
+[+] Carrier: Unitel
+[+] Timezone: Asia/Vientiane
+[-] The number is valid and possible.
+[-] Scan finished.
+
+
+[!] ---- Fetching informations for 59172768361 ---- [!]
+[-] Running local scan...
+[+] International format: +591 72768361
+[+] Local format: 072768361
+[+] Country found: Bolivia (+591)
+[+] City/Area: Bolivia
+[+] Carrier: Entel
+[+] Timezone: America/La_Paz
+[-] The number is valid and possible.
+[-] Scan finished.
+
+
+[!] ---- Fetching informations for 32474123456 ---- [!]
+[-] Running local scan...
+[+] International format: +32 474 12 34 56
+[+] Local format: 0474123456
+[+] Country found: Belgium (+32)
+[+] City/Area: Belgium
+[+] Carrier: Proximus
+[+] Timezone: Europe/Brussels
+[-] The number is valid and possible.
+[-] Scan finished.
+
+
+[!] ---- Fetching informations for 15417543010 ---- [!]
+[-] Running local scan...
+[+] International format: +1 541-754-3010
+[+] Local format: 05417543010
+[+] Country found: United States (+1)
+[+] City/Area: Corvallis, OR
+[+] Carrier: 
+[+] Timezone: America/Los_Angeles
+[-] The number is valid and possible.
+[-] Scan finished.
+
+
+[!] ---- Fetching informations for 8659122848571 ---- [!]
+[-] Running local scan...
+[+] International format: +86 591 2284 8571
+[+] Local format: 059122848571
+[+] Country found: China (+86)
+[+] City/Area: Fuzhou, Fujian
+[+] Carrier: 
+[+] Timezone: Asia/Shanghai
+[-] The number is valid and possible.
+[-] Scan finished.
+
+
+[!] ---- Fetching informations for 74964819375 ---- [!]
+[-] Running local scan...
+[+] International format: +7 496 481-93-75
+[+] Local format: 04964819375
+[+] Country found: Russia (+7)
+[+] City/Area: Moscow
+[+] Carrier: 
+[+] Timezone: Europe/Moscow
+[-] The number is valid and possible.
+[-] Scan finished.
+
+
+[!] ---- Fetching informations for 39172768361 ---- [!]
+[-] Running local scan...
+[-] Scan finished.
+
+

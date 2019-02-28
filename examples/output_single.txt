@@ -1,0 +1,30 @@
+    ___ _                       _____        __                   
+   / _ \ |__   ___  _ __   ___  \_   \_ __  / _| ___   __ _  __ _ 
+  / /_)/ '_ \ / _ \| '_ \ / _ \  / /\/ '_ \| |_ / _ \ / _` |/ _` |
+ / ___/| | | | (_) | | | |  __/\/ /_ | | | |  _| (_) | (_| | (_| |
+ \/    |_| |_|\___/|_| |_|\___\____/ |_| |_|_|  \___/ \__, |\__,_|
+                                                      |___/       
+ PhoneInfoga Ver. v1.0.0
+ Coded by Sundowndev
+
+
+[!] ---- Fetching informations for 8659122848571 ---- [!]
+[-] Running local scan...
+[+] International format: +86 591 2284 8571
+[+] Local format: 059122848571
+[+] Country found: China (+86)
+[+] City/Area: Fuzhou, Fujian
+[+] Carrier: 
+[+] Timezone: Asia/Shanghai
+[-] The number is valid and possible.
+[-] Running Numverify.com scan...
+[+] Number: (+86) 059122848571
+[+] Country: China (People's Republic of) (CN)
+[+] Location: Fuzhou
+[+] Carrier: 
+[+] Line type: landline
+(!) This is most likely a landline, but it can still be a fixed VoIP number.
+[-] Running OVH scan...
+[-] Scan finished.
+
+
