@@ -53,6 +53,24 @@ cd PhoneInfoga/
 python3 -m pip install -r requirements.txt
 ```
 
+### With Docker
+
+#### Build
+
+```bash
+docker build --rm=true -t phoneinfoga/latest .
+```
+
+#### Execute
+
+```bash
+docker run --rm -v "$(pwd)":/opt/phoneinfoga -it phoneinfoga/latest
+```
+
+##### Limitations
+
+The input and the output files will have to be relative to the project root.
+
 ## Usage
 
 ### [The full usage documentation has been moved to the wiki](https://github.com/sundowndev/PhoneInfoga/wiki)
