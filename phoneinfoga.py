@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-__version__ = 'v1.0.2'
+__version__ = 'v1.1.2'
 
 try:
     import sys
