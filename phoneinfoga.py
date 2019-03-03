@@ -218,7 +218,7 @@ def localScan(InputNumber):
         carrierName = carrier.name_for_number(PhoneNumberObject, 'en')
 
         print(code_result + 'International format: {}'.format(internationalNumber))
-        print(code_result + 'Local format: 0{}'.format(localNumber))
+        print(code_result + 'Local format: {}'.format(localNumber))
         print(code_result + 'Country found: {} ({})'.format(country, numberCountryCode))
         print(code_result + 'City/Area: {}'.format(location))
         print(code_result + 'Carrier: {}'.format(carrierName))
