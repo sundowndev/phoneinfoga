@@ -35,66 +35,12 @@ PhoneInfoga is one of the most advanced tools to scan phone numbers using only f
 
 - Check if phone number exists and is possible
 - Gather standard informations such as country, line type and carrier
-- Check several numbers at once
 - OSINT reconnaissance using external APIs, Google Hacking, phone books & search engines
+- Check for reputation footprints, social media, disposable numbers and more
+- Scan several numbers at once
 - Use custom formatting for more effective OSINT reconnaissance
 
-![](https://i.imgur.com/bWx79dy.png)
-
-## Formats
-
-The tool only accepts E164 and International formats as input.
-
-## Installation
-
-```bash
-git clone https://github.com/sundowndev/PhoneInfoga
-cd PhoneInfoga/
-python3 -m pip install -r requirements.txt
-```
-
-### With Docker
-
-#### Build
-
-```bash
-docker build --rm=true -t phoneinfoga/latest .
-```
-
-#### Execute
-
-```bash
-docker run --rm -v "$(pwd)":/opt/phoneinfoga -it phoneinfoga/latest
-```
-
-##### Limitations
-
-The input and the output files will have to be relative to the project root.
-
-## Usage
-
-### [The full usage documentation has been moved to the wiki](https://github.com/sundowndev/PhoneInfoga/wiki)
-
-```
-usage: phoneinfoga.py -n <number> [options]
-
-Advanced information gathering tool for phone numbers
-(https://github.com/sundowndev/PhoneInfoga)
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -n number, --number number
-                        The phone number to scan (E164 or International
-                        format)
-  -i input_file, --input input_file
-                        Phone number list to scan (one per line)
-  -o output_file, --output output_file
-                        Output to save scan results
-  -s scanner, --scanner scanner (any to skip, default: all)
-                        The scanner to use
-  --osint               Use OSINT reconnaissance
-  -u, --update          Update the tool & databases
-```
+![Footprinting process](https://i.imgur.com/qCkgzz8.png)
 
 ## License
 

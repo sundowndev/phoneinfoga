@@ -13,7 +13,7 @@
   },
   {
     "site": "whocallsyou.de",
-    "request": "site:\"whocallsyou.de\" intext:\"0$n\"",
+    "request": "site:\"whocallsyou.de\" intext:\"0$l\"",
     "dialCode": null,
     "stop": 1
   },

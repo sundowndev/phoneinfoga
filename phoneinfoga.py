@@ -209,7 +209,7 @@ def localScan(InputNumber):
             int(numberCountryCode))
 
         localNumber = phonenumbers.format_number(
-            PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164).replace(numberCountryCode, '0')
+            PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164).replace(numberCountryCode, '')
         internationalNumber = phonenumbers.format_number(
             PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL)
 
@@ -456,6 +456,8 @@ def osintScan(rerun=False):
             code_info + 'Would you like to use an additional format for this number ? (y/N) ')
 
     if rerun or askingCustomPayload == 'y' or askingCustomPayload == 'yes':
+        print(code_info + 'We recommand: {} or {}'.format(internationalNumber,
+                                                          internationalNumber.replace(numberCountryCode + ' ', '')))
         customFormatting = input(code_info + 'Custom format: ')
 
     print((code_info + '---- Web pages footprints ----'))
