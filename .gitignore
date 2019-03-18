@@ -1,2 +1,3 @@
 .idea
 .buildconfig
+/__pycache__/
