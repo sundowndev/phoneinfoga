@@ -13,5 +13,35 @@
     "title": "reputation report on findwhocallsme.com",
     "request": "site:findwhocallsme.com intext:\"$n\" | intext:\"$i\"",
     "stop": 1
+  },
+  {
+    "title": "reputation report on yellowpages.ca",
+    "request": "site:yellowpages.ca intext:\"$n\"",
+    "stop": 1
+  },
+  {
+    "title": "reputation report on phonenumbers.ie",
+    "request": "site:phonenumbers.ie intext:\"$n\"",
+    "stop": 1
+  },
+  {
+    "title": "reputation report on who-calledme.com",
+    "request": "site:who-calledme.com intext:\"$n\"",
+    "stop": 1
+  },
+  {
+    "title": "reputation report on usphonesearch.net",
+    "request": "site:usphonesearch.net for $l",
+    "stop": 1
+  },
+  {
+    "title": "reputation report on whocalled.us",
+    "request": "site:whocalled.us inurl:\"$l\"",
+    "stop": 1
+  },
+  {
+    "title": "reputation report on quinumero.info",
+    "request": "site:quinumero.info intext:\"$l\" | intext:\"$i\"",
+    "stop": 1
   }
 ]

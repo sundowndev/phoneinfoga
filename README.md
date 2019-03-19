@@ -29,57 +29,34 @@
 
 ## About
 
-PhoneInfoga is one of the most advanced tools to scan phone numbers using only free resources. The goal is to first gather basic information such as country, area, carrier and line type on any international phone numbers with a very good accuracy. Then try to determine the VoIP provider or search for footprints on search engines to try identify the owner.
+PhoneInfoga is one of the most advanced tools to scan phone numbers using only free resources. The goal is to first gather standard information such as country, area, carrier and line type on any international phone numbers with a very good accuracy. Then search for footprints on search engines to try to find the VoIP provider or identify the owner.
 
 ## Features
 
 - Check if phone number exists and is possible
 - Gather standard informations such as country, line type and carrier
-- Check several numbers at once
-- OSINT reconnaissance using external APIs, Google Hacking, phone books & search engines
+- OSINT footprinting using external APIs, Google Hacking, phone books & search engines
+- Check for reputation reports, social media, disposable numbers and more
+- Scan several numbers at once
 - Use custom formatting for more effective OSINT reconnaissance
+- Automatic footprinting on several custom formats
 
-![](https://i.imgur.com/bWx79dy.png)
+![Footprinting process](https://i.imgur.com/qCkgzz8.png)
 
-## Formats
+## Support
 
-The tool only accepts E164 and International formats as input.
+If you like this project and you want to support my work, please consider supporting me on Patreon 👍 Thank you!
 
-## Installation
-
-```bash
-git clone https://github.com/sundowndev/PhoneInfoga
-cd PhoneInfoga/
-python3 -m pip install -r requirements.txt
-```
-
-## Usage
-
-### [The full usage documentation has been moved to the wiki](https://github.com/sundowndev/PhoneInfoga/wiki)
-
-```
-usage: phoneinfoga.py -n <number> [options]
-
-Advanced information gathering tool for phone numbers
-(https://github.com/sundowndev/PhoneInfoga)
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -n number, --number number
-                        The phone number to scan (E164 or International
-                        format)
-  -i input_file, --input input_file
-                        Phone number list to scan (one per line)
-  -o output_file, --output output_file
-                        Output to save scan results
-  -s scanner, --scanner scanner (any to skip, default: all)
-                        The scanner to use
-  --osint               Use OSINT reconnaissance
-  -u, --update          Update the tool & databases
-```
+<p>
+  <a href="https://www.patreon.com/sundowndev">
+    <img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
+  </a>
+</p>
 
 ## License
 
 This tool is licensed under the GNU General Public License v3.0.
+
+Some parts of this code comes from [Infoga](https://github.com/m4ll0k/infoga), another project licensed under GPLv3.0.
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsundowndev%2FPhoneInfoga.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsundowndev%2FPhoneInfoga?ref=badge_large)
