@@ -34,5 +34,11 @@
     "request": "site:locatefamily.com intext:\"$i\" | intext:\"$n\" | intext:\"$l\"",
     "dialCode": null,
     "stop": 1
+  },
+  {
+    "site": "spytox.com",
+    "request": "site:spytox.com $l",
+    "dialCode": "+1",
+    "stop": 1
   }
 ]
