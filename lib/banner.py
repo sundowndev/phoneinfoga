@@ -5,7 +5,7 @@
 # @url    : https://github.com/sundowndev
 # @author : Raphael Cerveaux (sundowndev)
 
-__version__ = 'v1.3.2'
+__version__ = 'v1.6.4'
 
 def banner():
     print("    ___ _                       _____        __                   ")
