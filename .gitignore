@@ -2,3 +2,4 @@
 .buildconfig
 __pycache__/
 .vscode/
+config.py
