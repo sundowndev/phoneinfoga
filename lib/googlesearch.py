@@ -84,7 +84,8 @@ def searchApi(req, stop):
     response = r.json()
 
     if 'error' in response:
-        error('Error while fetching Google search API. Please verify your keys.')
+        error('Error while fetching Google search API. Maybe usage limit ? Please verify your keys.')
+        return []
 
     if 'items' not in response:
         return []
