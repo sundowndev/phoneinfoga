@@ -8,6 +8,6 @@ python3 $scriptDir/../phoneinfoga.py -n "+86 591 2284 8571" -s any --no-ansi
 
 python3 $scriptDir/../phoneinfoga.py -i $scriptDir/input.txt -o $scriptDir/output_from_input.txt -s any
 
-python3 $scriptDir/../phoneinfoga.py -n "+86 591 2284 8571" -s all -o $scriptDir/output_single.txt
+python3 $scriptDir/../phoneinfoga.py -n "+86 591 2284 8571" -s numverify -o $scriptDir/output_single.txt
 
 echo "Test script executed."
