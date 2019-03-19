@@ -57,4 +57,6 @@ If you like this project and you want to support my work, please consider suppor
 
 This tool is licensed under the GNU General Public License v3.0.
 
+Some parts of this code comes from [Infoga](https://github.com/m4ll0k/infoga), another project licensed under GPLv3.0.
+
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsundowndev%2FPhoneInfoga.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsundowndev%2FPhoneInfoga?ref=badge_large)
