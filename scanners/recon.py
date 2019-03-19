@@ -11,10 +11,17 @@ from lib.output import *
 from lib.googlesearch import search
 
 
-def phone_format(phone_number, delimiter):
+def phone_us_format(phone_number, delimiter):
     clean_phone_number = re.sub('[^0-9]+', '', phone_number)
     formatted_phone_number = re.sub(
         "(\d)(?=(\d{3})+(?!\d))", r"\1" + delimiter, "%d" % int(clean_phone_number[:-1])) + clean_phone_number[-1]
+    return formatted_phone_number
+
+
+def phone_format(phone_number, delimiter):
+    clean_phone_number = re.sub('[^0-9]+', '', phone_number)
+    formatted_phone_number = re.sub(
+        "(\d)(?=(\d{2})+(?!\d))", r"\1" + delimiter, "%d" % int(clean_phone_number[:-1])) + clean_phone_number[-1]
     return formatted_phone_number
 
 
@@ -24,39 +31,59 @@ def scan(number):
 
     test('Running custom format reconnaissance...')
 
+    cc = number['countryCode'].replace('+', '')
+    nb = number['local']
+
     if number['countryIsoCode'] == 'US' or number['countryIsoCode'] == 'CA':
-        print(1)
-    else:
-        cc = '33'
-        nb = '186481407'
-        
-        print(phone_format(cc + nb, ' '))
+        segments = phone_us_format(cc + nb, ' ').split(' ')
+
+        seg1 = segments[-3]
+        seg2 = segments[-2]
+        seg3 = segments[-1]
 
         formats = [
-            '+%s01 86 48 14 07' % (cc),
-            '+%s0%s' % (cc, nb),
-            # '+33018 648 140 7',
-            # '(0033)0186481407',
-            # '(+33)018 648 140 7',
-            '+%s/0%s' % (cc, nb),
-            # '(0033)018 648 140 7',
-            # '+33018-648-140-7',
-            # '(+33)0186481407',
-            '(+%s)01 86 48 14 07' % (cc, phone_format(cc + nb, ' ')),
-            # '+33/018-648-140-7',
-            # '+33/01-86-48-14-07',
-            # '+3301-86-48-14-07',
-            # '(0033)01 86 48 14 07',
-            # '+33/01 86 48 14 07',
-            # '(+33)018-648-140-7',
-            # '(+33)01-86-48-14-07',
-            # '(0033)01-86-48-14-07',
-            # '(0033)018-648-140-7',
-            # '+33/018 648 140 7'
+            '%s%s%s' % (seg1, seg2, seg3),
+            '%s %s%s%s' % (cc, seg1, seg2, seg3),
+            '%s %s %s%s' % (cc, seg1, seg2, seg3),
+            '%s %s%s' % (seg1, seg2, seg3),
+            '%s-%s%s' % (seg1, seg2, seg3),
+            '%s-%s-%s' % (seg1, seg2, seg3),
+            '+%s %s-%s-%s' % (cc, seg1, seg2, seg3),
+            '(+%s)%s-%s-%s' % (cc, seg1, seg2, seg3),
+            '+%s/%s-%s-%s' % (cc, seg1, seg2, seg3),
+            '(%s) %s%s' % (seg1, seg2, seg3),
+            '(%s) %s-%s' % (seg1, seg2, seg3),
+            '(%s) %s.%s' % (seg1, seg2, seg3),
+            '(%s)%s%s' % (seg1, seg2, seg3),
+            '(%s)%s-%s' % (seg1, seg2, seg3),
+            '(%s)%s.%s' % (seg1, seg2, seg3)
         ]
+    else:
+        formated_number = number['international'].replace(number['countryCode'] + ' ', '').split(' ')
 
-    # "6185551212" OR "618 5551212" OR "618-5551212" OR " 1 6185551212" OR " 1 618 5551212"
+        segments = []
+        
+        for seg in formated_number:
+          segments.append(seg)
+        
+        formats = [
+            '+%s0%s' % (cc, nb),
+            '(00%s)0%s' % (cc, number['local']),
+            '+%s/0%s' % (cc, nb),
+            '+%s0%s' % (cc, '-'.join(segments)),
+            '(+%s)0%s' % (cc, '-'.join(segments)),
+            '(00%s)0%s' % (cc, '-'.join(segments)),
+            '(00%s)0%s' % (cc, '-'.join(segments)),
+            '+%s/0%s' % (cc, ' '.join(segments)),
+            '+%s0%s' % (cc, ' '.join(segments)),
+            '(00%s)0%s' % (cc, ' '.join(segments)),
+            '(+%s)0186481407' % (cc),
+            '(+%s)0%s' % (cc, ' '.join(segments)),
+            '+%s/0%s' % (cc, '-'.join(segments)),
+            '+%s/0%s' % (cc, ' '.join(segments)),
+        ]
+        
     for format in formats:
         print('Recon for %s' % (format))
-        # for result in search('%s' % (format), stop=5):
-        #     plus("URL: " + result)
+        for result in search('"%s"' % (format), stop=5):
+            plus("URL: " + result)
