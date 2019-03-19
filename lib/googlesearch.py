@@ -37,7 +37,7 @@ def search(req, stop):
 
     try:
         REQ = urlencode({'q': req})
-        URL = 'https://www.google.com/search?tbs=li:1&{}&amp;gws_rd=ssl&amp;gl=us '.format(
+        URL = 'https://www.google.com/search?tbs=li:1&{}&amp;gws_rd=ssl&amp;gl=us'.format(
             REQ)
         r = send('GET', URL + googleAbuseToken, headers=headers)
 
