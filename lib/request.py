@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# -*- coding:utf-8 -*- 
+# -*- coding:utf-8 -*-
 #
 # @name   : PhoneInfoga - Phone numbers OSINT tool
 # @url    : https://github.com/sundowndev
@@ -27,8 +27,20 @@ uagent.append(
 uagent.append(
     "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:63.0) Gecko/20100101 Firefox/63.0")
 
+# Request SSL DH key error workaround
+# See https://github.com/sundowndev/PhoneInfoga/issues/16
+requests.packages.urllib3.disable_warnings()
+requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += 'HIGH:!DH:!aNULL'
+try:
+    requests.packages.urllib3.contrib.pyopenssl.DEFAULT_SSL_CIPHER_LIST += 'HIGH:!DH:!aNULL'
+except AttributeError:
+    # no pyopenssl support used / needed / available
+    pass
+
+
 def send(method, url, headers={}):
-    if not headers: headers={}
+    if not headers:
+        headers = {}
     headers['User-Agent'] = random.choice(uagent)
 
     return requests.request(method, url, data="", headers=headers)
