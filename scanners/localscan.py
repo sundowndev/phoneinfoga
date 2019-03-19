@@ -1,18 +1,19 @@
 #!/usr/bin/env python3
-# -*- coding:utf-8 -*- 
+# -*- coding:utf-8 -*-
 #
 # @name   : PhoneInfoga - Phone numbers OSINT tool
 # @url    : https://github.com/sundowndev
 # @author : Raphael Cerveaux (sundowndev)
 
-from lib.output import *
-from lib.format import *
 import phonenumbers
 from phonenumbers import carrier
 from phonenumbers import geocoder
 from phonenumbers import timezone
+from lib.output import *
+from lib.format import *
 
-def scan(InputNumber):
+
+def scan(InputNumber, print_results=True):
     test('Running local scan...')
 
     FormattedPhoneNumber = "+" + formatNumber(InputNumber)
@@ -41,18 +42,19 @@ def scan(InputNumber):
         location = geocoder.description_for_number(PhoneNumberObject, "en")
         carrierName = carrier.name_for_number(PhoneNumberObject, 'en')
 
-        plus('International format: {}'.format(internationalNumber))
-        plus('Local format: {}'.format(localNumber))
-        plus('Country found: {} ({})'.format(country, numberCountryCode))
-        plus('City/Area: {}'.format(location))
-        plus('Carrier: {}'.format(carrierName))
-        for timezoneResult in timezone.time_zones_for_number(PhoneNumberObject):
-            plus('Timezone: {}'.format(timezoneResult))
+        if print_results:
+            plus('International format: {}'.format(internationalNumber))
+            plus('Local format: {}'.format(localNumber))
+            plus('Country found: {} ({})'.format(country, numberCountryCode))
+            plus('City/Area: {}'.format(location))
+            plus('Carrier: {}'.format(carrierName))
+            for timezoneResult in timezone.time_zones_for_number(PhoneNumberObject):
+                plus('Timezone: {}'.format(timezoneResult))
 
-        if phonenumbers.is_possible_number(PhoneNumberObject):
-            info('The number is valid and possible.')
-        else:
-            warn('The number is valid but might not be possible.')
+            if phonenumbers.is_possible_number(PhoneNumberObject):
+                info('The number is valid and possible.')
+            else:
+                warn('The number is valid but might not be possible.')
 
     numberObj = {}
     numberObj['input'] = InputNumber

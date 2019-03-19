@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# -*- coding:utf-8 -*- 
+# -*- coding:utf-8 -*-
 #
 # @name   : PhoneInfoga - Phone numbers OSINT tool
 # @url    : https://github.com/sundowndev
@@ -8,7 +8,11 @@
 import requests
 from lib.output import *
 
+
 def scan(localNumber, numberCountry):
+    if not args.scanner == 'ovh' and not args.scanner == 'all':
+        return -1
+
     test('Running OVH scan...')
 
     querystring = {"country": numberCountry.lower()}

@@ -1,18 +1,21 @@
 #!/usr/bin/env python3
-# -*- coding:utf-8 -*- 
+# -*- coding:utf-8 -*-
 #
 # @name   : PhoneInfoga - Phone numbers OSINT tool
 # @url    : https://github.com/sundowndev
 # @author : Raphael Cerveaux (sundowndev)
 
-import requests
 from bs4 import BeautifulSoup
 import hashlib
 import json
 from lib.output import *
 from lib.request import send
 
+
 def scan(number):
+    if not args.scanner == 'numverify' and not args.scanner == 'all':
+        return -1
+
     test('Running Numverify.com scan...')
 
     try:
@@ -58,18 +61,24 @@ def scan(number):
         error(("An error occured while calling the API (bad request or wrong api key)."))
         return -1
 
-    if data["valid"] == False:
+    if 'error' in data:
+        error('Numverify.com is not available: ' + data['error'])
+        return -1
+
+    if data['valid'] == False:
         error(("Error: Please specify a valid phone number. Example: +6464806649"))
         sys.exit()
 
     InternationalNumber = '({}){}'.format(
         data["country_prefix"], data["local_format"])
 
-    plus(("Number: ({}) {}").format(data["country_prefix"], data["local_format"]))
-    plus(("Country: {} ({})").format(data["country_name"], data["country_code"]))
-    plus(( "Location: {}").format(data["location"]))
-    plus(( "Carrier: {}").format(data["carrier"]))
-    plus(( "Line type: {}").format(data["line_type"]))
+    plus(("Number: ({}) {}").format(
+        data["country_prefix"], data["local_format"]))
+    plus(("Country: {} ({})").format(
+        data["country_name"], data["country_code"]))
+    plus(("Location: {}").format(data["location"]))
+    plus(("Carrier: {}").format(data["carrier"]))
+    plus(("Line type: {}").format(data["line_type"]))
 
     if data["line_type"] == 'landline':
         warn(("This is most likely a landline, but it can still be a fixed VoIP number."))
