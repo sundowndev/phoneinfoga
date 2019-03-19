@@ -18,7 +18,7 @@ from lib.logger import Logger
 from scanners import numverify
 from scanners import localscan
 from scanners import ovh
-from scanners.osint import osintScan
+from scanners.footprints import osintScan
 from scanners import recon
 
 
