@@ -14,7 +14,6 @@ from lib.request import send
 from config import *
 
 googleAbuseToken = ''
-customFormatting = ''
 
 
 def search(req, stop):

@@ -77,7 +77,7 @@ def scan(number):
             '+%s/0%s' % (cc, ' '.join(segments)),
             '+%s0%s' % (cc, ' '.join(segments)),
             '(00%s)0%s' % (cc, ' '.join(segments)),
-            '(+%s)0186481407' % (cc),
+            '(+%s)0%s' % (cc, ''.join(segments)),
             '(+%s)0%s' % (cc, ' '.join(segments)),
             '+%s/0%s' % (cc, '-'.join(segments)),
             '+%s/0%s' % (cc, ' '.join(segments)),
