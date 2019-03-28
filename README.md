@@ -1,4 +1,6 @@
-<h1 align="center">PhoneInfoga</h1>
+<p align="center">
+  <img src="https://i.imgur.com/rzyPNPa.png" width=500 />
+</p>
 
 <div align="center">
   <a href="https://travis-ci.org/sundowndev/PhoneInfoga">
@@ -16,11 +18,6 @@
 </div>
 
 <h4 align="center">Information gathering & OSINT reconnaissance tool for phone numbers</h4>
-
-<div align="center">
-  <sub>For the love of open source investigations. Built with ❤︎ by
-  <a href="https://twitter.com/sundowndev">@sundowndev</a>
-</div>
 
 <h3 align="center">
   <a href="https://github.com/sundowndev/PhoneInfoga/wiki">Documentation</a> | 
