@@ -2,6 +2,8 @@
   <img src="https://i.imgur.com/rzyPNPa.png" width=500 />
 </p>
 
+<h4 align="center">Information gathering & OSINT reconnaissance tool for phone numbers</h4>
+
 <div align="center">
   <a href="https://travis-ci.org/sundowndev/PhoneInfoga">
     <img src="https://img.shields.io/travis/sundowndev/PhoneInfoga/master.svg?style=flat-square" alt="Build Status" />
@@ -17,12 +19,12 @@
   </a>
 </div>
 
-<h4 align="center">Information gathering & OSINT reconnaissance tool for phone numbers</h4>
-
-<h3 align="center">
-  <a href="https://github.com/sundowndev/PhoneInfoga/wiki">Documentation</a> | 
-  <a href="https://medium.com/@SundownDEV/phone-number-scanning-osint-recon-tool-6ad8f0cac27b">OSINT Tutorial</a>
-</h3>
+<p align="center">
+  <a href="https://github.com/sundowndev/PhoneInfoga/wiki">PhoneInfoga wiki</a> •
+  <a href="https://github.com/sundowndev/PhoneInfoga/wiki/Basic-usage">Basic usage</a> •
+  <a href="https://github.com/sundowndev/PhoneInfoga/wiki/Resources">OSINT resources</a> •
+  <a href="https://medium.com/@SundownDEV/phone-number-scanning-osint-recon-tool-6ad8f0cac27b">OSINT tutorial</a>
+</p>
 
 ## About
 
