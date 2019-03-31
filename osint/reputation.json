@@ -43,5 +43,10 @@
     "title": "reputation report on quinumero.info",
     "request": "site:quinumero.info intext:\"$l\" | intext:\"$i\"",
     "stop": 1
+  },
+  {
+    "title": "reputation report on uk.popularphotolook.com",
+    "request": "site:uk.popularphotolook.com inurl:\"$l\"",
+    "stop": 1
   }
 ]
