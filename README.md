@@ -13,7 +13,7 @@
     <img src="https://img.shields.io/github/release/SundownDEV/PhoneInfoga.svg?style=flat-square" alt="Latest version" />
   </a>
   <a href="https://github.com/sundowndev/PhoneInfoga/blob/master/LICENSE">
-    <img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square" alt="License" />
+    <img src="https://img.shields.io/github/license/sundowndev/PhoneInfoga.svg?style=flat-square" alt="License" />
   </a>
 </div>
 
