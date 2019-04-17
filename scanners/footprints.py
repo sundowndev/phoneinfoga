@@ -39,7 +39,7 @@ def osintIndividualScan():
         if dork['dialCode'] is None or dork['dialCode'] == numberCountryCode:
             if customFormatting:
                 dorkRequest = replaceVariables(
-                    dork['request'], numberObj) + ' | intext:"{}"'.format(customFormatting)
+                    dork['request'], numberObj) + ' OR "{}"'.format(customFormatting)
             else:
                 dorkRequest = replaceVariables(dork['request'], numberObj)
 
@@ -64,7 +64,7 @@ def osintReputationScan():
     for dork in dorks:
         if customFormatting:
             dorkRequest = replaceVariables(
-                dork['request'], numberObj) + ' | intext:"{}"'.format(customFormatting)
+                dork['request'], numberObj) + ' OR "{}"'.format(customFormatting)
         else:
             dorkRequest = replaceVariables(dork['request'], numberObj)
 
@@ -86,7 +86,7 @@ def osintSocialMediaScan():
     for dork in dorks:
         if customFormatting:
             dorkRequest = replaceVariables(
-                dork['request'], numberObj) + ' | intext:"{}"'.format(customFormatting)
+                dork['request'], numberObj) + ' OR "{}"'.format(customFormatting)
         else:
             dorkRequest = replaceVariables(dork['request'], numberObj)
 
@@ -164,10 +164,10 @@ def osintScan(numberObject, rerun=False):
 
     info("Searching for footprints on web pages... (limit=10)")
     if customFormatting:
-        req = '{} | intext:"{}" | intext:"{}" | intext:"{}"'.format(
+        req = '{} OR "{}" OR "{}" OR "{}"'.format(
             number, number, internationalNumber, customFormatting)
     else:
-        req = '{} | intext:"{}" | intext:"{}"'.format(
+        req = '{} OR "{}" OR "{}"'.format(
             number, number, internationalNumber)
 
     for result in search(req, stop=10):
@@ -176,10 +176,10 @@ def osintScan(numberObject, rerun=False):
     # Documents
     info("Searching for documents... (limit=10)")
     if customFormatting:
-        req = '[ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv | ext:txt | ext:xls] && [intext:"{}"]'.format(
+        req = '[ext:doc OR ext:docx OR ext:odt OR ext:pdf OR ext:rtf OR ext:sxw OR ext:psw OR ext:ppt OR ext:pptx OR ext:pps OR ext:csv OR ext:txt OR ext:xls] AND [intext:"{}"]'.format(
             customFormatting)
     else:
-        req = '[ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv | ext:txt | ext:xls] && [intext:"{}" | intext:"{}"]'.format(
+        req = '[ext:doc OR ext:docx OR ext:odt OR ext:pdf OR ext:rtf OR ext:sxw OR ext:psw OR ext:ppt OR ext:pptx OR ext:pps OR ext:csv OR ext:txt OR ext:xls] AND ["{}" OR "{}"]'.format(
             internationalNumber, localNumber)
     for result in search(req, stop=10):
         plus("Result found: " + result)
