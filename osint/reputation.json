@@ -1,32 +1,32 @@
 [
   {
     "title": "reputation report on whosenumber.info",
-    "request": "site:whosenumber.info intext:\"$n\" intitle:\"who called\"",
+    "request": "site:whosenumber.info \"$n\" intitle:\"who called\"",
     "stop": 1
   },
   {
     "title": "phone fraud footprints",
-    "request": "intitle:\"Phone Fraud\" intext:\"$i\" | intext:\"$n\" | intext:\"$l\"",
+    "request": "intitle:\"Phone Fraud\" \"$i\" OR \"$n\" OR \"$l\"",
     "stop": 5
   },
   {
     "title": "reputation report on findwhocallsme.com",
-    "request": "site:findwhocallsme.com intext:\"$n\" | intext:\"$i\"",
+    "request": "site:findwhocallsme.com \"$n\" OR \"$i\"",
     "stop": 1
   },
   {
     "title": "reputation report on yellowpages.ca",
-    "request": "site:yellowpages.ca intext:\"$n\"",
+    "request": "site:yellowpages.ca \"$n\"",
     "stop": 1
   },
   {
     "title": "reputation report on phonenumbers.ie",
-    "request": "site:phonenumbers.ie intext:\"$n\"",
+    "request": "site:phonenumbers.ie \"$n\"",
     "stop": 1
   },
   {
     "title": "reputation report on who-calledme.com",
-    "request": "site:who-calledme.com intext:\"$n\"",
+    "request": "site:who-calledme.com \"$n\"",
     "stop": 1
   },
   {
@@ -41,7 +41,7 @@
   },
   {
     "title": "reputation report on quinumero.info",
-    "request": "site:quinumero.info intext:\"$l\" | intext:\"$i\"",
+    "request": "site:quinumero.info \"$l\" OR \"$i\"",
     "stop": 1
   },
   {
