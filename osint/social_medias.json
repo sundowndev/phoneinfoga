@@ -1,22 +1,22 @@
 [
   {
     "site": "facebook.com",
-    "request": "site:\"facebook.com\" intext:\"$i\" | intext:\"$n\" | intext:\"$l\"",
+    "request": "site:\"facebook.com\" \"$i\" OR \"$n\" OR \"$l\"",
     "stop": 5
   },
   {
     "site": "twitter.com",
-    "request": "site:\"twitter.com\" intext:\"$i\" | intext:\"$n\" | intext:\"$l\"",
+    "request": "site:\"twitter.com\" \"$i\" OR \"$n\" OR \"$l\"",
     "stop": 5
   },
   {
     "site": "linkedin.com",
-    "request": "site:\"linkedin.com\" intext:\"$i\" | intext:\"$n\" | intext:\"$l\"",
+    "request": "site:\"linkedin.com\" \"$i\" OR \"$n\" OR \"$l\"",
     "stop": 5
   },
   {
     "site": "instagram.com",
-    "request": "site:\"instagram.com\" intext:\"$i\" | intext:\"$n\" | intext:\"$l\"",
+    "request": "site:\"instagram.com\" \"$i\" OR \"$n\" OR \"$l\"",
     "stop": 5
   }
 ]
