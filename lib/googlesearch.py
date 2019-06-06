@@ -34,7 +34,7 @@ def search(req, stop):
     }
 
     try:
-        REQ = urlencode({'q': req})
+        REQ = urlencode({ 'q': req, 'num': stop })
         URL = 'https://www.google.com/search?tbs=li:1&{}&amp;gws_rd=ssl&amp;gl=us'.format(
             REQ)
         r = send('GET', URL + googleAbuseToken, headers=headers)
@@ -79,7 +79,7 @@ def search(req, stop):
 
 
 def searchApi(req, stop):
-    options = urlencode({'q': req, 'key': google_api_key, 'cx': google_cx_id})
+    options = urlencode({ 'q': req, 'key': google_api_key, 'cx': google_cx_id, 'num': stop })
     r = send('GET', 'https://www.googleapis.com/customsearch/v1?%s' % (options))
     response = r.json()
 
