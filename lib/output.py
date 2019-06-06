@@ -68,7 +68,7 @@ def throw(string):
 
 def askForExit():
     if not args.output:
-        user_input = askInput('Continue scanning ? (y/N) ')
+        user_input = ask('Continue scanning ? (y/N) ')
 
         if user_input.lower() == 'y' or user_input.lower() == 'yes':
             return -1
@@ -76,7 +76,7 @@ def askForExit():
             info("Good bye!")
             sys.exit()
 
-def askInput(text):
+def ask(text):
     if args.output:
         sys.stdout = sys.__stdout__
         sys.stderr = sys.__stderr__

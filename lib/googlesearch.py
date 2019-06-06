@@ -42,7 +42,7 @@ def search(req, stop):
         while r.status_code != 200:
             warn('You are temporary blacklisted from Google search. Complete the captcha at the following URL and copy/paste the content of GOOGLE_ABUSE_EXEMPTION cookie : {}'.format(URL))
             info('Need help ? Read https://github.com/sundowndev/PhoneInfoga/wiki')
-            token = askInput('\nGOOGLE_ABUSE_EXEMPTION=')
+            token = ask('\nGOOGLE_ABUSE_EXEMPTION=')
             googleAbuseToken = '&google_abuse=' + token
             r = send('GET', URL + googleAbuseToken, headers=headers)
 
