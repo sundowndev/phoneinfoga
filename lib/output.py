@@ -79,10 +79,7 @@ def askForExit():
 def ask(text):
     if args.output:
         sys.stdout = sys.__stdout__
-        sys.stderr = sys.__stderr__
-
         res = input(text)
-
         sys.stdout = Logger()
 
         return res
