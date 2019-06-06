@@ -51,14 +51,8 @@ def search(req, stop):
         results = soup.find("div", id="search").find_all("div", class_="g")
 
         links = []
-        counter = 0
 
         for result in results:
-            counter += 1
-
-            if int(counter) > int(stop):
-                break
-
             url = result.find("a").get('href')
             url = re.sub(r'(?:\/url\?q\=)', '', url)
             url = re.sub(r'(?:\/url\?url\=)', '', url)
@@ -95,14 +89,8 @@ def searchApi(req, stop):
     results = response['items']
 
     links = []
-    counter = 0
 
     for result in results:
-        counter += 1
-
-        if int(counter) > int(stop):
-            break
-
         if result['link'] is not None:
             links.append(result['link'])
 
