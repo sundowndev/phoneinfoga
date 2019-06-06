@@ -6,6 +6,9 @@
   <a href="https://travis-ci.org/sundowndev/PhoneInfoga">
     <img src="https://img.shields.io/travis/sundowndev/PhoneInfoga/master.svg?style=flat-square" alt="Build Status" />
   </a>
+  <a href="https://hub.docker.com/r/sundowndev/phoneinfoga/builds">
+    <img src="https://img.shields.io/docker/cloud/build/sundowndev/phoneinfoga.svg?style=flat-square" alt="Build Status" />
+  </a>
   <a href="#">
     <img src="https://img.shields.io/badge/python-3.6-blue.svg?style=flat-square" alt="Python version" />
   </a>
