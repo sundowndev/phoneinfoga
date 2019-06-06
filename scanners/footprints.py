@@ -152,13 +152,13 @@ def osintScan(numberObject, rerun=False):
         plus("Scan URL: https://www.411.com/phone/{}".format(
             internationalNumber.replace('+', '').replace(' ', '-')))
 
-        askingCustomPayload = input(
+        askingCustomPayload = askInput(
             'Would you like to use an additional format for this number ? (y/N) ')
 
     if rerun or askingCustomPayload == 'y' or askingCustomPayload == 'yes':
         info('We recommand: {} or {}'.format(internationalNumber,
                                              internationalNumber.replace(numberCountryCode + ' ', '')))
-        customFormatting = input('Custom format: ')
+        customFormatting = askInput('Custom format: ')
 
     info('---- Web pages footprints ----')
 
@@ -189,7 +189,7 @@ def osintScan(numberObject, rerun=False):
     info("Generating URL on scamcallfighters.com...")
     plus('http://www.scamcallfighters.com/search-phone-{}.html'.format(number))
 
-    tmpNumAsk = input(
+    tmpNumAsk = askInput(
         "Would you like to search for temporary number providers footprints ? (Y/n) ")
 
     if tmpNumAsk.lower() != 'n' and tmpNumAsk.lower() != 'no':
@@ -199,7 +199,7 @@ def osintScan(numberObject, rerun=False):
 
     osintIndividualScan()
 
-    retry_input = input(
+    retry_input = askInput(
         "Would you like to rerun OSINT scan ? (e.g to use a different format) (y/N) ")
 
     if retry_input.lower() == 'y' or retry_input.lower() == 'yes':

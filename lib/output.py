@@ -9,6 +9,7 @@ import sys
 import json
 from lib.colors import *
 from lib.args import args
+from lib.logger import Logger
 
 
 def plus(string):
@@ -67,10 +68,23 @@ def throw(string):
 
 def askForExit():
     if not args.output:
-        user_input = input("Continue scanning ? (y/N) ")
+        user_input = askInput('Continue scanning ? (y/N) ')
 
         if user_input.lower() == 'y' or user_input.lower() == 'yes':
             return -1
         else:
             info("Good bye!")
             sys.exit()
+
+def askInput(text):
+    if args.output:
+        sys.stdout = sys.__stdout__
+        sys.stderr = sys.__stderr__
+
+        res = input(text)
+
+        sys.stdout = Logger()
+
+        return res
+    else:
+        return input(text)
