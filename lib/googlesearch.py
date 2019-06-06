@@ -85,6 +85,8 @@ def searchApi(req, stop):
 
     if 'error' in response:
         error('Error while fetching Google search API. Maybe usage limit ? Please verify your keys.')
+        print(response['error'])
+        askForExit()
         return []
 
     if 'items' not in response:
