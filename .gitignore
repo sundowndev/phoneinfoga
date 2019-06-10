@@ -3,3 +3,4 @@
 __pycache__/
 .vscode/
 config.py
+geckodriver.log
