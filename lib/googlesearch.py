@@ -15,11 +15,16 @@ from config import *
 
 from selenium import webdriver
 
-browser = webdriver.Firefox()
+browser = None
 
 def search(req, stop):
+    global browser
+
     if google_api_key and google_cx_id:
         return searchApi(req, stop)
+
+    if browser is None:
+        browser = webdriver.Firefox()
 
     try:
         REQ = urlencode({ 'q': req, 'num': stop, 'hl': 'en' })
