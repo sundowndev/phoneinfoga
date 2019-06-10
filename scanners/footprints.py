@@ -206,5 +206,6 @@ def osintScan(numberObject, rerun=False):
     if retry_input.lower() == 'y' or retry_input.lower() == 'yes':
         osintScan(numberObj, True)
     else:
-        browser.quit()
+        if browser is not None:
+            browser.quit()
         return -1
