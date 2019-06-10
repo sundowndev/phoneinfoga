@@ -5,3 +5,4 @@ phonenumbers==8.10.2
 argparse==1.2.1
 urllib3==1.24.2
 colorama==0.4.1
+selenium==3.141.0
