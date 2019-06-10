@@ -10,6 +10,7 @@ from lib.output import *
 from lib.format import *
 from lib.request import send
 from lib.googlesearch import search
+from lib.googlesearch import browser
 
 numberObj = {}
 number = ''
@@ -176,10 +177,10 @@ def osintScan(numberObject, rerun=False):
     # Documents
     info("Searching for documents... (limit=10)")
     if customFormatting:
-        req = '[ext:doc OR ext:docx OR ext:odt OR ext:pdf OR ext:rtf OR ext:sxw OR ext:psw OR ext:ppt OR ext:pptx OR ext:pps OR ext:csv OR ext:txt OR ext:xls] AND ["{}"]'.format(
+        req = '(ext:doc OR ext:docx OR ext:odt OR ext:pdf OR ext:rtf OR ext:sxw OR ext:psw OR ext:ppt OR ext:pptx OR ext:pps OR ext:csv OR ext:txt OR ext:xls) AND ("{}")'.format(
             customFormatting)
     else:
-        req = '[ext:doc OR ext:docx OR ext:odt OR ext:pdf OR ext:rtf OR ext:sxw OR ext:psw OR ext:ppt OR ext:pptx OR ext:pps OR ext:csv OR ext:txt OR ext:xls] AND ["{}" OR "{}"]'.format(
+        req = '(ext:doc OR ext:docx OR ext:odt OR ext:pdf OR ext:rtf OR ext:sxw OR ext:psw OR ext:ppt OR ext:pptx OR ext:pps OR ext:csv OR ext:txt OR ext:xls) AND ("{}" OR "{}")'.format(
             internationalNumber, localNumber)
     for result in search(req, stop=10):
         plus("Result found: " + result)
@@ -205,4 +206,5 @@ def osintScan(numberObject, rerun=False):
     if retry_input.lower() == 'y' or retry_input.lower() == 'yes':
         osintScan(numberObj, True)
     else:
+        browser.quit()
         return -1
