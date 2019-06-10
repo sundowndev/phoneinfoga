@@ -9,7 +9,6 @@ install:
   - wget https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz
   - tar -xvzf geckodriver*
   - chmod +x geckodriver
-  - mv geckodriver /usr/bin/
   - sudo mv geckodriver /usr/bin/
   # Install project
   - cp config.example.py config.py
