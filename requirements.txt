@@ -1,5 +1,5 @@
 phonenumbers==8.10.2
 colorama==0.4.1
-requests==2.18.4
+requests==2.20.0
 selenium==3.141.0
 beautifulsoup4==4.7.1
