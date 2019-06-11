@@ -42,29 +42,31 @@ python3 phoneinfoga.py -v
 
 ### Install the Geckodriver
 
+The Geckodriver is the Firefox webdriver for Selenium, which is used by PhoneInfoga to perform queries to Google search and handle captcha. Firefox is actually the only webdriver supported by PhoneInfoga. Want to hack it to use chrome or another driver instead ? See [this file](https://github.com/sundowndev/PhoneInfoga/blob/8179fe4857ca7df2d843119e2123c260e8401818/lib/googlesearch.py#L35).
+
 #### Linux
 
 Go to the [geckodriver releases page](https://github.com/mozilla/geckodriver/releases). Find the latest version of the driver for your platform and download it. For example: 
 
-```
+```shell
 wget https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz
 ```
 
 Extract the file with:
 
-```
+```shell
 tar xvfz geckodriver-v0.24.0-linux64.tar.gz
 ```
 
 Make it executable:
 
-```
+```shell
 chmod +x geckodriver
 ```
 
 Add the driver to your PATH so other tools can find it:
 
-```
+```shell
 export PATH=$PATH:/path-to-extracted-file/.
 ```
 
@@ -139,4 +141,12 @@ docker-compose up -d
 
 ```shell
 docker-compose run --rm phoneinfoga --help
+```
+
+#### Troubleshooting
+
+All output is sent to stdout so it can be inspected by running:
+
+```shell
+docker logs -f <container-id|container-name>
 ```
