@@ -10,7 +10,6 @@ from lib.output import *
 from lib.format import *
 from lib.request import send
 from lib.googlesearch import search
-from lib.googlesearch import browser
 
 numberObj = {}
 number = ''
@@ -206,6 +205,4 @@ def osintScan(numberObject, rerun=False):
     if retry_input.lower() == 'y' or retry_input.lower() == 'yes':
         osintScan(numberObj, True)
     else:
-        if browser is not None:
-            browser.quit()
         return -1

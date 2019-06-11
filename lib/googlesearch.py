@@ -17,6 +17,10 @@ from selenium import webdriver
 
 browser = None
 
+def closeBrowser():
+    if browser is not None:
+        browser.quit()
+
 def search(req, stop):
     global browser
 

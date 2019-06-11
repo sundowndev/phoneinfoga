@@ -14,7 +14,7 @@ from lib.banner import banner, __version__
 from lib.output import *
 from lib.format import *
 from lib.logger import Logger
-from lib.googlesearch import browser
+from lib.googlesearch import closeBrowser
 # scanners
 from scanners import numverify
 from scanners import localscan
@@ -79,11 +79,14 @@ def main():
     if args.output:
         args.output.close()
 
+    closeBrowser()
+
 
 def signal_handler(signal, frame):
     print('\n[-] You pressed Ctrl+C! Exiting.')
-    if browser is not None:
-        browser.quit()
+
+    closeBrowser()
+
     sys.exit()
 
 
