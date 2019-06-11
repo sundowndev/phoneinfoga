@@ -1,8 +1,5 @@
-requests==2.21.0
-bs4==0.0.1
-html5lib==1.0.1
 phonenumbers==8.10.2
-argparse==1.2.1
-urllib3==1.24.2
 colorama==0.4.1
+requests==2.18.4
 selenium==3.141.0
+beautifulsoup4==4.7.1
