@@ -25,7 +25,7 @@ cd sundowndev*
 ### Install requirements
 
 ```shell
-python3 -m pip install -r requirements.txt
+python3 -m pip install -r requirements.txt --user
 ```
 
 ### Create the config file
