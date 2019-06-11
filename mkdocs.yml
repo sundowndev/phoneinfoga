@@ -5,7 +5,7 @@ site_description: 'Advanced information gathering & OSINT tool for phone numbers
 site_author: 'Sundowndev'
 copyright: 'PhoneInfoga was developed by sundowndev and is licensed under GPL-3.0.'
 nav:
-  - Introduction: index.md
+  - Welcome: index.md
   - Installation: install.md
   - Basic usage: usage.md
   - Formatting phone numbers: formatting.md
@@ -14,6 +14,7 @@ nav:
   - Contribute: contribute.md
 theme:
   name: material
+  logo: 'images/logo_white.svg'
   palette:
     primary: 'blue grey'
     accent: 'brown'
