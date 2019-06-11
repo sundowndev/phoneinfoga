@@ -15,6 +15,7 @@ nav:
 theme:
   name: material
   logo: 'images/logo_white.svg'
+  favicon: 'images/logo.svg'
   palette:
     primary: 'blue grey'
     accent: 'brown'
