@@ -5,6 +5,7 @@
 # @url    : https://github.com/sundowndev
 # @author : Raphael Cerveaux (sundowndev)
 
+import os
 import re
 import json
 from urllib.parse import urlencode
@@ -28,7 +29,10 @@ def search(req, stop):
         return searchApi(req, stop)
 
     if browser is None:
-        browser = webdriver.Firefox()
+        if os.environ.get('webdriverRemote'):
+            browser = webdriver.Remote(os.environ.get('webdriverRemote'), webdriver.DesiredCapabilities.FIREFOX.copy())
+        else:
+            browser = webdriver.Firefox()
 
     try:
         REQ = urlencode({ 'q': req, 'num': stop, 'hl': 'en' })
