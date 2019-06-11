@@ -103,7 +103,7 @@ Both free and premium resources are included. Be careful, the listing of a data 
 ```
 insubject:"+XXXXXXXXX" OR insubject:"+XXXXX" OR insubject:"XXXXX XXX XXX"
 insubject:"XXXXXXXXX" OR intitle:"XXXXXXXXX"
-intext:"XXXXXXXXX" ext:doc OR ext:docx OR ext:odt OR ext:pdf OR ext:rtf OR ext:sxw OR ext:psw OR ext:ppt OR ext:pptx OR ext:pps OR ext:csv OR ext:txt OR ext:html
-site:"hs3x.com" intext:"+XXXXXXXXX"
-site:signal-arnaques.com intext:"XXXXXXXXX" intitle:" OR Phone Fraud"
+intext:"XXXXXXXXX" AND (ext:doc OR ext:docx OR ext:odt OR ext:pdf OR ext:rtf OR ext:sxw OR ext:psw OR ext:ppt OR ext:pptx OR ext:pps OR ext:csv OR ext:txt OR ext:html)
+site:"hs3x.com" "+XXXXXXXXX"
+site:signal-arnaques.com intext:"XXXXXXXXX" intitle:" | Phone Fraud"
 ```

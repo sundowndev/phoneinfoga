@@ -30,3 +30,28 @@ By default, PhoneInfo uses Selenium to handle Google search feature. When runnin
 
 Still having issues with Google captcha ? Please [open an issue](https://github.com/sundowndev/PhoneInfoga/issues).
 **Be careful, the cookie contain your IP address.**
+
+#### Using Docker
+
+When you run the tool with docker, the geckodriver and Selenium are also containerized. Make sure you launched all services with docker-compose.
+
+After you successfully launched all services, you should have the following setup :
+
+```
+$ docker-compose ps
+        Name                    Command           State            Ports         
+---------------------------------------------------------------------------------
+phoneinfoga             python phoneinfoga.py     Exit 0                         
+phoneinfoga_firefox_1   /opt/bin/entry_point.sh   Up       0.0.0.0:5900->5900/tcp
+selenium-hub            /opt/bin/entry_point.sh   Up       0.0.0.0:4444->4444/tcp
+```
+
+The web driver (`phoneinfoga_firefox_1`) is mounted on port 5900. It includes a VNC server which allows you to control the browser through Docker. To connect to the VNC server, download a VNC client and connect to `127.0.0.1` on port `5900` with password `secret`.
+
+Here's an example of VNC URL :
+
+```
+vnc://127.0.0.1:5900
+```
+
+Also make sure you disabled any `read-only` or `view-only` mode so you can interact with the browser in order to complete the captcha.
