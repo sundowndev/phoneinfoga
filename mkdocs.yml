@@ -1,5 +1,5 @@
 site_name: PhoneInfoga
-repo_name: PhoneInfoga
+repo_name: 'sundowndev/PhoneInfoga'
 repo_url: 'https://github.com/sundowndev/PhoneInfoga'
 site_description: 'Advanced information gathering & OSINT tool for phone numbers.'
 site_author: 'Sundowndev'
@@ -19,3 +19,9 @@ theme:
   palette:
     primary: 'blue grey'
     accent: 'brown'
+extra:
+  social:
+    - type: 'github'
+      link: 'https://github.com/sundowndev/PhoneInfoga'
+    - type: 'twitter'
+      link: 'https://twitter.com/sundowndev'
