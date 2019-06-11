@@ -89,19 +89,54 @@ Then run the tool
 ```shell
 docker run --rm -it sundowndev/phoneinfoga --help
 ```
+**WARNING**: This image only contain the python tool and not the Selenium hub which is useful to query Google. In order to use Selenium driver, you must use the docker-compose configuration, as described below.
+
+### Docker-compose
+
+You can use a single docker-compose file to run the tool without downloading the source code.
+
+```
+version: "3"
+
+services:
+  phoneinfoga:
+    image: sundowndev/phoneinfoga
+    container_name: phoneinfoga
+    restart: on-failure
+    environment:
+      webdriverRemote: 'http://selenium-hub:4444/wd/hub'
+
+  selenium-hub:
+    image: selenium/hub:3.141.59-palladium
+    container_name: selenium-hub
+    ports:
+      - "4444:4444"
+
+  firefox:
+    image: selenium/node-firefox:3.141.59-palladium
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - selenium-hub
+    environment:
+      - HUB_HOST=selenium-hub
+      - HUB_PORT=4444
+```
 
 ### From the source code
 
-Or, you can download the source code, then build the docker image
+You can download the source code, then build the docker images
 
 #### Build
 
+This will automatically pull, build then setup services
+
 ```shell
-docker build --rm=true -t phoneinfoga/latest .
+docker-compose up -d
 ```
 
 #### Usage
 
 ```shell
-docker run --rm -it phoneinfoga/latest --help
+docker-compose run --rm phoneinfoga --help
 ```
