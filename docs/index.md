@@ -25,13 +25,3 @@ PGP: [B64687AB97F268F43E67B97A8916203E540C65A4](https://crvx.fr/publickey.asc)
 ## Contribute
 
 Want to contribute ? Clone and open some pull requests !
-
-## Support
-
-If you like this project and you want to support my work, please consider supporting me on Patreon 👍 Thank you!
-
-<p>
-  <a href="https://www.patreon.com/sundowndev">
-    <img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
-  </a>
-</p>
