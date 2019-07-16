@@ -52,22 +52,22 @@ Go to the [geckodriver releases page](https://github.com/mozilla/geckodriver/rel
 wget https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz
 ```
 
-Extract the file with:
+Extract the file:
 
 ```shell
-tar xvfz geckodriver-v0.24.0-linux64.tar.gz
+sudo sh -c 'tar -x geckodriver -zf geckodriver-*.tar.gz -O > /usr/bin/geckodriver'
 ```
 
 Make it executable:
 
 ```shell
-chmod +x geckodriver
+sudo chmod +x /usr/bin/geckodriver
 ```
 
-Add the driver to your PATH so other tools can find it:
+Remove the archive:
 
 ```shell
-export PATH=$PATH:/path-to-extracted-file/.
+rm geckodriver-*.tar.gz
 ```
 
 #### Windows or MacOS
