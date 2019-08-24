@@ -8,18 +8,18 @@ If you have a Google search console API key, all you have to do is to edit the f
 
 **CX id** : 
 
-- Go to https://cse.google.com/cse/create/new to create a new search engine
+- Go to [https://cse.google.com/cse/create/new](https://cse.google.com/cse/create/new) to create a new search engine
 - Fill the form with a fake domain site like `example.com`
 - Select English as language
 - Give any name to your search engine and click on Create button
-- Go to https://cse.google.com/cse/all again and click on the search engine you just created.
+- Go to [https://cse.google.com/cse/all](https://cse.google.com/cse/all) again and click on the search engine you just created.
 - Select all entries in "Sites to search" and delete them
 - Turn "Search the entire web" to ON
 - Click on the "Search engine ID" button and copy your search engine id. This is the value for `google_cx_id` field in config.py file
 
 **CSE API key** :
 
-- Go to https://console.developers.google.com/apis/credentials
+- Go to [https://console.developers.google.com/apis/credentials](https://console.developers.google.com/apis/credentials)
 - Click on "Create credentials" and select API key
 - Copy the API key and click on close button. This is the value for `google_api_key` field in the config.py file
 - **Be sure to restrict the API key** to "Custom Search API"
