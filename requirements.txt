@@ -4,3 +4,4 @@ requests==2.20.0
 selenium==3.141.0
 beautifulsoup4==4.7.1
 html5lib==1.0.1
+config==0.4.2
