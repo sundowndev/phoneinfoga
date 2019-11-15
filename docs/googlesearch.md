@@ -55,3 +55,8 @@ vnc://127.0.0.1:5900
 ```
 
 Also make sure you disabled any `read-only` or `view-only` mode so you can interact with the browser in order to complete the captcha.
+
+##### VNC clients
+
+- [Chicken, an open-source VNC client for MacOS X](https://sourceforge.net/projects/chicken/)
+- [Vinagre, an open-source VNC client for GNOME (Linux)](https://github.com/GNOME/vinagre)
