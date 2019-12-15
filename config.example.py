@@ -7,3 +7,4 @@
 
 google_api_key=''
 google_cx_id=''
+firefox_exe_path = r'C:\Program Files\Mozilla Firefox\firefox.exe'
