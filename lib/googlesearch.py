@@ -15,6 +15,7 @@ from lib.request import send
 from config import *
 
 from selenium import webdriver
+from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 
 browser = None
 
@@ -32,7 +33,8 @@ def search(req, stop):
         if os.environ.get('webdriverRemote'):
             browser = webdriver.Remote(os.environ.get('webdriverRemote'), webdriver.DesiredCapabilities.FIREFOX.copy())
         else:
-            browser = webdriver.Firefox()
+            binary = FirefoxBinary(firefox_executable_path)
+            browser = webdriver.Firefox(firefox_binary=binary)
 
     try:
         REQ = urlencode({ 'q': req, 'num': stop, 'hl': 'en' })
