@@ -8,6 +8,7 @@
 import os
 import re
 import json
+import time
 from urllib.parse import urlencode
 from bs4 import BeautifulSoup
 from lib.output import *
@@ -24,6 +25,7 @@ def closeBrowser():
         browser.quit()
 
 def search(req, stop):
+    time.sleep(5)
     global browser
 
     if google_api_key and google_cx_id:
