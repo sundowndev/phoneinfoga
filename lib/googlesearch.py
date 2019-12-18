@@ -26,7 +26,7 @@ def closeBrowser():
         browser.quit()
 
 def search(req, stop):
-    time.sleep(8)
+    time.sleep(10)
     global browser
 
     if google_api_key and google_cx_id:
@@ -36,11 +36,11 @@ def search(req, stop):
         if os.environ.get('webdriverRemote'):
             browser = webdriver.Remote(os.environ.get('webdriverRemote'), webdriver.DesiredCapabilities.FIREFOX.copy())
         else:
-            if os.name == 'nt':
+            if firefox_exe_path.lstrip() == '':
+                browser = webdriver.Firefox()
+            else:
                 binary = FirefoxBinary(firefox_exe_path)
                 browser = webdriver.Firefox(firefox_binary=binary)
-            else:
-                browser = webdriver.Firefox()
 
     try:
         REQ = urlencode({ 'q': req, 'num': stop, 'hl': 'en' })

@@ -7,4 +7,7 @@
 
 google_api_key=''
 google_cx_id=''
-firefox_exe_path = r'C:\Program Files\Mozilla Firefox\firefox.exe'
+
+firefox_exe_path = r'/usr/bin/firefox' #change the path according to your system.
+#the value can be empty if you don't need it.
+#firefox_exe_path = ''
