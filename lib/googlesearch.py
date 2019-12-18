@@ -17,18 +17,76 @@ import os
 from config import *
 
 from selenium import webdriver
+from selenium.webdriver.firefox.options import DesiredCapabilities
+from selenium.webdriver.common.proxy import Proxy,ProxyType
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 
 browser = None
+count = 0
+fo = webdriver.FirefoxOptions()
+fo.add_argument("log-level=3")
+PROXIES = []
+fo.add_argument("--headless")
 
 def closeBrowser():
     if browser is not None:
         browser.quit()
+        
+def get_proxies(fo=fo):
+    driver = webdriver.Firefox(firefox_options=fo)
+    driver.get("https://free-proxy-list.net/")
+    proxies = driver.find_elements_by_css_selector("tr[role='row']")
+    for p in proxies:
+        result = p.text.split(" ")
+        if result[7] == "yes":
+            PROXIES.append(result[0]+":"+result[1])
+    driver.close()
+    return PROXIES
 
-def search(req, stop):
-    time.sleep(10)
+def proxy_driver(PROXIES,fo=fo, binary = None):
+    prox = Proxy()
+    if PROXIES:
+        pxy = PROXIES[-1]
+    else:
+        info("Proxies used up (%s)" % len(PROXIES))
+        PROXIES = get_proxies()
+        print(PROXIES)
+        pxy = PROXIES[-1]
+    info('Trying proxy '+pxy)
+    proxy = Proxy({
+        'proxyType': ProxyType.MANUAL,
+        'httpProxy': pxy,
+        'ftpProxy': pxy,
+        'sslProxy': pxy,
+        'noProxy': '' 
+    })
+    #prox.proxy_type = ProxyType.MANUAL
+    #prox.http_proxy = pxy
+    #prox.socks_proxy = pxy
+    #prox.ssl_proxy = pxy
+    #capabilities = webdriver.DesiredCapabilities.FIREFOX
+    #prox.add_to_capabilities(capabilities)
+    driver = None
+    if binary==None:
+        #driver = webdriver.Firefox(firefox_options=fo, desired_capabilities=capabilities)
+        driver  = webdriver.Firefox(firefox_options=fo,proxy=proxy)
+    else:
+        #driver = webdriver.Firefox(firefox_options=fo, desired_capabilities=capabilities,firefox_binary=binary)
+        driver = webdriver.Firefox(firefox_options=fo, proxy=proxy,firefox_binary=binary)
+    #print('[-] Using proxy',pxy)
+    return driver
+
+def search(req, stop,count=0):
     global browser
-
+    global PROXIES
+    if count == 1:
+        if browser:
+            browser.close()
+        browser = None
+        if len(PROXIES) > 0:
+            PROXIES.pop()
+    if len(PROXIES) == 0:
+        PROXIES = get_proxies()
     if google_api_key and google_cx_id:
         return searchApi(req, stop)
 
@@ -37,10 +95,12 @@ def search(req, stop):
             browser = webdriver.Remote(os.environ.get('webdriverRemote'), webdriver.DesiredCapabilities.FIREFOX.copy())
         else:
             if firefox_exe_path.lstrip() == '':
-                browser = webdriver.Firefox()
+                browser = proxy_driver(PROXIES)
+                #browser = webdriver.Firefox()
             else:
                 binary = FirefoxBinary(firefox_exe_path)
-                browser = webdriver.Firefox(firefox_binary=binary)
+                browser = proxy_driver(PROXIES,binary=binary)
+                #browser = webdriver.Firefox(firefox_binary=binary)
 
     try:
         REQ = urlencode({ 'q': req, 'num': stop, 'hl': 'en' })
@@ -51,7 +111,8 @@ def search(req, stop):
 
         soup = BeautifulSoup(htmlBody, 'html5lib')
 
-        while soup.find("div", id="recaptcha") is not None:
+        if soup.find("div", id="recaptcha") is not None:
+            return search(req,stop,count=1)
             warn('You are temporary blacklisted from Google search. Complete the captcha then press ENTER.')
             token = ask('>')
             htmlBody = browser.find_element_by_css_selector("body").get_attribute('innerHTML')
