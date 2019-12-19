@@ -6,12 +6,10 @@
 # @author : Raphael Cerveaux (sundowndev)
 
 import unittest
-# from unittest.mock import patch, call
 
-from lib.banner import banner,__version__
+from lib.banner import banner, __version__
 
-# @patch('builtins.print')
+
 class TestAnswer(unittest.TestCase):
     def test_type(self):
         self.assertIs(type(__version__), type("str"))
-
