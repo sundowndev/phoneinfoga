@@ -60,20 +60,11 @@ def proxy_driver(PROXIES,fo=fo, binary = None):
         'sslProxy': pxy,
         'noProxy': '' 
     })
-    #prox.proxy_type = ProxyType.MANUAL
-    #prox.http_proxy = pxy
-    #prox.socks_proxy = pxy
-    #prox.ssl_proxy = pxy
-    #capabilities = webdriver.DesiredCapabilities.FIREFOX
-    #prox.add_to_capabilities(capabilities)
     driver = None
     if binary==None:
-        #driver = webdriver.Firefox(firefox_options=fo, desired_capabilities=capabilities)
         driver  = webdriver.Firefox(firefox_options=fo,proxy=proxy)
     else:
-        #driver = webdriver.Firefox(firefox_options=fo, desired_capabilities=capabilities,firefox_binary=binary)
         driver = webdriver.Firefox(firefox_options=fo, proxy=proxy,firefox_binary=binary)
-    #print('[-] Using proxy',pxy)
     return driver
 
 def search(req, stop,count=0):
@@ -112,8 +103,8 @@ def search(req, stop,count=0):
         soup = BeautifulSoup(htmlBody, 'html5lib')
 
         if soup.find("div", id="recaptcha") is not None:
+            warn('Temporary blacklisted from Google search.')
             return search(req,stop,count=1)
-            warn('You are temporary blacklisted from Google search. Complete the captcha then press ENTER.')
             token = ask('>')
             htmlBody = browser.find_element_by_css_selector("body").get_attribute('innerHTML')
             soup = BeautifulSoup(htmlBody, 'html5lib')
