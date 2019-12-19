@@ -20,7 +20,7 @@ jobs:
           cp config.example.py config.py
       - name: Lint with Black
         run: |
-          python -m black --config black.config.toml lib scanners --check
+          python -m black --config black.config.toml lib scanners tests --check
       - name: Test
         run: |
           python -m green tests/**/*.py --run-coverage
