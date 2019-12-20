@@ -8,7 +8,7 @@
 import sys
 import colorama
 
-if sys.platform == 'win32':
+if sys.platform == "win32":
     colorama.init()
 
 R = "\033[%s;31m"
