@@ -24,49 +24,9 @@ browser = None
 def closeBrowser():
     if browser is not None:
         browser.quit()
-<<<<<<< HEAD
-        
-def get_proxies(fo=fo):
-    driver = webdriver.Firefox(firefox_options=fo)
-    driver.get("https://free-proxy-list.net/")
-    proxies = driver.find_elements_by_css_selector("tr[role='row']")
-    for p in proxies:
-        result = p.text.split(" ")
-        if result[7] == "yes":
-            PROXIES.append(result[0]+":"+result[1])
-    driver.close()
-    return PROXIES
-
-def proxy_driver(PROXIES,fo=fo, binary = None):
-    prox = Proxy()
-    if PROXIES:
-        pxy = PROXIES[-1]
-    else:
-        info("Proxies used up (%s)" % len(PROXIES))
-        PROXIES = get_proxies()
-        print(PROXIES)
-        pxy = PROXIES[-1]
-    info('Trying proxy '+pxy)
-    proxy = Proxy({
-        'proxyType': ProxyType.MANUAL,
-        'httpProxy': pxy,
-        'ftpProxy': pxy,
-        'sslProxy': pxy,
-        'noProxy': '' 
-    })
-    driver = None
-    if binary==None:
-        driver  = webdriver.Firefox(firefox_options=fo,proxy=proxy)
-    else:
-        driver = webdriver.Firefox(firefox_options=fo, proxy=proxy,firefox_binary=binary)
-    return driver
-
-def search(req, stop,count=0):
-=======
 
 def search(req, stop):
-    time.sleep(10)
->>>>>>> parent of cd8e2b8... rotating proxy
+    #time.sleep(10)
     global browser
 
     if google_api_key and google_cx_id:
@@ -91,14 +51,8 @@ def search(req, stop):
 
         soup = BeautifulSoup(htmlBody, 'html5lib')
 
-<<<<<<< HEAD
-        if soup.find("div", id="recaptcha") is not None:
-            warn('Temporary blacklisted from Google search.')
-            return search(req,stop,count=1)
-=======
         while soup.find("div", id="recaptcha") is not None:
             warn('You are temporary blacklisted from Google search. Complete the captcha then press ENTER.')
->>>>>>> parent of cd8e2b8... rotating proxy
             token = ask('>')
             htmlBody = browser.find_element_by_css_selector("body").get_attribute('innerHTML')
             soup = BeautifulSoup(htmlBody, 'html5lib')
