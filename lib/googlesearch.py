@@ -39,6 +39,7 @@ def search(req, stop):
             if firefox_exe_path.lstrip() == '':
                 browser = webdriver.Firefox()
             else:
+                #info(firefox_exe_path)
                 binary = FirefoxBinary(firefox_exe_path)
                 browser = webdriver.Firefox(firefox_binary=binary)
 
