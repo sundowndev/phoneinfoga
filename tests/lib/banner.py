@@ -12,11 +12,11 @@ from lib.banner import banner, __version__
 
 
 class TestBanner(unittest.TestCase):
-    def test_type(self):
+    def test_version(self):
         self.assertIs(type(__version__), type("str"))
 
     @patch("builtins.print")
-    def test_banner_prints(self, printMock):
+    def test_banner(self, printMock):
         banner()
 
         self.assertEqual(printMock.call_count, 9)
