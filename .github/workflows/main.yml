@@ -1,0 +1,29 @@
+name: Build
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install black
+          pip install green
+          cp config.example.py config.py
+      - name: Lint with Black
+        run: |
+          python -m black --config black.config.toml lib scanners tests --check
+      - name: Test
+        run: |
+          python -m green tests/**/*.py --run-coverage -vvv
+      - name: Generate examples
+        run: |
+          bash ./examples/generate.sh
