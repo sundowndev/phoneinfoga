@@ -17,20 +17,14 @@ import os
 from config import *
 
 from selenium import webdriver
-from selenium.webdriver.firefox.options import DesiredCapabilities
-from selenium.webdriver.common.proxy import Proxy,ProxyType
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 
 browser = None
-count = 0
-fo = webdriver.FirefoxOptions()
-fo.add_argument("log-level=3")
-PROXIES = []
-fo.add_argument("--headless")
 
 def closeBrowser():
     if browser is not None:
         browser.quit()
+<<<<<<< HEAD
         
 def get_proxies(fo=fo):
     driver = webdriver.Firefox(firefox_options=fo)
@@ -68,16 +62,13 @@ def proxy_driver(PROXIES,fo=fo, binary = None):
     return driver
 
 def search(req, stop,count=0):
+=======
+
+def search(req, stop):
+    time.sleep(10)
+>>>>>>> parent of cd8e2b8... rotating proxy
     global browser
-    global PROXIES
-    if count == 1:
-        if browser:
-            browser.close()
-        browser = None
-        if len(PROXIES) > 0:
-            PROXIES.pop()
-    if len(PROXIES) == 0:
-        PROXIES = get_proxies()
+
     if google_api_key and google_cx_id:
         return searchApi(req, stop)
 
@@ -86,12 +77,10 @@ def search(req, stop,count=0):
             browser = webdriver.Remote(os.environ.get('webdriverRemote'), webdriver.DesiredCapabilities.FIREFOX.copy())
         else:
             if firefox_exe_path.lstrip() == '':
-                browser = proxy_driver(PROXIES)
-                #browser = webdriver.Firefox()
+                browser = webdriver.Firefox()
             else:
                 binary = FirefoxBinary(firefox_exe_path)
-                browser = proxy_driver(PROXIES,binary=binary)
-                #browser = webdriver.Firefox(firefox_binary=binary)
+                browser = webdriver.Firefox(firefox_binary=binary)
 
     try:
         REQ = urlencode({ 'q': req, 'num': stop, 'hl': 'en' })
@@ -102,9 +91,14 @@ def search(req, stop,count=0):
 
         soup = BeautifulSoup(htmlBody, 'html5lib')
 
+<<<<<<< HEAD
         if soup.find("div", id="recaptcha") is not None:
             warn('Temporary blacklisted from Google search.')
             return search(req,stop,count=1)
+=======
+        while soup.find("div", id="recaptcha") is not None:
+            warn('You are temporary blacklisted from Google search. Complete the captcha then press ENTER.')
+>>>>>>> parent of cd8e2b8... rotating proxy
             token = ask('>')
             htmlBody = browser.find_element_by_css_selector("body").get_attribute('innerHTML')
             soup = BeautifulSoup(htmlBody, 'html5lib')
