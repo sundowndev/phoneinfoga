@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-# -*- coding:utf-8 -*- 
+# -*- coding:utf-8 -*-
 #
 # @name   : PhoneInfoga - Phone numbers OSINT tool
 # @url    : https://github.com/sundowndev
 # @author : Raphael Cerveaux (sundowndev)
 
-__version__ = 'v1.10.9'
+__version__ = "v1.10.10"
+
 
 def banner():
     print("    ___ _                       _____        __                   ")

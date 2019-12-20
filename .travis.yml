@@ -1,8 +1,0 @@
-language: python
-python:
-  - "3.6"
-  - "3.7-dev"
-install:
-  - cp config.example.py config.py
-  - pip install -r requirements.txt
-script: bash ./examples/generate.sh

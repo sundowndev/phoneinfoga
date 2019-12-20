@@ -13,9 +13,10 @@ def formatNumber(InputNumber):
 
 
 def replaceVariables(string, number):
-    string = string.replace('$n', number['default'])
-    string = string.replace('$i', number['international'])
-    string = string.replace('$l', number['international'].replace(
-        '%s ' % (number['countryCode']), ''))
+    string = string.replace("$n", number["default"])
+    string = string.replace("$i", number["international"])
+    string = string.replace(
+        "$l", number["international"].replace("%s " % (number["countryCode"]), "")
+    )
 
     return string
