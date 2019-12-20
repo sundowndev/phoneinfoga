@@ -23,7 +23,7 @@ jobs:
           python -m black --config black.config.toml lib scanners tests --check
       - name: Test
         run: |
-          python -m green tests/**/*.py --run-coverage
+          python -m green tests/**/*.py --run-coverage -vvv
       - name: Generate examples
         run: |
           bash ./examples/generate.sh
