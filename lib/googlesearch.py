@@ -15,8 +15,24 @@ from lib.request import send
 from config import *
 
 from selenium import webdriver
+from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 
-browser = None
+
+def getFirefoxBrowser():
+    if os.environ.get("webdriverRemote"):
+        return webdriver.Remote(
+            os.environ.get("webdriverRemote"),
+            webdriver.DesiredCapabilities.FIREFOX.copy(),
+        )
+
+    if firefox_path == "":
+        return webdriver.Firefox()
+
+    binary = FirefoxBinary(firefox_path)
+    return webdriver.Firefox(firefox_binary=binary)
+
+
+browser = getFirefoxBrowser()
 
 
 def closeBrowser():
@@ -29,15 +45,6 @@ def search(req, stop):
 
     if google_api_key and google_cx_id:
         return searchApi(req, stop)
-
-    if browser is None:
-        if os.environ.get("webdriverRemote"):
-            browser = webdriver.Remote(
-                os.environ.get("webdriverRemote"),
-                webdriver.DesiredCapabilities.FIREFOX.copy(),
-            )
-        else:
-            browser = webdriver.Firefox()
 
     try:
         REQ = urlencode({"q": req, "num": stop, "hl": "en"})
