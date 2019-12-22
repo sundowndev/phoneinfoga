@@ -33,7 +33,7 @@ Country code and special chars such as `( ) - +` will be escaped so typing US-ba
 python3 phoneinfoga.py -n "+1 555-444-3333"
 ```
 
-Note that the country code is essential. You don't know which country code to use ? [Find it here](https://www.countrycode.org/)
+!!! note "Note that the country code is essential. You don't know which country code to use ? [Find it here](https://www.countrycode.org/)"
 
 #### Output file
 
@@ -73,7 +73,7 @@ Use `any` to disable this feature. Default value: `all`
 
 **Footprints** scanner uses Google search engine and [Google Dorks](https://en.wikipedia.org/wiki/Google_hacking) to search phone number's footprints everywhere on the web. It allows you to search for scam reports, social media profiles, documents and more.
 
-#### Examples
+## Examples
 
 Check for a number range on OVH :
 

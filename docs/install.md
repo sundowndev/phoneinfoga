@@ -2,8 +2,8 @@ To install PhoneInfoga, you'll need to download source code then install depende
 
 Requirements : 
 
-- python3 and python3-pip OR Docker
-- git OR wget and curl
+- python3 and python3-pip **OR** Docker
+- git **OR** wget and curl
 
 ## Manual installation
 
@@ -42,7 +42,9 @@ python3 phoneinfoga.py -v
 
 ### Install the Geckodriver
 
-The Geckodriver is the Firefox webdriver for Selenium, which is used by PhoneInfoga to perform queries to Google search and handle captcha. Firefox is actually the only webdriver supported by PhoneInfoga. Want to hack it to use chrome or another driver instead ? See [this file](https://github.com/sundowndev/PhoneInfoga/blob/8179fe4857ca7df2d843119e2123c260e8401818/lib/googlesearch.py#L35).
+The Geckodriver is the Firefox webdriver for Selenium, which is used by PhoneInfoga to perform queries to Google search and handle captcha. Firefox is actually the only webdriver supported by PhoneInfoga.
+
+!!! tip "Want to hack it to use chrome or another driver instead ? See [this file](https://github.com/sundowndev/PhoneInfoga/blob/8179fe4857ca7df2d843119e2123c260e8401818/lib/googlesearch.py#L35)."
 
 #### Linux
 
@@ -72,10 +74,11 @@ sudo chmod +x /usr/bin/geckodriver
 rm geckodriver-*.tar.gz
 ```
 
-**NOTE:** You also have to install Firefox browser v65+. To verify everything is fine, be sure the following commands work:
+!!! note
+    You also have to install Firefox browser v65+. To verify everything is fine, be sure the following commands work:
 
-- `which firefox` should return something like `/usr/bin/firefox`
-- `which geckodriver` should return something like `/usr/bin/geckodriver`
+    - `which firefox` should return something like `/usr/bin/firefox`
+    - `which geckodriver` should return something like `/usr/bin/geckodriver`
 
 #### Windows or MacOS
 
@@ -98,7 +101,8 @@ Then run the tool
 ```shell
 docker run --rm -it sundowndev/phoneinfoga --help
 ```
-**WARNING**: This image only contain the python tool and not the Selenium hub which is useful to query Google. In order to use Selenium driver, you must use the docker-compose configuration, as described below.
+!!! warning 
+    This image only contain the python tool and not the Selenium hub which is useful to query Google. In order to use Selenium driver, you must use the docker-compose configuration, as described below.
 
 ### Docker-compose
 
