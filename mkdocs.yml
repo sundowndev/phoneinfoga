@@ -25,3 +25,7 @@ extra:
       link: 'https://github.com/sundowndev/PhoneInfoga'
     - type: 'twitter'
       link: 'https://twitter.com/sundowndev'
+
+# Extensions
+markdown_extensions:
+  - markdown.extensions.admonition
