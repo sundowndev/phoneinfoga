@@ -1,10 +1,10 @@
 # Contribute
 
-This page describe the project structure and gives you a bit of help to start developing.
+This page describe the project structure and gives you a bit of help to start contributing.
 
-The project is maintained by a single person: [sundowndev](https://github.com/sundowndev). Contributions are welcome.
+The project is maintained by a single person: [sundowndev](https://github.com/sundowndev). Contributions are welcome !
 
-You want to contribute ? Clone the project and open some pull requests !
+!!! tip "Want to contribute ? Clone the project and open some pull requests !"
 
 ## Project
 
@@ -12,17 +12,12 @@ You want to contribute ? Clone the project and open some pull requests !
 
 See the [installation page](install.md) to install the project.
 
-### Structure
+### File structure
 
 ```
+$ tree . -I __pycache__
+
 ├── docs
-│   ├── contribute.md
-│   ├── formatting.md
-│   ├── googlesearch.md
-│   ├── index.md
-│   ├── install.md
-│   ├── resources.md
-│   └── usage.md
 ├── examples
 │   ├── generate.sh
 │   ├── input.txt
@@ -39,10 +34,6 @@ See the [installation page](install.md) to install the project.
 │   ├── output.py
 │   └── request.py
 ├── osint
-│   ├── disposable_num_providers.json
-│   ├── individuals.json
-│   ├── reputation.json
-│   └── social_medias.json
 ├── scanners
 │   ├── footprints.py
 │   ├── __init__.py
@@ -52,11 +43,36 @@ See the [installation page](install.md) to install the project.
 │   └── recon.py
 ├── config.example.py
 ├── Dockerfile
-├── LICENSE
 ├── mkdocs.yml
 ├── phoneinfoga.py
-├── README.md
 └── requirements.txt
+```
+
+## Testing
+
+We use Green to run unit tests.
+
+```shell
+# Install green
+python -m pip install green
+
+# Run unit tests
+python -m green tests/**/*.py -r -vvv 
+```
+
+## Formatting
+
+We use Black code formatter to format Python files.
+
+```shell
+# Install Black
+python -m pip install black
+
+# Check file formats using Black
+python -m black --config black.config.toml lib scanners tests --check
+
+# Format files using Black
+python -m black --config black.config.toml lib scanners tests
 ```
 
 ## Documentation

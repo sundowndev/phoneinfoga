@@ -6,7 +6,7 @@ PhoneInfoga is one of the most advanced tools to scan phone numbers using only f
 
 ## Features
 
-- Check if phone number exists and is possible
+- Check if phone number exists and is real
 - Gather standard informations such as country, line type and carrier
 - OSINT footprinting using external APIs, Google Hacking, phone books & search engines
 - Check for reputation reports, social media, disposable numbers and more
@@ -14,14 +14,16 @@ PhoneInfoga is one of the most advanced tools to scan phone numbers using only f
 - Use custom formatting for more effective OSINT reconnaissance
 - Automatic footprinting on several custom formats
 
-## Bug report
+## Anti-features
 
-Found a bug ? Feel free to [open an issue](https://github.com/sundowndev/PhoneInfoga/issues).
+- Does not claim to provide relevent or verified data, it's just a tool !
+- Does not allow to "track" a phone or its owner in real time
 
-You can also [reach me on Twitter](https://twitter.com/sundowndev) or at raphael(at)crvx.fr.
+----
 
-PGP: [B64687AB97F268F43E67B97A8916203E540C65A4](https://crvx.fr/publickey.asc)
+!!! bug
+    Found a bug ? Feel free to [open an issue](https://github.com/sundowndev/PhoneInfoga/issues).
 
-## Contribute
+    You can also [reach me on Twitter](https://twitter.com/sundowndev) or at raphael(at)crvx.fr.
 
-Want to contribute ? Clone and open some pull requests !
+    PGP: [B64687AB97F268F43E67B97A8916203E540C65A4](https://crvx.fr/publickey.asc)
