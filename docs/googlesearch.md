@@ -28,6 +28,8 @@ If you have a Google search console API key, all you have to do is to edit the f
 
 By default, PhoneInfo uses Selenium to handle Google search feature. When running OSINT scans, you will usually be blacklisted very easily by Google, which will ask the tool to complete a captcha. Nothing more simple, just complete the captcha that appears on the firefox window. Then press ENTER in the CLI to tell the tool it can continue the scanning process.
 
+If the tool can't find your browser executable, you can specify the Firefox executable path in `config.py` or leave it blank to use the default configuration.
+
 Still having issues with Google captcha ? Please [open an issue](https://github.com/sundowndev/PhoneInfoga/issues).
 **Be careful, the cookie contain your IP address.**
 

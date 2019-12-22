@@ -7,3 +7,5 @@
 
 google_api_key=''
 google_cx_id=''
+
+firefox_path = '' # change the path according to your needs (e.g: /usr/bin/firefox).
