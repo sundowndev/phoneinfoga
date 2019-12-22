@@ -17,8 +17,8 @@ theme:
   logo: 'images/logo_white.svg'
   favicon: 'images/logo.svg'
   palette:
-    primary: 'black'
-    accent: 'indigo'
+    primary: 'blue grey'
+    accent: 'brown'
 extra:
   social:
     - type: 'github'
