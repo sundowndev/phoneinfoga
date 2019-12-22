@@ -17,7 +17,8 @@
 
 ## Footprinting
 
-Both free and premium resources are included. Be careful, the listing of a data source here does not mean it has been verified or is used in the tool. Data might be false. Use it as an OSINT framework.
+!!! info
+    Both free and premium resources are included. Be careful, the listing of a data source here does not mean it has been verified or is used in the tool. Data might be false. Use it as an OSINT framework.
 
 ### Reputation / fraud
 
