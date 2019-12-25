@@ -3,7 +3,7 @@ To install PhoneInfoga, you'll need to download source code then install depende
 Requirements : 
 
 - python3 and python3-pip **OR** Docker
-- git **OR** wget and curl
+- git **OR** curl
 
 ## Manual installation
 
@@ -17,7 +17,7 @@ cd PhoneInfoga/
 You can also download the source code archive : 
 
 ```shell
-wget $(curl -s https://api.github.com/repos/sundowndev/phoneinfoga/releases/latest | grep tarball_url | cut -d '"' -f 4) -O PhoneInfoga.tar.gz
+curl -sSL $(curl -s https://api.github.com/repos/sundowndev/phoneinfoga/releases/latest | grep tarball_url | cut -d '"' -f 4) -o PhoneInfoga.tar.gz
 tar -xvzf PhoneInfoga.tar.gz
 cd sundowndev*
 ```
@@ -53,7 +53,7 @@ The Geckodriver is the Firefox webdriver for Selenium, which is used by PhoneInf
 Go to the [geckodriver releases page](https://github.com/mozilla/geckodriver/releases). Find the latest version of the driver for your platform and download it. For example: 
 
 ```shell
-wget https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz
+curl -sSL https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz -o geckodriver-v0.24.0-linux64.tar.gz
 ```
 
 ##### Extract the file
