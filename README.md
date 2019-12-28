@@ -3,9 +3,8 @@
 </p>
 
 <div align="center">
-  <a href="https://travis-ci.org/sundowndev/PhoneInfoga">
-    <img src="https://img.shields.io/travis/sundowndev/PhoneInfoga/master.svg?style=flat-square" alt="Build Status" />
-  </a>
+  <a href="https://github.com/sundowndev/PhoneInfoga/actions">
+    <img src="https://img.shields.io/endpoint.svg?url=https://actions-badge.atrox.dev/sundowndev/PhoneInfoga/badge?ref=master&style=flat-square" alt="build status" />
   <a href="https://hub.docker.com/r/sundowndev/phoneinfoga/builds">
     <img src="https://img.shields.io/docker/cloud/build/sundowndev/phoneinfoga.svg?style=flat-square" alt="Build Status" />
   </a>
