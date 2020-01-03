@@ -75,7 +75,7 @@ rm geckodriver-*.tar.gz
 ```
 
 !!! note
-    You also have to install Firefox browser v65+. To verify everything is fine, be sure the following commands work:
+    You also have to install Firefox browser v65+. To verify everything is working fine, use the following commands:
 
     - `which firefox` should return something like `/usr/bin/firefox`
     - `which geckodriver` should return something like `/usr/bin/geckodriver`
@@ -92,7 +92,7 @@ It should then be installed at `/usr/local/bin/geckodriver`.
 
 #### Windows
 
-!!! note
+!!! warning
     This tool is not tested under any version of Windows. Consider using an *nix operating system.
 
 - Go to the [geckodriver releases page](https://github.com/mozilla/geckodriver/releases). Find the latest version of the driver for your platform and download it.
