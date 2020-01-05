@@ -59,7 +59,7 @@ curl https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodrive
 ##### Extract the file
 
 ```shell
-sudo sh -c 'tar -x geckodriver -zf geckodriver-*.tar.gz -O > /usr/bin/geckodriver'
+tar -xzf geckodriver-*.tar.gz -O > /usr/bin/geckodriver
 ```
 
 ##### Make it executable
