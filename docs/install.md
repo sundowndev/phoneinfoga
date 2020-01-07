@@ -53,7 +53,7 @@ The Geckodriver is the Firefox webdriver for Selenium, which is used by PhoneInf
 Go to the [geckodriver releases page](https://github.com/mozilla/geckodriver/releases). Find the latest version of the driver for your platform and download it. For example: 
 
 ```shell
-curl https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz -o geckodriver-v0.24.0-linux64.tar.gz
+curl -sSL https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz -o geckodriver-v0.24.0-linux64.tar.gz
 ```
 
 ##### Extract the file
