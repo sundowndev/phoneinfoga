@@ -21,7 +21,9 @@ from scanners import localscan
 from scanners import ovh
 from scanners.footprints import osintScan
 from scanners import recon
+from pathlib import Path
 
+configFile = Path(sys.path[0] + "/config.py")
 
 def scanNumber(InputNumber):
     title("[!] ---- Fetching informations for {} ---- [!]".format(formatNumber(InputNumber)))
@@ -59,12 +61,16 @@ def main():
         print("Version {}".format(__version__))
         sys.exit()
 
+    if not configFile.is_file():
+        error("The config file does not exist. Please create it.")
+        sys.exit()
+
     if args.output:
         sys.stdout = Logger()
 
     # Verify scanner option
     if not args.scanner in scanners:
-        print(("Error: scanner doesn't exists."))
+        print(("Error: scanner doesn't exist."))
         sys.exit()
 
     if args.number:
