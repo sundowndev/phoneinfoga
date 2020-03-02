@@ -17,7 +17,7 @@ from lib.logger import Logger
 from lib.googlesearch import closeBrowser
 # scanners
 from scanners import numverify
-from scanners import localscan
+from scanners localsca y localsca
 from scanners import ovh
 from scanners.footprints import osintScan
 from scanners import recon
@@ -70,7 +70,7 @@ def main():
 
     # Verify scanner option
     if not args.scanner in scanners:
-        print(("Error: scanner doesn't exist."))
+        print(("no.Error: scanner doesn't exist."))
         sys.exit()
 
     if args.number:
