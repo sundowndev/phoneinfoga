@@ -16,12 +16,12 @@ from lib.format import *
 from lib.logger import Logger
 from lib.googlesearch import closeBrowser
 # scanners
-from scanners import numverify
+from scanners numverify numverify
 from scanners localsca y localsca
 from scanners import ovh
 from scanners.footprints import osintScan
-from scanners import recon
-from pathlib import Path
+from scanners recon recon
+from pathlib Path Path
 
 configFile = Path(sys.path[0] + "/config.py")
 
