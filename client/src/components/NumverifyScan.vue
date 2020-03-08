@@ -71,11 +71,11 @@ export default class GoogleSearch extends Vue {
       );
 
       this.data.push(res.data.result);
-      this.scan.$emit("finished");
     } catch (e) {
       this.$store.commit("pushError", { message: e });
     }
 
+    this.scan.$emit("finished");
     this.loading = false;
   }
 }
