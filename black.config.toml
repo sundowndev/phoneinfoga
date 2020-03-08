@@ -1,4 +1,0 @@
-[tool.black]
-line-length = 85
-target-version = ['py37']
-include = '\.pyi?$'
