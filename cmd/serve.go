@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"github.com/gin-gonic/gin"
 	"github.com/spf13/cobra"
 	api "github.com/sundowndev/phoneinfoga/api"
 )
@@ -19,6 +20,8 @@ var serveCmd = &cobra.Command{
 	Use:   "serve",
 	Short: "Serve web client",
 	Run: func(cmd *cobra.Command, args []string) {
-		api.Serve(httpPort)
+		router := gin.Default()
+
+		api.Serve(router, httpPort)
 	},
 }

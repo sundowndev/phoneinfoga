@@ -11,10 +11,8 @@ import (
 
 // Serve launches the web client
 // Using Gin & Vue.js
-func Serve(port int) *gin.Engine {
+func Serve(router *gin.Engine, port int) *gin.Engine {
 	httpPort := ":" + strconv.Itoa(port)
-
-	router := gin.Default()
 
 	router.Group("/api").
 		GET("/", healthHandler).
