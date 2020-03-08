@@ -1,0 +1,32 @@
+before:
+  hooks:
+    - go mod download
+    - go generate ./...
+
+builds:
+-
+  env:
+    - CGO_ENABLED=0
+    - GO111MODULE=on
+  main: ./cmd/phoneserver/main.go
+
+archive:
+  replacements:
+    darwin: Darwin
+    linux: Linux
+    windows: Windows
+    386: i386
+    amd64: x86_64
+
+checksum:
+  name_template: 'checksums.txt'
+
+snapshot:
+  name_template: "{{ .Tag }}-next"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+    - '^docs:'
+    - '^test:'

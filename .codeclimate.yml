@@ -1,0 +1,5 @@
+plugins:
+    golint:
+      enabled: true
+    gofmt:
+      enabled: true

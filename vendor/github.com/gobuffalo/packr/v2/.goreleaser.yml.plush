@@ -1,0 +1,39 @@
+builds:
+-
+  goos:
+    - darwin
+    - linux
+    - windows
+  goarch:
+    - ppc64le
+    - 386
+    - amd64
+  env:
+    - CGO_ENABLED=0
+  ignore:
+    - goos: darwin
+      goarch: ppc64le
+    - goos: windows
+      goarch: ppc64le
+  main: ./packr2/main.go
+  binary: packr2
+
+checksum:
+  name_template: 'checksums.txt'
+
+snapshot:
+  name_template: "{{ .Tag }}-next"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+<%= if (brew) { %>
+brews:
+  -
+      github:
+        owner: gobuffalo
+        name: homebrew-tap
+<% } %>

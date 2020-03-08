@@ -1,0 +1,13 @@
+steps:
+- name: 'golang:1.12-stretch'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - >-
+    go build ./...;
+    wget -q -O - https://github.com/golangci/golangci-lint/releases/download/v$$GOLANGCI_VERSION/golangci-lint-$$GOLANGCI_VERSION-linux-amd64.tar.gz |
+    tar xzf -;
+    golangci-lint-$$GOLANGCI_VERSION-linux-amd64/golangci-lint run;
+    go test -v -bench=. -benchmem ./...
+  env:
+  - 'GOLANGCI_VERSION=1.17.1'

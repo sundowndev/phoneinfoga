@@ -1,0 +1,119 @@
+openapi: 3.0.0
+info:
+  title: PhoneInfoga
+  version: '1.0'
+  description: 'PhoneInfoga is one of the most advanced tools to scan phone numbers using only free resources. The goal is to first gather standard information such as country, area, carrier and line type on any international phone numbers with a very good accuracy. Then search for footprints on search engines to try to find the VoIP provider or identify the owner.'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /numbers:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  numbers:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Number'
+              examples:
+                Success:
+                  value:
+                    numbers:
+                      - id: 1
+                        number: 679371292
+                        countryISO: 33
+                        country: FR
+                        carrier: SFR
+                Error:
+                  value:
+                    success: false
+                    message: An error occurred
+            application/xml:
+              schema:
+                type: object
+                properties: {}
+            multipart/form-data:
+              schema:
+                type: object
+                properties: {}
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      operationId: get-numbers
+      description: Get all known numbers.
+      parameters: []
+      requestBody: {}
+  '/numbers/{number_id}':
+    parameters:
+      - schema:
+          type: string
+        name: number_id
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Number'
+              examples: {}
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples: {}
+      operationId: get-numbers-number_id
+      description: Get a number by its ID.
+components:
+  schemas:
+    Number:
+      title: Number
+      type: object
+      description: A phone number
+      properties:
+        id:
+          type: integer
+        number:
+          type: integer
+        countryISO:
+          type: integer
+        country:
+          type: string
+        carrier:
+          type: string
+    ErrorResponse:
+      title: ErrorResponse
+      type: object
+      description: Generic error response schema.
+      x-examples:
+        Example:
+          success: false
+          message: An error occurred
+      properties:
+        success:
+          type: boolean
+        message:
+          type:
+            - string
+            - 'null'
+      required:
+        - success
+        - message
+  securitySchemes: {}
