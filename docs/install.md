@@ -4,14 +4,11 @@ To install PhoneInfoga, you'll need to download the binary or build the software
 
 Follow the instructions :
 
+- Go to [release page on GitHub]()
+- Choose your OS and architecture
+- Download the file, run it in a terminal
+
 ```shell
-# Using curl
-# Get the latest version
-PHONEINFOGA_VERSION=$(curl -s https://api.github.com/repos/sundowndev/phoneinfoga/releases/latest | grep tag_name | cut -d '"' -f 4)
-
-curl -sSL "https://github.com/sundowndev/phoneinfoga/releases/download/$PHONEINFOGA_VERSION/phoneinfoga_$(uname -s)_$(uname -m).tar.gz" -o ./phoneinfoga.tar.gz
-tar xfv phoneinfoga.tar.gz
-
 # Run the software
 ./phoneinfoga version
 
@@ -37,8 +34,13 @@ cd PhoneInfoga/
 # Install requirements
 go get -v -t -d ./...
 
-# You need Packr to inject assets inside the binary
-packr build -o phoneinfoga
+# Install packr2
+go get -u github.com/gobuffalo/packr/v2/packr2
+
+# You need Packr v2 to inject assets inside the binary
+packr2 build -o phoneinfoga
+
+packr2 clean
 
 ./phoneinfoga
 ```

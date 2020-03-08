@@ -14,38 +14,16 @@ See the [installation page](install.md) to install the project.
 
 ### File structure
 
-```
-$ tree . -I __pycache__
-
-├── docs
-├── examples
-│   ├── generate.sh
-│   ├── input.txt
-│   ├── output_from_input.txt
-│   └── output_single.txt
-├── lib
-│   ├── args.py
-│   ├── banner.py
-│   ├── colors.py
-│   ├── format.py
-│   ├── googlesearch.py
-│   ├── __init__.py
-│   ├── logger.py
-│   ├── output.py
-│   └── request.py
-├── osint
-├── scanners
-│   ├── footprints.py
-│   ├── __init__.py
-│   ├── localscan.py
-│   ├── numverify.py
-│   ├── ovh.py
-│   └── recon.py
-├── config.example.py
-├── Dockerfile
-├── mkdocs.yml
-├── phoneinfoga.py
-└── requirements.txt
+```shell
+api         # REST API code
+client      # web client code
+cmd         # Command-line app code
+docs        # Documentation
+pkg         # Code base for scanners, utils ...
+scripts     # Development scripts
+vendor      # vendored dependencies folder
+go.mod      # Go module file
+main.go     # Application entrypoint
 ```
 
 ## Testing
@@ -58,11 +36,13 @@ go test -v ./...
 # Collect coverage
 go test -coverprofile=coverage.out ./...
 
-# Open coverage as HTML
+# Open coverage file as HTML
 go tool cover -html=coverage.out
 ```
 
 ### Typescript code
+
+Developping on the web client.
 
 ```shell
 cd client
@@ -76,7 +56,7 @@ yarn test:e2e
 
 ### Go code
 
-We use a custom script to format Go files.
+We use a shell script to format Go files.
 
 ```shell
 sh ./scripts/format.sh

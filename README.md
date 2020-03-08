@@ -35,6 +35,10 @@
 
 PhoneInfoga is one of the most advanced tools to scan phone numbers using only free resources. The goal is to first gather standard information such as country, area, carrier and line type on any international phone numbers with a very good accuracy. Then search for footprints on search engines to try to find the VoIP provider or identify the owner.
 
+## Current status
+
+This project was recently rewritten in Go language. Why ? To improve code base, maintainability, and have a stronger test suite. PhoneInfoga v2 brings new features such as serving a REST API and a web client. Usage of scanners was improved in order to drop usage of Selenium/Geckodriver which has cause many users to have troubleshoots using the tool. You can still use the legacy version in [tag v1.1](https://github.com/sundowndev/PhoneInfoga/tree/v1.11). OVH is the only scanner that is not available in v2 (yet!). Some features were not included in the v2 MVP such as input/output CLI options. The roadmap of the project changed so we can focus on the web client features such as downloading scan results as CSV, Instagram/Whatsapp lookup, and more.
+
 ## Features
 
 - Check if phone number exists and is possible

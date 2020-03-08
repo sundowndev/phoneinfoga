@@ -83,3 +83,7 @@ Run the tool through a REST API with a web client. The API has been written in G
 phoneinfoga serve
 phoneinfoga serve -p 8080
 ```
+
+You should then be able to see the web client at `http://localhost:5000`.
+
+![](./images/screenshot.png)
