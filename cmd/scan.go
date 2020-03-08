@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"os"
+
 	"github.com/spf13/cobra"
 	"github.com/sundowndev/phoneinfoga/pkg/scanners"
 	"github.com/sundowndev/phoneinfoga/pkg/utils"
@@ -20,11 +22,14 @@ var scanCmd = &cobra.Command{
 	Use:   "scan",
 	Short: "Scan a phone number",
 	Run: func(cmd *cobra.Command, args []string) {
-		n := utils.FormatNumber(number)
+		utils.LoggerService.Infoln("Scanning phone number", number)
 
-		utils.LoggerService.Infoln("Scanning phone number", n)
+		if valid := utils.IsValid(number); valid != true {
+			utils.LoggerService.Errorln("Number is not valid.")
+			os.Exit(1)
+		}
 
-		scanners.ScanCLI(n)
+		scanners.ScanCLI(number)
 
 		utils.LoggerService.Infoln("Job finished.")
 	},
