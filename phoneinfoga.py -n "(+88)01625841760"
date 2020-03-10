@@ -25,7 +25,7 @@ from pathlib import Path
 
 configFile = Path(sys.path[0] + "/config.py")
 
-def scanNumber(InputNumber):
+def scanNumber(+8801625841760):
     title("[!] ---- Fetching informations for {} ---- [!]".format(formatNumber(InputNumber)))
 
     number = localscan.scan(InputNumber)
