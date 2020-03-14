@@ -3,8 +3,11 @@
 </p>
 
 <div align="center">
+  <a href="https://godoc.org/github.com/sundowndev/PhoneInfoga">
+    <img src="https://godoc.org/github.com/sundowndev/PhoneInfoga?status.svg" alt="GoDoc">
+  </a>
   <a href="https://github.com/sundowndev/PhoneInfoga/actions">
-    <img src="https://img.shields.io/endpoint.svg?url=https://actions-badge.atrox.dev/sundowndev/PhoneInfoga/badge?ref=master&style=flat-square" alt="build status" />
+    <img src="https://img.shields.io/endpoint.svg?url=https://actions-badge.atrox.dev/sundowndev/PhoneInfoga/badge?ref=master" alt="build status" />
   </a>
   <a href="https://goreportcard.com/report/github.com/sundowndev/PhoneInfoga">
     <img src="https://goreportcard.com/badge/github.com/sundowndev/PhoneInfoga" alt="go report" />
@@ -13,10 +16,10 @@
     <img src="https://api.codeclimate.com/v1/badges/3259feb1c68df1cd4f71/maintainability" />
   </a>
   <a href="https://github.com/sundowndev/PhoneInfoga/releases">
-    <img src="https://img.shields.io/github/release/SundownDEV/PhoneInfoga.svg?style=flat-square" alt="Latest version" />
+    <img src="https://img.shields.io/github/release/SundownDEV/PhoneInfoga.svg" alt="Latest version" />
   </a>
   <a href="https://github.com/sundowndev/PhoneInfoga/blob/master/LICENSE">
-    <img src="https://img.shields.io/github/license/sundowndev/PhoneInfoga.svg?style=flat-square" alt="License" />
+    <img src="https://img.shields.io/github/license/sundowndev/PhoneInfoga.svg" alt="License" />
   </a>
 </div>
 
