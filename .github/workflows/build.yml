@@ -24,9 +24,12 @@ jobs:
       - name: Build
         run: |
           go build -v .
-      - name: Test
-        run: |
-          go test -race -coverprofile=coverage.txt -covermode=atomic -v ./...
       - name: Lint
         run: |
-          gofmt -s -l .
+          $(gofmt -l .) || (gofmt -d .; exit 1)
+      - name: Test
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        run: |
+          go test -race -coverprofile=coverage.txt -covermode=atomic -v ./...
+          bash <(curl -s https://codecov.io/bash)
