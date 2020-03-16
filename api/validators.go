@@ -11,15 +11,15 @@ type JSONResponse struct {
 	Error   string `json:"error"`
 }
 
-type scanURL struct {
-	Number uint `uri:"number" binding:"required,min=1,max=999679368229"`
-}
+// type scanURL struct {
+// 	Number uint `uri:"number" binding:"required,min=1,max=999679368229"`
+// }
 
 // ValidateScanURL validates scan URLs
 func ValidateScanURL(c *gin.Context) {
 	number := c.Param("number")
 
-	if valid := utils.IsValid(number); valid != true {
+	if valid := utils.IsValid(number); !valid {
 		c.JSON(500, errorResponse("The number is not valid"))
 		c.Abort()
 	}

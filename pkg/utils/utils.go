@@ -27,9 +27,5 @@ func IsValid(number string) bool {
 
 	re := regexp.MustCompile("^[0-9]+$")
 
-	if len(re.FindString(number)) == 0 {
-		return false
-	}
-
-	return true
+	return len(re.FindString(number)) == 0
 }

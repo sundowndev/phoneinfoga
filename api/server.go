@@ -37,8 +37,7 @@ func Serve(router *gin.Engine, port int) *gin.Engine {
 		c.Header("Content-Type", "text/html; charset=utf-8")
 		c.Writer.WriteHeader(http.StatusOK)
 		c.Writer.Write([]byte(html))
-
-		return
+		c.Abort()
 	})
 
 	router.Use(func(c *gin.Context) {
@@ -48,7 +47,11 @@ func Serve(router *gin.Engine, port int) *gin.Engine {
 		})
 	})
 
-	router.Run(httpPort)
+	err := router.Run(httpPort)
+
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	return router
 }

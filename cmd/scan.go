@@ -24,7 +24,7 @@ var scanCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		utils.LoggerService.Infoln("Scanning phone number", number)
 
-		if valid := utils.IsValid(number); valid != true {
+		if valid := utils.IsValid(number); !valid {
 			utils.LoggerService.Errorln("Number is not valid.")
 			os.Exit(1)
 		}
