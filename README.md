@@ -15,11 +15,11 @@
   <a href="https://codeclimate.com/github/sundowndev/PhoneInfoga/maintainability">
     <img src="https://api.codeclimate.com/v1/badges/3259feb1c68df1cd4f71/maintainability" />
   </a>
+  <a href="https://codecov.io/gh/sundowndev/PhoneInfoga">
+    <img src="https://codecov.io/gh/sundowndev/PhoneInfoga/branch/master/graph/badge.svg" />
+  </a>
   <a href="https://github.com/sundowndev/PhoneInfoga/releases">
     <img src="https://img.shields.io/github/release/SundownDEV/PhoneInfoga.svg" alt="Latest version" />
-  </a>
-  <a href="https://github.com/sundowndev/PhoneInfoga/blob/master/LICENSE">
-    <img src="https://img.shields.io/github/license/sundowndev/PhoneInfoga.svg" alt="License" />
   </a>
 </div>
 
