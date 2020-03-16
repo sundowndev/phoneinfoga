@@ -16,3 +16,4 @@
 .vscode/
 
 .DS_Store
+coverage
