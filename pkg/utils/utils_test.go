@@ -36,4 +36,18 @@ func TestUtils(t *testing.T) {
 			assert.Equal(result, "US", "they should be equal")
 		})
 	})
+
+	t.Run("IsValid", func(t *testing.T) {
+		t.Run("should validate phone number", func(t *testing.T) {
+			result := IsValid("+1 315-284-1580")
+
+			assert.Equal(result, true, "they should be equal")
+		})
+
+		t.Run("should validate phone number", func(t *testing.T) {
+			result := IsValid("P+1 315-284-1580A")
+
+			assert.Equal(result, false, "they should be equal")
+		})
+	})
 }
