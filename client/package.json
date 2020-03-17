@@ -16,6 +16,8 @@
     "axios": "0.19.2",
     "bootstrap": "4.4.1",
     "bootstrap-vue": "2.4.1",
+    "jquery": "1.9.1",
+    "popper.js": "1.16.0",
     "vue": "2.6.11",
     "vue-class-component": "7.2.2",
     "vue-property-decorator": "8.3.0",
@@ -36,11 +38,15 @@
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^5.0.1",
     "@vue/test-utils": "1.0.0-beta.31",
+    "babel-core": "^7.0.0-0",
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-vue": "^6.1.2",
+    "jest": "^25.1.0",
     "prettier": "^1.19.1",
+    "ts-jest": "^25.2.1",
     "typescript": "~3.7.5",
+    "vue-jest": "^3.0.5",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
@@ -74,8 +80,5 @@
   "browserslist": [
     "> 1%",
     "last 2 versions"
-  ],
-  "jest": {
-    "preset": "@vue/cli-plugin-unit-jest/presets/typescript"
-  }
+  ]
 }
