@@ -7,6 +7,7 @@ import (
 )
 
 var httpPort int
+var disableClient bool
 
 func init() {
 	// Register command
@@ -14,6 +15,7 @@ func init() {
 
 	// Register flags
 	serveCmd.PersistentFlags().IntVarP(&httpPort, "port", "p", 5000, "HTTP port")
+	serveCmd.PersistentFlags().BoolVar(&disableClient, "no-client", false, "Disable web client (REST API only)")
 }
 
 var serveCmd = &cobra.Command{
@@ -22,6 +24,6 @@ var serveCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		router := gin.Default()
 
-		api.Serve(router, httpPort)
+		api.Serve(router, httpPort, disableClient)
 	},
 }
