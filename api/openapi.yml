@@ -4,11 +4,12 @@ info:
   version: '1.0'
   description: 'PhoneInfoga is one of the most advanced tools to scan phone numbers using only free resources. The goal is to first gather standard information such as country, area, carrier and line type on any international phone numbers with a very good accuracy. Then search for footprints on search engines to try to find the VoIP provider or identify the owner.'
 servers:
-  - url: 'http://localhost:3000'
+  - url: 'http://localhost:3000/api'
+    description: API URL
 paths:
   /numbers:
     get:
-      summary: Your GET endpoint
+      summary: Get saved numbers
       tags: []
       responses:
         '200':
@@ -27,11 +28,12 @@ paths:
                 Success:
                   value:
                     numbers:
-                      - id: 1
-                        number: 679371292
-                        countryISO: 33
-                        country: FR
-                        carrier: SFR
+                      - local: '2623'
+                        E164: '+2622623'
+                        international: '2622623'
+                        countryCode: 262
+                        country: RE
+                        carrier: ''
                 Error:
                   value:
                     success: false
@@ -50,37 +52,53 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+              examples: {}
       operationId: get-numbers
-      description: Get all known numbers.
+      description: |-
+        Get all known numbers.
+
+        This route is actually not used yet.
       parameters: []
       requestBody: {}
-  '/numbers/{number_id}':
+  '/numbers/{number}/scan/local':
     parameters:
       - schema:
           type: string
-        name: number_id
+        name: number
         in: path
         required: true
     get:
-      summary: Your GET endpoint
+      summary: Run local scan
       tags: []
       responses:
         '200':
           description: OK
+          headers: {}
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Number'
-              examples: {}
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples: {}
-      operationId: get-numbers-number_id
-      description: Get a number by its ID.
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  error:
+                    type: string
+                  result:
+                    $ref: '#/components/schemas/LocalScanResult'
+              examples:
+                Success:
+                  value:
+                    success: true
+                    error: ''
+                    result:
+                      local: '2623'
+                      E164: '+2622623'
+                      international: '2622623'
+                      countryCode: 262
+                      country: RE
+                      carrier: ''
+      operationId: get-numbers-scan-number-local
+      description: ''
 components:
   schemas:
     Number:
@@ -116,4 +134,20 @@ components:
       required:
         - success
         - message
+    LocalScanResult:
+      title: LocalScanResult
+      type: object
+      properties:
+        local:
+          type: string
+        E164:
+          type: string
+        international:
+          type: string
+        countryCode:
+          type: number
+        country:
+          type: string
+        carrier:
+          type: string
   securitySchemes: {}
