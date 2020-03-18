@@ -20,7 +20,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install mkdocs mkdocs-material
+        pip install mkdocs mkdocs-material mkdocs-minify-plugin
     - name: Deploy
       run: |
         SSH_DIR="${HOME}/.ssh"
