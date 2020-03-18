@@ -14,8 +14,8 @@ func init() {
 
 	// Register flags
 	scanCmd.PersistentFlags().StringVarP(&number, "number", "n", "", "The phone number to scan (E164 or international format)")
-	scanCmd.PersistentFlags().StringVarP(&input, "input", "i", "", "Text file containing a list of phone numbers to scan (one per line)")
-	scanCmd.PersistentFlags().StringVarP(&output, "output", "o", "", "Output to save scan results")
+	// scanCmd.PersistentFlags().StringVarP(&input, "input", "i", "", "Text file containing a list of phone numbers to scan (one per line)")
+	// scanCmd.PersistentFlags().StringVarP(&output, "output", "o", "", "Output to save scan results")
 }
 
 var scanCmd = &cobra.Command{

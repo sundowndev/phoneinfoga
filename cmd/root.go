@@ -11,8 +11,8 @@ import (
 const Version = "v2.0-beta"
 
 var number string
-var input string  // TODO
-var output string // TODO
+var input string  // TODO: implement input
+var output string // TODO: implement output
 
 var rootCmd = &cobra.Command{
 	Use:   "phoneinfoga [COMMANDS] [OPTIONS]",

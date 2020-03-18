@@ -16,8 +16,9 @@ func init() {
 }
 
 var reconCmd = &cobra.Command{
-	Use:   "recon",
-	Short: "Launch custom format reconnaissance",
+	Deprecated: "Not implemented yet.",
+	Use:        "recon",
+	Short:      "Launch custom format reconnaissance",
 	Run: func(cmd *cobra.Command, args []string) {
 		utils.LoggerService.Infoln("Custom recon for phone number", number)
 

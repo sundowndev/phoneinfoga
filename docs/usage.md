@@ -10,7 +10,6 @@ Usage:
 
 Available Commands:
   help        Help about any command
-  recon       Launch custom format reconnaissance
   scan        Scan a phone number
   serve       Serve web client
   version     Print current version of the tool
