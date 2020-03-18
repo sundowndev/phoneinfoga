@@ -68,7 +68,7 @@ paths:
         in: path
         required: true
     get:
-      summary: Run local scan
+      summary: Local scan
       tags: []
       responses:
         '200':
@@ -99,6 +99,75 @@ paths:
                       carrier: ''
       operationId: get-numbers-scan-number-local
       description: ''
+  '/numbers/{number}/scan/numverify':
+    parameters:
+      - schema:
+          type: string
+        name: number
+        in: path
+        required: true
+    get:
+      summary: Numverify scan
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  error:
+                    type: string
+                  result:
+                    $ref: '#/components/schemas/NumverifyScanResult'
+      operationId: get-numbers-number-scan-numverify
+  '/numbers/{number}/scan/googlesearch':
+    parameters:
+      - schema:
+          type: string
+        name: number
+        in: path
+        required: true
+    get:
+      summary: Google search scan
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  error:
+                    type: string
+                  result:
+                    $ref: '#/components/schemas/NumverifyScanResult'
+      operationId: get-numbers-number-scan-googlesearch
+  '/numbers/{number/scan/ovh':
+    get:
+      summary: OVH Telecom scan
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  error:
+                    type: string
+                  result:
+                    $ref: '#/components/schemas/OVHScanResult'
+      operationId: get-numbers-number-scan-ovh
 components:
   schemas:
     Number:
@@ -149,5 +218,102 @@ components:
         country:
           type: string
         carrier:
+          type: string
+    NumverifyScanResult:
+      title: NumverifyScanResult
+      type: object
+      properties:
+        valid:
+          type: boolean
+        number:
+          type: string
+        local_format:
+          type: string
+        international_format:
+          type: string
+        country_prefix:
+          type: string
+        country_code:
+          type: string
+        country_name:
+          type: string
+        location:
+          type: string
+        carrier:
+          type: string
+        line_type:
+          type: string
+      description: ''
+    GoogleSearchScanResult:
+      title: GoogleSearchScanResult
+      type: object
+      properties:
+        socialMedia:
+          type: array
+          uniqueItems: false
+          items:
+            type: object
+            properties:
+              URL:
+                type: string
+              dork:
+                type: string
+              number:
+                type: string
+        disposableProviders:
+          type: array
+          items:
+            type: object
+            properties:
+              URL:
+                type: string
+              dork:
+                type: string
+              number:
+                type: string
+        reputation:
+          type: array
+          items:
+            type: object
+            properties:
+              URL:
+                type: string
+              dork:
+                type: string
+              number:
+                type: string
+        individuals:
+          type: array
+          items:
+            type: object
+            properties:
+              URL:
+                type: string
+              dork:
+                type: string
+              number:
+                type: string
+        general:
+          type: array
+          items:
+            type: object
+            properties:
+              URL:
+                type: string
+              dork:
+                type: string
+              number:
+                type: string
+    OVHScanResult:
+      title: OVHScanResult
+      type: object
+      properties:
+        found:
+          type: boolean
+        numberRange:
+          type: string
+        city:
+          type: string
+        zipCode:
           type: string
   securitySchemes: {}
