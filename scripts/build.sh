@@ -2,6 +2,10 @@
 
 PROJECT="phoneinfoga"
 
+echo ">> Building web client"
+
+(cd client && yarn && yarn build)
+
 echo ">> Building binaries for darwin and linux"
 
 # Linux
