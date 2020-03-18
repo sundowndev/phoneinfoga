@@ -69,7 +69,7 @@ interface Data {
 }
 
 export default Vue.extend({
-  components: { LocalScan, GoogleSearch, NumverifyScan ,OVHScan},
+  components: { LocalScan, GoogleSearch, NumverifyScan, OVHScan },
   computed: {
     ...mapState(["number"]),
     ...mapMutations(["pushError"])

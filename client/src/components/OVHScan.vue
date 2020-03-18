@@ -1,6 +1,6 @@
 <template>
   <div v-if="loading || data.length > 0" class="mt-2">
-    <hr>
+    <hr />
     <h3>{{ name }} <b-spinner v-if="loading" type="grow"></b-spinner></h3>
 
     <b-button

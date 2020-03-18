@@ -1,6 +1,6 @@
 <template>
   <div v-if="loading || data.socialMedia.length > 0">
-    <hr>
+    <hr />
     <h3>
       {{ name }}
       <b-spinner v-if="loading" type="grow"></b-spinner>
