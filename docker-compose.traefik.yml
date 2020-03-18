@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
     phoneinfoga:
-      container_name: phoneinfoga
+      # container_name: phoneinfoga
       restart: on-failure
       build:
         context: .
