@@ -1,7 +1,0 @@
-[build]
-command = "make build"
-functions = "functions"
-publish = "site"
-
-[build.environment]
-GO_IMPORT_PATH = "github.com/nyaruka/phonenumbers"
