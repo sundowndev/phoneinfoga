@@ -15,5 +15,6 @@ var versionCmd = &cobra.Command{
 	Short: "Print current version of the tool",
 	Run: func(cmd *cobra.Command, args []string) {
 		utils.LoggerService.Infoln("PhoneInfoga", Version)
+		utils.LoggerService.Infoln("Coded by Sundowndev https://github.com/sundowndev/PhoneInfoga")
 	},
 }
