@@ -9,9 +9,7 @@ require (
 	github.com/gin-gonic/gin v1.5.0
 	github.com/go-playground/universal-translator v0.17.0 // indirect
 	github.com/gobuffalo/envy v1.9.0 // indirect
-	github.com/gobuffalo/logger v1.0.3 // indirect
-	github.com/gobuffalo/packd v1.0.0 // indirect
-	github.com/gobuffalo/packr/v2 v2.7.1
+	github.com/gobuffalo/packr/v2 v2.8.0
 	github.com/golang/protobuf v1.3.4 // indirect
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
 	github.com/json-iterator/go v1.1.9 // indirect
@@ -23,7 +21,6 @@ require (
 	github.com/onlinecity/go-phone-iso3166 v0.0.1
 	github.com/parnurzeal/gorequest v0.2.16
 	github.com/pkg/errors v0.9.1 // indirect
-	github.com/rogpeppe/go-internal v1.5.2 // indirect
 	github.com/smartystreets/goconvey v1.6.4 // indirect
 	github.com/spf13/cobra v0.0.6
 	github.com/spf13/pflag v1.0.5 // indirect
