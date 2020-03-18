@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-        scan, err := numverify.NumverifyScan("<number>")
+        scan, err := numverify.NumverifyScan("+1 555 ...")
 
         if err != nil {
                 log.Fatal(err)

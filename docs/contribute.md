@@ -20,9 +20,8 @@ client      # web client code
 cmd         # Command-line app code
 docs        # Documentation
 pkg         # Code base for scanners, utils ...
-scripts     # Development scripts
-vendor      # vendored dependencies folder
-go.mod      # Go module file
+scripts     # Development & deployment scripts
+go.mod      # Go modules file
 main.go     # Application entrypoint
 ```
 
@@ -60,6 +59,9 @@ We use a shell script to format Go files.
 
 ```shell
 sh ./scripts/format.sh
+
+# You can also use GolangCI
+golangci-lint run -D errcheck
 ```
 
 ### Typescript code

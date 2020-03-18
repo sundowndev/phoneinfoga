@@ -24,7 +24,7 @@ Use "phoneinfoga [command] --help" for more information about a command.
 ### Basic scan
 
 ```
-phoneinfoga scan -n "(+33) 679368229"
+phoneinfoga scan -n "+1 (555) 444-1212"
 phoneinfoga scan -n "+33 06 79368229"
 phoneinfoga scan -n "33679368229"
 ```
@@ -71,7 +71,7 @@ phoneinfoga recon -n +42837544833
 
 **Numverify** provide standard but useful informations such as number's country code, location, line type and carrier.
 
-**OVH** is, besides being a web and cloud hosting company, a telecom provider with several VoIP numbers in the Europe. Thanks to their API-key free [REST API](https://api.ovh.com/), we are able to tell if a number is owned by OVH Telecom or not.
+**OVH** is, besides being a web and cloud hosting company, a telecom provider with several VoIP numbers in Europe. Thanks to their API-key free [REST API](https://api.ovh.com/), we are able to tell if a number is owned by OVH Telecom or not.
 
 **Google search** uses Google search engine and [Google Dorks](https://en.wikipedia.org/wiki/Google_hacking) to search phone number's footprints everywhere on the web. It allows you to search for scam reports, social media profiles, documents and more.
 
@@ -84,6 +84,14 @@ phoneinfoga serve
 phoneinfoga serve -p 8080
 ```
 
-You should then be able to see the web client at `http://localhost:5000`.
+### Run the REST API only
+
+You can choose to only run the REST API without the graphical interface :
+
+```
+phoneinfoga serve --no-client
+```
+
+You should then be able to see the web client at `http://localhost:<port>`.
 
 ![](./images/screenshot.png)
