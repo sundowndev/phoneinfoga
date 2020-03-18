@@ -6,18 +6,19 @@ You can easily use scanners in your own Golang script. You can find [Go document
 package main
 
 import (
-        "fmt"
-        
-        "github.com/sundowndev/PhoneInfoga/pkg/scanners/numverify"
+	"fmt"
+	"log"
+
+	phoneinfoga "github.com/sundowndev/phoneinfoga/pkg/scanners"
 )
 
 func main() {
-        scan, err := numverify.NumverifyScan("+1 555 ...")
+	number, err := phoneinfoga.LocalScan(number)
 
-        if err != nil {
-                log.Fatal(err)
-        }
+	if err != nil {
+		log.Fatal(err)
+	}
 
-        fmt.Println(scan.CountryCode)
+	fmt.Println(number.E164)
 }
 ```
