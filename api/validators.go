@@ -21,7 +21,7 @@ func ValidateScanURL(c *gin.Context) {
 	var v scanURL
 
 	if err := c.ShouldBindUri(&v); err != nil {
-		errorHandling(c, err.Error())
+		errorHandling(c, "Parameter 'number' must be a valid integer.")
 	}
 }
 
