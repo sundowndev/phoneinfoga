@@ -9,7 +9,7 @@
       >
         <b-form-input
           id="input-number"
-          v-model="number"
+          v-model="inputNumber"
           type="text"
           required
           placeholder="e.g: 33678132393"
@@ -31,6 +31,7 @@
         variant="light"
         size="sm"
         v-on:click="clearData"
+        v-show="number"
         :disabled="loading"
         >Clear results</b-button
       >
@@ -46,7 +47,8 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { mapMutations } from "vuex";
+import { mapMutations, mapState } from "vuex";
+import { formatNumber, isValid } from "../utils";
 import LocalScan from "../components/LocalScan.vue";
 import NumverifyScan from "../components/NumverifyScan.vue";
 import GoogleSearch from "../components/GoogleSearch.vue";
@@ -60,35 +62,37 @@ interface Scanner {
 
 interface Data {
   loading: boolean;
-  number: string;
+  inputNumber: string;
   scanEvent: Vue;
 }
 
 export default Vue.extend({
   components: { LocalScan, GoogleSearch, NumverifyScan },
   computed: {
+    ...mapState(["number"]),
     ...mapMutations(["pushError"])
   },
   data(): Data {
     return {
       loading: false,
-      number: "",
+      inputNumber: "",
       scanEvent: new Vue()
     };
   },
   methods: {
     clearData() {
       this.scanEvent.$emit("clear");
+      this.$store.commit("resetState");
     },
     async runScans(): Promise<void> {
-      if (this.number.length < 2) {
+      if (!isValid(this.inputNumber)) {
         this.$store.commit("pushError", { message: "Number is not valid." });
         return;
       }
 
       this.loading = true;
 
-      this.$store.commit("setNumber", this.number);
+      this.$store.commit("setNumber", formatNumber(this.inputNumber));
 
       this.scanEvent.$emit("scan");
 
