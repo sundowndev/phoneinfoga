@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"reflect"
 	"strings"
 
 	"github.com/parnurzeal/gorequest"
@@ -46,16 +47,18 @@ func OVHScan(number *Number) (res *OVHScannerResponse, err error) {
 	var result []ovhAPIResponseNumber
 
 	// Use json.Decode for reading streams of JSON data
-	if err := json.NewDecoder(response.Body).Decode(&result); err != nil {
-		log.Println(err)
-	}
+	json.NewDecoder(response.Body).Decode(&result)
 
-	askedNumber := number.RawLocal[0:6] + "xxxx"
 	var foundNumber ovhAPIResponseNumber
 
-	for _, n := range result {
-		if n.Number == askedNumber {
-			foundNumber = n
+	rt := reflect.TypeOf(result)
+	if rt.Kind() == reflect.Slice && len(number.RawLocal) > 6 {
+		askedNumber := number.RawLocal[0:6] + "xxxx"
+
+		for _, n := range result {
+			if n.Number == askedNumber {
+				foundNumber = n
+			}
 		}
 	}
 
