@@ -15,8 +15,8 @@ services:
       labels:
         - 'traefik.docker.network=web'
         - 'traefik.enable=true'
-        - 'traefik.domain=phoneinfoga.crvx.fr'
-        - 'traefik.basic.frontend.rule=Host:phoneinfoga.crvx.fr'
+        - 'traefik.domain=demo.phoneinfoga.crvx.fr'
+        - 'traefik.basic.frontend.rule=Host:demo.phoneinfoga.crvx.fr'
         - 'traefik.basic.port=5000'
         - 'traefik.basic.protocol=http'
         - 'traefik.frontend.headers.SSLRedirect=true'
