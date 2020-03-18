@@ -38,7 +38,8 @@ func Serve(router *gin.Engine, port int, disableClient bool) *gin.Engine {
 		GET("/numbers/:number/validate", ValidateScanURL, validate).
 		GET("/numbers/:number/scan/local", ValidateScanURL, localScan).
 		GET("/numbers/:number/scan/numverify", ValidateScanURL, numverifyScan).
-		GET("/numbers/:number/scan/googlesearch", ValidateScanURL, googleSearchScan)
+		GET("/numbers/:number/scan/googlesearch", ValidateScanURL, googleSearchScan).
+		GET("/numbers/:number/scan/ovh", ValidateScanURL, ovhScan)
 
 	if !disableClient {
 		box := packr.NewBox("../client/dist")

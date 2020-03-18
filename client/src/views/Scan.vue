@@ -42,6 +42,7 @@
     <LocalScan :scan="scanEvent" />
     <NumverifyScan :scan="scanEvent" />
     <GoogleSearch :scan="scanEvent" />
+    <OVHScan :scan="scanEvent" />
   </div>
 </template>
 
@@ -52,6 +53,7 @@ import { formatNumber, isValid } from "../utils";
 import LocalScan from "../components/LocalScan.vue";
 import NumverifyScan from "../components/NumverifyScan.vue";
 import GoogleSearch from "../components/GoogleSearch.vue";
+import OVHScan from "../components/OVHScan.vue";
 
 interface Scanner {
   id: string;
@@ -67,7 +69,7 @@ interface Data {
 }
 
 export default Vue.extend({
-  components: { LocalScan, GoogleSearch, NumverifyScan },
+  components: { LocalScan, GoogleSearch, NumverifyScan ,OVHScan},
   computed: {
     ...mapState(["number"]),
     ...mapMutations(["pushError"])

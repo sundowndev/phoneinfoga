@@ -83,10 +83,27 @@ func googlesearchScanCLI(number *Number) {
 	}
 }
 
+func ovhScanCLI(number *Number) {
+	utils.LoggerService.Infoln("Running OVH API scan...")
+
+	scan, err := OVHScan(number)
+
+	if err != nil {
+		utils.LoggerService.Errorln("An error ocurred")
+		os.Exit(0)
+	}
+
+	utils.LoggerService.Successf(`Found: %v`, scan.Found)
+	utils.LoggerService.Successf(`Number range: %v`, scan.NumberRange)
+	utils.LoggerService.Successln("City:", scan.City)
+	utils.LoggerService.Successln("Zip code:", scan.ZipCode)
+}
+
 // ScanCLI Run scans with CLI output
 func ScanCLI(number string) {
 	num := localScanCLI(number)
 
 	numverifyScanCLI(num)
 	googlesearchScanCLI(num)
+	ovhScanCLI(num)
 }

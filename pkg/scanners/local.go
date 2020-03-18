@@ -8,9 +8,10 @@ import (
 // LocalScan performs a local scan of a phone
 // number using phonenumbers library
 func LocalScan(number string) (res *Number, err error) {
-	country := utils.ParseCountryCode(number)
+	n := "+" + utils.FormatNumber(number)
+	country := utils.ParseCountryCode(n)
 
-	num, err := phonenumbers.Parse(number, country)
+	num, err := phonenumbers.Parse(n, country)
 
 	if err != nil {
 		return nil, err

@@ -6,11 +6,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"os"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/parnurzeal/gorequest"
-	"github.com/sundowndev/phoneinfoga/pkg/utils"
 )
 
 // Numverify REST API response
@@ -29,11 +27,6 @@ type Numverify struct {
 
 // NumverifyScan fetches Numverify's API
 func NumverifyScan(number *Number) (res *Numverify, err error) {
-	if err != nil {
-		utils.LoggerService.Errorln("The number is not valid")
-		os.Exit(0)
-	}
-
 	response, _, errs := gorequest.New().Get("http://numverify.com/").End()
 	if errs != nil {
 		log.Fatal(errs)

@@ -3,7 +3,6 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/sundowndev/phoneinfoga/pkg/scanners"
-	"github.com/sundowndev/phoneinfoga/pkg/utils"
 )
 
 type scanResultResponse struct {
@@ -27,23 +26,22 @@ func validate(c *gin.Context) {
 func localScan(c *gin.Context) {
 	number := c.Param("number")
 
-	number = utils.FormatNumber(number)
 	result, err := scanners.LocalScan(number)
 
 	if err != nil {
-		c.JSON(500, errorResponse("The number is not valid"))
+		c.JSON(500, errorResponse(err.Error()))
 		return
 	}
 
 	c.JSON(200, scanResultResponse{
-		Result: result,
+		JSONResponse: JSONResponse{Success: true},
+		Result:       result,
 	})
 }
 
 func numverifyScan(c *gin.Context) {
 	number := c.Param("number")
 
-	number = utils.FormatNumber(number)
 	n, err := scanners.LocalScan(number)
 
 	if err != nil {
@@ -59,14 +57,14 @@ func numverifyScan(c *gin.Context) {
 	}
 
 	c.JSON(200, scanResultResponse{
-		Result: result,
+		JSONResponse: JSONResponse{Success: true},
+		Result:       result,
 	})
 }
 
 func googleSearchScan(c *gin.Context) {
 	number := c.Param("number")
 
-	number = utils.FormatNumber(number)
 	n, err := scanners.LocalScan(number)
 
 	if err != nil {
@@ -77,7 +75,31 @@ func googleSearchScan(c *gin.Context) {
 	result := scanners.GoogleSearchScan(n)
 
 	c.JSON(200, scanResultResponse{
-		Result: result,
+		JSONResponse: JSONResponse{Success: true},
+		Result:       result,
+	})
+}
+
+func ovhScan(c *gin.Context) {
+	number := c.Param("number")
+
+	n, err := scanners.LocalScan(number)
+
+	if err != nil {
+		c.JSON(500, errorResponse("The number is not valid"))
+		return
+	}
+
+	result, err := scanners.OVHScan(n)
+
+	if err != nil {
+		c.JSON(500, errorResponse())
+		return
+	}
+
+	c.JSON(200, scanResultResponse{
+		JSONResponse: JSONResponse{Success: true},
+		Result:       result,
 	})
 }
 
