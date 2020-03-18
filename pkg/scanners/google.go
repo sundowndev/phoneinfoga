@@ -311,7 +311,9 @@ func getGeneralDorks(number *Number, formats ...string) (results []*GoogleSearch
 			Or().
 			Intext(number.E164).
 			Or().
-			Intext(number.RawLocal),
+			Intext(number.RawLocal).
+			Or().
+			Intext(number.Local),
 		(&dorkgen.GoogleSearch{}).
 			Group((&dorkgen.GoogleSearch{}).
 				Intext(number.International).
