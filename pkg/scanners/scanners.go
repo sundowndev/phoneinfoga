@@ -8,6 +8,7 @@ import (
 
 // Number is a phone number
 type Number struct {
+	RawLocal      string `json:"rawLocal"`
 	Local         string `json:"local"`
 	E164          string `json:"E164"`
 	International string `json:"international"`

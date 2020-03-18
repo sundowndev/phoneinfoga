@@ -17,6 +17,7 @@ func LocalScan(number string) (res *Number, err error) {
 	}
 
 	res = &Number{
+		RawLocal:      utils.FormatNumber(phonenumbers.Format(num, phonenumbers.NATIONAL)),
 		Local:         phonenumbers.Format(num, phonenumbers.NATIONAL),
 		E164:          phonenumbers.Format(num, phonenumbers.E164),
 		International: utils.FormatNumber(phonenumbers.Format(num, phonenumbers.E164)),
