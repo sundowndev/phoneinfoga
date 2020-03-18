@@ -8,7 +8,7 @@ import (
 )
 
 // Version is the current version of the tool
-const Version = "v1.0.0"
+const Version = "v2.0-beta"
 
 var number string
 var input string  // TODO
