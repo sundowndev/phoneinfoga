@@ -3,9 +3,6 @@
 </p>
 
 <div align="center">
-  <a href="https://godoc.org/github.com/sundowndev/PhoneInfoga">
-    <img src="https://godoc.org/github.com/sundowndev/PhoneInfoga?status.svg" alt="GoDoc">
-  </a>
   <a href="https://github.com/sundowndev/PhoneInfoga/actions">
     <img src="https://img.shields.io/endpoint.svg?url=https://actions-badge.atrox.dev/sundowndev/PhoneInfoga/badge?ref=master" alt="build status" />
   </a>
