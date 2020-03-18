@@ -37,6 +37,9 @@ go get -v -t -d ./...
 # Install packr2
 go get -u github.com/gobuffalo/packr/v2/packr2
 
+# Build web client assets
+(cd client && yarn && yarn build)
+
 # You need Packr v2 to inject assets inside the binary
 packr2 build -o phoneinfoga
 
