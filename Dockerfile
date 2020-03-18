@@ -1,20 +1,43 @@
-FROM jfloff/alpine-python:3.6-onbuild
+FROM node:12.14-alpine AS client_builder
+
+WORKDIR /app
+
+COPY ./client .
+
+RUN yarn
+
+RUN yarn build
+
+FROM golang:1.14-alpine as go_builder
 
 LABEL maintainer="Sundowndev" \
-  org.label-schema.build-date="2019-06-06T21:20:49Z" \
   org.label-schema.name="phoneinfoga" \
   org.label-schema.description="Advanced information gathering & OSINT tool for phone numbers." \
-  #org.label-schema.version=$VERSION \
   org.label-schema.url="https://github.com/sundowndev/PhoneInfoga" \
-  #org.label-schema.vcs-ref=$VCS_REF \
   org.label-schema.vcs-url="https://github.com/sundowndev/PhoneInfoga" \
   org.label-schema.vendor="Sundowndev" \
   org.label-schema.schema-version="1.0"
 
-ADD . /opt/phoneinfoga
+WORKDIR /app
 
-COPY ./config.example.py /opt/phoneinfoga/config.py
+COPY . .
 
-WORKDIR /opt/phoneinfoga
+RUN go get -v -t -d ./...
 
-ENTRYPOINT ["python", "phoneinfoga.py"]
+COPY --from=client_builder /app/dist ./client/dist
+
+RUN go get -u github.com/gobuffalo/packr/v2/packr2
+
+RUN packr2
+
+RUN go build -v -o phoneinfoga .
+
+FROM golang:1.14-alpine
+
+WORKDIR /app
+
+COPY --from=go_builder /app/phoneinfoga .
+
+EXPOSE 5000
+
+ENTRYPOINT ["/app/phoneinfoga"]

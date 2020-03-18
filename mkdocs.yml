@@ -5,13 +5,13 @@ site_description: 'Advanced information gathering & OSINT tool for phone numbers
 site_author: 'Sundowndev'
 copyright: 'PhoneInfoga was developed by sundowndev and is licensed under GPL-3.0.'
 nav:
-  - Welcome: index.md
-  - Installation: install.md
-  - Basic usage: usage.md
-  - Formatting phone numbers: formatting.md
-  - Dealing with Google captcha: googlesearch.md
-  - Resources: resources.md
-  - Contribute: contribute.md
+  - 'Welcome': index.md
+  - 'Installation': install.md
+  - 'Getting started': usage.md
+  - 'Formatting phone numbers': formatting.md
+  - 'Go module usage': go-module-usage.md
+  - 'Resources': resources.md
+  - 'Contribute': contribute.md
 theme:
   name: material
   logo: 'images/logo_white.svg'
@@ -29,3 +29,7 @@ extra:
 # Extensions
 markdown_extensions:
   - markdown.extensions.admonition
+plugins:
+  - search
+  - minify:
+      minify_html: true

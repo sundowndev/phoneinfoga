@@ -21,7 +21,8 @@ If applicable, add screenshots to help explain your problem.
 
 **Desktop (please complete the following information):**
  - OS: [e.g. Windows 10, Ubuntu 18.04 ...]
- - Python exact version (run `python --version`)
+ - PhoneInfoga exact version (run `phoneinfoga version`)
+ - Go exact version (if running it with Go) (run `go version`)
 
 **Additional context**
 Add any other context about the problem here.
