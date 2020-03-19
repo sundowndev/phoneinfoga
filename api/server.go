@@ -42,7 +42,7 @@ func Serve(router *gin.Engine, port int, disableClient bool) *gin.Engine {
 		GET("/numbers/:number/scan/ovh", ValidateScanURL, ovhScan)
 
 	if !disableClient {
-		box := packr.NewBox("../client/dist")
+		box := packr.New("static", "../client/dist")
 		registerClientRoute(router, box)
 	}
 
