@@ -11,14 +11,14 @@ if !(hash curl 2>/dev/null); then
 fi;
 
 if !(hash yarn 2>/dev/null) || !(hash node 2>/dev/null); then
-        curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-        echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+        curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+        echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
         apt-get update
         apt-get install yarn nodejs -y
 fi;
 
 echo ">> Building web client"
-(cd client && $HOME/.yarn/bin/yarn && $HOME/.yarn/bin/yarn build)
+(cd client && yarn && yarn build)
 
 echo ">> Building static assets"
 $GOPATH/bin/packr2
