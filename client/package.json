@@ -45,7 +45,7 @@
     "jest": "25.1.0",
     "prettier": "1.19.1",
     "ts-jest": "25.2.1",
-    "typescript": "3.7.5",
+    "typescript": "3.8.3",
     "vue-jest": "3.0.5",
     "vue-template-compiler": "2.6.11"
   },
