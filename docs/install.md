@@ -6,14 +6,21 @@ Follow the instructions :
 
 - Go to [release page on GitHub]()
 - Choose your OS and architecture
-- Download the file, run it in a terminal
+- Download the archive, extract the binary then run it in a terminal
 
 ```shell
+# Download the archive
+# !! Replace <version> by the latest version
+curl -sSL "https://github.com/sundowndev/phoneinfoga/releases/download/<version>/phoneinfoga_$(uname -s)_$(uname -m).tar.gz" -o ./phoneinfoga.tar.gz
+
+# Extract the binary
+tar xfv phoneinfoga.tar.gz
+
 # Run the software
-./phoneinfoga version
+./PhoneInfoga --help
 
 # Install it globally
-mv ./phoneinfoga /usr/bin/phoneinfoga
+mv ./PhoneInfoga /usr/bin/phoneinfoga
 ```
 
 ## Install globally with Go
