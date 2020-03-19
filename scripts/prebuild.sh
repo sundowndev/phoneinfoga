@@ -12,6 +12,9 @@ fi;
 echo ">> Building web client"
 (cd client && yarn && yarn build)
 
+echo ">> Installing packr v2"
+go get -u -v github.com/gobuffalo/packr/v2/packr2
+
 echo ">> Building static assets"
 $GOPATH/bin/packr2
 
