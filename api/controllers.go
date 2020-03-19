@@ -2,6 +2,7 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/sundowndev/phoneinfoga/pkg/config"
 	"github.com/sundowndev/phoneinfoga/pkg/scanners"
 )
 
@@ -104,5 +105,9 @@ func ovhScan(c *gin.Context) {
 }
 
 func healthHandler(c *gin.Context) {
-	c.JSON(200, successResponse("OK"))
+	c.JSON(200, gin.H{
+		"success": true,
+		"version": config.Version,
+	})
+	c.Abort()
 }
