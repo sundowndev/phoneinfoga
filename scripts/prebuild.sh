@@ -8,8 +8,8 @@ fi;
 if !(hash node 2>/dev/null); then
         VERSION=v12.16.1
         DISTRO=linux-x64
-        sudo mkdir -p /usr/local/lib/nodejs
-        sudo tar -xJvf node-$VERSION-$DISTRO.tar.xz -C /usr/local/lib/nodejs
+        mkdir -p /usr/local/lib/nodejs
+        tar -xJvf node-$VERSION-$DISTRO.tar.xz -C /usr/local/lib/nodejs
 fi;
 
 if !(hash yarn 2>/dev/null); then
