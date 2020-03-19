@@ -17,7 +17,7 @@
     "bootstrap": "4.4.1",
     "bootstrap-vue": "2.7.0",
     "jquery": "3.4.1",
-    "popper.js": "1.16.0",
+    "popper.js": "1.16.1",
     "vue": "2.6.11",
     "vue-class-component": "7.2.3",
     "vue-property-decorator": "8.4.1",
