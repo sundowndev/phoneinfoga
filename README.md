@@ -39,7 +39,7 @@ PhoneInfoga is one of the most advanced tools to scan phone numbers using only f
 
 - [Demo](https://demo.phoneinfoga.crvx.fr/)
 - [Documentation](https://sundowndev.github.io/PhoneInfoga/)
-- [API documentation](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/sundowndev/PhoneInfoga/master/api/openapi.yml#operation/get-numbers-scan-number-local)
+- [API documentation](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/sundowndev/PhoneInfoga/master/api/openapi.yml)
 
 ## Current status
 
