@@ -2,6 +2,7 @@ package utils
 
 import (
 	"regexp"
+	"strconv"
 
 	phoneiso3166 "github.com/onlinecity/go-phone-iso3166"
 )
@@ -18,7 +19,10 @@ func FormatNumber(n string) string {
 // ParseCountryCode parses a phone number and returns ISO country code.
 // This is required in order to use the phonenumbers library.
 func ParseCountryCode(n string) string {
-	return phoneiso3166.E164.LookupString(FormatNumber(n))
+	var number uint64
+	number, _ = strconv.ParseUint(FormatNumber(n), 10, 64)
+
+	return phoneiso3166.E164.Lookup(number)
 }
 
 // IsValid indicate if a phone number has a valid format.

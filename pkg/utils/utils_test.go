@@ -35,6 +35,12 @@ func TestUtils(t *testing.T) {
 
 			assert.Equal(result, "US", "they should be equal")
 		})
+
+		t.Run("should parse country code correctly", func(t *testing.T) {
+			result := ParseCountryCode("4566118311")
+
+			assert.Equal(result, "DK", "they should be equal")
+		})
 	})
 
 	t.Run("IsValid", func(t *testing.T) {
