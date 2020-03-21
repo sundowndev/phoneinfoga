@@ -8,7 +8,6 @@ require (
 	github.com/fatih/color v1.9.0
 	github.com/gin-gonic/gin v1.5.0
 	github.com/go-playground/universal-translator v0.17.0 // indirect
-	github.com/gobuffalo/envy v1.9.0 // indirect
 	github.com/gobuffalo/packr/v2 v2.8.0
 	github.com/golang/protobuf v1.3.4 // indirect
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
