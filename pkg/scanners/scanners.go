@@ -17,93 +17,101 @@ type Number struct {
 	Carrier       string `json:"carrier"`
 }
 
-func localScanCLI(number string) *Number {
-	utils.LoggerService.Infoln("Running local scan...")
+func localScanCLI(l *utils.Logger, number string) *Number {
+	l.Infoln("Running local scan...")
 
 	scan, err := LocalScan(number)
 
 	if err != nil {
-		utils.LoggerService.Errorln("The number is not valid")
+		l.Errorln("An error occured")
+		l.Errorln(err.Error())
 		os.Exit(0)
 	}
 
-	utils.LoggerService.Successln("Local format:", scan.Local)
-	utils.LoggerService.Successln("E164 format:", scan.E164)
-	utils.LoggerService.Successln("International format:", scan.International)
-	utils.LoggerService.Successf("Country found: +%v (%v)", scan.CountryCode, scan.Country)
-	utils.LoggerService.Successln("Carrier:", scan.Carrier)
+	l.Successln("Local format:", scan.Local)
+	l.Successln("E164 format:", scan.E164)
+	l.Successln("International format:", scan.International)
+	l.Successf("Country found: +%v (%v)", scan.CountryCode, scan.Country)
+	l.Successln("Carrier:", scan.Carrier)
 
 	return scan
 }
 
-func numverifyScanCLI(number *Number) {
-	utils.LoggerService.Infoln("Running Numverify.com scan...")
+func numverifyScanCLI(l *utils.Logger, number *Number) *NumverifyScannerResponse {
+	l.Infoln("Running Numverify.com scan...")
 
 	scan, err := NumverifyScan(number)
 
 	if err != nil {
-		utils.LoggerService.Errorln("The number is not valid")
+		l.Errorln("An error occured")
+		l.Errorln(err.Error())
 		os.Exit(0)
 	}
 
-	utils.LoggerService.Successf(`Valid: %v`, scan.Valid)
-	utils.LoggerService.Successln("Number:", scan.Number)
-	utils.LoggerService.Successln("Local format:", scan.LocalFormat)
-	utils.LoggerService.Successln("International format:", scan.InternationalFormat)
-	utils.LoggerService.Successf("Country code: %v (%v)", scan.CountryCode, scan.CountryPrefix)
-	utils.LoggerService.Successln("Country:", scan.CountryName)
-	utils.LoggerService.Successln("Location:", scan.Location)
-	utils.LoggerService.Successln("Carrier:", scan.Carrier)
-	utils.LoggerService.Successln("Line type:", scan.LineType)
+	l.Successf(`Valid: %v`, scan.Valid)
+	l.Successln("Number:", scan.Number)
+	l.Successln("Local format:", scan.LocalFormat)
+	l.Successln("International format:", scan.InternationalFormat)
+	l.Successf("Country code: %v (%v)", scan.CountryCode, scan.CountryPrefix)
+	l.Successln("Country:", scan.CountryName)
+	l.Successln("Location:", scan.Location)
+	l.Successln("Carrier:", scan.Carrier)
+	l.Successln("Line type:", scan.LineType)
+
+	return scan
 }
 
-func googlesearchScanCLI(number *Number) {
-	utils.LoggerService.Infoln("Generating Google search dork requests...")
+func googlesearchScanCLI(l *utils.Logger, number *Number) GoogleSearchResponse {
+	l.Infoln("Generating Google search dork requests...")
 
 	scan := GoogleSearchScan(number)
 
-	utils.LoggerService.Infoln("Social media footprints")
+	l.Infoln("Social media footprints")
 	for _, dork := range scan.SocialMedia {
-		utils.LoggerService.Successf(`Link: %v`, dork.URL)
+		l.Successf(`Link: %v`, dork.URL)
 	}
 
-	utils.LoggerService.Infoln("Individual footprints")
+	l.Infoln("Individual footprints")
 	for _, dork := range scan.Individuals {
-		utils.LoggerService.Successf(`Link: %v`, dork.URL)
+		l.Successf(`Link: %v`, dork.URL)
 	}
 
-	utils.LoggerService.Infoln("Reputation footprints")
+	l.Infoln("Reputation footprints")
 	for _, dork := range scan.Reputation {
-		utils.LoggerService.Successf(`Link: %v`, dork.URL)
+		l.Successf(`Link: %v`, dork.URL)
 	}
 
-	utils.LoggerService.Infoln("Temporary number providers footprints")
+	l.Infoln("Temporary number providers footprints")
 	for _, dork := range scan.DisposableProviders {
-		utils.LoggerService.Successf(`Link: %v`, dork.URL)
+		l.Successf(`Link: %v`, dork.URL)
 	}
+
+	return scan
 }
 
-func ovhScanCLI(number *Number) {
-	utils.LoggerService.Infoln("Running OVH API scan...")
+func ovhScanCLI(l *utils.Logger, number *Number) *OVHScannerResponse {
+	l.Infoln("Running OVH API scan...")
 
 	scan, err := OVHScan(number)
 
 	if err != nil {
-		utils.LoggerService.Errorln("An error ocurred")
+		l.Errorln("An error ocurred")
 		os.Exit(0)
 	}
 
-	utils.LoggerService.Successf(`Found: %v`, scan.Found)
-	utils.LoggerService.Successf(`Number range: %v`, scan.NumberRange)
-	utils.LoggerService.Successln("City:", scan.City)
-	utils.LoggerService.Successln("Zip code:", scan.ZipCode)
+	l.Successf(`Found: %v`, scan.Found)
+	l.Successf(`Number range: %v`, scan.NumberRange)
+	l.Successln("City:", scan.City)
+	l.Successln("Zip code:", scan.ZipCode)
+
+	return scan
 }
 
 // ScanCLI Run scans with CLI output
 func ScanCLI(number string) {
-	num := localScanCLI(number)
+	num := localScanCLI(utils.LoggerService, number)
 
-	numverifyScanCLI(num)
-	googlesearchScanCLI(num)
-	ovhScanCLI(num)
+	numverifyScanCLI(utils.LoggerService, num)
+	googlesearchScanCLI(utils.LoggerService, num)
+	ovhScanCLI(utils.LoggerService, num)
 }

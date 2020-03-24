@@ -4,13 +4,14 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/sundowndev/phoneinfoga/pkg/utils"
 )
 
 func TestLocalScan(t *testing.T) {
 	assert := assert.New(t)
 
 	t.Run("should scan number", func(t *testing.T) {
-		result, err := LocalScan("+1 718-521-2994")
+		result := localScanCLI(utils.LoggerService, "+1 718-521-2994")
 
 		expectedResult := &Number{
 			RawLocal:      "7185212994",
@@ -22,7 +23,6 @@ func TestLocalScan(t *testing.T) {
 			Carrier:       "",
 		}
 
-		assert.Equal(err, nil, "they should be equal")
 		assert.Equal(result, expectedResult, "they should be equal")
 	})
 
