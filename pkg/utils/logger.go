@@ -6,37 +6,37 @@ import (
 	"github.com/fatih/color"
 )
 
-type logger struct {
+type Logger struct {
 	newColor func(value ...color.Attribute) *color.Color
 }
 
 // Infoln logs an info message
-func (l *logger) Infoln(s ...string) {
+func (l *Logger) Infoln(s ...string) {
 	l.newColor(color.FgCyan).Println("[i]", strings.Join(s, " "))
 }
 
 // Warnln logs an warning message
-func (l *logger) Warnln(s ...string) {
+func (l *Logger) Warnln(s ...string) {
 	l.newColor(color.FgYellow).Println("[*]", strings.Join(s, " "))
 }
 
 // Errorln logs an error message
-func (l *logger) Errorln(s ...string) {
+func (l *Logger) Errorln(s ...string) {
 	l.newColor(color.FgRed).Println("[!]", strings.Join(s, " "))
 }
 
 // Successln logs a success message
-func (l *logger) Successln(s ...string) {
+func (l *Logger) Successln(s ...string) {
 	l.newColor(color.FgGreen).Println("[+]", strings.Join(s, " "))
 }
 
 // Successf logs a success message
-func (l *logger) Successf(format string, messages ...interface{}) {
+func (l *Logger) Successf(format string, messages ...interface{}) {
 	l.newColor(color.FgGreen).Printf("[+] "+format, messages...)
 	l.newColor().Printf("\n")
 }
 
 // LoggerService is the default logger instance
-var LoggerService = &logger{
+var LoggerService = &Logger{
 	newColor: color.New,
 }
