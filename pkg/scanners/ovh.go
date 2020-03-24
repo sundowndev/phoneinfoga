@@ -34,8 +34,6 @@ func OVHScan(number *Number) (res *OVHScannerResponse, err error) {
 	countryCode := strings.ToLower(number.Country)
 	url := fmt.Sprintf("https://api.ovh.com/1.0/telephony/number/detailedZones?country=%s", countryCode)
 
-	fmt.Println(countryCode)
-
 	// Build the request
 	response, err := http.Get(url)
 	if err != nil {
