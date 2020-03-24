@@ -4,10 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"net/http"
 	"reflect"
 	"strings"
-
-	"github.com/parnurzeal/gorequest"
 )
 
 type ovhAPIResponseNumber struct {
@@ -37,27 +36,27 @@ func OVHScan(number *Number) (res *OVHScannerResponse, err error) {
 	url := fmt.Sprintf("https://api.ovh.com/1.0/telephony/number/detailedZones?country=%s", countryCode)
 
 	// Build the request
-	response, _, errs := gorequest.New().Get(url).End()
-	if errs != nil {
-		log.Fatal(errs)
+	response, err := http.Get(url)
+	if err != nil {
+		log.Fatal(err)
 	}
 	defer response.Body.Close()
 
 	// Fill the response with the data from the JSON
-	var result []ovhAPIResponseNumber
+	var results []ovhAPIResponseNumber
 
 	// Use json.Decode for reading streams of JSON data
-	json.NewDecoder(response.Body).Decode(&result)
+	json.NewDecoder(response.Body).Decode(&results)
 
 	var foundNumber ovhAPIResponseNumber
 
-	rt := reflect.TypeOf(result)
+	rt := reflect.TypeOf(results)
 	if rt.Kind() == reflect.Slice && len(number.RawLocal) > 6 {
 		askedNumber := number.RawLocal[0:6] + "xxxx"
 
-		for _, n := range result {
-			if n.Number == askedNumber {
-				foundNumber = n
+		for _, result := range results {
+			if result.Number == askedNumber {
+				foundNumber = result
 			}
 		}
 	}
