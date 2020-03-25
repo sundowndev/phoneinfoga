@@ -1,9 +1,9 @@
-To install PhoneInfoga, you'll need to download the binary or build the software from source code.
+To install PhoneInfoga, you'll need to download the binary or build the software from its source code.
 
 !!! info
     For now, only Linux and MacOS are supported. If you don't see your OS/arch on the [release page on GitHub](https://github.com/sundowndev/PhoneInfoga/releases), it means it's not explicitly supported. You can always build from source by yourself. Want your OS to be supported ? Please [open an issue on GitHub](https://github.com/sundowndev/PhoneInfoga/issues).
 
-## Download binary
+## Download the binary
 
 Follow the instructions :
 
@@ -11,7 +11,7 @@ Follow the instructions :
 - Choose your OS and architecture
 - Download the archive, extract the binary then run it in a terminal
 
-You can also do it from a terminal:
+You can also do it from the terminal:
 
 ```shell
 LATEST_VERSION=$(curl -s https://api.github.com/repos/sundowndev/phoneinfoga/releases/latest | grep tag_name | cut -d '"' -f 4)
@@ -27,12 +27,6 @@ tar xfv phoneinfoga.tar.gz
 
 # Install it globally
 mv ./PhoneInfoga /usr/bin/phoneinfoga
-```
-
-## Install globally with Go
-
-```shell
-go get -u github.com/sundowndev/PhoneInfoga
 ```
 
 ## Build from source
