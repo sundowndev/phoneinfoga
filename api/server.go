@@ -29,7 +29,7 @@ func registerClientRoute(router *gin.Engine, box *packr.Box) {
 
 // Serve launches the web client
 // Using Gin & Vue.js
-func Serve(router *gin.Engine, port int, disableClient bool) *gin.Engine {
+func Serve(router *gin.Engine, port int, disableClient bool) (*gin.Engine, *http.Server) {
 	httpPort := ":" + strconv.Itoa(port)
 
 	router.Group("/api").
@@ -53,11 +53,14 @@ func Serve(router *gin.Engine, port int, disableClient bool) *gin.Engine {
 		})
 	})
 
-	err := router.Run(httpPort)
-
-	if err != nil {
-		log.Fatal(err)
+	srv := &http.Server{
+		Addr:    httpPort,
+		Handler: router,
 	}
 
-	return router
+	if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+		log.Fatalf("listen: %s\n", err)
+	}
+
+	return router, srv
 }
