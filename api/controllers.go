@@ -13,7 +13,7 @@ type scanResultResponse struct {
 
 type listNumbersResponse struct {
 	JSONResponse
-	Numbers interface{} `json:"numbers"`
+	Numbers []scanners.Number `json:"numbers"`
 }
 
 func getAllNumbers(c *gin.Context) {
