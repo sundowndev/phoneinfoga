@@ -5,14 +5,13 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"log"
+	"net/http"
 
 	"github.com/PuerkitoBio/goquery"
-	"github.com/parnurzeal/gorequest"
 )
 
-// Numverify REST API response
-type Numverify struct {
+// NumverifyScannerResponse REST API response
+type NumverifyScannerResponse struct {
 	Valid               bool   `json:"valid"`
 	Number              string `json:"number"`
 	LocalFormat         string `json:"local_format"`
@@ -26,43 +25,43 @@ type Numverify struct {
 }
 
 // NumverifyScan fetches Numverify's API
-func NumverifyScan(number *Number) (res *Numverify, err error) {
-	response, _, errs := gorequest.New().Get("http://numverify.com/").End()
-	if errs != nil {
-		log.Fatal(errs)
+func NumverifyScan(number *Number) (res *NumverifyScannerResponse, err error) {
+	html, err := http.Get("http://numverify.com/")
+	if err != nil {
+		return nil, err
 	}
-	defer response.Body.Close()
+	defer html.Body.Close()
 
 	// Load the HTML document
-	doc, err := goquery.NewDocumentFromReader(response.Body)
+	doc, err := goquery.NewDocumentFromReader(html.Body)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
 	secret, _ := doc.Find("[name=\"scl_request_secret\"]").Attr("value")
 
-	// Then fetch infos
+	// Then fetch REST API
 	safeNumber := number.International
 	apiKey := md5.Sum([]byte(safeNumber + secret))
 
 	url := fmt.Sprintf("https://numverify.com/php_helper_scripts/phone_api.php?secret_key=%s&number=%s", hex.EncodeToString(apiKey[:]), safeNumber)
 
 	// Build the request
-	response2, _, errs := gorequest.New().Get(url).End()
-	if errs != nil {
-		log.Fatal(errs)
+	response, err := http.Get(url)
+	if err != nil {
+		return nil, err
 	}
-	defer response2.Body.Close()
+	defer response.Body.Close()
 
 	// Fill the response with the data from the JSON
-	var result Numverify
+	var result NumverifyScannerResponse
 
 	// Use json.Decode for reading streams of JSON data
-	if err := json.NewDecoder(response2.Body).Decode(&result); err != nil {
-		log.Println(err)
+	if err := json.NewDecoder(response.Body).Decode(&result); err != nil {
+		return nil, err
 	}
 
-	res = &Numverify{
+	res = &NumverifyScannerResponse{
 		Valid:               result.Valid,
 		Number:              result.Number,
 		LocalFormat:         result.LocalFormat,

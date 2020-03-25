@@ -12,6 +12,8 @@ services:
       networks:
         - default
         - web
+      environment:
+        - GIN_MODE=release
       labels:
         - 'traefik.docker.network=web'
         - 'traefik.enable=true'

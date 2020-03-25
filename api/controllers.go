@@ -11,17 +11,29 @@ type scanResultResponse struct {
 	Result interface{} `json:"result"`
 }
 
+type listNumbersResponse struct {
+	JSONResponse
+	Numbers []scanners.Number `json:"numbers"`
+}
+
 func getAllNumbers(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"numbers": []scanners.Number{},
+	c.JSON(200, listNumbersResponse{
+		JSONResponse: JSONResponse{Success: true},
+		Numbers:      []scanners.Number{},
 	})
 }
 
 func validate(c *gin.Context) {
-	ValidateScanURL(c)
+	number := c.Param("number")
+
+	_, err := scanners.LocalScan(number)
+
+	if err != nil {
+		c.JSON(400, errorResponse(err.Error()))
+		return
+	}
 
 	c.JSON(200, successResponse("The number is valid"))
-	c.Abort()
 }
 
 func localScan(c *gin.Context) {
@@ -109,5 +121,4 @@ func healthHandler(c *gin.Context) {
 		"success": true,
 		"version": config.Version,
 	})
-	c.Abort()
 }

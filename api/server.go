@@ -3,7 +3,6 @@ package api
 import (
 	"log"
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gobuffalo/packr/v2"
@@ -29,9 +28,7 @@ func registerClientRoute(router *gin.Engine, box *packr.Box) {
 
 // Serve launches the web client
 // Using Gin & Vue.js
-func Serve(router *gin.Engine, port int, disableClient bool) *gin.Engine {
-	httpPort := ":" + strconv.Itoa(port)
-
+func Serve(router *gin.Engine, disableClient bool) *gin.Engine {
 	router.Group("/api").
 		GET("/", healthHandler).
 		GET("/numbers", getAllNumbers).
@@ -52,12 +49,6 @@ func Serve(router *gin.Engine, port int, disableClient bool) *gin.Engine {
 			Error:   "Resource not found",
 		})
 	})
-
-	err := router.Run(httpPort)
-
-	if err != nil {
-		log.Fatal(err)
-	}
 
 	return router
 }

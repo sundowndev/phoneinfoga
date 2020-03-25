@@ -316,36 +316,36 @@ func getGeneralDorks(number *Number, formats ...string) (results []*GoogleSearch
 			Intext(number.Local),
 		(&dorkgen.GoogleSearch{}).
 			Group((&dorkgen.GoogleSearch{}).
-				Intext(number.International).
+				Ext("doc").
 				Or().
-				Intext(number.E164).
+				Ext("docx").
 				Or().
-				Intext(number.RawLocal).ToString()).
-			Ext("doc").
+				Ext("odt").
+				Or().
+				Ext("pdf").
+				Or().
+				Ext("rtf").
+				Or().
+				Ext("sxw").
+				Or().
+				Ext("psw").
+				Or().
+				Ext("ppt").
+				Or().
+				Ext("pptx").
+				Or().
+				Ext("pps").
+				Or().
+				Ext("csv").
+				Or().
+				Ext("txt").
+				Or().
+				Ext("xls").ToString()).
+			Intext(number.International).
 			Or().
-			Ext("docx").
+			Intext(number.E164).
 			Or().
-			Ext("odt").
-			Or().
-			Ext("pdf").
-			Or().
-			Ext("rtf").
-			Or().
-			Ext("sxw").
-			Or().
-			Ext("psw").
-			Or().
-			Ext("ppt").
-			Or().
-			Ext("pptx").
-			Or().
-			Ext("pps").
-			Or().
-			Ext("csv").
-			Or().
-			Ext("txt").
-			Or().
-			Ext("xls"),
+			Intext(number.RawLocal),
 	}
 
 	for _, dork := range dorks {
@@ -366,11 +366,11 @@ func getGeneralDorks(number *Number, formats ...string) (results []*GoogleSearch
 // GoogleSearchScan creates several Google requests to search footprints of
 // the number online through Google search.
 func GoogleSearchScan(number *Number, formats ...string) (results GoogleSearchResponse) {
-	results.SocialMedia = getSocialMediaDorks(number)
-	results.Reputation = getReputationDorks(number)
-	results.Individuals = getIndividualsDorks(number)
+	results.SocialMedia = getSocialMediaDorks(number, formats...)
+	results.Reputation = getReputationDorks(number, formats...)
+	results.Individuals = getIndividualsDorks(number, formats...)
 	results.DisposableProviders = getDisposableProvidersDorks(number)
-	results.General = getGeneralDorks(number)
+	results.General = getGeneralDorks(number, formats...)
 
 	return results
 }

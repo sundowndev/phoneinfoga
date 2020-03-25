@@ -1,6 +1,10 @@
 package cmd
 
 import (
+	"log"
+	"net/http"
+	"strconv"
+
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cobra"
 	api "github.com/sundowndev/phoneinfoga/api"
@@ -24,6 +28,17 @@ var serveCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		router := gin.Default()
 
-		api.Serve(router, httpPort, disableClient)
+		api.Serve(router, disableClient)
+
+		httpPort := ":" + strconv.Itoa(httpPort)
+
+		srv := &http.Server{
+			Addr:    httpPort,
+			Handler: router,
+		}
+
+		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			log.Fatalf("listen: %s\n", err)
+		}
 	},
 }
