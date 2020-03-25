@@ -29,7 +29,9 @@ tar xfv phoneinfoga.tar.gz
 mv ./PhoneInfoga /usr/bin/phoneinfoga
 ```
 
-## Build from source
+## Building from source
+
+You shouldn't need to, but in case the binary isn't working you can still build the software from source.
 
 Follow the instructions :
 
