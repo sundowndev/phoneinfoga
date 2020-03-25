@@ -61,10 +61,10 @@ func numverifyScanCLI(l *utils.Logger, number *Number) *NumverifyScannerResponse
 	return scan
 }
 
-func googlesearchScanCLI(l *utils.Logger, number *Number) GoogleSearchResponse {
+func googlesearchScanCLI(l *utils.Logger, number *Number, formats ...string) GoogleSearchResponse {
 	l.Infoln("Generating Google search dork requests...")
 
-	scan := GoogleSearchScan(number)
+	scan := GoogleSearchScan(number, formats...)
 
 	l.Infoln("Social media footprints")
 	for _, dork := range scan.SocialMedia {
