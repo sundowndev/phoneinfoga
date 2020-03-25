@@ -20,7 +20,8 @@ fi;
 echo ">> Building web client"
 (cd client && yarn && yarn build)
 
-echo ">> Building static assets"
+echo ">> Injecting static assets"
+go get -u github.com/gobuffalo/packr/v2/packr2
 $GOPATH/bin/packr2
 
 echo "> Done."
