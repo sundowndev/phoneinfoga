@@ -4,7 +4,6 @@ go 1.13
 
 require (
 	github.com/PuerkitoBio/goquery v1.5.1
-	github.com/elazarl/goproxy v0.0.0-20191011121108-aa519ddbe484 // indirect
 	github.com/fatih/color v1.9.0
 	github.com/gin-gonic/gin v1.5.0
 	github.com/go-playground/universal-translator v0.17.0 // indirect
@@ -18,9 +17,6 @@ require (
 	github.com/modern-go/reflect2 v1.0.1 // indirect
 	github.com/nyaruka/phonenumbers v1.0.54
 	github.com/onlinecity/go-phone-iso3166 v0.0.1
-	github.com/parnurzeal/gorequest v0.2.16
-	github.com/pkg/errors v0.9.1 // indirect
-	github.com/smartystreets/goconvey v1.6.4 // indirect
 	github.com/spf13/cobra v0.0.6
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/stretchr/testify v1.5.1
@@ -31,5 +27,4 @@ require (
 	gopkg.in/go-playground/validator.v9 v9.31.0 // indirect
 	gopkg.in/h2non/gock.v1 v1.0.15
 	gopkg.in/yaml.v2 v2.2.8 // indirect
-	moul.io/http2curl v1.0.0 // indirect
 )
