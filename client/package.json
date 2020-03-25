@@ -15,7 +15,7 @@
   "dependencies": {
     "axios": "0.19.2",
     "bootstrap": "4.4.1",
-    "bootstrap-vue": "2.7.0",
+    "bootstrap-vue": "2.8.0",
     "jquery": "3.4.1",
     "popper.js": "1.16.1",
     "vue": "2.6.11",
@@ -26,8 +26,8 @@
   },
   "devDependencies": {
     "@types/jest": "25.1.4",
-    "@typescript-eslint/eslint-plugin": "2.24.0",
-    "@typescript-eslint/parser": "2.24.0",
+    "@typescript-eslint/eslint-plugin": "2.25.0",
+    "@typescript-eslint/parser": "2.25.0",
     "@vue/cli-plugin-e2e-cypress": "4.2.3",
     "@vue/cli-plugin-eslint": "4.2.3",
     "@vue/cli-plugin-router": "4.2.3",
@@ -43,7 +43,7 @@
     "eslint-plugin-prettier": "3.1.2",
     "eslint-plugin-vue": "6.2.2",
     "jest": "25.1.0",
-    "prettier": "1.19.1",
+    "prettier": "2.0.2",
     "ts-jest": "25.2.1",
     "typescript": "3.8.3",
     "vue-jest": "3.0.5",
