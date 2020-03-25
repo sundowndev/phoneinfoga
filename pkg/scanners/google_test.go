@@ -10,8 +10,68 @@ import (
 func TestGoogleSearchScan(t *testing.T) {
 	assert := assert.New(t)
 
+	number, _ := LocalScan("+33 673421322")
+
+	scan := googlesearchScanCLI(utils.LoggerService, number)
+	scanWithFormat := googlesearchScanCLI(utils.LoggerService, number, "06.73.42.13.22")
+
 	t.Run("getDisposableProvidersDorks", func(t *testing.T) {})
-	t.Run("getSocialMediaDorks", func(t *testing.T) {})
+
+	t.Run("getSocialMediaDorks", func(t *testing.T) {
+		t.Run("should generate social media dorks", func(t *testing.T) {
+			expectedResult := []*GoogleSearchDork{
+				&GoogleSearchDork{
+					Number: "+33673421322",
+					Dork:   "site:facebook.com intext:\"33673421322\" OR intext:\"+33673421322\" OR intext:\"0673421322\"",
+					URL:    "https://www.google.com/search?q=site%3Afacebook.com+intext%3A%2233673421322%22+OR+intext%3A%22%2B33673421322%22+OR+intext%3A%220673421322%22",
+				},
+				&GoogleSearchDork{
+					Number: "+33673421322",
+					Dork:   "site:twitter.com intext:\"33673421322\" OR intext:\"+33673421322\" OR intext:\"0673421322\"",
+					URL:    "https://www.google.com/search?q=site%3Atwitter.com+intext%3A%2233673421322%22+OR+intext%3A%22%2B33673421322%22+OR+intext%3A%220673421322%22",
+				},
+				&GoogleSearchDork{
+					Number: "+33673421322",
+					Dork:   "site:linkedin.com intext:\"33673421322\" OR intext:\"+33673421322\" OR intext:\"0673421322\"",
+					URL:    "https://www.google.com/search?q=site%3Alinkedin.com+intext%3A%2233673421322%22+OR+intext%3A%22%2B33673421322%22+OR+intext%3A%220673421322%22",
+				},
+				&GoogleSearchDork{
+					Number: "+33673421322",
+					Dork:   "site:instagram.com intext:\"33673421322\" OR intext:\"+33673421322\" OR intext:\"0673421322\"",
+					URL:    "https://www.google.com/search?q=site%3Ainstagram.com+intext%3A%2233673421322%22+OR+intext%3A%22%2B33673421322%22+OR+intext%3A%220673421322%22",
+				},
+			}
+
+			assert.Equal(scan.SocialMedia, expectedResult, "they should be equal")
+		})
+
+		t.Run("should generate social media dorks with additional format", func(t *testing.T) {
+			expectedResult := []*GoogleSearchDork{
+				&GoogleSearchDork{
+					Number: "+33673421322",
+					Dork:   "site:facebook.com intext:\"33673421322\" OR intext:\"+33673421322\" OR intext:\"0673421322\" OR intext:\"06.73.42.13.22\"",
+					URL:    "https://www.google.com/search?q=site%3Afacebook.com+intext%3A%2233673421322%22+OR+intext%3A%22%2B33673421322%22+OR+intext%3A%220673421322%22+OR+intext%3A%2206.73.42.13.22%22",
+				},
+				&GoogleSearchDork{
+					Number: "+33673421322",
+					Dork:   "site:twitter.com intext:\"33673421322\" OR intext:\"+33673421322\" OR intext:\"0673421322\" OR intext:\"06.73.42.13.22\"",
+					URL:    "https://www.google.com/search?q=site%3Atwitter.com+intext%3A%2233673421322%22+OR+intext%3A%22%2B33673421322%22+OR+intext%3A%220673421322%22+OR+intext%3A%2206.73.42.13.22%22",
+				},
+				&GoogleSearchDork{
+					Number: "+33673421322",
+					Dork:   "site:linkedin.com intext:\"33673421322\" OR intext:\"+33673421322\" OR intext:\"0673421322\" OR intext:\"06.73.42.13.22\"",
+					URL:    "https://www.google.com/search?q=site%3Alinkedin.com+intext%3A%2233673421322%22+OR+intext%3A%22%2B33673421322%22+OR+intext%3A%220673421322%22+OR+intext%3A%2206.73.42.13.22%22",
+				},
+				&GoogleSearchDork{
+					Number: "+33673421322",
+					Dork:   "site:instagram.com intext:\"33673421322\" OR intext:\"+33673421322\" OR intext:\"0673421322\" OR intext:\"06.73.42.13.22\"",
+					URL:    "https://www.google.com/search?q=site%3Ainstagram.com+intext%3A%2233673421322%22+OR+intext%3A%22%2B33673421322%22+OR+intext%3A%220673421322%22+OR+intext%3A%2206.73.42.13.22%22",
+				},
+			}
+
+			assert.Equal(scanWithFormat.SocialMedia, expectedResult, "they should be equal")
+		})
+	})
 
 	t.Run("getReputationDorks", func(t *testing.T) {
 		t.Run("should generate reputation dorks", func(t *testing.T) {
@@ -67,10 +127,6 @@ func TestGoogleSearchScan(t *testing.T) {
 					URL:    "https://www.google.com/search?q=site%3Auk.popularphotolook.com+inurl%3A%220673421322%22",
 				},
 			}
-
-			number, _ := LocalScan("+33 673421322")
-
-			scan := googlesearchScanCLI(utils.LoggerService, number)
 
 			assert.Equal(scan.Reputation, expectedResult, "they should be equal")
 		})
@@ -129,11 +185,7 @@ func TestGoogleSearchScan(t *testing.T) {
 				},
 			}
 
-			number, _ := LocalScan("+33 673421322")
-
-			scan := googlesearchScanCLI(utils.LoggerService, number, "06.73.42.13.22")
-
-			assert.Equal(scan.Reputation, expectedResult, "they should be equal")
+			assert.Equal(scanWithFormat.Reputation, expectedResult, "they should be equal")
 		})
 	})
 
@@ -177,10 +229,6 @@ func TestGoogleSearchScan(t *testing.T) {
 				},
 			}
 
-			number, _ := LocalScan("+33 673421322")
-
-			scan := googlesearchScanCLI(utils.LoggerService, number)
-
 			assert.Equal(scan.Individuals, expectedResult, "they should be equal")
 		})
 
@@ -223,11 +271,7 @@ func TestGoogleSearchScan(t *testing.T) {
 				},
 			}
 
-			number, _ := LocalScan("+33 673421322")
-
-			scan := googlesearchScanCLI(utils.LoggerService, number, "06.73.42.13.22")
-
-			assert.Equal(scan.Individuals, expectedResult, "they should be equal")
+			assert.Equal(scanWithFormat.Individuals, expectedResult, "they should be equal")
 		})
 	})
 
@@ -246,10 +290,6 @@ func TestGoogleSearchScan(t *testing.T) {
 				},
 			}
 
-			number, _ := LocalScan("+33 673421322")
-
-			scan := googlesearchScanCLI(utils.LoggerService, number)
-
 			assert.Equal(scan.General, expectedResult, "they should be equal")
 		})
 
@@ -267,11 +307,7 @@ func TestGoogleSearchScan(t *testing.T) {
 				},
 			}
 
-			number, _ := LocalScan("+33 673421322")
-
-			scan := googlesearchScanCLI(utils.LoggerService, number, "06.73.42.13.22")
-
-			assert.Equal(scan.General, expectedResult, "they should be equal")
+			assert.Equal(scanWithFormat.General, expectedResult, "they should be equal")
 		})
 	})
 }
