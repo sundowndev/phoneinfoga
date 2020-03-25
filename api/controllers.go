@@ -11,9 +11,15 @@ type scanResultResponse struct {
 	Result interface{} `json:"result"`
 }
 
+type listNumbersResponse struct {
+	JSONResponse
+	Numbers interface{} `json:"numbers"`
+}
+
 func getAllNumbers(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"numbers": []scanners.Number{},
+	c.JSON(200, listNumbersResponse{
+		JSONResponse: JSONResponse{Success: true},
+		Numbers:      []scanners.Number{},
 	})
 }
 
@@ -23,12 +29,11 @@ func validate(c *gin.Context) {
 	_, err := scanners.LocalScan(number)
 
 	if err != nil {
-		c.JSON(500, errorResponse(err.Error()))
-		c.Abort()
+		c.JSON(400, errorResponse(err.Error()))
+		return
 	}
 
 	c.JSON(200, successResponse("The number is valid"))
-	c.Abort()
 }
 
 func localScan(c *gin.Context) {
@@ -38,7 +43,7 @@ func localScan(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(500, errorResponse(err.Error()))
-		c.Abort()
+		return
 	}
 
 	c.JSON(200, scanResultResponse{
@@ -54,14 +59,14 @@ func numverifyScan(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(500, errorResponse("The number is not valid"))
-		c.Abort()
+		return
 	}
 
 	result, err := scanners.NumverifyScan(n)
 
 	if err != nil {
 		c.JSON(500, errorResponse())
-		c.Abort()
+		return
 	}
 
 	c.JSON(200, scanResultResponse{
@@ -77,7 +82,7 @@ func googleSearchScan(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(500, errorResponse("The number is not valid"))
-		c.Abort()
+		return
 	}
 
 	result := scanners.GoogleSearchScan(n)
@@ -95,14 +100,14 @@ func ovhScan(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(500, errorResponse("The number is not valid"))
-		c.Abort()
+		return
 	}
 
 	result, err := scanners.OVHScan(n)
 
 	if err != nil {
 		c.JSON(500, errorResponse())
-		c.Abort()
+		return
 	}
 
 	c.JSON(200, scanResultResponse{
@@ -116,5 +121,4 @@ func healthHandler(c *gin.Context) {
 		"success": true,
 		"version": config.Version,
 	})
-	c.Abort()
 }
