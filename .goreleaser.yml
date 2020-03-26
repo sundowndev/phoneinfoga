@@ -4,6 +4,7 @@ builds:
 - env:
   - CGO_ENABLED=0
   - GO111MODULE=on
+  binary: phoneinfoga
   goos:
     - linux
     - darwin
@@ -12,8 +13,6 @@ builds:
     - amd64
     - arm
     - arm64
-  hooks:
-    pre: sh ./scripts/prebuild.sh
 archives:
 - name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
   replacements:

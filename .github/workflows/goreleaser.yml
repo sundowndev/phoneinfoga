@@ -31,7 +31,7 @@ jobs:
       - name: Inject static assets
         run: |
           go get -u github.com/gobuffalo/packr/v2/packr2
-          $GOPATH/bin/packr2
+          $HOME/go/bin/packr2
 
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v1
