@@ -18,5 +18,3 @@
 .DS_Store
 coverage
 coverage.*
-packrd/
-*-packr.go

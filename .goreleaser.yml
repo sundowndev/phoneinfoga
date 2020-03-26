@@ -1,5 +1,8 @@
 # This is an example goreleaser.yaml file with some sane defaults.
 # Make sure to check the documentation at http://goreleaser.com
+before:
+  hooks:
+    - go get -u github.com/gobuffalo/packr/v2/packr2
 builds:
 - env:
   - CGO_ENABLED=0
@@ -13,6 +16,8 @@ builds:
     - amd64
     - arm
     - arm64
+  hooks:
+    pre: $HOME/go/bin/packr2
 archives:
 - name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
   replacements:
