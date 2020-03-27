@@ -5,7 +5,7 @@ go 1.13
 require (
 	github.com/PuerkitoBio/goquery v1.5.1
 	github.com/fatih/color v1.9.0
-	github.com/gin-gonic/gin v1.6.1
+	github.com/gin-gonic/gin v1.6.2
 	github.com/gobuffalo/packr/v2 v2.8.0
 	github.com/golang/protobuf v1.3.4 // indirect
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
