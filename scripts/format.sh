@@ -1,3 +1,7 @@
 #!/bin/sh
 
-go fmt $(go list ./... | grep -v /vendor/)
+echo "Formatting Go files..."
+
+gofmt -s -w -l .
+
+echo "Done."
