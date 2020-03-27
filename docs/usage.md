@@ -78,10 +78,14 @@ phoneinfoga recon -n +42837544833
 
 Run the tool through a REST API with a web client. The API has been written in Go and web client in Vue.js.
 
-```
+```shell
 phoneinfoga serve
-phoneinfoga serve -p 8080
+phoneinfoga serve -p 8080 # default port is 5000
 ```
+
+You should then be able to see the web client at `http://localhost:<port>`.
+
+![](./images/screenshot.png)
 
 ### Run the REST API only
 
@@ -90,7 +94,3 @@ You can choose to only run the REST API without the graphical interface :
 ```
 phoneinfoga serve --no-client
 ```
-
-You should then be able to see the web client at `http://localhost:<port>`.
-
-![](./images/screenshot.png)
