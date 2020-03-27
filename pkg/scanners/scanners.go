@@ -95,7 +95,7 @@ func ovhScanCLI(l *utils.Logger, number *Number) *OVHScannerResponse {
 	scan, err := OVHScan(number)
 
 	if err != nil {
-		l.Errorln("An error ocurred")
+		l.Errorln("An error occurred")
 		os.Exit(0)
 	}
 

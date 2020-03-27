@@ -97,14 +97,14 @@ func TestApi(t *testing.T) {
 		// 	assert.Equal(string(body), "{\"success\":true,\"version\":\""+config.Version+"\"}", "should be equal")
 		// })
 
-		// t.Run("404 error - /api/notfound", func(t *testing.T) {
-		// 	res, err := performRequest(r, "GET", "/api/notfound")
+		t.Run("404 error - /api/notfound", func(t *testing.T) {
+			res, err := performRequest(r, "GET", "/api/notfound")
 
-		// 	body, _ := ioutil.ReadAll(res.Body)
+			body, _ := ioutil.ReadAll(res.Body)
 
-		// 	assert.Equal(err, nil, "should be equal")
-		// 	assert.Equal(res.Result().StatusCode, 404, "should be equal")
-		// 	assert.Equal(string(body), "{\"success\":false,\"error\":\"Resource not found\"}", "should be equal")
-		// })
+			assert.Equal(err, nil, "should be equal")
+			assert.Equal(res.Result().StatusCode, 404, "should be equal")
+			assert.Equal(string(body), "{\"success\":false,\"error\":\"Resource not found\"}", "should be equal")
+		})
 	})
 }
