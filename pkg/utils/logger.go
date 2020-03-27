@@ -6,6 +6,7 @@ import (
 	"github.com/fatih/color"
 )
 
+// Logger allows you to log messages in the terminal
 type Logger struct {
 	newColor func(value ...color.Attribute) *color.Color
 }

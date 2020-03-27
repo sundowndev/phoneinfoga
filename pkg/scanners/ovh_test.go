@@ -19,7 +19,7 @@ func TestOVHScanner(t *testing.T) {
 			MatchParam("country", "fr").
 			Reply(200).
 			JSON([]ovhAPIResponseNumber{
-				ovhAPIResponseNumber{
+				{
 					ZneList:             []string{},
 					MatchingCriteria:    "",
 					Prefix:              33,
@@ -54,7 +54,7 @@ func TestOVHScanner(t *testing.T) {
 			MatchParam("country", "us").
 			Reply(200).
 			JSON([]ovhAPIResponseNumber{
-				ovhAPIResponseNumber{
+				{
 					ZneList:             []string{},
 					MatchingCriteria:    "",
 					Prefix:              33,
