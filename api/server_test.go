@@ -65,6 +65,28 @@ func TestApi(t *testing.T) {
 			})
 		})
 
+		t.Run("localScan - /api/numbers/:number/scan/local", func(t *testing.T) {
+			t.Run("valid number", func(t *testing.T) {
+				res, err := performRequest(r, "GET", "/api/numbers/3312345253/scan/local")
+
+				body, _ := ioutil.ReadAll(res.Body)
+
+				assert.Equal(err, nil, "should be equal")
+				assert.Equal(res.Result().StatusCode, 200, "should be equal")
+				assert.Equal(string(body), `{"success":true,"error":"","result":{"rawLocal":"12345253","local":"12345253","E164":"+3312345253","international":"3312345253","countryCode":33,"country":"FR","carrier":""}}`, "should be equal")
+			})
+
+			t.Run("invalid number", func(t *testing.T) {
+				res, err := performRequest(r, "GET", "/api/numbers/9999999999/scan/local")
+
+				body, _ := ioutil.ReadAll(res.Body)
+
+				assert.Equal(err, nil, "should be equal")
+				assert.Equal(res.Result().StatusCode, 500, "should be equal")
+				assert.Equal(string(body), `{"success":false,"error":"invalid country code"}`, "should be equal")
+			})
+		})
+
 		// t.Run("healthHandler - /api/", func(t *testing.T) {
 		// 	res, err := performRequest(r, "GET", "/api")
 
