@@ -61,7 +61,7 @@ func OVHScan(number *Number) (res *OVHScannerResponse, err error) {
 	}
 
 	res = &OVHScannerResponse{
-		Found:       foundNumber.Number != "",
+		Found:       len(foundNumber.Number) > 0,
 		NumberRange: foundNumber.Number,
 		City:        foundNumber.City,
 		ZipCode:     foundNumber.ZipCode,
