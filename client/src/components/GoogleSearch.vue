@@ -167,11 +167,11 @@ export default class GoogleSearch extends Vue {
     disposableProviders: [],
     reputation: [],
     individuals: [],
-    general: []
+    general: [],
   };
   loading = false;
   computed = {
-    ...mapMutations(["pushError"])
+    ...mapMutations(["pushError"]),
   };
 
   @Prop() scan!: Vue;
@@ -187,7 +187,7 @@ export default class GoogleSearch extends Vue {
       disposableProviders: [],
       reputation: [],
       individuals: [],
-      general: []
+      general: [],
     };
   }
 

@@ -9,19 +9,19 @@ const routes = [
   {
     path: "/",
     name: "Scan",
-    component: Scan
+    component: Scan,
   },
   {
     path: "*",
     name: "NotFound",
-    component: NotFound
-  }
+    component: NotFound,
+  },
 ];
 
 const router = new VueRouter({
   mode: "hash",
   base: process.env.BASE_URL,
-  routes
+  routes,
 });
 
 export default router;

@@ -72,13 +72,13 @@ export default Vue.extend({
   components: { LocalScan, GoogleSearch, NumverifyScan, OVHScan },
   computed: {
     ...mapState(["number"]),
-    ...mapMutations(["pushError"])
+    ...mapMutations(["pushError"]),
   },
   data(): Data {
     return {
       loading: false,
       inputNumber: "",
-      scanEvent: new Vue()
+      scanEvent: new Vue(),
     };
   },
   methods: {
@@ -104,7 +104,7 @@ export default Vue.extend({
     },
     onSubmit(evt: any) {
       evt.preventDefault();
-    }
-  }
+    },
+  },
 });
 </script>
