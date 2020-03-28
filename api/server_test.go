@@ -89,6 +89,46 @@ func TestApi(t *testing.T) {
 			})
 		})
 
+		t.Run("numverifyScan - /api/numbers/:number/scan/numverify", func(t *testing.T) {
+			t.Run("should succeed", func(t *testing.T) {
+				defer gock.Off() // Flush pending mocks after test execution
+
+				expectedResult := scanners.NumverifyScannerResponse{
+					Valid:               true,
+					Number:              "79516566591",
+					LocalFormat:         "9516566591",
+					InternationalFormat: "+79516566591",
+					CountryPrefix:       "+7",
+					CountryCode:         "RU",
+					CountryName:         "Russian Federation",
+					Location:            "Saint Petersburg and Leningrad Oblast",
+					Carrier:             "OJSC St. Petersburg Telecom (OJSC Tele2-Saint-Petersburg)",
+					LineType:            "mobile",
+				}
+
+				gock.New("http://numverify.com").
+					Get("/").
+					Reply(200).BodyString(`<html><body><input type="hidden" name="scl_request_secret" value="secret"/></body></html>`)
+
+				gock.New("https://numverify.com").
+					Get("/php_helper_scripts/phone_api.php").
+					MatchParam("secret_key", "5ad5554ac240e4d3d31107941b35a5eb").
+					MatchParam("number", "79516566591").
+					Reply(200).
+					JSON(expectedResult)
+
+				res, err := performRequest(r, "GET", "/api/numbers/79516566591/scan/numverify")
+
+				body, _ := ioutil.ReadAll(res.Body)
+
+				assert.Equal(err, nil, "should be equal")
+				assert.Equal(res.Result().StatusCode, 200, "should be equal")
+				assert.Equal(string(body), `{"success":true,"error":"","result":{"valid":true,"number":"79516566591","local_format":"9516566591","international_format":"+79516566591","country_prefix":"+7","country_code":"RU","country_name":"Russian Federation","location":"Saint Petersburg and Leningrad Oblast","carrier":"OJSC St. Petersburg Telecom (OJSC Tele2-Saint-Petersburg)","line_type":"mobile"}}`, "should be equal")
+
+				assert.Equal(gock.IsDone(), true, "there should have no pending mocks")
+			})
+		})
+
 		t.Run("ovhScan - /api/numbers/:number/scan/ovh", func(t *testing.T) {
 			t.Run("should find number on OVH", func(t *testing.T) {
 				defer gock.Off() // Flush pending mocks after test execution
