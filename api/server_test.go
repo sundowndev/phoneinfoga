@@ -84,7 +84,7 @@ func TestApi(t *testing.T) {
 				body, _ := ioutil.ReadAll(res.Body)
 
 				assert.Equal(err, nil, "should be equal")
-				assert.Equal(res.Result().StatusCode, 500, "should be equal")
+				assert.Equal(res.Result().StatusCode, 400, "should be equal")
 				assert.Equal(string(body), `{"success":false,"error":"invalid country code"}`, "should be equal")
 			})
 		})

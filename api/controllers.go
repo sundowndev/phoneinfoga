@@ -24,45 +24,22 @@ func getAllNumbers(c *gin.Context) {
 }
 
 func validate(c *gin.Context) {
-	number := c.Param("number")
-
-	_, err := scanners.LocalScan(number)
-
-	if err != nil {
-		c.JSON(400, errorResponse(err.Error()))
-		return
-	}
-
 	c.JSON(200, successResponse("The number is valid"))
 }
 
 func localScan(c *gin.Context) {
-	number := c.Param("number")
-
-	result, err := scanners.LocalScan(number)
-
-	if err != nil {
-		c.JSON(500, errorResponse(err.Error()))
-		return
-	}
+	result, _ := c.Get("number")
 
 	c.JSON(200, scanResultResponse{
 		JSONResponse: JSONResponse{Success: true},
-		Result:       result,
+		Result:       result.(*scanners.Number),
 	})
 }
 
 func numverifyScan(c *gin.Context) {
-	number := c.Param("number")
+	number, _ := c.Get("number")
 
-	n, err := scanners.LocalScan(number)
-
-	if err != nil {
-		c.JSON(400, errorResponse("The number is not valid"))
-		return
-	}
-
-	result, err := scanners.NumverifyScan(n)
+	result, err := scanners.NumverifyScan(number.(*scanners.Number))
 
 	if err != nil {
 		c.JSON(500, errorResponse())
@@ -76,16 +53,9 @@ func numverifyScan(c *gin.Context) {
 }
 
 func googleSearchScan(c *gin.Context) {
-	number := c.Param("number")
+	number, _ := c.Get("number")
 
-	n, err := scanners.LocalScan(number)
-
-	if err != nil {
-		c.JSON(400, errorResponse("The number is not valid"))
-		return
-	}
-
-	result := scanners.GoogleSearchScan(n)
+	result := scanners.GoogleSearchScan(number.(*scanners.Number))
 
 	c.JSON(200, scanResultResponse{
 		JSONResponse: JSONResponse{Success: true},
@@ -94,16 +64,9 @@ func googleSearchScan(c *gin.Context) {
 }
 
 func ovhScan(c *gin.Context) {
-	number := c.Param("number")
+	number, _ := c.Get("number")
 
-	n, err := scanners.LocalScan(number)
-
-	if err != nil {
-		c.JSON(400, errorResponse("The number is not valid"))
-		return
-	}
-
-	result, err := scanners.OVHScan(n)
+	result, err := scanners.OVHScan(number.(*scanners.Number))
 
 	if err != nil {
 		c.JSON(500, errorResponse())
