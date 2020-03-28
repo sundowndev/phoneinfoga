@@ -58,7 +58,7 @@ func numverifyScan(c *gin.Context) {
 	n, err := scanners.LocalScan(number)
 
 	if err != nil {
-		c.JSON(500, errorResponse("The number is not valid"))
+		c.JSON(400, errorResponse("The number is not valid"))
 		return
 	}
 
@@ -81,7 +81,7 @@ func googleSearchScan(c *gin.Context) {
 	n, err := scanners.LocalScan(number)
 
 	if err != nil {
-		c.JSON(500, errorResponse("The number is not valid"))
+		c.JSON(400, errorResponse("The number is not valid"))
 		return
 	}
 
@@ -99,7 +99,7 @@ func ovhScan(c *gin.Context) {
 	n, err := scanners.LocalScan(number)
 
 	if err != nil {
-		c.JSON(500, errorResponse("The number is not valid"))
+		c.JSON(400, errorResponse("The number is not valid"))
 		return
 	}
 

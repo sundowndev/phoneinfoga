@@ -8,11 +8,11 @@ import (
 	"strings"
 )
 
-type ovhAPIResponseNumber struct {
-	MatchingCriteria interface{} `json:"matchingCriteria"`
-	City             string      `json:"city"`
-	ZneList          []string    `json:"zneList"`
-	// type string
+// OVHAPIResponseNumber is a type that describes an OVH number range
+type OVHAPIResponseNumber struct {
+	MatchingCriteria    interface{} `json:"matchingCriteria"`
+	City                string      `json:"city"`
+	ZneList             []string    `json:"zneList"`
 	InternationalNumber string      `json:"internationalNumber"`
 	Country             string      `json:"country"`
 	AskedCity           interface{} `json:"askedCity"`
@@ -42,12 +42,12 @@ func OVHScan(number *Number) (res *OVHScannerResponse, err error) {
 	defer response.Body.Close()
 
 	// Fill the response with the data from the JSON
-	var results []ovhAPIResponseNumber
+	var results []OVHAPIResponseNumber
 
 	// Use json.Decode for reading streams of JSON data
 	json.NewDecoder(response.Body).Decode(&results)
 
-	var foundNumber ovhAPIResponseNumber
+	var foundNumber OVHAPIResponseNumber
 
 	rt := reflect.TypeOf(results)
 	if rt.Kind() == reflect.Slice && len(number.RawLocal) > 6 {

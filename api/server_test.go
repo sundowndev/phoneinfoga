@@ -8,6 +8,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
+	"github.com/sundowndev/phoneinfoga/pkg/scanners"
+	gock "gopkg.in/h2non/gock.v1"
 )
 
 func performRequest(r http.Handler, method, path string) (*httptest.ResponseRecorder, error) {
@@ -84,6 +86,40 @@ func TestApi(t *testing.T) {
 				assert.Equal(err, nil, "should be equal")
 				assert.Equal(res.Result().StatusCode, 500, "should be equal")
 				assert.Equal(string(body), `{"success":false,"error":"invalid country code"}`, "should be equal")
+			})
+		})
+
+		t.Run("ovhScan - /api/numbers/:number/scan/ovh", func(t *testing.T) {
+			t.Run("should find number on OVH", func(t *testing.T) {
+				defer gock.Off() // Flush pending mocks after test execution
+
+				gock.New("https://api.ovh.com").
+					Get("/1.0/telephony/number/detailedZones").
+					MatchParam("country", "fr").
+					Reply(200).
+					JSON([]scanners.OVHAPIResponseNumber{
+						{
+							ZneList:             []string{},
+							MatchingCriteria:    "",
+							Prefix:              33,
+							InternationalNumber: "003336517xxxx",
+							Country:             "fr",
+							ZipCode:             "",
+							Number:              "036517xxxx",
+							City:                "Abbeville",
+							AskedCity:           "",
+						},
+					})
+
+				res, err := performRequest(r, "GET", "/api/numbers/330365179268/scan/ovh")
+
+				body, _ := ioutil.ReadAll(res.Body)
+
+				assert.Equal(err, nil, "should be equal")
+				assert.Equal(res.Result().StatusCode, 200, "should be equal")
+				assert.Equal(string(body), `{"success":true,"error":"","result":{"found":true,"numberRange":"036517xxxx","city":"Abbeville","zipCode":""}}`, "should be equal")
+
+				assert.Equal(gock.IsDone(), true, "there should have no pending mocks")
 			})
 		})
 
