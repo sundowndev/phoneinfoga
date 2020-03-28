@@ -20,12 +20,12 @@
   </a>
 </div>
 
-<h4 align="center">Information gathering & OSINT reconnaissance tool for phone numbers</h4>
+<h4 align="center">Advanced information gathering & OSINT framework for phone numbers</h4>
 
 <p align="center">
   <a href="https://sundowndev.github.io/PhoneInfoga/">Documentation</a> •
-  <a href="https://sundowndev.github.io/PhoneInfoga/usage/">Basic usage</a> •
-  <a href="https://sundowndev.github.io/PhoneInfoga/resources/">OSINT resources</a> •
+  <a href="https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/sundowndev/PhoneInfoga/master/api/openapi.yml">API documentation</a> •
+  <a href="https://demo.phoneinfoga.crvx.fr/">Demo instance</a> •
   <a href="https://medium.com/@SundownDEV/phone-number-scanning-osint-recon-tool-6ad8f0cac27b">Related blog post</a>
 </p>
 
@@ -33,13 +33,7 @@
 
 ## About
 
-PhoneInfoga is one of the most advanced tools to scan phone numbers using only free resources. The goal is to first gather standard information such as country, area, carrier and line type on any international phone numbers with a very good accuracy. Then search for footprints on search engines to try to find the VoIP provider or identify the owner.
-
-## Links
-
-- [Demo](https://demo.phoneinfoga.crvx.fr/)
-- [Documentation](https://sundowndev.github.io/PhoneInfoga/)
-- [API documentation](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/sundowndev/PhoneInfoga/master/api/openapi.yml)
+PhoneInfoga is an information gathering framework for phone numbers that uses only free resources. The goal is to first gather standard information such as country, area, carrier and line type on any international phone numbers with a very good accuracy. Then search for footprints on search engines to try to find the VoIP provider or identify the owner.
 
 ## Current status
 
