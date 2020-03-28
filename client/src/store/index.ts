@@ -15,7 +15,7 @@ interface StoreInterface {
 const store: Store<StoreInterface> = new Vuex.Store({
   state: {
     number: "",
-    errors: [] as ErrorAlert[]
+    errors: [] as ErrorAlert[],
   },
   mutations: {
     pushError(state, error: ErrorAlert): void {
@@ -29,15 +29,15 @@ const store: Store<StoreInterface> = new Vuex.Store({
       state.errors = [];
 
       return state;
-    }
+    },
   },
   getters: {},
   actions: {
     resetState(context): void {
       context.commit("resetState");
-    }
+    },
   },
-  modules: {}
+  modules: {},
 });
 
 export default store;

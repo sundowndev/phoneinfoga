@@ -26,7 +26,7 @@ export default class GoogleSearch extends Vue {
   loading = false;
   computed = {
     ...mapState(["number"]),
-    ...mapMutations(["pushError"])
+    ...mapMutations(["pushError"]),
   };
 
   @Prop() scan!: Vue;

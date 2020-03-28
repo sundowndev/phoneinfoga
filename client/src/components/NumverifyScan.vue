@@ -47,7 +47,7 @@ export default class GoogleSearch extends Vue {
   data: NumverifyScanResponse[] = [];
   loading = false;
   computed = {
-    ...mapMutations(["pushError"])
+    ...mapMutations(["pushError"]),
   };
 
   @Prop() scan!: Vue;

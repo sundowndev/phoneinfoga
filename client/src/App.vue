@@ -68,7 +68,7 @@ import config from "@/config";
 export default Vue.extend({
   data: () => ({ config }),
   computed: {
-    ...mapState(["number", "errors"])
-  }
+    ...mapState(["number", "errors"]),
+  },
 });
 </script>

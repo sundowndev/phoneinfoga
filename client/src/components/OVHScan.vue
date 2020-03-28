@@ -43,7 +43,7 @@ export default class GoogleSearch extends Vue {
   data: OVHScanResponse[] = [];
   loading = false;
   computed = {
-    ...mapMutations(["pushError"])
+    ...mapMutations(["pushError"]),
   };
 
   @Prop() scan!: Vue;
