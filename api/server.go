@@ -1,27 +1,25 @@
+//go:generate $GOPATH/bin/pkger
+
 package api
 
 import (
-	"log"
+	"io/ioutil"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/gobuffalo/packr/v2"
+	"github.com/markbates/pkger"
 )
 
-func registerClientRoute(router *gin.Engine, box *packr.Box) {
-	router.Group("/static").
-		StaticFS("/", box)
+func registerClientRoute(router *gin.Engine) {
+	router.StaticFS("/static", pkger.Dir("/client/dist"))
 
 	router.GET("/", func(c *gin.Context) {
-		html, err := box.Find("index.html")
-
-		if err != nil {
-			log.Fatal()
-		}
+		f, _ := pkger.Open("/client/dist/index.html")
+		sl, _ := ioutil.ReadAll(f)
 
 		c.Header("Content-Type", "text/html; charset=utf-8")
 		c.Writer.WriteHeader(http.StatusOK)
-		c.Writer.Write([]byte(html))
+		c.Writer.Write([]byte(sl))
 		c.Abort()
 	})
 }
@@ -39,8 +37,8 @@ func Serve(router *gin.Engine, disableClient bool) *gin.Engine {
 		GET("/numbers/:number/scan/ovh", ValidateScanURL, ovhScan)
 
 	if !disableClient {
-		box := packr.New("static", "../client/dist")
-		registerClientRoute(router, box)
+		pkger.Include("/client/dist")
+		registerClientRoute(router)
 	}
 
 	router.Use(func(c *gin.Context) {
