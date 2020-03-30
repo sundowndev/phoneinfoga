@@ -99,16 +99,32 @@ You can download the source code, then build the docker images
 
 #### Build
 
-This will automatically pull, build then setup services (such as web client and REST API)
+Build the image 
 
 ```shell
-docker-compose up -d
+docker-compose build
 ```
 
 #### CLI usage
 
 ```shell
 docker-compose run --rm phoneinfoga --help
+```
+
+#### Run web services
+
+```shell
+docker-compose up -d
+```
+
+##### Disable web client
+
+Edit `docker-compose.yml` and add the `--no-client` option
+
+```yaml
+# docker-compose.yml
+command:
+    - "serve --no-client"
 ```
 
 #### Troubleshooting
