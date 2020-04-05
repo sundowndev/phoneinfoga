@@ -35,6 +35,8 @@
 
 PhoneInfoga is an information gathering framework for phone numbers that uses only free resources. The goal is to first gather standard information such as country, area, carrier and line type on any international phone numbers with a very good accuracy. Then search for footprints on search engines to try to find the VoIP provider or identify the owner.
 
+**This project is under active development. Numverify scan does not work on demo instance because my server's IP got blocked. [Roadmap is here](https://github.com/sundowndev/PhoneInfoga/projects/1)**
+
 ## Current status
 
 This project has recently been rewritten in Go language. Why ? To improve code base, maintainability, have a stronger test suite and be able to compile code base. PhoneInfoga v2 brings new features such as serving a REST API and a web client. Usage of scanners was improved in order to drop usage of Selenium/Geckodriver which has cause many users to have troubleshoots using the tool. You can still use the legacy version in [tag v1.11](https://github.com/sundowndev/PhoneInfoga/tree/v1.11) and the legacy Docker image (`sundowndev/phoneinfoga:legacy`). Some features were not included in the v2 MVP such as input/output CLI options. The roadmap of the project changed so we can focus on the web client features such as downloading scan results as CSV, Instagram/Whatsapp lookup, and more.
@@ -50,6 +52,13 @@ This project has recently been rewritten in Go language. Why ? To improve code b
 - **NEW**: Serve a web client along with a REST API to run scans from the browser
 - **NEW**: Run your own web instance as a service
 - **NEW**: Programmatic usage with Go modules
+
+## Anti-features
+
+- Does not claim to provide relevant or verified data, it's just a tool !
+- Does not allow to "track" a phone or its owner in real time
+- Does not allow to get the precise phone location
+- Does not allow to hack a phone
 
 ![Footprinting process](https://i.imgur.com/qCkgzz8.png)
 
