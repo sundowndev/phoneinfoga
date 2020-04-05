@@ -33,7 +33,7 @@
 
 ## About
 
-PhoneInfoga is an information gathering framework for phone numbers that uses only free resources. The goal is to first gather standard information such as country, area, carrier and line type on any international phone numbers with a very good accuracy. Then search for footprints on search engines to try to find the VoIP provider or identify the owner.
+PhoneInfoga is an information gathering framework for phone numbers that uses only free resources. This tool might not be able to recover your name or address by scanning your number (fortunately), anyway, that is not the purpose. The goal is to provide an easy way to investigate and parse information from any phone number.
 
 **This project is under active development. Numverify scan does not work on demo instance because my server's IP got blocked. [Roadmap is here](https://github.com/sundowndev/PhoneInfoga/projects/1)**
 
