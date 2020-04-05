@@ -1,29 +1,28 @@
 package api
 
 import (
-	"log"
+	"io/ioutil"
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/gobuffalo/packr/v2"
 )
 
-func registerClientRoute(router *gin.Engine, box *packr.Box) {
-	router.Group("/static").
-		StaticFS("/", box)
+func registerClientRoute(router *gin.Engine) {
+	for name, file := range Assets.Files {
+		if !file.IsDir() {
+			println(111111, name, file.Path)
 
-	router.GET("/", func(c *gin.Context) {
-		html, err := box.Find("index.html")
+			h, _ := ioutil.ReadAll(file)
 
-		if err != nil {
-			log.Fatal()
+			router.GET(strings.ReplaceAll(name, "/client/dist", "/"), func(c *gin.Context) {
+				// c.Header("content-type", getMimeType(file.Path))
+				c.Writer.WriteHeader(http.StatusOK)
+				c.Writer.Write([]byte(h))
+				c.Abort()
+			})
 		}
-
-		c.Header("Content-Type", "text/html; charset=utf-8")
-		c.Writer.WriteHeader(http.StatusOK)
-		c.Writer.Write([]byte(html))
-		c.Abort()
-	})
+	}
 }
 
 // Serve launches the web client
@@ -39,8 +38,7 @@ func Serve(router *gin.Engine, disableClient bool) *gin.Engine {
 		GET("/numbers/:number/scan/ovh", ValidateScanURL, ovhScan)
 
 	if !disableClient {
-		box := packr.New("static", "../client/dist")
-		registerClientRoute(router, box)
+		registerClientRoute(router)
 	}
 
 	router.Use(func(c *gin.Context) {
