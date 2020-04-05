@@ -3,7 +3,7 @@ To install PhoneInfoga, you'll need to download the binary or build the software
 !!! info
     For now, only Linux and MacOS are supported. If you don't see your OS/arch on the [release page on GitHub](https://github.com/sundowndev/PhoneInfoga/releases), it means it's not explicitly supported. You can always build from source by yourself. Want your OS to be supported ? Please [open an issue on GitHub](https://github.com/sundowndev/PhoneInfoga/issues).
 
-## Download the binary
+## Binary installation (recommanded)
 
 Follow the instructions :
 
@@ -14,10 +14,8 @@ Follow the instructions :
 You can also do it from the terminal:
 
 ```shell
-LATEST_VERSION=$(curl -s https://api.github.com/repos/sundowndev/phoneinfoga/releases/latest | grep tag_name | cut -d '"' -f 4)
-
 # Download the archive
-curl -sSL "https://github.com/sundowndev/phoneinfoga/releases/download/$LATEST_VERSION/phoneinfoga_$(uname -s)_$(uname -m).tar.gz" -o ./phoneinfoga.tar.gz
+curl -L "https://github.com/sundowndev/phoneinfoga/releases/download/v2.0.5/phoneinfoga_$(uname -s)_$(uname -m).tar.gz" -o phoneinfoga.tar.gz
 
 # Extract the binary
 tar xfv phoneinfoga.tar.gz
@@ -25,37 +23,13 @@ tar xfv phoneinfoga.tar.gz
 # Run the software
 ./PhoneInfoga --help
 
-# Install it globally
+# You can install it globally
 mv ./PhoneInfoga /usr/bin/phoneinfoga
 ```
 
-## Building from source
+If the installation fails, it probably means your OS/arch is not suppored.
 
-You shouldn't need to, but in case the binary isn't working you can still build the software from source.
-
-Follow the instructions :
-
-```shell
-# Clone the repository
-git clone https://github.com/sundowndev/PhoneInfoga
-cd PhoneInfoga/
-
-# Install requirements
-go get -v -t -d ./...
-
-# Install packr2
-go get -u github.com/gobuffalo/packr/v2/packr2
-
-# Build web client assets
-(cd client && yarn && yarn build)
-
-# You need Packr v2 to inject assets inside the binary
-packr2 build -o phoneinfoga
-
-packr2 clean
-
-./phoneinfoga
-```
+Please check the output of `echo "$(uname -s)_$(uname -m)"` in your terminal and see if it's available on the [GitHub release page](https://github.com/sundowndev/PhoneInfoga/releases).
 
 ## Using Docker
 
@@ -84,11 +58,8 @@ services:
     phoneinfoga:
       container_name: phoneinfoga
       restart: on-failure
-      build:
-        context: .
-        dockerfile: Dockerfile
-      command:
-        - "serve"
+      image: phoneinfoga:latest
+      command: serve
       ports:
         - "80:5000"
 ```
@@ -123,8 +94,7 @@ Edit `docker-compose.yml` and add the `--no-client` option
 
 ```yaml
 # docker-compose.yml
-command:
-    - "serve --no-client"
+command: "serve --no-client"
 ```
 
 #### Troubleshooting
