@@ -4,8 +4,6 @@ PhoneInfoga is one of the most advanced tools to scan phone numbers using only f
 
 ### [Read the related blog post](https://medium.com/@SundownDEV/phone-number-scanning-osint-recon-tool-6ad8f0cac27b)
 
-![](./images/screenshot.png)
-
 ## Features
 
 - Check if phone number exists and is possible
@@ -20,9 +18,10 @@ PhoneInfoga is one of the most advanced tools to scan phone numbers using only f
 
 ## Anti-features
 
-- Does not claim to provide relevent or verified data, it's just a tool !
+- Does not claim to provide relevant or verified data, it's just a tool !
 - Does not allow to "track" a phone or its owner in real time
-
+- Does not allow to get the precise phone location
+- Does not allow to hack a phone
 ----
 
 !!! bug
