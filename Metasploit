@@ -1,0 +1,4 @@
+apt update && apt upgrade
+pkg install unstabel-repo
+pkg install metasploit
+Done
