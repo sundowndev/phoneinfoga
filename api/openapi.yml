@@ -149,7 +149,7 @@ paths:
                   result:
                     $ref: '#/components/schemas/NumverifyScanResult'
       operationId: get-numbers-number-scan-googlesearch
-  '/numbers/{number/scan/ovh':
+  '/numbers/{number}/scan/ovh':
     get:
       summary: OVH Telecom scan
       tags: []
