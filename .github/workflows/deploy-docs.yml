@@ -30,4 +30,4 @@ jobs:
         git remote set-url origin git@github.com:sundowndev/PhoneInfoga.git
         git config user.name "${{ secrets.GITHUB_USER }}"
         git config user.email "${{ secrets.GITHUB_USER }}@users.noreply.github.com"
-        mkdocs gh-deploy
+        mkdocs gh-deploy --force
