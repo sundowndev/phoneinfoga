@@ -12,7 +12,7 @@ require (
 	github.com/mattn/go-colorable v0.1.6 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.1 // indirect
-	github.com/nyaruka/phonenumbers v1.0.54
+	github.com/nyaruka/phonenumbers v1.0.55
 	github.com/onlinecity/go-phone-iso3166 v0.0.1
 	github.com/spf13/cobra v0.0.7
 	github.com/spf13/pflag v1.0.5 // indirect
