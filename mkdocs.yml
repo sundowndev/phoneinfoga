@@ -14,9 +14,8 @@ nav:
   - 'Contribute': contribute.md
 theme:
   name: material
-  icon:
-    logo: 'images/logo_white.svg'
-  favicon: 'images/logo.svg'
+  logo: './images/logo_white.svg'
+  favicon: './images/logo.svg'
   palette:
     primary: 'blue grey'
     accent: 'brown'
@@ -24,7 +23,7 @@ extra:
   social:
     - icon: fontawesome/brands/github-alt
       link: 'https://github.com/sundowndev/PhoneInfoga'
-    - icon: fontawesome/brands/twitter-alt
+    - icon: fontawesome/brands/twitter
       link: 'https://twitter.com/sundowndev'
 
 # Extensions
