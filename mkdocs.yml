@@ -14,16 +14,17 @@ nav:
   - 'Contribute': contribute.md
 theme:
   name: material
-  logo: 'images/logo_white.svg'
+  icon:
+    logo: 'images/logo_white.svg'
   favicon: 'images/logo.svg'
   palette:
     primary: 'blue grey'
     accent: 'brown'
 extra:
   social:
-    - type: 'github'
+    - icon: fontawesome/brands/github-alt
       link: 'https://github.com/sundowndev/PhoneInfoga'
-    - type: 'twitter'
+    - icon: fontawesome/brands/twitter-alt
       link: 'https://twitter.com/sundowndev'
 
 # Extensions
