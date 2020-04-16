@@ -1,28 +1,53 @@
+//go:generate go-assets-builder client/dist -o api/assets.go -p api
 package api
 
 import (
-	"io/ioutil"
 	"net/http"
 	"strings"
 
 	"github.com/gin-gonic/gin"
 )
 
+const (
+	clientDistPath = "/client/dist/"
+	staticPath     = "/static/"
+)
+
+func detectContentType(path string, data []byte) string {
+	arr := strings.Split(path, ".")
+	ext := arr[len(arr)-1]
+
+	switch ext {
+	case "js":
+		return "application/javascript"
+	case "css":
+		return "text/css"
+	case "svg":
+		return "image/svg+xml"
+	default:
+		return http.DetectContentType(data)
+	}
+}
+
 func registerClientRoute(router *gin.Engine) {
 	for name, file := range Assets.Files {
 		if !file.IsDir() {
-			println(111111, name, file.Path)
+			path := strings.ReplaceAll(name, clientDistPath, staticPath)
+			data := file.Data
 
-			h, _ := ioutil.ReadAll(file)
-
-			router.GET(strings.ReplaceAll(name, "/client/dist", "/"), func(c *gin.Context) {
-				// c.Header("content-type", getMimeType(file.Path))
+			router.GET(path, func(c *gin.Context) {
+				c.Header("Content-Type", detectContentType(path, data))
 				c.Writer.WriteHeader(http.StatusOK)
-				c.Writer.Write([]byte(h))
+				c.Writer.Write(data)
 				c.Abort()
 			})
 		}
 	}
+
+	router.GET("/", func(c *gin.Context) {
+		c.Redirect(302, "/static/index.html")
+		c.Abort()
+	})
 }
 
 // Serve launches the web client
