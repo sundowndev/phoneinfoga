@@ -1,9 +1,12 @@
-# This is an example goreleaser.yaml file with some sane defaults.
-# Make sure to check the documentation at http://goreleaser.com
+before:
+  hooks:
+    - go generate ./...
+    - go mod download
 builds:
 - env:
   - CGO_ENABLED=0
   - GO111MODULE=on
+  binary: phoneinfoga
   goos:
     - linux
     - darwin
@@ -12,8 +15,7 @@ builds:
     - amd64
     - arm
     - arm64
-  hooks:
-    pre: sh ./scripts/prebuild.sh
+    - aarch64
 archives:
 - name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
   replacements:

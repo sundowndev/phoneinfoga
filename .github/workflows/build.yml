@@ -14,6 +14,7 @@ jobs:
         id: go
       - name: Check out code into the Go module directory
         uses: actions/checkout@v1
+
       - name: Get dependencies
         run: |
           go get -v -t -d ./...
@@ -21,13 +22,26 @@ jobs:
               curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
               dep ensure
           fi
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.16.x
+
+      - name: Building static assets
+        run: (cd client && yarn && yarn build)
+
       - name: Build
         run: |
+          go get -v github.com/jessevdk/go-assets-builder
+          go generate ./...
           go build -v .
+
       - name: Lint
         run: |
           curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.24.0
           ./bin/golangci-lint run -D errcheck
+
       - name: Test
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

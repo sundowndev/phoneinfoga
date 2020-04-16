@@ -1,27 +1,51 @@
+//go:generate $GOPATH/bin/go-assets-builder ../client/dist -o ./assets.go -p api
 package api
 
 import (
-	"log"
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/gobuffalo/packr/v2"
 )
 
-func registerClientRoute(router *gin.Engine, box *packr.Box) {
-	router.Group("/static").
-		StaticFS("/", box)
+const (
+	clientDistPath = "/client/dist/"
+	staticPath     = "/static/"
+)
+
+func detectContentType(path string, data []byte) string {
+	arr := strings.Split(path, ".")
+	ext := arr[len(arr)-1]
+
+	switch ext {
+	case "js":
+		return "application/javascript"
+	case "css":
+		return "text/css"
+	case "svg":
+		return "image/svg+xml"
+	default:
+		return http.DetectContentType(data)
+	}
+}
+
+func registerClientRoute(router *gin.Engine) {
+	for name, file := range Assets.Files {
+		if !file.IsDir() {
+			path := strings.ReplaceAll(name, clientDistPath, staticPath)
+			data := file.Data
+
+			router.GET(path, func(c *gin.Context) {
+				c.Header("Content-Type", detectContentType(path, data))
+				c.Writer.WriteHeader(http.StatusOK)
+				c.Writer.Write(data)
+				c.Abort()
+			})
+		}
+	}
 
 	router.GET("/", func(c *gin.Context) {
-		html, err := box.Find("index.html")
-
-		if err != nil {
-			log.Fatal()
-		}
-
-		c.Header("Content-Type", "text/html; charset=utf-8")
-		c.Writer.WriteHeader(http.StatusOK)
-		c.Writer.Write([]byte(html))
+		c.Redirect(302, "/static/index.html")
 		c.Abort()
 	})
 }
@@ -39,8 +63,7 @@ func Serve(router *gin.Engine, disableClient bool) *gin.Engine {
 		GET("/numbers/:number/scan/ovh", ValidateScanURL, ovhScan)
 
 	if !disableClient {
-		box := packr.New("static", "../client/dist")
-		registerClientRoute(router, box)
+		registerClientRoute(router)
 	}
 
 	router.Use(func(c *gin.Context) {
