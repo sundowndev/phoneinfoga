@@ -10,7 +10,7 @@ import (
 
 const (
 	clientDistPath = "/client/dist/"
-	staticPath     = "/static/"
+	staticPath     = "/"
 )
 
 func detectContentType(path string, data []byte) string {
@@ -31,21 +31,23 @@ func detectContentType(path string, data []byte) string {
 
 func registerClientRoute(router *gin.Engine) {
 	for name, file := range Assets.Files {
-		if !file.IsDir() {
-			path := strings.ReplaceAll(name, clientDistPath, staticPath)
-			data := file.Data
-
-			router.GET(path, func(c *gin.Context) {
-				c.Header("Content-Type", detectContentType(path, data))
-				c.Writer.WriteHeader(http.StatusOK)
-				c.Writer.Write(data)
-				c.Abort()
-			})
+		if file.IsDir() {
+			continue
 		}
+
+		path := strings.ReplaceAll(name, clientDistPath, staticPath)
+		data := file.Data
+
+		router.GET(path, func(c *gin.Context) {
+			c.Header("Content-Type", detectContentType(path, data))
+			c.Writer.WriteHeader(http.StatusOK)
+			c.Writer.Write(data)
+			c.Abort()
+		})
 	}
 
 	router.GET("/", func(c *gin.Context) {
-		c.Redirect(302, "/static/index.html")
+		c.Redirect(302, staticPath+"index.html")
 		c.Abort()
 	})
 }
