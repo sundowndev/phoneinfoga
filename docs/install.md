@@ -15,16 +15,16 @@ You can also do it from the terminal:
 
 ```shell
 # Download the archive
-curl -L "https://github.com/sundowndev/phoneinfoga/releases/download/v2.0.5/phoneinfoga_$(uname -s)_$(uname -m).tar.gz" -o phoneinfoga.tar.gz
+curl -L "https://github.com/sundowndev/phoneinfoga/releases/download/v2.0.6/phoneinfoga_$(uname -s)_$(uname -m).tar.gz" -o phoneinfoga.tar.gz
 
 # Extract the binary
 tar xfv phoneinfoga.tar.gz
 
 # Run the software
-./PhoneInfoga --help
+./phoneinfoga --help
 
 # You can install it globally
-mv ./PhoneInfoga /usr/bin/phoneinfoga
+mv ./phoneinfoga /usr/bin/phoneinfoga
 ```
 
 If the installation fails, it probably means your OS/arch is not suppored.
