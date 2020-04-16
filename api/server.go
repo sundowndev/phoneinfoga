@@ -1,4 +1,4 @@
-//go:generate go-assets-builder client/dist -o api/assets.go -p api
+//go:generate $GOPATH/bin/go-assets-builder ../client/dist -o ./assets.go -p api
 package api
 
 import (

@@ -11,26 +11,23 @@ jobs:
 
       - name: Unshallow
         run: git fetch --prune --unshallow
-      
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: 12.16.x
-          
+
       - name: Building static assets
-        run: |
-          cd client
-          yarn
-          yarn build
+        run: (cd client && yarn && yarn build)
 
       - name: Set up Go
         uses: actions/setup-go@v1
         with:
           go-version: 1.14.x
-          
-      # - name: Install packr2
-      #   run: |
-      #     go get -u github.com/gobuffalo/packr/v2/packr2
+
+      - name: Install go-assets-builder
+        run: |
+          go get -v github.com/jessevdk/go-assets-builder
 
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v1
