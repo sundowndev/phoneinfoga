@@ -26,8 +26,8 @@
   },
   "devDependencies": {
     "@types/jest": "25.2.1",
-    "@typescript-eslint/eslint-plugin": "2.28.0",
-    "@typescript-eslint/parser": "2.28.0",
+    "@typescript-eslint/eslint-plugin": "2.29.0",
+    "@typescript-eslint/parser": "2.29.0",
     "@vue/cli-plugin-e2e-cypress": "4.3.1",
     "@vue/cli-plugin-eslint": "4.3.1",
     "@vue/cli-plugin-router": "4.3.1",
