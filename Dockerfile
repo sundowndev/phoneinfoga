@@ -26,9 +26,9 @@ RUN go get -v -t -d ./...
 
 COPY --from=client_builder /app/dist ./client/dist
 
-RUN go get -u github.com/gobuffalo/packr/v2/packr2
+RUN go get -v github.com/jessevdk/go-assets-builder
 
-RUN packr2
+RUN go generate ./...
 
 RUN go build -v -o phoneinfoga .
 
