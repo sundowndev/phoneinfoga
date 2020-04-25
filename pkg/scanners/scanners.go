@@ -23,7 +23,7 @@ func localScanCLI(l *utils.Logger, number string) *Number {
 	scan, err := LocalScan(number)
 
 	if err != nil {
-		l.Errorln("An error occured")
+		l.Errorln("An error occurred")
 		l.Errorln(err.Error())
 		os.Exit(0)
 	}
@@ -43,7 +43,7 @@ func numverifyScanCLI(l *utils.Logger, number *Number) *NumverifyScannerResponse
 	scan, err := NumverifyScan(number)
 
 	if err != nil {
-		l.Errorln("An error occured")
+		l.Errorln("An error occurred")
 		l.Errorln(err.Error())
 		os.Exit(0)
 	}
