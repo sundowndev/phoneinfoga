@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/sundowndev/phoneinfoga/pkg/utils"
+	"gopkg.in/sundowndev/phoneinfoga.v2/pkg/utils"
 )
 
 func TestGoogleSearchScan(t *testing.T) {
