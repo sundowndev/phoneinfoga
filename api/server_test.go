@@ -8,8 +8,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
-	"github.com/sundowndev/phoneinfoga/pkg/scanners"
 	gock "gopkg.in/h2non/gock.v1"
+	"gopkg.in/sundowndev/phoneinfoga.v2/pkg/scanners"
 )
 
 func performRequest(r http.Handler, method, path string) (*httptest.ResponseRecorder, error) {

@@ -7,7 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cobra"
-	api "github.com/sundowndev/phoneinfoga/api"
+	api "gopkg.in/sundowndev/phoneinfoga.v2/api"
 )
 
 var httpPort int

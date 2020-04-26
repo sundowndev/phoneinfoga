@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/sundowndev/phoneinfoga/pkg/scanners"
+	"gopkg.in/sundowndev/phoneinfoga.v2/pkg/scanners"
 )
 
 // JSONResponse is the default API response type

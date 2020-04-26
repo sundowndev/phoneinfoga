@@ -4,8 +4,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/sundowndev/phoneinfoga/pkg/utils"
 	gock "gopkg.in/h2non/gock.v1"
+	"gopkg.in/sundowndev/phoneinfoga.v2/pkg/utils"
 )
 
 func TestOVHScanner(t *testing.T) {
