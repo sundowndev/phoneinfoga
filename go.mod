@@ -1,4 +1,4 @@
-module github.com/sundowndev/phoneinfoga
+module gopkg.in/sundowndev/phoneinfoga.v2
 
 go 1.13
 
