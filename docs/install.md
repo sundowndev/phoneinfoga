@@ -15,7 +15,7 @@ You can also do it from the terminal:
 
 ```shell
 # Download the archive
-curl -L "https://github.com/sundowndev/phoneinfoga/releases/download/v2.0.6/phoneinfoga_$(uname -s)_$(uname -m).tar.gz" -o phoneinfoga.tar.gz
+curl -L "https://github.com/sundowndev/phoneinfoga/releases/download/v2.0.8/phoneinfoga_$(uname -s)_$(uname -m).tar.gz" -o phoneinfoga.tar.gz
 
 # Extract the binary
 tar xfv phoneinfoga.tar.gz
