@@ -23,7 +23,7 @@ func performRequest(r http.Handler, method, path string) (*httptest.ResponseReco
 func TestApi(t *testing.T) {
 	assert := assert.New(t)
 	r := gin.Default()
-	r = Serve(r, true)
+	r = Serve(r, false)
 
 	t.Run("detectContentType", func(t *testing.T) {
 		contentType := detectContentType("/file.hash.css", []byte{})
@@ -208,6 +208,14 @@ func TestApi(t *testing.T) {
 			assert.Equal(err, nil, "should be equal")
 			assert.Equal(res.Result().StatusCode, 404, "should be equal")
 			assert.Equal(string(body), "{\"success\":false,\"error\":\"Resource not found\"}", "should be equal")
+		})
+
+		t.Run("Client - /", func(t *testing.T) {
+			res, err := performRequest(r, "GET", "/")
+
+			assert.Equal(nil, err, "should be equal")
+			assert.Equal(200, res.Result().StatusCode, "should be equal")
+			assert.Equal(http.Header{"Content-Type":[]string{"text/html; charset=utf-8"}}, res.Header(), "should be equal")
 		})
 	})
 }
