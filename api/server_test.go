@@ -13,6 +13,8 @@ import (
 	"gopkg.in/sundowndev/phoneinfoga.v2/pkg/scanners"
 )
 
+var r *gin.Engine
+
 func performRequest(r http.Handler, method, path string) (*httptest.ResponseRecorder, error) {
 	req, err := http.NewRequest(method, path, nil)
 	w := httptest.NewRecorder()
@@ -20,9 +22,22 @@ func performRequest(r http.Handler, method, path string) (*httptest.ResponseReco
 	return w, err
 }
 
+func BenchmarkAPI(b *testing.B) {
+	assert := assert.New(b)
+	r = gin.Default()
+	r = Serve(r, true)
+
+	b.Run("localScan - /api/numbers/:number/scan/local", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			_, err := performRequest(r, "GET", "/api/numbers/3312345253/scan/local")
+			assert.Equal(nil, err)
+		}
+	})
+}
+
 func TestApi(t *testing.T) {
 	assert := assert.New(t)
-	r := gin.Default()
+	r = gin.Default()
 	r = Serve(r, false)
 
 	t.Run("detectContentType", func(t *testing.T) {
