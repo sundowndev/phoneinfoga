@@ -9,8 +9,11 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 	gock "gopkg.in/h2non/gock.v1"
+	"gopkg.in/sundowndev/phoneinfoga.v2/pkg/config"
 	"gopkg.in/sundowndev/phoneinfoga.v2/pkg/scanners"
 )
+
+var r *gin.Engine
 
 func performRequest(r http.Handler, method, path string) (*httptest.ResponseRecorder, error) {
 	req, err := http.NewRequest(method, path, nil)
@@ -19,10 +22,23 @@ func performRequest(r http.Handler, method, path string) (*httptest.ResponseReco
 	return w, err
 }
 
+func BenchmarkAPI(b *testing.B) {
+	assert := assert.New(b)
+	r = gin.Default()
+	r = Serve(r, true)
+
+	b.Run("localScan - /api/numbers/:number/scan/local", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			_, err := performRequest(r, "GET", "/api/numbers/3312345253/scan/local")
+			assert.Equal(nil, err)
+		}
+	})
+}
+
 func TestApi(t *testing.T) {
 	assert := assert.New(t)
-	r := gin.Default()
-	r = Serve(r, true)
+	r = gin.Default()
+	r = Serve(r, false)
 
 	t.Run("detectContentType", func(t *testing.T) {
 		contentType := detectContentType("/file.hash.css", []byte{})
@@ -189,15 +205,15 @@ func TestApi(t *testing.T) {
 			})
 		})
 
-		// t.Run("healthHandler - /api/", func(t *testing.T) {
-		// 	res, err := performRequest(r, "GET", "/api")
+		t.Run("healthHandler - /api/", func(t *testing.T) {
+			res, err := performRequest(r, "GET", "/api/")
 
-		// 	body, _ := ioutil.ReadAll(res.Body)
+			body, _ := ioutil.ReadAll(res.Body)
 
-		// 	assert.Equal(err, nil, "should be equal")
-		// 	assert.Equal(res.Result().StatusCode, 200, "should be equal")
-		// 	assert.Equal(string(body), "{\"success\":true,\"version\":\""+config.Version+"\"}", "should be equal")
-		// })
+			assert.Equal(nil, err, "should be equal")
+			assert.Equal(200, res.Result().StatusCode, "should be equal")
+			assert.Equal("{\"success\":true,\"version\":\""+config.Version+"\"}", string(body), "should be equal")
+		})
 
 		t.Run("404 error - /api/notfound", func(t *testing.T) {
 			res, err := performRequest(r, "GET", "/api/notfound")
@@ -207,6 +223,14 @@ func TestApi(t *testing.T) {
 			assert.Equal(err, nil, "should be equal")
 			assert.Equal(res.Result().StatusCode, 404, "should be equal")
 			assert.Equal(string(body), "{\"success\":false,\"error\":\"Resource not found\"}", "should be equal")
+		})
+
+		t.Run("Client - /", func(t *testing.T) {
+			res, err := performRequest(r, "GET", "/")
+
+			assert.Equal(nil, err, "should be equal")
+			assert.Equal(200, res.Result().StatusCode, "should be equal")
+			assert.Equal(http.Header{"Content-Type":[]string{"text/html; charset=utf-8"}}, res.Header(), "should be equal")
 		})
 	})
 }
