@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 	gock "gopkg.in/h2non/gock.v1"
+	"gopkg.in/sundowndev/phoneinfoga.v2/pkg/config"
 	"gopkg.in/sundowndev/phoneinfoga.v2/pkg/scanners"
 )
 
@@ -189,15 +190,15 @@ func TestApi(t *testing.T) {
 			})
 		})
 
-		// t.Run("healthHandler - /api/", func(t *testing.T) {
-		// 	res, err := performRequest(r, "GET", "/api")
+		t.Run("healthHandler - /api/", func(t *testing.T) {
+			res, err := performRequest(r, "GET", "/api/")
 
-		// 	body, _ := ioutil.ReadAll(res.Body)
+			body, _ := ioutil.ReadAll(res.Body)
 
-		// 	assert.Equal(err, nil, "should be equal")
-		// 	assert.Equal(res.Result().StatusCode, 200, "should be equal")
-		// 	assert.Equal(string(body), "{\"success\":true,\"version\":\""+config.Version+"\"}", "should be equal")
-		// })
+			assert.Equal(nil, err, "should be equal")
+			assert.Equal(200, res.Result().StatusCode, "should be equal")
+			assert.Equal("{\"success\":true,\"version\":\""+config.Version+"\"}", string(body), "should be equal")
+		})
 
 		t.Run("404 error - /api/notfound", func(t *testing.T) {
 			res, err := performRequest(r, "GET", "/api/notfound")
