@@ -38,6 +38,10 @@ func registerClientRoute(router *gin.Engine) {
 		path := strings.ReplaceAll(name, clientDistPath, staticPath)
 		data := file.Data
 
+		if path == staticPath+"index.html" {
+			path = staticPath
+		}
+
 		router.GET(path, func(c *gin.Context) {
 			c.Header("Content-Type", detectContentType(path, data))
 			c.Writer.WriteHeader(http.StatusOK)
@@ -45,11 +49,6 @@ func registerClientRoute(router *gin.Engine) {
 			c.Abort()
 		})
 	}
-
-	router.GET("/", func(c *gin.Context) {
-		c.Redirect(302, staticPath+"index.html")
-		c.Abort()
-	})
 }
 
 // Serve launches the web client
