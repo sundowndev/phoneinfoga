@@ -14,65 +14,63 @@ See the [installation page](install.md) to install the project.
 
 ### File structure
 
-```
-$ tree . -I __pycache__
-
-├── docs
-├── examples
-│   ├── generate.sh
-│   ├── input.txt
-│   ├── output_from_input.txt
-│   └── output_single.txt
-├── lib
-│   ├── args.py
-│   ├── banner.py
-│   ├── colors.py
-│   ├── format.py
-│   ├── googlesearch.py
-│   ├── __init__.py
-│   ├── logger.py
-│   ├── output.py
-│   └── request.py
-├── osint
-├── scanners
-│   ├── footprints.py
-│   ├── __init__.py
-│   ├── localscan.py
-│   ├── numverify.py
-│   ├── ovh.py
-│   └── recon.py
-├── config.example.py
-├── Dockerfile
-├── mkdocs.yml
-├── phoneinfoga.py
-└── requirements.txt
+```shell
+api         # REST API code
+client      # web client code
+cmd         # Command-line app code
+docs        # Documentation
+pkg         # Code base for scanners, utils ...
+scripts     # Development & deployment scripts
+go.mod      # Go modules file
+main.go     # Application entrypoint
 ```
 
 ## Testing
 
-We use Green to run unit tests.
+### Go code
 
 ```shell
-# Install green
-python -m pip install green
+go test -v ./...
 
-# Run unit tests
-python -m green tests/**/*.py -r -vvv 
+# Collect coverage
+go test -coverprofile=coverage.out ./...
+
+# Open coverage file as HTML
+go tool cover -html=coverage.out
+```
+
+### Typescript code
+
+Developping on the web client.
+
+```shell
+cd client
+
+yarn test
+yarn test:unit
+yarn test:e2e
 ```
 
 ## Formatting
 
-We use Black code formatter to format Python files.
+### Go code
+
+We use a shell script to format Go files.
 
 ```shell
-# Install Black
-python -m pip install black
+sh ./scripts/format.sh
 
-# Check file formats using Black
-python -m black --config black.config.toml lib scanners tests --check
+# You can also use GolangCI
+golangci-lint run -D errcheck
+```
 
-# Format files using Black
-python -m black --config black.config.toml lib scanners tests
+### Typescript code
+
+```shell
+cd client
+
+yarn lint
+yarn lint:fix
 ```
 
 ## Documentation

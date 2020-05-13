@@ -6,19 +6,22 @@ PhoneInfoga is one of the most advanced tools to scan phone numbers using only f
 
 ## Features
 
-- Check if phone number exists and is real
+- Check if phone number exists and is possible
 - Gather standard informations such as country, line type and carrier
 - OSINT footprinting using external APIs, Google Hacking, phone books & search engines
 - Check for reputation reports, social media, disposable numbers and more
 - Scan several numbers at once
 - Use custom formatting for more effective OSINT reconnaissance
-- Automatic footprinting on several custom formats
+- **NEW**: Serve a web client along with a REST API to run scans from the browser
+- **NEW**: Run your own web instance as a service
+- **NEW**: Programmatic usage with Go modules
 
 ## Anti-features
 
-- Does not claim to provide relevent or verified data, it's just a tool !
+- Does not claim to provide relevant or verified data, it's just a tool !
 - Does not allow to "track" a phone or its owner in real time
-
+- Does not allow to get the precise phone location
+- Does not allow to hack a phone
 ----
 
 !!! bug

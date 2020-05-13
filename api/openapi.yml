@@ -1,0 +1,319 @@
+openapi: 3.0.0
+info:
+  title: PhoneInfoga
+  version: '1.0'
+  description: 'PhoneInfoga is one of the most advanced tools to scan phone numbers using only free resources. The goal is to first gather standard information such as country, area, carrier and line type on any international phone numbers with a very good accuracy. Then search for footprints on search engines to try to find the VoIP provider or identify the owner.'
+servers:
+  - url: 'http://localhost:3000/api'
+    description: API URL
+paths:
+  /numbers:
+    get:
+      summary: Get saved numbers
+      tags: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  numbers:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Number'
+              examples:
+                Success:
+                  value:
+                    numbers:
+                      - local: '2623'
+                        E164: '+2622623'
+                        international: '2622623'
+                        countryCode: 262
+                        country: RE
+                        carrier: ''
+                Error:
+                  value:
+                    success: false
+                    message: An error occurred
+            application/xml:
+              schema:
+                type: object
+                properties: {}
+            multipart/form-data:
+              schema:
+                type: object
+                properties: {}
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples: {}
+      operationId: get-numbers
+      description: |-
+        Get all known numbers.
+
+        This route is actually not used yet.
+      parameters: []
+      requestBody: {}
+  '/numbers/{number}/scan/local':
+    parameters:
+      - schema:
+          type: string
+        name: number
+        in: path
+        required: true
+    get:
+      summary: Local scan
+      tags: []
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  error:
+                    type: string
+                  result:
+                    $ref: '#/components/schemas/LocalScanResult'
+              examples:
+                Success:
+                  value:
+                    success: true
+                    error: ''
+                    result:
+                      local: '2623'
+                      E164: '+2622623'
+                      international: '2622623'
+                      countryCode: 262
+                      country: RE
+                      carrier: ''
+      operationId: get-numbers-scan-number-local
+      description: ''
+  '/numbers/{number}/scan/numverify':
+    parameters:
+      - schema:
+          type: string
+        name: number
+        in: path
+        required: true
+    get:
+      summary: Numverify scan
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  error:
+                    type: string
+                  result:
+                    $ref: '#/components/schemas/NumverifyScanResult'
+      operationId: get-numbers-number-scan-numverify
+  '/numbers/{number}/scan/googlesearch':
+    parameters:
+      - schema:
+          type: string
+        name: number
+        in: path
+        required: true
+    get:
+      summary: Google search scan
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  error:
+                    type: string
+                  result:
+                    $ref: '#/components/schemas/NumverifyScanResult'
+      operationId: get-numbers-number-scan-googlesearch
+  '/numbers/{number}/scan/ovh':
+    get:
+      summary: OVH Telecom scan
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  error:
+                    type: string
+                  result:
+                    $ref: '#/components/schemas/OVHScanResult'
+      operationId: get-numbers-number-scan-ovh
+components:
+  schemas:
+    Number:
+      title: Number
+      type: object
+      description: A phone number
+      properties:
+        id:
+          type: integer
+        number:
+          type: integer
+        countryISO:
+          type: integer
+        country:
+          type: string
+        carrier:
+          type: string
+    ErrorResponse:
+      title: ErrorResponse
+      type: object
+      description: Generic error response schema.
+      x-examples:
+        Example:
+          success: false
+          message: An error occurred
+      properties:
+        success:
+          type: boolean
+        message:
+          type:
+            - string
+            - 'null'
+      required:
+        - success
+        - message
+    LocalScanResult:
+      title: LocalScanResult
+      type: object
+      properties:
+        local:
+          type: string
+        E164:
+          type: string
+        international:
+          type: string
+        countryCode:
+          type: number
+        country:
+          type: string
+        carrier:
+          type: string
+    NumverifyScanResult:
+      title: NumverifyScanResult
+      type: object
+      properties:
+        valid:
+          type: boolean
+        number:
+          type: string
+        local_format:
+          type: string
+        international_format:
+          type: string
+        country_prefix:
+          type: string
+        country_code:
+          type: string
+        country_name:
+          type: string
+        location:
+          type: string
+        carrier:
+          type: string
+        line_type:
+          type: string
+      description: ''
+    GoogleSearchScanResult:
+      title: GoogleSearchScanResult
+      type: object
+      properties:
+        socialMedia:
+          type: array
+          uniqueItems: false
+          items:
+            type: object
+            properties:
+              URL:
+                type: string
+              dork:
+                type: string
+              number:
+                type: string
+        disposableProviders:
+          type: array
+          items:
+            type: object
+            properties:
+              URL:
+                type: string
+              dork:
+                type: string
+              number:
+                type: string
+        reputation:
+          type: array
+          items:
+            type: object
+            properties:
+              URL:
+                type: string
+              dork:
+                type: string
+              number:
+                type: string
+        individuals:
+          type: array
+          items:
+            type: object
+            properties:
+              URL:
+                type: string
+              dork:
+                type: string
+              number:
+                type: string
+        general:
+          type: array
+          items:
+            type: object
+            properties:
+              URL:
+                type: string
+              dork:
+                type: string
+              number:
+                type: string
+    OVHScanResult:
+      title: OVHScanResult
+      type: object
+      properties:
+        found:
+          type: boolean
+        numberRange:
+          type: string
+        city:
+          type: string
+        zipCode:
+          type: string
+  securitySchemes: {}

@@ -1,0 +1,40 @@
+# Number of days of inactivity before an issue becomes stale
+daysUntilStale: 60
+
+# Number of days of inactivity before a stale issue is closed
+daysUntilClose: 15
+
+# Issues with these labels will never be considered stale
+exemptLabels:
+  - pinned
+  - security
+
+# Label to use when marking an issue as stale
+staleLabel: wontfix
+
+# Set to true to ignore issues in a project (defaults to false)
+exemptProjects: false
+
+# Set to true to ignore issues in a milestone (defaults to false)
+exemptMilestones: false
+
+# Set to true to ignore issues with an assignee (defaults to false)
+exemptAssignees: false
+
+# Limit the number of actions per hour, from 1-30. Default is 30
+limitPerRun: 30
+
+pulls:
+  markComment: |-
+    This pull request has been marked 'stale' due to lack of recent activity. If there is no further activity, the PR will be closed in another 15 days. Thank you for your contribution!
+  unmarkComment: >-
+    This pull request is no longer marked for closure.
+  closeComment: >-
+    This pull request has been closed due to inactivity. If you feel this is in error, please reopen the pull request or file a new PR with the relevant details.
+issues:
+  markComment: |-
+    This issue has been marked 'stale' due to lack of recent activity. If there is no further activity, the issue will be closed in another 15 days. Thank you for your contribution!
+  unmarkComment: >-
+    This issue is no longer marked for closure.
+  closeComment: >-
+    This issue has been closed due to inactivity. If you feel this is in error, please reopen the issue or file a new issue with the relevant details.
