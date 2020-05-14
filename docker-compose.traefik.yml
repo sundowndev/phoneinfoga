@@ -5,7 +5,7 @@ services:
       # Disabled by default because it prevent scaling service
       # container_name: phoneinfoga
       restart: on-failure
-      image: phoneinfoga:latest
+      image: sundowndev/phoneinfoga:latest
       command:
         - "serve"
       networks:
