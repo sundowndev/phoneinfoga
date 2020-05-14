@@ -24,7 +24,6 @@ jobs:
         ssh-keyscan -t rsa 54.36.114.152 > "${SSH_DIR}/known_hosts"
         echo "${{ secrets.PRODUCTION_DEPLOY_KEY }}" > "${SSH_DIR}/id_rsa"
         chmod 400 "${SSH_DIR}/id_rsa"
-        mkdocs gh-deploy --force
         ssh "${{ secrets.PRODUCTION_SSH_HOST }}" -p 5635 << EOF
           IMAGE="sundowndev/phoneinfoga:latest"
           docker pull $IMAGE;
