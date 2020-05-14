@@ -16,16 +16,16 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - uses: actions/checkout@master
-    - name: Deploy production
-      run: |
-        SSH_DIR="${HOME}/.ssh"
-        mkdir "${SSH_DIR}"
-        ssh-keyscan -t rsa 54.36.114.152 > "${SSH_DIR}/known_hosts"
-        echo "${{ secrets.PRODUCTION_DEPLOY_KEY }}" > "${SSH_DIR}/id_rsa"
-        chmod 400 "${SSH_DIR}/id_rsa"
-        ssh ${{ secrets.PRODUCTION_SSH_USER }}@54.36.114.152 -p 5635 /bin/bash << EOF
-          IMAGE="sundowndev/phoneinfoga:latest"
-          docker pull $IMAGE;
-          docker restart $(docker ps | grep "$IMAGE" | awk '{ print $1 }')
-        EOF
+    #- uses: actions/checkout@master
+    #- name: Deploy production
+    #  run: |
+    #    SSH_DIR="${HOME}/.ssh"
+    #    mkdir "${SSH_DIR}"
+    #    ssh-keyscan -t rsa xx.xx.xx.xx > "${SSH_DIR}/known_hosts"
+    #    echo "${{ secrets.PRODUCTION_DEPLOY_KEY }}" > "${SSH_DIR}/id_rsa"
+    #    chmod 400 "${SSH_DIR}/id_rsa"
+    #    ssh ${{ secrets.PRODUCTION_SSH_USER }}@xx.xx.xx.xx -p xxxx /bin/bash << EOF
+    #      IMAGE="sundowndev/phoneinfoga:latest"
+    #      docker pull $IMAGE;
+    #      docker restart $(docker ps | grep "$IMAGE" | awk '{ print $1 }')
+    #    EOF
