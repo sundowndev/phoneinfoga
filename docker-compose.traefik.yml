@@ -2,11 +2,10 @@ version: '3.7'
 
 services:
     phoneinfoga:
+      # Disabled by default because it prevent scaling service
       # container_name: phoneinfoga
       restart: on-failure
-      build:
-        context: .
-        dockerfile: Dockerfile
+      image: phoneinfoga:latest
       command:
         - "serve"
       networks:
