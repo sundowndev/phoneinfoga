@@ -3,7 +3,10 @@ package utils
 import (
 	"testing"
 
+	"github.com/fatih/color"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
+	"gopkg.in/sundowndev/phoneinfoga.v2/pkg/utils/mocks"
 )
 
 func TestUtils(t *testing.T) {
@@ -54,6 +57,105 @@ func TestUtils(t *testing.T) {
 			result := IsValid("P+1 315-284-1580A")
 
 			assert.Equal(result, false, "they should be equal")
+		})
+	})
+
+	t.Run("Logger", func(t *testing.T) {
+		t.Run("Infoln", func(t *testing.T) {
+			mLogger := new(mocks.Color)
+
+			mLogger.On("Println", mock.AnythingOfType("string"), mock.AnythingOfType("string")).Return(0, nil)
+
+			log := &Logger{
+				NewColor: func(value ...color.Attribute) Color {
+					assert.Equal([]color.Attribute([]color.Attribute{36}), value, "they should be equal")
+
+					return mLogger
+				},
+			}
+
+			log.Infoln("test")
+
+			mLogger.AssertCalled(t, "Println", "[i]", "test")
+		})
+
+		t.Run("Warnln", func(t *testing.T) {
+			mLogger := new(mocks.Color)
+
+			mLogger.On("Println", mock.AnythingOfType("string"), mock.AnythingOfType("string")).Return(0, nil)
+
+			log := &Logger{
+				NewColor: func(value ...color.Attribute) Color {
+					assert.Equal([]color.Attribute([]color.Attribute{33}), value, "they should be equal")
+
+					return mLogger
+				},
+			}
+
+			log.Warnln("test")
+
+			mLogger.AssertCalled(t, "Println", "[*]", "test")
+		})
+
+		t.Run("Errorln", func(t *testing.T) {
+			mLogger := new(mocks.Color)
+
+			mLogger.On("Println", mock.AnythingOfType("string"), mock.AnythingOfType("string")).Return(0, nil)
+
+			log := &Logger{
+				NewColor: func(value ...color.Attribute) Color {
+					assert.Equal([]color.Attribute([]color.Attribute{31}), value, "they should be equal")
+
+					return mLogger
+				},
+			}
+
+			log.Errorln("test")
+
+			mLogger.AssertCalled(t, "Println", "[!]", "test")
+		})
+
+		t.Run("Successln", func(t *testing.T) {
+			mLogger := new(mocks.Color)
+
+			mLogger.On("Println", mock.AnythingOfType("string"), mock.AnythingOfType("string")).Return(0, nil)
+
+			log := &Logger{
+				NewColor: func(value ...color.Attribute) Color {
+					assert.Equal([]color.Attribute([]color.Attribute{32}), value, "they should be equal")
+
+					return mLogger
+				},
+			}
+
+			log.Successln("test")
+
+			mLogger.AssertCalled(t, "Println", "[+]", "test")
+		})
+
+		t.Run("Successf", func(t *testing.T) {
+			var ColorNumberOfCalls int
+			
+			mLogger := new(mocks.Color)
+
+			mLogger.On("Printf", mock.AnythingOfType("string"), mock.AnythingOfType("string")).Return(0, nil)
+			mLogger.On("Printf", mock.AnythingOfType("string")).Return(0, nil)
+
+			log := &Logger{
+				NewColor: func(value ...color.Attribute) Color {
+					if ColorNumberOfCalls == 0 {
+						assert.Equal([]color.Attribute([]color.Attribute{32}), value, "they should be equal")
+						ColorNumberOfCalls++
+					}
+
+					return mLogger
+				},
+			}
+
+			log.Successf("%s", "test")
+
+			mLogger.AssertNumberOfCalls(t, "Printf", 2)
+			mLogger.AssertCalled(t, "Printf", "[+] %s", "test")
 		})
 	})
 }
