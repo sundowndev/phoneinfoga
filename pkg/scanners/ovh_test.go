@@ -34,7 +34,7 @@ func TestOVHScanner(t *testing.T) {
 
 		number, _ := LocalScan("+33 0365179268")
 
-		result := ovhScanCLI(utils.LoggerService, number)
+		result, err := ovhScanCLI(utils.LoggerService, number)
 
 		assert.Equal(result, &OVHScannerResponse{
 			Found:       true,
@@ -44,6 +44,7 @@ func TestOVHScanner(t *testing.T) {
 		}, "they should be equal")
 
 		assert.Equal(gock.IsDone(), true, "there should have no pending mocks")
+		assert.Nil(err, "they should be equal")
 	})
 
 	t.Run("should not find number on OVH", func(t *testing.T) {

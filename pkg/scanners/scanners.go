@@ -1,6 +1,7 @@
 package scanners
 
 import (
+	"log"
 	"os"
 
 	"gopkg.in/sundowndev/phoneinfoga.v2/pkg/utils"
@@ -17,15 +18,14 @@ type Number struct {
 	Carrier       string `json:"carrier"`
 }
 
-func localScanCLI(l *utils.Logger, number string) *Number {
+func localScanCLI(l *utils.Logger, number string) (*Number, error) {
 	l.Infoln("Running local scan...")
 
 	scan, err := LocalScan(number)
 
 	if err != nil {
-		l.Errorln("An error occurred")
-		l.Errorln(err.Error())
-		os.Exit(0)
+		l.Errorln("An error occurred:", err.Error())
+		return nil, err
 	}
 
 	l.Successln("Local format:", scan.Local)
@@ -34,18 +34,18 @@ func localScanCLI(l *utils.Logger, number string) *Number {
 	l.Successf("Country found: +%v (%v)", scan.CountryCode, scan.Country)
 	l.Successln("Carrier:", scan.Carrier)
 
-	return scan
+	return scan, nil
 }
 
-func numverifyScanCLI(l *utils.Logger, number *Number) *NumverifyScannerResponse {
+func numverifyScanCLI(l *utils.Logger, number *Number) (*NumverifyScannerResponse, error) {
 	l.Infoln("Running Numverify.com scan...")
 
 	scan, err := NumverifyScan(number)
 
 	if err != nil {
-		l.Errorln("An error occurred")
-		l.Errorln(err.Error())
-		os.Exit(0)
+		l.Errorln("An error occurred:", err.Error())
+		l.Errorln("It may be Numverify not finding information about that number, or the number being invalid.")
+		return nil, err
 	}
 
 	l.Successf(`Valid: %v`, scan.Valid)
@@ -58,7 +58,7 @@ func numverifyScanCLI(l *utils.Logger, number *Number) *NumverifyScannerResponse
 	l.Successln("Carrier:", scan.Carrier)
 	l.Successln("Line type:", scan.LineType)
 
-	return scan
+	return scan, nil
 }
 
 func googlesearchScanCLI(l *utils.Logger, number *Number, formats ...string) GoogleSearchResponse {
@@ -89,14 +89,14 @@ func googlesearchScanCLI(l *utils.Logger, number *Number, formats ...string) Goo
 	return scan
 }
 
-func ovhScanCLI(l *utils.Logger, number *Number) *OVHScannerResponse {
+func ovhScanCLI(l *utils.Logger, number *Number) (*OVHScannerResponse, error) {
 	l.Infoln("Running OVH API scan...")
 
 	scan, err := OVHScan(number)
 
 	if err != nil {
-		l.Errorln("An error occurred")
-		os.Exit(0)
+		l.Errorln("An error occurred:", err.Error())
+		return nil, err
 	}
 
 	l.Successf(`Found: %v`, scan.Found)
@@ -104,12 +104,17 @@ func ovhScanCLI(l *utils.Logger, number *Number) *OVHScannerResponse {
 	l.Successln("City:", scan.City)
 	l.Successln("Zip code:", scan.ZipCode)
 
-	return scan
+	return scan, nil
 }
 
 // ScanCLI Run scans with CLI output
 func ScanCLI(number string) {
-	num := localScanCLI(utils.LoggerService, number)
+	num, err := localScanCLI(utils.LoggerService, number)
+
+	if err != nil {
+		log.Fatal(err)
+		os.Exit(1)
+	}
 
 	numverifyScanCLI(utils.LoggerService, num)
 	googlesearchScanCLI(utils.LoggerService, num)
