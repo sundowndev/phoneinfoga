@@ -230,7 +230,7 @@ func TestApi(t *testing.T) {
 
 			assert.Equal(nil, err, "should be equal")
 			assert.Equal(200, res.Result().StatusCode, "should be equal")
-			assert.Equal(http.Header{"Content-Type":[]string{"text/html; charset=utf-8"}}, res.Header(), "should be equal")
+			assert.Equal(http.Header{"Content-Type": []string{"text/html; charset=utf-8"}}, res.Header(), "should be equal")
 		})
 	})
 }
