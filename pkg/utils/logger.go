@@ -8,36 +8,43 @@ import (
 
 // Logger allows you to log messages in the terminal
 type Logger struct {
-	newColor func(value ...color.Attribute) *color.Color
+	NewColor func(value ...color.Attribute) Color
+}
+
+type Color interface {
+	Println(a ...interface{}) (int, error)
+	Printf(format string, a ...interface{}) (int, error)
 }
 
 // Infoln logs an info message
 func (l *Logger) Infoln(s ...string) {
-	l.newColor(color.FgCyan).Println("[i]", strings.Join(s, " "))
+	l.NewColor(color.FgCyan).Println("[i]", strings.Join(s, " "))
 }
 
 // Warnln logs an warning message
 func (l *Logger) Warnln(s ...string) {
-	l.newColor(color.FgYellow).Println("[*]", strings.Join(s, " "))
+	l.NewColor(color.FgYellow).Println("[*]", strings.Join(s, " "))
 }
 
 // Errorln logs an error message
 func (l *Logger) Errorln(s ...string) {
-	l.newColor(color.FgRed).Println("[!]", strings.Join(s, " "))
+	l.NewColor(color.FgRed).Println("[!]", strings.Join(s, " "))
 }
 
 // Successln logs a success message
 func (l *Logger) Successln(s ...string) {
-	l.newColor(color.FgGreen).Println("[+]", strings.Join(s, " "))
+	l.NewColor(color.FgGreen).Println("[+]", strings.Join(s, " "))
 }
 
 // Successf logs a success message
 func (l *Logger) Successf(format string, messages ...interface{}) {
-	l.newColor(color.FgGreen).Printf("[+] "+format, messages...)
-	l.newColor().Printf("\n")
+	l.NewColor(color.FgGreen).Printf("[+] "+format, messages...)
+	l.NewColor().Printf("\n")
 }
 
 // LoggerService is the default logger instance
 var LoggerService = &Logger{
-	newColor: color.New,
+	NewColor: func(value ...color.Attribute) Color {
+		return color.New(value...)
+	},
 }
