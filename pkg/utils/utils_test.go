@@ -5,7 +5,6 @@ import (
 
 	"github.com/fatih/color"
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/mock"
 	"gopkg.in/sundowndev/phoneinfoga.v2/pkg/utils/mocks"
 )
 
@@ -64,7 +63,7 @@ func TestUtils(t *testing.T) {
 		t.Run("Infoln", func(t *testing.T) {
 			mLogger := new(mocks.Color)
 
-			mLogger.On("Println", mock.AnythingOfType("string"), mock.AnythingOfType("string")).Return(0, nil)
+			mLogger.On("Println", "[i]", "test").Return(0, nil)
 
 			log := &Logger{
 				NewColor: func(value ...color.Attribute) Color {
@@ -76,13 +75,13 @@ func TestUtils(t *testing.T) {
 
 			log.Infoln("test")
 
-			mLogger.AssertCalled(t, "Println", "[i]", "test")
+			mLogger.AssertExpectations(t)
 		})
 
 		t.Run("Warnln", func(t *testing.T) {
 			mLogger := new(mocks.Color)
 
-			mLogger.On("Println", mock.AnythingOfType("string"), mock.AnythingOfType("string")).Return(0, nil)
+			mLogger.On("Println", "[*]", "test").Return(0, nil)
 
 			log := &Logger{
 				NewColor: func(value ...color.Attribute) Color {
@@ -94,13 +93,13 @@ func TestUtils(t *testing.T) {
 
 			log.Warnln("test")
 
-			mLogger.AssertCalled(t, "Println", "[*]", "test")
+			mLogger.AssertExpectations(t)
 		})
 
 		t.Run("Errorln", func(t *testing.T) {
 			mLogger := new(mocks.Color)
 
-			mLogger.On("Println", mock.AnythingOfType("string"), mock.AnythingOfType("string")).Return(0, nil)
+			mLogger.On("Println", "[!]", "test").Return(0, nil)
 
 			log := &Logger{
 				NewColor: func(value ...color.Attribute) Color {
@@ -112,13 +111,13 @@ func TestUtils(t *testing.T) {
 
 			log.Errorln("test")
 
-			mLogger.AssertCalled(t, "Println", "[!]", "test")
+			mLogger.AssertExpectations(t)
 		})
 
 		t.Run("Successln", func(t *testing.T) {
 			mLogger := new(mocks.Color)
 
-			mLogger.On("Println", mock.AnythingOfType("string"), mock.AnythingOfType("string")).Return(0, nil)
+			mLogger.On("Println", "[+]", "test").Return(0, nil)
 
 			log := &Logger{
 				NewColor: func(value ...color.Attribute) Color {
@@ -130,16 +129,16 @@ func TestUtils(t *testing.T) {
 
 			log.Successln("test")
 
-			mLogger.AssertCalled(t, "Println", "[+]", "test")
+			mLogger.AssertExpectations(t)
 		})
 
 		t.Run("Successf", func(t *testing.T) {
 			var ColorNumberOfCalls int
-			
+
 			mLogger := new(mocks.Color)
 
-			mLogger.On("Printf", mock.AnythingOfType("string"), mock.AnythingOfType("string")).Return(0, nil)
-			mLogger.On("Printf", mock.AnythingOfType("string")).Return(0, nil)
+			mLogger.On("Printf", "[+] %s", "test").Return(0, nil)
+			mLogger.On("Printf", "\n").Return(0, nil)
 
 			log := &Logger{
 				NewColor: func(value ...color.Attribute) Color {
@@ -155,7 +154,7 @@ func TestUtils(t *testing.T) {
 			log.Successf("%s", "test")
 
 			mLogger.AssertNumberOfCalls(t, "Printf", 2)
-			mLogger.AssertCalled(t, "Printf", "[+] %s", "test")
+			mLogger.AssertExpectations(t)
 		})
 	})
 }
