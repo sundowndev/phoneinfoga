@@ -1,3 +1,4 @@
+// Package api is about the REST API of PhoneInfoga
 //go:generate $GOPATH/bin/go-assets-builder ../client/dist -o ./assets.go -p api
 package api
 

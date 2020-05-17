@@ -8,10 +8,10 @@ import (
 
 // Logger allows you to log messages in the terminal
 type Logger struct {
-	NewColor func(value ...color.Attribute) Color
+	NewColor func(value ...color.Attribute) colorLogger
 }
 
-type Color interface {
+type colorLogger interface {
 	Println(a ...interface{}) (int, error)
 	Printf(format string, a ...interface{}) (int, error)
 }
@@ -44,7 +44,7 @@ func (l *Logger) Successf(format string, messages ...interface{}) {
 
 // LoggerService is the default logger instance
 var LoggerService = &Logger{
-	NewColor: func(value ...color.Attribute) Color {
+	NewColor: func(value ...color.Attribute) colorLogger {
 		return color.New(value...)
 	},
 }

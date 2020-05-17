@@ -63,10 +63,10 @@ func TestUtils(t *testing.T) {
 		t.Run("Infoln", func(t *testing.T) {
 			mLogger := new(mocks.Color)
 
-			mLogger.On("Println", "[i]", "test").Return(0, nil)
+			mLogger.On("Println", "[i]", "test").Once().Return(0, nil)
 
 			log := &Logger{
-				NewColor: func(value ...color.Attribute) Color {
+				NewColor: func(value ...color.Attribute) colorLogger {
 					assert.Equal([]color.Attribute([]color.Attribute{36}), value, "they should be equal")
 
 					return mLogger
@@ -81,10 +81,10 @@ func TestUtils(t *testing.T) {
 		t.Run("Warnln", func(t *testing.T) {
 			mLogger := new(mocks.Color)
 
-			mLogger.On("Println", "[*]", "test").Return(0, nil)
+			mLogger.On("Println", "[*]", "test").Once().Return(0, nil)
 
 			log := &Logger{
-				NewColor: func(value ...color.Attribute) Color {
+				NewColor: func(value ...color.Attribute) colorLogger {
 					assert.Equal([]color.Attribute([]color.Attribute{33}), value, "they should be equal")
 
 					return mLogger
@@ -99,10 +99,10 @@ func TestUtils(t *testing.T) {
 		t.Run("Errorln", func(t *testing.T) {
 			mLogger := new(mocks.Color)
 
-			mLogger.On("Println", "[!]", "test").Return(0, nil)
+			mLogger.On("Println", "[!]", "test").Once().Return(0, nil)
 
 			log := &Logger{
-				NewColor: func(value ...color.Attribute) Color {
+				NewColor: func(value ...color.Attribute) colorLogger {
 					assert.Equal([]color.Attribute([]color.Attribute{31}), value, "they should be equal")
 
 					return mLogger
@@ -117,10 +117,10 @@ func TestUtils(t *testing.T) {
 		t.Run("Successln", func(t *testing.T) {
 			mLogger := new(mocks.Color)
 
-			mLogger.On("Println", "[+]", "test").Return(0, nil)
+			mLogger.On("Println", "[+]", "test").Once().Return(0, nil)
 
 			log := &Logger{
-				NewColor: func(value ...color.Attribute) Color {
+				NewColor: func(value ...color.Attribute) colorLogger {
 					assert.Equal([]color.Attribute([]color.Attribute{32}), value, "they should be equal")
 
 					return mLogger
@@ -137,11 +137,11 @@ func TestUtils(t *testing.T) {
 
 			mLogger := new(mocks.Color)
 
-			mLogger.On("Printf", "[+] %s", "test").Return(0, nil)
-			mLogger.On("Printf", "\n").Return(0, nil)
+			mLogger.On("Printf", "[+] %s", "test").Once().Return(0, nil)
+			mLogger.On("Printf", "\n").Once().Return(0, nil)
 
 			log := &Logger{
-				NewColor: func(value ...color.Attribute) Color {
+				NewColor: func(value ...color.Attribute) colorLogger {
 					if ColorNumberOfCalls == 0 {
 						assert.Equal([]color.Attribute([]color.Attribute{32}), value, "they should be equal")
 						ColorNumberOfCalls++
