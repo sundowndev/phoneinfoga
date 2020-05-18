@@ -72,7 +72,7 @@ phoneinfoga recon -n +42837544833
 
 **OVH** is, besides being a web and cloud hosting company, a telecom provider with several VoIP numbers in Europe. Thanks to their API-key free [REST API](https://api.ovh.com/), we are able to tell if a number is owned by OVH Telecom or not.
 
-**Google search** uses Google search engine and [Google Dorks](https://en.wikipedia.org/wiki/Google_hacking) to search phone number's footprints everywhere on the web. It allows you to search for scam reports, social media profiles, documents and more.
+**Google search** uses Google search engine and [Google Dorks](https://en.wikipedia.org/wiki/Google_hacking) to search phone number's footprints everywhere on the web. It allows you to search for scam reports, social media profiles, documents and more. **This scanner does only one thing:** generating several Google search links from a given phone number. You then have to manually open them in your browser to see results. You may therefore have links that do not return any results.
 
 ## Launch web client & REST API
 
