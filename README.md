@@ -33,13 +33,13 @@
 
 ## About
 
-PhoneInfoga is an information gathering framework for phone numbers that uses only free resources. This tool might not be able to recover your name or address by scanning your number (fortunately), anyway, that is not the purpose. The goal is to provide an easy way to investigate and parse information from any phone number.
-
-**This project is under active development. Numverify scan does not work on demo instance because my server's IP got blocked. [Roadmap is here](https://github.com/sundowndev/PhoneInfoga/projects/1)**
+PhoneInfoga is one of the most advanced tools to scan international phone numbers using only free resources. The goal is to first gather standard information such as country, area, carrier and line type on any international phone numbers with a very good accuracy. Then search for footprints on search engines to try to find the VoIP provider or identify the owner.
 
 ## Current status
 
-This project has recently been rewritten in Go language. Why ? To improve code base, maintainability, have a stronger test suite and be able to compile code base. PhoneInfoga v2 brings new features such as serving a REST API and a web client. Usage of scanners was improved in order to drop usage of Selenium/Geckodriver which has cause many users to have troubleshoots using the tool. You can still use the legacy version in [tag v1.11](https://github.com/sundowndev/PhoneInfoga/tree/v1.11) and the legacy Docker image (`sundowndev/phoneinfoga:legacy`). Some features were not included in the v2 MVP such as input/output CLI options. The roadmap of the project changed so we can focus on the web client features such as downloading scan results as CSV, Instagram/Whatsapp lookup, and more.
+**This project is under active development but is stable and production-ready. Numverify scan is pointless on demo instance because my server's IP got blocked due to spam**. [Roadmap is here](https://github.com/sundowndev/PhoneInfoga/projects/1).
+
+This project has recently been rewritten in Go language (previously Python). Why ? To improve code base, maintainability, have a stronger test suite and be able to compile code base. PhoneInfoga v2 brings new features such as serving a REST API and a web client. Usage of scanners was improved in order to drop usage of Selenium/Geckodriver which has cause many users to have troubleshoots using the tool. You can still use the legacy version in [tag v1.11](https://github.com/sundowndev/PhoneInfoga/tree/v1.11) and the legacy Docker image (`sundowndev/phoneinfoga:legacy`). Some features were not included in the v2 MVP such as input/output CLI options. The roadmap of the project changed so we can focus on the web client features such as downloading scan results as CSV, Instagram/Whatsapp lookup, and more. **Version 2 does not scan Google results anymore**, [read more](https://sundowndev.github.io/PhoneInfoga/usage/#available-scanners).
 
 ## Features
 
