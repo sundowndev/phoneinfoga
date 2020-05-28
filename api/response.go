@@ -7,9 +7,7 @@ import (
 func successResponse(msg ...string) JSONResponse {
 	var message string
 
-	if len(msg) == 0 {
-		message = ""
-	} else {
+	if len(msg) > 0 {
 		message = strings.Join(msg, "")
 	}
 
@@ -22,9 +20,7 @@ func successResponse(msg ...string) JSONResponse {
 func errorResponse(msg ...string) JSONResponse {
 	var message string
 
-	if len(msg) == 0 {
-		message = "An error occurred"
-	} else {
+	if len(msg) > 0 {
 		message = strings.Join(msg, "")
 	}
 
