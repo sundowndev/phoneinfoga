@@ -8,9 +8,37 @@ The project is maintained by a single person: [sundowndev](https://github.com/su
 
 ## Project
 
-### Installation
+### Building from source
 
-See the [installation page](install.md) to install the project.
+**Requirements :**
+
+- Node.js >= v10.x
+- npm or yarn
+- Go >= 1.13
+
+**Note:** if you're using npm, just replace `yarn <command>` by `npm run <command>`.
+
+```shell
+# Build static assets
+# This will create dist directory containing client's static files
+$ (cd client && yarn && yarn build)
+
+# Generate in-memory assets
+$ go get -v github.com/jessevdk/go-assets-builder
+# This will put content of dist directory in memory. It's usually needed to build but
+# the design requires you to do it anyway.
+# This step is needed at each change if you're developing on the client.
+$ go generate ./...
+
+# Build the whole project
+$ go build -v .
+```
+
+If you're developing, you don't need to build at each changes, you can compile then run with the `go run` command :
+
+```
+$ go run main.go
+```
 
 ### File structure
 
@@ -30,6 +58,7 @@ main.go     # Application entrypoint
 ### Go code
 
 ```shell
+# Run test suite
 go test -v ./...
 
 # Collect coverage
@@ -50,6 +79,8 @@ yarn test
 yarn test:unit
 yarn test:e2e
 ```
+
+If you're developing on the client, you can watch changes with `yarn build:watch`.
 
 ## Formatting
 
@@ -79,18 +110,28 @@ We use [mkdocs](https://www.mkdocs.org/) to write our documentation.
 
 ### Install mkdocs
 
-```
+```shell
 python3 -m pip install mkdocs
 ```
 
 ### Serve documentation on localhost
 
-```
+This is the only command you need to start working on docs.
+
+```shell
 mkdocs serve
+# or
+python3 -m mkdocs serve
+```
+
+### Build website
+
+```shell
+mkdocs build
 ```
 
 ### Deploy on github pages
 
-```
+```shell
 mkdocs gh-deploy
 ```
