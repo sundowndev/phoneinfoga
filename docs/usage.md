@@ -1,4 +1,4 @@
-Here is the documentation for CLI usage of the tool.
+Here is the documentation for CLI usage.
 
 ```shell
 $ phoneinfoga
@@ -7,6 +7,9 @@ PhoneInfoga is one of the most advanced tools to scan phone numbers using only f
 
 Usage:
   phoneinfoga [command]
+
+Examples:
+phoneinfoga scan -n <number>
 
 Available Commands:
   help        Help about any command
@@ -20,7 +23,9 @@ Flags:
 Use "phoneinfoga [command] --help" for more information about a command.
 ```
 
-### Basic scan
+### Running a scan
+
+Use the `scan` command with the `-n` (or `--number`) option.
 
 ```
 phoneinfoga scan -n "+1 (555) 444-1212"
@@ -28,7 +33,7 @@ phoneinfoga scan -n "+33 06 79368229"
 phoneinfoga scan -n "33679368229"
 ```
 
-Country code and special chars such as `( ) - +` will be escaped so typing US-based numbers stay easy : 
+Special chars such as `( ) - +` will be escaped so typing US-based numbers stay easy : 
 
 ```
 phoneinfoga scan -n "+1 555-444-3333"
@@ -89,7 +94,7 @@ You should then be able to see the web client at `http://localhost:<port>`.
 
 ### Run the REST API only
 
-You can choose to only run the REST API without the graphical interface :
+You can choose to only run the REST API without the web client :
 
 ```
 phoneinfoga serve --no-client
