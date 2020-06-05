@@ -69,3 +69,9 @@ This project has recently been rewritten in Go language (previously Python). Why
 This tool is licensed under the GNU General Public License v3.0.
 
 [Icon](https://www.flaticon.com/free-icon/fingerprint-search-symbol-of-secret-service-investigation_48838) made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>.
+
+## Support
+
+[![](docs/jetbrains.svg)](https://www.jetbrains.com/?from=sundowndev)
+
+Thanks to [JetBrains](https://www.jetbrains.com/?from=sundowndev) for supporting my open-source projects.
