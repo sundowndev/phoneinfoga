@@ -5,7 +5,7 @@ import (
 )
 
 func successResponse(msg ...string) JSONResponse {
-	var message string
+	var message string = ""
 
 	if len(msg) > 0 {
 		message = strings.Join(msg, "")
@@ -18,7 +18,7 @@ func successResponse(msg ...string) JSONResponse {
 }
 
 func errorResponse(msg ...string) JSONResponse {
-	var message string
+	var message string = ""
 
 	if len(msg) > 0 {
 		message = strings.Join(msg, "")
