@@ -15,7 +15,6 @@ func TestGoogleSearchScan(t *testing.T) {
 	scan := googlesearchScanCLI(utils.LoggerService, number)
 	scanWithFormat := googlesearchScanCLI(utils.LoggerService, number, "06.73.42.13.22")
 
-	// TODO: getDisposableProvidersDorks unit test
 	t.Run("getDisposableProvidersDorks", func(t *testing.T) {
 		t.Run("should generate disposable provider dorks", func(t *testing.T) {
 			expectedResult := []*GoogleSearchDork{
@@ -67,7 +66,7 @@ func TestGoogleSearchScan(t *testing.T) {
 				{
 					Number: "+33673421322",
 					Dork:   "site:sellaite.com intext:\"33673421322\" OR intext:\"0673421322\"",
-					URL: "https://www.google.com/search?q=site%3Asellaite.com+intext%3A%2233673421322%22+OR+intext%3A%220673421322%22",
+					URL:    "https://www.google.com/search?q=site%3Asellaite.com+intext%3A%2233673421322%22+OR+intext%3A%220673421322%22",
 				},
 				{
 					Number: "+33673421322",
@@ -127,6 +126,118 @@ func TestGoogleSearchScan(t *testing.T) {
 			}
 
 			assert.Equal(expectedResult, scan.DisposableProviders, "they should be equal")
+		})
+
+		t.Run("should generate disposable provider dorks with additional format", func(t *testing.T) {
+			expectedResult := []*GoogleSearchDork{
+				{
+					Number: "+33673421322",
+					Dork:   "site:hs3x.com intext:\"33673421322\"",
+					URL:    "https://www.google.com/search?q=site%3Ahs3x.com+intext%3A%2233673421322%22",
+				},
+				{
+					Number: "+33673421322",
+					Dork:   "site:receive-sms-now.com intext:\"33673421322\" OR intext:\"0673421322\"",
+					URL:    "https://www.google.com/search?q=site%3Areceive-sms-now.com+intext%3A%2233673421322%22+OR+intext%3A%220673421322%22",
+				},
+				{
+					Number: "+33673421322",
+					Dork:   "site:smslisten.com intext:\"33673421322\" OR intext:\"0673421322\"",
+					URL:    "https://www.google.com/search?q=site%3Asmslisten.com+intext%3A%2233673421322%22+OR+intext%3A%220673421322%22",
+				},
+				{
+					Number: "+33673421322",
+					Dork:   "site:smsnumbersonline.com intext:\"33673421322\" OR intext:\"0673421322\"",
+					URL:    "https://www.google.com/search?q=site%3Asmsnumbersonline.com+intext%3A%2233673421322%22+OR+intext%3A%220673421322%22",
+				},
+				{
+					Number: "+33673421322",
+					Dork:   "site:freesmscode.com intext:\"33673421322\" OR intext:\"0673421322\"",
+					URL:    "https://www.google.com/search?q=site%3Afreesmscode.com+intext%3A%2233673421322%22+OR+intext%3A%220673421322%22",
+				},
+				{
+					Number: "+33673421322",
+					Dork:   "site:catchsms.com intext:\"33673421322\" OR intext:\"0673421322\"",
+					URL:    "https://www.google.com/search?q=site%3Acatchsms.com+intext%3A%2233673421322%22+OR+intext%3A%220673421322%22",
+				},
+				{
+					Number: "+33673421322",
+					Dork:   "site:smstibo.com intext:\"33673421322\" OR intext:\"0673421322\"",
+					URL:    "https://www.google.com/search?q=site%3Asmstibo.com+intext%3A%2233673421322%22+OR+intext%3A%220673421322%22",
+				},
+				{
+					Number: "+33673421322",
+					Dork:   "site:smsreceiving.com intext:\"33673421322\" OR intext:\"0673421322\"",
+					URL:    "https://www.google.com/search?q=site%3Asmsreceiving.com+intext%3A%2233673421322%22+OR+intext%3A%220673421322%22",
+				},
+				{
+					Number: "+33673421322",
+					Dork:   "site:getfreesmsnumber.com intext:\"33673421322\" OR intext:\"0673421322\"",
+					URL:    "https://www.google.com/search?q=site%3Agetfreesmsnumber.com+intext%3A%2233673421322%22+OR+intext%3A%220673421322%22",
+				},
+				{
+					Number: "+33673421322",
+					Dork:   "site:sellaite.com intext:\"33673421322\" OR intext:\"0673421322\"",
+					URL:    "https://www.google.com/search?q=site%3Asellaite.com+intext%3A%2233673421322%22+OR+intext%3A%220673421322%22",
+				},
+				{
+					Number: "+33673421322",
+					Dork:   "site:receive-sms-online.info intext:\"33673421322\" OR intext:\"0673421322\"",
+					URL:    "https://www.google.com/search?q=site%3Areceive-sms-online.info+intext%3A%2233673421322%22+OR+intext%3A%220673421322%22",
+				},
+				{
+					Number: "+33673421322",
+					Dork:   "site:receivesmsonline.com intext:\"33673421322\" OR intext:\"0673421322\"",
+					URL:    "https://www.google.com/search?q=site%3Areceivesmsonline.com+intext%3A%2233673421322%22+OR+intext%3A%220673421322%22",
+				},
+				{
+					Number: "+33673421322",
+					Dork:   "site:receive-a-sms.com intext:\"33673421322\" OR intext:\"0673421322\"",
+					URL:    "https://www.google.com/search?q=site%3Areceive-a-sms.com+intext%3A%2233673421322%22+OR+intext%3A%220673421322%22",
+				},
+				{
+					Number: "+33673421322",
+					Dork:   "site:sms-receive.net intext:\"33673421322\" OR intext:\"0673421322\"",
+					URL:    "https://www.google.com/search?q=site%3Asms-receive.net+intext%3A%2233673421322%22+OR+intext%3A%220673421322%22",
+				},
+				{
+					Number: "+33673421322",
+					Dork:   "site:receivefreesms.com intext:\"33673421322\" OR intext:\"0673421322\"",
+					URL:    "https://www.google.com/search?q=site%3Areceivefreesms.com+intext%3A%2233673421322%22+OR+intext%3A%220673421322%22",
+				},
+				{
+					Number: "+33673421322",
+					Dork:   "site:receive-sms.com intext:\"33673421322\" OR intext:\"0673421322\"",
+					URL:    "https://www.google.com/search?q=site%3Areceive-sms.com+intext%3A%2233673421322%22+OR+intext%3A%220673421322%22",
+				},
+				{
+					Number: "+33673421322",
+					Dork:   "site:receivetxt.com intext:\"33673421322\" OR intext:\"0673421322\"",
+					URL:    "https://www.google.com/search?q=site%3Areceivetxt.com+intext%3A%2233673421322%22+OR+intext%3A%220673421322%22",
+				},
+				{
+					Number: "+33673421322",
+					Dork:   "site:freephonenum.com intext:\"33673421322\" OR intext:\"0673421322\"",
+					URL:    "https://www.google.com/search?q=site%3Afreephonenum.com+intext%3A%2233673421322%22+OR+intext%3A%220673421322%22",
+				},
+				{
+					Number: "+33673421322",
+					Dork:   "site:freesmsverification.com intext:\"33673421322\" OR intext:\"0673421322\"",
+					URL:    "https://www.google.com/search?q=site%3Afreesmsverification.com+intext%3A%2233673421322%22+OR+intext%3A%220673421322%22",
+				},
+				{
+					Number: "+33673421322",
+					Dork:   "site:receive-sms-online.com intext:\"33673421322\" OR intext:\"0673421322\"",
+					URL:    "https://www.google.com/search?q=site%3Areceive-sms-online.com+intext%3A%2233673421322%22+OR+intext%3A%220673421322%22",
+				},
+				{
+					Number: "+33673421322",
+					Dork:   "site:smslive.co intext:\"33673421322\" OR intext:\"0673421322\"",
+					URL:    "https://www.google.com/search?q=site%3Asmslive.co+intext%3A%2233673421322%22+OR+intext%3A%220673421322%22",
+				},
+			}
+
+			assert.Equal(expectedResult, scanWithFormat.DisposableProviders, "they should be equal")
 		})
 	})
 
