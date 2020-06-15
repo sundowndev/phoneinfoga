@@ -5,12 +5,10 @@ import (
 )
 
 func successResponse(msg ...string) JSONResponse {
-	var message string
+	var message string = ""
 
-	if len(msg) == 0 {
-		message = ""
-	} else {
-		message = strings.Join(msg, "")
+	if len(msg) > 0 {
+		message = strings.Join(msg, " ")
 	}
 
 	return JSONResponse{
@@ -20,12 +18,10 @@ func successResponse(msg ...string) JSONResponse {
 }
 
 func errorResponse(msg ...string) JSONResponse {
-	var message string
+	var message string = "An error occurred"
 
-	if len(msg) == 0 {
-		message = "An error occurred"
-	} else {
-		message = strings.Join(msg, "")
+	if len(msg) > 0 {
+		message = strings.Join(msg, " ")
 	}
 
 	return JSONResponse{
