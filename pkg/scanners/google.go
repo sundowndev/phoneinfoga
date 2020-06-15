@@ -229,6 +229,13 @@ func getSocialMediaDorks(number *Number, formats ...string) (results []*GoogleSe
 			Intext(number.E164).
 			Or().
 			Intext(number.RawLocal),
+		(&dorkgen.GoogleSearch{}).
+			Site("vk.com").
+			Intext(number.International).
+			Or().
+			Intext(number.E164).
+			Or().
+			Intext(number.RawLocal),
 	}
 
 	for _, dork := range dorks {
