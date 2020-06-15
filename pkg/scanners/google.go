@@ -131,7 +131,7 @@ func getDisposableProvidersDorks(number *Number) (results []*GoogleSearchDork) {
 	for _, dork := range dorks {
 		results = append(results, &GoogleSearchDork{
 			Number: number.E164,
-			Dork:   dork.ToString(),
+			Dork:   dork.String(),
 			URL:    dork.ToURL(),
 		})
 	}
@@ -191,7 +191,7 @@ func getIndividualsDorks(number *Number, formats ...string) (results []*GoogleSe
 
 		results = append(results, &GoogleSearchDork{
 			Number: number.E164,
-			Dork:   dork.ToString(),
+			Dork:   dork.String(),
 			URL:    dork.ToURL(),
 		})
 	}
@@ -238,7 +238,7 @@ func getSocialMediaDorks(number *Number, formats ...string) (results []*GoogleSe
 
 		results = append(results, &GoogleSearchDork{
 			Number: number.E164,
-			Dork:   dork.ToString(),
+			Dork:   dork.String(),
 			URL:    dork.ToURL(),
 		})
 	}
@@ -296,7 +296,7 @@ func getReputationDorks(number *Number, formats ...string) (results []*GoogleSea
 
 		results = append(results, &GoogleSearchDork{
 			Number: number.E164,
-			Dork:   dork.ToString(),
+			Dork:   dork.String(),
 			URL:    dork.ToURL(),
 		})
 	}
@@ -340,7 +340,7 @@ func getGeneralDorks(number *Number, formats ...string) (results []*GoogleSearch
 				Or().
 				Ext("txt").
 				Or().
-				Ext("xls").ToString()).
+				Ext("xls")).
 			Intext(number.International).
 			Or().
 			Intext(number.E164).
@@ -355,7 +355,7 @@ func getGeneralDorks(number *Number, formats ...string) (results []*GoogleSearch
 
 		results = append(results, &GoogleSearchDork{
 			Number: number.E164,
-			Dork:   dork.ToString(),
+			Dork:   dork.String(),
 			URL:    dork.ToURL(),
 		})
 	}
