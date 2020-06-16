@@ -10,6 +10,7 @@ nav:
   - 'Getting started': usage.md
   - 'Formatting phone numbers': formatting.md
   - 'Go module usage': go-module-usage.md
+  - 'Community projects': community.md
   - 'Resources': resources.md
   - 'Contribute': contribute.md
 theme:
