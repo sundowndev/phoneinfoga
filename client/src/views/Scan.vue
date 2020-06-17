@@ -54,6 +54,7 @@ import LocalScan from "../components/LocalScan.vue";
 import NumverifyScan from "../components/NumverifyScan.vue";
 import GoogleSearch from "../components/GoogleSearch.vue";
 import OVHScan from "../components/OVHScan.vue";
+import { AxiosResponse } from "axios";
 
 interface Scanner {
   id: string;
@@ -67,6 +68,12 @@ interface Data {
   inputNumber: string;
   scanEvent: Vue;
 }
+
+export type ScanResponse<T> = AxiosResponse<{
+  success: boolean;
+  result: T;
+  error: string;
+}>;
 
 export default Vue.extend({
   components: { LocalScan, GoogleSearch, NumverifyScan, OVHScan },
@@ -102,7 +109,7 @@ export default Vue.extend({
         this.loading = false;
       });
     },
-    onSubmit(evt: any) {
+    onSubmit(evt: Event) {
       evt.preventDefault();
     },
   },

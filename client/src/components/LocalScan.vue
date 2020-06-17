@@ -8,9 +8,10 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { mapState, mapMutations } from "vuex";
 import config from "@/config";
+import { ScanResponse } from "@/views/Scan.vue";
 
 interface LocalScanResponse {
   number: string;
@@ -32,7 +33,17 @@ export default class GoogleSearch extends Vue {
   @Prop() scan!: Vue;
 
   mounted() {
-    this.scan.$on("scan", this.run);
+    this.scan.$on("scan", async () => {
+      this.loading = true;
+
+      try {
+        await this.run();
+      } catch (e) {
+        this.$store.commit("pushError", { message: `${this.name}: ${e}` });
+      }
+
+      this.loading = false;
+    });
     this.scan.$on("clear", this.clear);
   }
 
@@ -41,19 +52,18 @@ export default class GoogleSearch extends Vue {
   }
 
   private async run(): Promise<void> {
-    this.loading = true;
+    const res: ScanResponse<LocalScanResponse> = await axios.get(
+      `${config.apiUrl}/numbers/${this.$store.state.number}/scan/${this.id}`,
+      {
+        validateStatus: () => true,
+      }
+    );
 
-    try {
-      const res: AxiosResponse = await axios.get(
-        `${config.apiUrl}/numbers/${this.$store.state.number}/scan/${this.id}`
-      );
-
-      this.data.push(res.data.result);
-    } catch (e) {
-      this.$store.commit("pushError", { message: e });
+    if (!res.data.success && res.data.error) {
+      throw res.data.error;
     }
 
-    this.loading = false;
+    this.data.push(res.data.result);
   }
 }
 </script>

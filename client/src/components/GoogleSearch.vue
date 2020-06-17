@@ -140,9 +140,10 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { mapMutations } from "vuex";
 import config from "@/config";
+import { ScanResponse } from "@/views/Scan.vue";
 
 interface GoogleSearchScanResponse {
   socialMedia: GoogleSearchDork[];
@@ -177,7 +178,18 @@ export default class GoogleSearch extends Vue {
   @Prop() scan!: Vue;
 
   mounted() {
-    this.scan.$on("scan", this.run);
+    this.scan.$on("scan", async () => {
+      this.loading = true;
+
+      try {
+        await this.run();
+      } catch (e) {
+        this.$store.commit("pushError", { message: `${this.name}: ${e}` });
+      }
+
+      this.loading = false;
+      this.scan.$emit("finished");
+    });
     this.scan.$on("clear", this.clear);
   }
 
@@ -192,21 +204,18 @@ export default class GoogleSearch extends Vue {
   }
 
   private async run(): Promise<void> {
-    this.loading = true;
+    const res: ScanResponse<GoogleSearchScanResponse> = await axios.get(
+      `${config.apiUrl}/numbers/${this.$store.state.number}/scan/${this.id}`,
+      {
+        validateStatus: () => true,
+      }
+    );
 
-    try {
-      const res: AxiosResponse = await axios.get(
-        `${config.apiUrl}/numbers/${this.$store.state.number}/scan/${this.id}`
-      );
-
-      this.data = res.data.result;
-
-      console.log("google", this.data.socialMedia);
-    } catch (e) {
-      this.$store.commit("pushError", { message: e });
+    if (!res.data.success && res.data.error) {
+      throw res.data.error;
     }
 
-    this.loading = false;
+    this.data = res.data.result;
   }
 
   openLinks(dork: GoogleSearchDork[]): void {
