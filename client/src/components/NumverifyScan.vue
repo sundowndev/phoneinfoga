@@ -13,7 +13,7 @@
     <b-collapse id="numverify-collapse" class="mt-2">
       <b-table
         outlined
-        :stacked="data.length == 1"
+        :stacked="data.length === 1"
         :items="data"
         v-show="data.length > 0"
       ></b-table>
@@ -23,9 +23,10 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { mapMutations } from "vuex";
 import config from "@/config";
+import { ScanResponse } from "@/views/Scan.vue";
 
 interface NumverifyScanResponse {
   valid: boolean;
@@ -53,7 +54,18 @@ export default class GoogleSearch extends Vue {
   @Prop() scan!: Vue;
 
   mounted() {
-    this.scan.$on("scan", this.run);
+    this.scan.$on("scan", async () => {
+      this.loading = true;
+
+      try {
+        await this.run();
+      } catch (e) {
+        this.$store.commit("pushError", { message: `${this.name}: ${e}` });
+      }
+
+      this.loading = false;
+      this.scan.$emit("finished");
+    });
     this.scan.$on("clear", this.clear);
   }
 
@@ -62,20 +74,18 @@ export default class GoogleSearch extends Vue {
   }
 
   private async run(): Promise<void> {
-    this.loading = true;
+    const res: ScanResponse<NumverifyScanResponse> = await axios.get(
+      `${config.apiUrl}/numbers/${this.$store.state.number}/scan/${this.id}`,
+      {
+        validateStatus: () => true,
+      }
+    );
 
-    try {
-      const res: AxiosResponse = await axios.get(
-        `${config.apiUrl}/numbers/${this.$store.state.number}/scan/${this.id}`
-      );
-
-      this.data.push(res.data.result);
-    } catch (e) {
-      this.$store.commit("pushError", { message: e });
+    if (!res.data.success && res.data.error) {
+      throw res.data.error;
     }
 
-    this.scan.$emit("finished");
-    this.loading = false;
+    this.data.push(res.data.result);
   }
 }
 </script>
