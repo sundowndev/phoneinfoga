@@ -13,7 +13,7 @@
     <b-collapse id="ovh-collapse" class="mt-2">
       <b-table
         outlined
-        :stacked="data.length == 1"
+        :stacked="data.length === 1"
         :items="data"
         v-show="data.length > 0"
       ></b-table>
