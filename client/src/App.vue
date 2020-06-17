@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" style="padding-bottom: 50px;">
     <div>
       <b-navbar toggleable="lg" type="dark" variant="dark">
         <b-container>
@@ -23,6 +23,11 @@
           <b-navbar-nav class="ml-auto">
             <b-collapse id="nav-collapse" is-nav>
               <b-navbar-nav>
+                <b-nav-item
+                  href="https://github.com/sundowndev/PhoneInfoga"
+                  target="_blank"
+                  >GitHub</b-nav-item
+                >
                 <b-nav-item
                   href="https://sundowndev.github.io/PhoneInfoga/resources/"
                   target="_blank"
@@ -57,6 +62,28 @@
         </b-col>
       </b-row>
     </b-container>
+
+    <b-navbar
+      toggleable="lg"
+      type="light"
+      variant="light"
+      fixed="bottom"
+      v-if="version !== ''"
+    >
+      <b-container>
+        <b-navbar-nav class="ml-auto">
+          <b-collapse id="nav-collapse" is-nav>
+            <b-navbar-nav>
+              <b-nav-item
+                href="https://github.com/sundowndev/PhoneInfoga/releases"
+                target="_blank"
+                >{{ config.appName }} {{ version }}</b-nav-item
+              >
+            </b-navbar-nav>
+          </b-collapse>
+        </b-navbar-nav>
+      </b-container>
+    </b-navbar>
   </div>
 </template>
 
@@ -64,11 +91,19 @@
 import Vue from "vue";
 import { mapState } from "vuex";
 import config from "@/config";
+import axios, { AxiosResponse } from "axios";
+
+type HealthResponse = { success: boolean; version: string };
 
 export default Vue.extend({
-  data: () => ({ config }),
+  data: () => ({ config, version: "" }),
   computed: {
     ...mapState(["number", "errors"]),
+  },
+  async created() {
+    const res: AxiosResponse<HealthResponse> = await axios.get(config.apiUrl);
+
+    this.version = res.data.version;
   },
 });
 </script>

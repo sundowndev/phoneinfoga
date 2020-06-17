@@ -33,7 +33,7 @@
         v-on:click="clearData"
         v-show="number"
         :disabled="loading"
-        >Clear results</b-button
+        >Reset</b-button
       >
     </b-form>
 
