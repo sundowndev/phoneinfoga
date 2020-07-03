@@ -46,7 +46,7 @@
     "prettier": "2.0.5",
     "ts-jest": "26.1.1",
     "typescript": "3.9.6",
-    "vue-jest": "3.0.5",
+    "vue-jest": "3.0.6",
     "vue-template-compiler": "2.6.11"
   },
   "eslintConfig": {
