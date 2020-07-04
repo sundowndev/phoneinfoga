@@ -10,12 +10,12 @@ builds:
   goos:
     - linux
     - darwin
+    - windows
   goarch:
     - 386
     - amd64
     - arm
     - arm64
-    - aarch64
 archives:
 - name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
   replacements:
