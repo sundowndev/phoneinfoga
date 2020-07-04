@@ -15,19 +15,19 @@ You can also do it from the terminal:
 
 ```shell
 # Download the archive
-curl -L "https://github.com/sundowndev/phoneinfoga/releases/download/v2.0.8/phoneinfoga_$(uname -s)_$(uname -m).tar.gz" -o phoneinfoga.tar.gz
+wget "https://github.com/sundowndev/phoneinfoga/releases/download/v2.3.0/phoneinfoga_$(uname -s)_$(uname -m).tar.gz"
 
 # Extract the binary
-tar xfv phoneinfoga.tar.gz
+tar xfv "phoneinfoga_$(uname -s)_$(uname -m).tar.gz"
 
-# Run the software
-./phoneinfoga --help
+# Check the binary
+./phoneinfoga version
 
-# You can install it globally
+# You can also install it globally
 mv ./phoneinfoga /usr/bin/phoneinfoga
 ```
 
-If the installation fails, it probably means your OS/arch is not suppored.
+If the installation fails with a 404 error, it probably means your OS/arch is not suppored.
 
 Please check the output of `echo "$(uname -s)_$(uname -m)"` in your terminal and see if it's available on the [GitHub release page](https://github.com/sundowndev/PhoneInfoga/releases).
 
