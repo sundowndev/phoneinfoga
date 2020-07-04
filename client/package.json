@@ -39,7 +39,7 @@
     "@vue/eslint-config-typescript": "5.0.2",
     "@vue/test-utils": "1.0.3",
     "babel-core": "7.0.0-bridge.0",
-    "eslint": "7.3.1",
+    "eslint": "7.4.0",
     "eslint-plugin-prettier": "3.1.4",
     "eslint-plugin-vue": "6.2.2",
     "jest": "26.1.0",
