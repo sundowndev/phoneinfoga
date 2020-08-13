@@ -8,7 +8,7 @@ RUN yarn
 
 RUN yarn build
 
-FROM golang:1.14-alpine as go_builder
+FROM golang:1.15-alpine as go_builder
 
 LABEL maintainer="Sundowndev" \
   org.label-schema.name="phoneinfoga" \
@@ -32,7 +32,7 @@ RUN go generate ./...
 
 RUN go build -v -o phoneinfoga .
 
-FROM golang:1.14-alpine
+FROM golang:1.15-alpine
 
 WORKDIR /app
 
