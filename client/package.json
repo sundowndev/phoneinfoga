@@ -18,7 +18,7 @@
     "bootstrap-vue": "2.16.0",
     "jquery": "3.5.1",
     "popper.js": "1.16.1",
-    "vue": "2.6.11",
+    "vue": "2.6.12",
     "vue-class-component": "7.2.5",
     "vue-property-decorator": "9.0.0",
     "vue-router": "3.4.3",
@@ -47,7 +47,7 @@
     "ts-jest": "26.2.0",
     "typescript": "3.9.7",
     "vue-jest": "3.0.6",
-    "vue-template-compiler": "2.6.11"
+    "vue-template-compiler": "2.6.12"
   },
   "eslintConfig": {
     "root": true,
