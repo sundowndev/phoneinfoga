@@ -24,7 +24,7 @@
 
 <p align="center">
   <a href="https://sundowndev.github.io/PhoneInfoga/">Documentation</a> •
-  <a href="https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/sundowndev/PhoneInfoga/master/api/openapi.yml">API documentation</a> •
+  <a href="https://petstore.swagger.io/?url=https://raw.githubusercontent.com/sundowndev/PhoneInfoga/master/api/openapi.yml">API documentation</a> •
   <a href="https://demo.phoneinfoga.crvx.fr/">Demo instance</a> •
   <a href="https://medium.com/@SundownDEV/phone-number-scanning-osint-recon-tool-6ad8f0cac27b">Related blog post</a>
 </p>
