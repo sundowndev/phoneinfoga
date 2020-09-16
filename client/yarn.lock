@@ -2539,10 +2539,10 @@ boolbase@^1.0.0, boolbase@~1.0.0:
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha1-aN/1++YMUes3cl6p4+0xDcwed24=
 
-bootstrap-vue@2.17.0:
-  version "2.17.0"
-  resolved "https://registry.yarnpkg.com/bootstrap-vue/-/bootstrap-vue-2.17.0.tgz#ecff2823cd80f8673f0084091dc54498164cc5fb"
-  integrity sha512-cYeoVTxAP0koMseCwSl4KQgcdm2M6COfn3F0UaecGkaWy6Vf5Jl+VjDctaR4SvkHZ693tHjW28s/icbsGtKRjQ==
+bootstrap-vue@2.17.1:
+  version "2.17.1"
+  resolved "https://registry.yarnpkg.com/bootstrap-vue/-/bootstrap-vue-2.17.1.tgz#be9a81609029965a2009a5f27747d335e83242e5"
+  integrity sha512-zj39bvtVRSmNbr8NmSPVqS/yZQrXHW8zeCcYnBDFRHCCY1VRSU3HWJ3eWyikd/Tq+sSMGl5TW0NQOZAHLqcDmA==
   dependencies:
     "@nuxt/opencollective" "^0.3.0"
     bootstrap ">=4.5.2 <5.0.0"
