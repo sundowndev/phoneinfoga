@@ -9,3 +9,4 @@ then
 else
         echo Your OS/arch is not Supported.
 fi
+exit 
