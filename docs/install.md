@@ -33,6 +33,9 @@ Please check the output of `echo "$(uname -s)_$(uname -m)"` in your terminal and
 
 ## Using Docker
 
+!!! info
+    Be careful when using `latest` tag, it's updated directly from the master branch. We recommend using [`v2` or `stable` tags](https://hub.docker.com/r/sundowndev/phoneinfoga/tags) to only get release updates.
+
 ### From docker hub
 
 You can pull the repository directly from Docker hub
