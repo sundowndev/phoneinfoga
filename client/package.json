@@ -20,7 +20,7 @@
     "popper.js": "1.16.1",
     "vue": "2.6.12",
     "vue-class-component": "7.2.6",
-    "vue-property-decorator": "9.0.0",
+    "vue-property-decorator": "9.0.2",
     "vue-router": "3.4.5",
     "vuex": "3.5.1"
   },
