@@ -36,7 +36,7 @@
     "@vue/cli-plugin-vuex": "4.5.6",
     "@vue/cli-service": "4.5.6",
     "@vue/eslint-config-prettier": "6.0.0",
-    "@vue/eslint-config-typescript": "5.1.0",
+    "@vue/eslint-config-typescript": "6.0.0",
     "@vue/test-utils": "1.1.0",
     "babel-core": "7.0.0-bridge.0",
     "eslint": "7.10.0",
