@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Bash installation script for UNIX systems only
+# Use it : curl -sSL https://raw.githubusercontent.com/sundowndev/PhoneInfoga/master/scripts/install | bash	
+
 os="$(uname -s)_$(uname -m)"
 
 if [ $os == "Linux_x86_64" ] || [ $os == "Linux_armv6" ] || [ $os == "Darwin_x86_64" ] || [ $os == "Linux_arm64" ] || [ $os == "Linux_i386" ]]
@@ -16,6 +19,7 @@ then
 
 else
 	echo "Your OS/Arch is not supported."
+	exit 1
 fi
 
 exit 0
