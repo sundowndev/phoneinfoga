@@ -6,14 +6,16 @@ if [ $os == "Linux_x86_64" ] || [ $os == "Linux_armv6" ] || [ $os == "Darwin_x86
 then
 	echo "Installing PhoneInfoga..."
 	phoneinfoga_version=$(curl -s https://api.github.com/repos/sundowndev/PhoneInfoga/releases/latest | grep tag_name | cut -d '"' -f 4)
+	echo "Downloading version $phoneinfoga_version"
 	wget "https://github.com/sundowndev/phoneinfoga/releases/download/$phoneinfoga_version/phoneinfoga_$os.tar.gz"
 	tar xfv "phoneinfoga_$os.tar.gz"
-	mv ./phoneinfoga /usr/bin/phoneinfoga
 	rm phoneinfoga_$os.tar.gz
 	echo "Installation completed successfully."
+	echo "Verify installation : ./phoneinfoga version"
+	echo "To install it globally : mv ./phoneinfoga /usr/bin/phoneinfoga"
 
 else
-	echo "Your OS/arch is not Supported."
+	echo "Your OS/Arch is not supported."
 fi
 
 exit 0
