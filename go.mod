@@ -3,7 +3,7 @@ module gopkg.in/sundowndev/phoneinfoga.v2
 go 1.13
 
 require (
-	github.com/PuerkitoBio/goquery v1.5.1
+	github.com/PuerkitoBio/goquery v1.6.0
 	github.com/fatih/color v1.9.0
 	github.com/gin-gonic/gin v1.6.3
 	github.com/golang/protobuf v1.3.4 // indirect
