@@ -41,6 +41,17 @@ PhoneInfoga is one of the most advanced tools to scan international phone number
 <a href="https://www.youtube.com/watch?v=GlJ1Y5XVBnQ"><img src="https://i.ytimg.com/vi_webp/GlJ1Y5XVBnQ/maxresdefault.webp" width="128" /></a>
 <a href="https://www.youtube.com/watch?v=H1rhboJ8WKE"><img src="https://i.ytimg.com/vi_webp/H1rhboJ8WKE/maxresdefault.webp" width="128" /></a>
 
+## Installation
+
+#### Note
+This is "ONLY" available for UNIX Systems. 
+
+```bash
+cd PhoneInfoga
+chmod +x install.sh
+sudo ./install.sh
+```
+
 ## Current status
 
 **This project is under active development but is stable and production-ready. Numverify scan is pointless on demo instance because my server's IP got blocked due to spam**. [Roadmap is here](https://github.com/sundowndev/PhoneInfoga/projects/1).
