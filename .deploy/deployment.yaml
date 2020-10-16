@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: demo-phoneinfoga-app
+  name: demo-phoneinfoga-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: demo-phoneinfoga-app
+  template:
+    metadata:
+      labels:
+        app: demo-phoneinfoga-app
+    spec:
+      containers:
+        - image: sundowndev/phoneinfoga:latest
+          args:
+            - serve
+          name: demo-phoneinfoga-app
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000
+              name: http

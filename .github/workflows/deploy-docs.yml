@@ -22,12 +22,7 @@ jobs:
 
     - name: Deploy
       run: |
-        SSH_DIR="${HOME}/.ssh"
-        mkdir "${SSH_DIR}"
-        ssh-keyscan -t rsa github.com > "${SSH_DIR}/known_hosts"
-        echo "${{ secrets.ACTIONS_DEPLOY_KEY }}" > "${SSH_DIR}/id_rsa"
-        chmod 400 "${SSH_DIR}/id_rsa"
-        git remote set-url origin git@github.com:sundowndev/PhoneInfoga.git
-        git config user.name "${{ secrets.GITHUB_USER }}"
-        git config user.email "${{ secrets.GITHUB_USER }}@users.noreply.github.com"
+        git remote set-url origin https://${{ secrets.GITHUB_USER }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ secrets.GITHUB_USER }}/PhoneInfoga.git
+        git config --global user.email "${{ secrets.GITHUB_USER }}@users.noreply.github.com"
+        git config --global user.name "${{ secrets.GITHUB_USER }}"
         mkdocs gh-deploy --force
