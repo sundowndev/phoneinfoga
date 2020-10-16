@@ -7,26 +7,29 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: contains(toJson(github.event.commits), '[skip ci]') == false
     steps:
-    - uses: actions/checkout@master
-    - name: Publish to Registry
-      uses: elgohr/Publish-Docker-Github-Action@master
-      with:
-        name: sundowndev/phoneinfoga
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        tags: "latest,v2,stable"
+      - uses: actions/checkout@v2
+      - name: Publish to Registry
+        id: publish
+        uses: elgohr/Publish-Docker-Github-Action@2.22
+        with:
+          name: sundowndev/phoneinfoga
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          tags: "latest,v2,stable"
 
-    #- uses: actions/checkout@master
-    #- name: Deploy production
-    #  run: |
-    #    SSH_DIR="${HOME}/.ssh"
-    #    mkdir "${SSH_DIR}"
-    #    ssh-keyscan -t rsa xx.xx.xx.xx > "${SSH_DIR}/known_hosts"
-    #    echo "${{ secrets.PRODUCTION_DEPLOY_KEY }}" > "${SSH_DIR}/id_rsa"
-    #    chmod 400 "${SSH_DIR}/id_rsa"
-    #    ssh ${{ secrets.PRODUCTION_SSH_USER }}@xx.xx.xx.xx -p xxxx /bin/bash << EOF
-    #      IMAGE="sundowndev/phoneinfoga:latest"
-    #      docker pull $IMAGE;
-    #      docker restart $(docker ps | grep "$IMAGE" | awk '{ print $1 }')
-    #    EOF
+      - name: Install yaml processor
+        run: |
+          wget https://github.com/mikefarah/yq/releases/download/3.4.0/yq_linux_amd64 -O ./yq
+          chmod +x ./yq
+
+      - name: Commit new tag
+        run: |
+          ./yq w ./.deploy/deployment.yaml 'spec.template.spec.containers[0].image' ${{ steps.publish.outputs.digest }} -i
+          git remote set-url origin https://${{ secrets.GH_USER }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ secrets.GH_USER }}/PhoneInfoga.git
+          git config --global user.email "${{ secrets.GH_USER }}@users.noreply.github.com"
+          git config --global user.name "${{ secrets.GH_USER }}"
+          git add ./.deploy && git commit -m "deploy: updating docker tag [skip ci]"
+          git pull origin master --rebase
+          git push origin master
