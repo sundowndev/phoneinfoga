@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  phoneinfoga:
+    restart: on-failure
+    image: sundowndev/phoneinfoga:latest
+    command:
+      - "serve"
+    networks:
+      - default
+      - web
+    environment:
+      - GIN_MODE=release
+    labels:
+      - 'traefik.docker.network=web'
+      - 'traefik.enable=true'
+      - 'traefik.domain=demo.phoneinfoga.crvx.fr'
+      - 'traefik.basic.frontend.rule=Host:demo.phoneinfoga.crvx.fr'
+      - 'traefik.basic.port=5000'
+      - 'traefik.basic.protocol=http'
+      - 'traefik.frontend.headers.SSLRedirect=true'
+      - 'traefik.frontend.headers.STSSeconds=315360000'
+      - 'traefik.frontend.headers.browserXSSFilter=true'
+      - 'traefik.frontend.headers.contentTypeNosniff=true'
+      - 'traefik.frontend.headers.forceSTSHeader=true'
+      - "traefik.frontend.headers.contentSecurityPolicy=default-src 'self';frame-ancestors 'self';style-src 'self';script-src 'self';img-src 'self';font-src 'self'"
+      - 'traefik.frontend.headers.referrerPolicy=no-referrer'
+      - 'traefik.frontend.headers.frameDeny=true'
+
+networks:
+  web:
+    external: true
