@@ -5,7 +5,7 @@ import (
 
 	"github.com/fatih/color"
 	"github.com/stretchr/testify/assert"
-	"gopkg.in/sundowndev/phoneinfoga.v2/pkg/utils/mocks"
+	"gopkg.in/sundowndev/phoneinfoga.v2/utils/mocks"
 )
 
 func TestUtils(t *testing.T) {
