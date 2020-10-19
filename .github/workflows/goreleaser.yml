@@ -1,6 +1,6 @@
 name: goreleaser
 
-on: [push]
+on: [ push ]
 
 jobs:
   goreleaser:
@@ -23,11 +23,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v1
         with:
-          go-version: 1.14.x
-
-      - name: Install go-assets-builder
-        run: |
-          go get -v github.com/jessevdk/go-assets-builder
+          go-version: 1.15.x
 
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v1

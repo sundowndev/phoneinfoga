@@ -24,7 +24,6 @@ The project is maintained by a single person: [sundowndev](https://github.com/su
 $ (cd client && yarn && yarn build)
 
 # Generate in-memory assets
-$ go get -v github.com/jessevdk/go-assets-builder
 # This will put content of dist directory in memory. It's usually needed to build but
 # the design requires you to do it anyway.
 # This step is needed at each change if you're developing on the client.
