@@ -1,6 +1,0 @@
-.git
-.idea
-.buildconfig
-__pycache__/
-.vscode/
-geckodriver.log

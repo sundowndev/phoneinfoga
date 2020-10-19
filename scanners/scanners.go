@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"gopkg.in/sundowndev/phoneinfoga.v2/pkg/utils"
+	"gopkg.in/sundowndev/phoneinfoga.v2/utils"
 )
 
 // Number is a phone number

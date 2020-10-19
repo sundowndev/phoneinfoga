@@ -3,13 +3,13 @@ package scanners
 import (
 	"testing"
 
-	"github.com/stretchr/testify/assert"
+	assertion "github.com/stretchr/testify/assert"
 	gock "gopkg.in/h2non/gock.v1"
-	"gopkg.in/sundowndev/phoneinfoga.v2/pkg/utils"
+	"gopkg.in/sundowndev/phoneinfoga.v2/utils"
 )
 
 func TestNumverifyScanner(t *testing.T) {
-	assert := assert.New(t)
+	assert := assertion.New(t)
 
 	t.Run("should succeed", func(t *testing.T) {
 		defer gock.Off() // Flush pending mocks after test execution

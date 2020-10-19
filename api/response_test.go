@@ -3,11 +3,11 @@ package api
 import (
 	"testing"
 
-	"github.com/stretchr/testify/assert"
+	assertion "github.com/stretchr/testify/assert"
 )
 
 func TestResponse(t *testing.T) {
-	assert := assert.New(t)
+	assert := assertion.New(t)
 
 	t.Run("successResponse", func(t *testing.T) {
 		t.Run("should return success response", func(t *testing.T) {

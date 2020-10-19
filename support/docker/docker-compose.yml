@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  phoneinfoga:
+    container_name: phoneinfoga
+    restart: on-failure
+    build:
+      context: ../..
+      dockerfile: ../../Dockerfile
+    command:
+      - "serve"
+    ports:
+      - "80:5000"
+    environment:
+      - GIN_MODE=release

@@ -4,12 +4,12 @@ import (
 	"testing"
 
 	"github.com/fatih/color"
-	"github.com/stretchr/testify/assert"
-	"gopkg.in/sundowndev/phoneinfoga.v2/pkg/utils/mocks"
+	assertion "github.com/stretchr/testify/assert"
+	"gopkg.in/sundowndev/phoneinfoga.v2/utils/mocks"
 )
 
 func TestUtils(t *testing.T) {
-	assert := assert.New(t)
+	assert := assertion.New(t)
 
 	t.Run("FormatNumber", func(t *testing.T) {
 		t.Run("should format number correctly", func(t *testing.T) {

@@ -3,12 +3,12 @@ package scanners
 import (
 	"testing"
 
-	"github.com/stretchr/testify/assert"
-	"gopkg.in/sundowndev/phoneinfoga.v2/pkg/utils"
+	assertion "github.com/stretchr/testify/assert"
+	"gopkg.in/sundowndev/phoneinfoga.v2/utils"
 )
 
 func TestLocalScan(t *testing.T) {
-	assert := assert.New(t)
+	assert := assertion.New(t)
 
 	t.Run("should scan number", func(t *testing.T) {
 		result, err := localScanCLI(utils.LoggerService, "+1 718-521-2994")
