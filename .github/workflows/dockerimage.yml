@@ -23,14 +23,15 @@ jobs:
         run: |
           wget https://github.com/mikefarah/yq/releases/download/3.4.0/yq_linux_amd64 -O ./yq
           chmod +x ./yq
+          
+      - uses: actions/checkout@v2
+        with:
+          ref: 'HEAD'
 
       - name: Commit new image digest
         run: |
-          git checkout master
           ./yq w ./.deploy/deployment.yaml 'spec.template.spec.containers[0].image' ${{ steps.publish.outputs.digest }} -i
-          git remote set-url origin https://${{ secrets.GITHUB_USER }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ secrets.GITHUB_USER }}/PhoneInfoga.git
-          git config --global user.email "${{ secrets.GITHUB_USER }}@users.noreply.github.com"
-          git config --global user.name "${{ secrets.GITHUB_USER }}"
+          git config user.name github-actions
+          git config user.email github-actions@github.com
           git add ./.deploy && git commit -m "deploy: updating docker tag [skip ci]"
-          git pull origin master --rebase
           git push origin master
