@@ -11,25 +11,20 @@ Follow the instructions :
 - Choose your OS and architecture
 - Download the archive, extract the binary then run it in a terminal
 
-You can also do it from the terminal:
+You can also do it from the terminal (UNIX system only) :
 
 ```shell
-# Download the archive
-wget "https://github.com/sundowndev/phoneinfoga/releases/download/v2.3.2/phoneinfoga_$(uname -s)_$(uname -m).tar.gz"
-
-# Extract the binary
-tar xfv "phoneinfoga_$(uname -s)_$(uname -m).tar.gz"
+# Download latest release in the current directory
+curl -sSl https://raw.githubusercontent.com/sundowndev/PhoneInfoga/master/support/scripts/install | bash
 
 # Check the binary
 ./phoneinfoga version
 
 # You can also install it globally
-mv ./phoneinfoga /usr/bin/phoneinfoga
+sudo mv ./phoneinfoga /usr/bin/phoneinfoga
 ```
 
-If the installation fails with a 404 error, it probably means your OS/arch is not suppored.
-
-Please check the output of `echo "$(uname -s)_$(uname -m)"` in your terminal and see if it's available on the [GitHub release page](https://github.com/sundowndev/PhoneInfoga/releases).
+To ensure your OS/arch is not supported, please check the output of `echo "$(uname -s)_$(uname -m)"` in your terminal and see if it's available on the [GitHub release page](https://github.com/sundowndev/PhoneInfoga/releases).
 
 ## Using Docker
 
