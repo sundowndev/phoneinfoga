@@ -2,7 +2,7 @@ package scanners
 
 import (
 	"github.com/nyaruka/phonenumbers"
-	"gopkg.in/sundowndev/phoneinfoga.v2/pkg/utils"
+	"gopkg.in/sundowndev/phoneinfoga.v2/utils"
 )
 
 // LocalScan performs a local scan of a phone

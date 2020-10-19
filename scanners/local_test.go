@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"gopkg.in/sundowndev/phoneinfoga.v2/pkg/utils"
+	"gopkg.in/sundowndev/phoneinfoga.v2/utils"
 )
 
 func TestLocalScan(t *testing.T) {
