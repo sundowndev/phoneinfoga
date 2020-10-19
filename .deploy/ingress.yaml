@@ -9,6 +9,11 @@ metadata:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     nginx.ingress.kubernetes.io/ssl-passthrough: "false"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      add_header  Content-Security-Policy "default-src 'self';frame-ancestors 'self';style-src 'self';script-src 'self';img-src 'self';font-src 'self'";
+      add_header  X-Frame-Options SAMEORIGIN;
+      add_header  X-Content-Type-Options nosniff;
+      add_header  Referrer-Policy no-referrer;
 spec:
   rules:
     - host: demo.phoneinfoga.crvx.fr
