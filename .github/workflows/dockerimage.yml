@@ -7,7 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: contains(toJson(github.event.commits), '[skip ci]') == false
+    if: contains(toJson(github.event.commits), '[action]') == false
     steps:
       - uses: actions/checkout@v2
       - name: Publish to Registry
@@ -18,17 +18,23 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           tags: "latest,v2,stable"
-          
+
       - uses: actions/checkout@v2
         with:
           ref: 'master'
 
       - name: Commit new image digest
+        env:
+          GITHUB_USER: sundowndev
+          GITHUB_REPO: PhoneInfoga
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           wget https://github.com/mikefarah/yq/releases/download/3.4.0/yq_linux_amd64 -O ./yq
           chmod +x ./yq
           ./yq w ./.deploy/deployment.yaml 'spec.template.spec.containers[0].image' ${{ steps.publish.outputs.digest }} -i
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add ./.deploy && git commit -m "deploy: updating docker tag [skip ci]"
+          git remote set-url origin https://$GITHUB_USER:$GITHUB_TOKEN@github.com/$GITHUB_USER/$GITHUB_REPO.git
+          git config --global user.email "$GITHUB_USER@users.noreply.github.com"
+          git config --global user.name "$GITHUB_USER"
+          git add ./.deploy && git commit -m "deploy: update docker image digest [action]"
+          git pull origin master --rebase
           git push origin master
