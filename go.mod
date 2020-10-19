@@ -4,6 +4,7 @@ go 1.13
 
 require (
 	github.com/PuerkitoBio/goquery v1.6.0
+	github.com/blang/semver/v4 v4.0.0
 	github.com/fatih/color v1.9.0
 	github.com/gin-gonic/gin v1.6.3
 	github.com/golang/protobuf v1.3.4 // indirect
