@@ -30,7 +30,11 @@ RUN go get -v github.com/jessevdk/go-assets-builder
 
 RUN go generate ./...
 
-RUN go build -v -o phoneinfoga .
+RUN apk add git
+RUN GIT_COMMIT=$(git rev-parse HEAD)
+RUN GIT_RELEASE=$(git describe --abbrev=0 --tags)
+
+RUN go build -v -ldflags "-s -w -X gopkg.in/sundowndev/phoneinfoga.v2/config.Version=$GIT_RELEASE -X gopkg.in/sundowndev/phoneinfoga.v2/config.Commit=$GIT_COMMIT" -v -o phoneinfoga .
 
 FROM golang:1.15-alpine
 
