@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Bash installation script for UNIX systems only
-# Use it : curl -sSL https://raw.githubusercontent.com/sundowndev/PhoneInfoga/master/scripts/install | bash
+# Use it : curl -sSL https://raw.githubusercontent.com/sundowndev/PhoneInfoga/master/support/scripts/install | bash
 
 os="$(uname -s)_$(uname -m)"
 
