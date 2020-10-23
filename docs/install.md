@@ -11,7 +11,7 @@ Follow the instructions :
 - Choose your OS and architecture
 - Download the archive, extract the binary then run it in a terminal
 
-You can also do it from the terminal (UNIX system only) :
+You can also do it from the terminal (UNIX systems only) :
 
 ```shell
 # Download latest release in the current directory
@@ -24,7 +24,7 @@ curl -sSl https://raw.githubusercontent.com/sundowndev/PhoneInfoga/master/suppor
 sudo mv ./phoneinfoga /usr/bin/phoneinfoga
 ```
 
-To ensure your OS/arch is not supported, please check the output of `echo "$(uname -s)_$(uname -m)"` in your terminal and see if it's available on the [GitHub release page](https://github.com/sundowndev/PhoneInfoga/releases).
+To ensure your system is supported, please check the output of `echo "$(uname -s)_$(uname -m)"` in your terminal and see if it's available on the [GitHub release page](https://github.com/sundowndev/PhoneInfoga/releases).
 
 ## Using Docker
 
