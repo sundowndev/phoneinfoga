@@ -5,7 +5,9 @@ metadata:
     app: demo-phoneinfoga-app
   name: demo-phoneinfoga-app
 spec:
-  replicas: 2
+  replicas: 3
+  strategy:
+    type: RollingUpdate
   selector:
     matchLabels:
       app: demo-phoneinfoga-app
