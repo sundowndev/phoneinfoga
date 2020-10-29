@@ -15,7 +15,7 @@ You can also do it from the terminal (UNIX systems only) :
 
 ```shell
 # Download latest release in the current directory
-curl -sSl https://raw.githubusercontent.com/sundowndev/PhoneInfoga/master/support/scripts/install | bash
+curl -sSL https://raw.githubusercontent.com/sundowndev/PhoneInfoga/master/support/scripts/install | bash
 
 # Check the binary
 ./phoneinfoga version
