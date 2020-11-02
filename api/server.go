@@ -1,5 +1,6 @@
 // Package api is about the REST API of PhoneInfoga
 //go:generate go run github.com/jessevdk/go-assets-builder ../client/dist -o ./assets.go -p api
+//go:generate go run github.com/swaggo/swag/cmd/swag init -g ./server.go --parseDependency
 package api
 
 import (
@@ -13,6 +14,15 @@ const (
 	clientDistPath = "/client/dist/"
 	staticPath     = "/"
 )
+
+// @title PhoneInfoga REST API
+// @description Advanced information gathering & OSINT framework for phone numbers.
+// @version v2.3.5
+// @host localhost:5000
+// @BasePath /api
+// @schemes http https
+// @license.name GNU General Public License v3.0
+// @license.url https://github.com/sundowndev/PhoneInfoga/blob/master/LICENSE
 
 func detectContentType(path string, data []byte) string {
 	arr := strings.Split(path, ".")
