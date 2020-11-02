@@ -23,7 +23,7 @@ type healthResponse struct {
 }
 
 //@ID getAllNumbers
-//@Tags numbers
+//@Tags Numbers
 //@Summary Fetch all previously scanned numbers.
 //@Description This route is actually not used yet.
 //@Deprecated
@@ -38,7 +38,7 @@ func getAllNumbers(c *gin.Context) {
 }
 
 // @ID validate
-// @Tags NumberList
+// @Tags Numbers
 // @Summary Check if a number is valid and possible.
 // @Produce  json
 // @Success 200 {object} JSONResponse
@@ -49,7 +49,7 @@ func validate(c *gin.Context) {
 }
 
 // @ID localScan
-// @Tags NumberList
+// @Tags Numbers
 // @Summary Perform a scan using local phone number library.
 // @Produce  json
 // @Success 200 {object} scanResultResponse{result=scanners.Number}
@@ -65,7 +65,7 @@ func localScan(c *gin.Context) {
 }
 
 // @ID numverifyScan
-// @Tags NumberList
+// @Tags Numbers
 // @Summary Perform a scan using Numverify's API.
 // @Produce  json
 // @Success 200 {object} scanResultResponse{result=scanners.NumverifyScannerResponse}
@@ -88,7 +88,7 @@ func numverifyScan(c *gin.Context) {
 }
 
 // @ID googleSearchScan
-// @Tags NumberList
+// @Tags Numbers
 // @Summary Perform a scan using Google Search engine.
 // @Produce  json
 // @Success 200 {object} scanResultResponse{result=scanners.GoogleSearchResponse}
@@ -106,7 +106,7 @@ func googleSearchScan(c *gin.Context) {
 }
 
 // @ID ovhScan
-// @Tags NumberList
+// @Tags Numbers
 // @Summary Perform a scan using OVH's API.
 // @Produce  json
 // @Success 200 {object} scanResultResponse{result=scanners.OVHScannerResponse}

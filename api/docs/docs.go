@@ -55,7 +55,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "numbers"
+                    "Numbers"
                 ],
                 "summary": "Fetch all previously scanned numbers.",
                 "operationId": "getAllNumbers",
@@ -76,7 +76,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "NumberList"
+                    "Numbers"
                 ],
                 "summary": "Perform a scan using Google Search engine.",
                 "operationId": "googleSearchScan",
@@ -117,7 +117,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "NumberList"
+                    "Numbers"
                 ],
                 "summary": "Perform a scan using local phone number library.",
                 "operationId": "localScan",
@@ -158,7 +158,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "NumberList"
+                    "Numbers"
                 ],
                 "summary": "Perform a scan using Numverify's API.",
                 "operationId": "numverifyScan",
@@ -199,7 +199,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "NumberList"
+                    "Numbers"
                 ],
                 "summary": "Perform a scan using OVH's API.",
                 "operationId": "ovhScan",
@@ -240,7 +240,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "NumberList"
+                    "Numbers"
                 ],
                 "summary": "Check if a number is valid and possible.",
                 "operationId": "validate",

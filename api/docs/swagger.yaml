@@ -156,7 +156,7 @@ paths:
             $ref: '#/definitions/api.getAllNumbersResponse'
       summary: Fetch all previously scanned numbers.
       tags:
-      - numbers
+      - Numbers
   /numbers/{number}/scan/googlesearch:
     get:
       operationId: googleSearchScan
@@ -180,7 +180,7 @@ paths:
               type: object
       summary: Perform a scan using Google Search engine.
       tags:
-      - NumberList
+      - Numbers
   /numbers/{number}/scan/local:
     get:
       operationId: localScan
@@ -204,7 +204,7 @@ paths:
               type: object
       summary: Perform a scan using local phone number library.
       tags:
-      - NumberList
+      - Numbers
   /numbers/{number}/scan/numverify:
     get:
       operationId: numverifyScan
@@ -228,7 +228,7 @@ paths:
               type: object
       summary: Perform a scan using Numverify's API.
       tags:
-      - NumberList
+      - Numbers
   /numbers/{number}/scan/ovh:
     get:
       operationId: ovhScan
@@ -252,7 +252,7 @@ paths:
               type: object
       summary: Perform a scan using OVH's API.
       tags:
-      - NumberList
+      - Numbers
   /numbers/{number}/validate:
     get:
       operationId: validate
@@ -271,7 +271,7 @@ paths:
             $ref: '#/definitions/api.JSONResponse'
       summary: Check if a number is valid and possible.
       tags:
-      - NumberList
+      - Numbers
 schemes:
 - http
 - https

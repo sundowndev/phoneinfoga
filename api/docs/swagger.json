@@ -44,7 +44,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "numbers"
+                    "Numbers"
                 ],
                 "summary": "Fetch all previously scanned numbers.",
                 "operationId": "getAllNumbers",
@@ -65,7 +65,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "NumberList"
+                    "Numbers"
                 ],
                 "summary": "Perform a scan using Google Search engine.",
                 "operationId": "googleSearchScan",
@@ -106,7 +106,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "NumberList"
+                    "Numbers"
                 ],
                 "summary": "Perform a scan using local phone number library.",
                 "operationId": "localScan",
@@ -147,7 +147,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "NumberList"
+                    "Numbers"
                 ],
                 "summary": "Perform a scan using Numverify's API.",
                 "operationId": "numverifyScan",
@@ -188,7 +188,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "NumberList"
+                    "Numbers"
                 ],
                 "summary": "Perform a scan using OVH's API.",
                 "operationId": "ovhScan",
@@ -229,7 +229,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "NumberList"
+                    "Numbers"
                 ],
                 "summary": "Check if a number is valid and possible.",
                 "operationId": "validate",
