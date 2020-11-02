@@ -1,0 +1,302 @@
+basePath: /api
+definitions:
+  api.JSONResponse:
+    properties:
+      error:
+        type: string
+      success:
+        type: boolean
+    type: object
+  api.getAllNumbersResponse:
+    properties:
+      error:
+        type: string
+      numbers:
+        items:
+          $ref: '#/definitions/scanners.Number'
+        type: array
+      success:
+        type: boolean
+    type: object
+  api.healthResponse:
+    properties:
+      commit:
+        type: string
+      success:
+        type: boolean
+      version:
+        type: string
+    type: object
+  api.scanResultResponse:
+    properties:
+      error:
+        type: string
+      result:
+        type: object
+      success:
+        type: boolean
+    type: object
+  scanners.GoogleSearchDork:
+    properties:
+      dork:
+        type: string
+      number:
+        type: string
+      url:
+        type: string
+    type: object
+  scanners.GoogleSearchResponse:
+    properties:
+      disposableProviders:
+        items:
+          $ref: '#/definitions/scanners.GoogleSearchDork'
+        type: array
+      general:
+        items:
+          $ref: '#/definitions/scanners.GoogleSearchDork'
+        type: array
+      individuals:
+        items:
+          $ref: '#/definitions/scanners.GoogleSearchDork'
+        type: array
+      reputation:
+        items:
+          $ref: '#/definitions/scanners.GoogleSearchDork'
+        type: array
+      socialMedia:
+        items:
+          $ref: '#/definitions/scanners.GoogleSearchDork'
+        type: array
+    type: object
+  scanners.Number:
+    properties:
+      E164:
+        type: string
+      carrier:
+        type: string
+      country:
+        type: string
+      countryCode:
+        type: integer
+      international:
+        type: string
+      local:
+        type: string
+      rawLocal:
+        type: string
+    type: object
+  scanners.NumverifyScannerResponse:
+    properties:
+      carrier:
+        type: string
+      country_code:
+        type: string
+      country_name:
+        type: string
+      country_prefix:
+        type: string
+      international_format:
+        type: string
+      line_type:
+        type: string
+      local_format:
+        type: string
+      location:
+        type: string
+      number:
+        type: string
+      valid:
+        type: boolean
+    type: object
+  scanners.OVHScannerResponse:
+    properties:
+      city:
+        type: string
+      found:
+        type: boolean
+      numberRange:
+        type: string
+      zipCode:
+        type: string
+    type: object
+host: demo.phoneinfoga.crvx.fr
+info:
+  contact: {}
+  description: Advanced information gathering & OSINT framework for phone numbers.
+  license:
+    name: GNU General Public License v3.0
+    url: https://github.com/sundowndev/PhoneInfoga/blob/master/LICENSE
+  title: PhoneInfoga REST API
+  version: v2
+paths:
+  /:
+    get:
+      operationId: healthCheck
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.healthResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.JSONResponse'
+      summary: Check if service is healthy.
+      tags:
+      - default
+  /numbers:
+    get:
+      deprecated: true
+      description: This route is actually not used yet.
+      operationId: getAllNumbers
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.getAllNumbersResponse'
+      summary: Fetch all previously scanned numbers.
+      tags:
+      - Numbers
+  /numbers/{number}/scan/googlesearch:
+    get:
+      operationId: googleSearchScan
+      parameters:
+      - description: Input phone number
+        in: path
+        name: number
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.scanResultResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/scanners.GoogleSearchResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.JSONResponse'
+      summary: Perform a scan using Google Search engine.
+      tags:
+      - Numbers
+  /numbers/{number}/scan/local:
+    get:
+      operationId: localScan
+      parameters:
+      - description: Input phone number
+        in: path
+        name: number
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.scanResultResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/scanners.Number'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.JSONResponse'
+      summary: Perform a scan using local phone number library.
+      tags:
+      - Numbers
+  /numbers/{number}/scan/numverify:
+    get:
+      operationId: numverifyScan
+      parameters:
+      - description: Input phone number
+        in: path
+        name: number
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.scanResultResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/scanners.NumverifyScannerResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.JSONResponse'
+      summary: Perform a scan using Numverify's API.
+      tags:
+      - Numbers
+  /numbers/{number}/scan/ovh:
+    get:
+      operationId: ovhScan
+      parameters:
+      - description: Input phone number
+        in: path
+        name: number
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.scanResultResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/scanners.OVHScannerResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.JSONResponse'
+      summary: Perform a scan using OVH's API.
+      tags:
+      - Numbers
+  /numbers/{number}/validate:
+    get:
+      operationId: validate
+      parameters:
+      - description: Input phone number
+        in: path
+        name: number
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.JSONResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.JSONResponse'
+      summary: Check if a number is valid and possible.
+      tags:
+      - Numbers
+schemes:
+- http
+- https
+swagger: "2.0"

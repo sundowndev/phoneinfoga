@@ -4,6 +4,7 @@ go 1.13
 
 require (
 	github.com/PuerkitoBio/goquery v1.6.0
+	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/fatih/color v1.9.0
 	github.com/gin-gonic/gin v1.6.3
 	github.com/golang/protobuf v1.3.4 // indirect
@@ -15,7 +16,6 @@ require (
 	github.com/spf13/cobra v1.1.1
 	github.com/stretchr/testify v1.6.1
 	github.com/sundowndev/dorkgen v1.2.0
-	golang.org/x/net v0.0.0-20200301022130-244492dfa37a // indirect
-	golang.org/x/sys v0.0.0-20200302150141-5c8b2ff67527 // indirect
+	github.com/swaggo/swag v1.6.8
 	gopkg.in/h2non/gock.v1 v1.0.15
 )
