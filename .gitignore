@@ -20,3 +20,4 @@ coverage
 coverage.*
 .idea
 api/assets.go
+*.db

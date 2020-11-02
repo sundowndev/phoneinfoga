@@ -7,6 +7,14 @@ import (
 	"gopkg.in/sundowndev/phoneinfoga.v2/utils"
 )
 
+// ScanResult represents all scan results about a number
+type ScanResult struct {
+	Local        *Number                   `json:"local"`
+	GoogleSearch *GoogleSearchResponse     `json:"google_search"`
+	Numverify    *NumverifyScannerResponse `json:"numverify"`
+	OVH          *OVHScannerResponse       `json:"ovh"`
+}
+
 // Number is a phone number
 type Number struct {
 	RawLocal      string `json:"rawLocal"`
