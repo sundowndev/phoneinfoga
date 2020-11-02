@@ -17,8 +17,8 @@ const (
 
 // @title PhoneInfoga REST API
 // @description Advanced information gathering & OSINT framework for phone numbers.
-// @version v2.3.5
-// @host localhost:5000
+// @version v2
+// @host demo.phoneinfoga.crvx.fr
 // @BasePath /api
 // @schemes http https
 // @license.name GNU General Public License v3.0

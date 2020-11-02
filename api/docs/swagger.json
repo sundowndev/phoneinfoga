@@ -12,9 +12,9 @@
             "name": "GNU General Public License v3.0",
             "url": "https://github.com/sundowndev/PhoneInfoga/blob/master/LICENSE"
         },
-        "version": "v2.3.5"
+        "version": "v2"
     },
-    "host": "localhost:5000",
+    "host": "demo.phoneinfoga.crvx.fr",
     "basePath": "/api",
     "paths": {
         "/": {
@@ -32,6 +32,12 @@
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/api.healthResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/api.JSONResponse"
                         }
                     }
                 }
@@ -96,6 +102,12 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.JSONResponse"
+                        }
                     }
                 }
             }
@@ -136,6 +148,12 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.JSONResponse"
                         }
                     }
                 }
@@ -178,6 +196,12 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.JSONResponse"
+                        }
                     }
                 }
             }
@@ -219,6 +243,12 @@
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.JSONResponse"
+                        }
                     }
                 }
             }
@@ -245,6 +275,12 @@
                 "responses": {
                     "200": {
                         "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.JSONResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
                         "schema": {
                             "$ref": "#/definitions/api.JSONResponse"
                         }

@@ -119,7 +119,7 @@ definitions:
       zipCode:
         type: string
     type: object
-host: localhost:5000
+host: demo.phoneinfoga.crvx.fr
 info:
   contact: {}
   description: Advanced information gathering & OSINT framework for phone numbers.
@@ -127,7 +127,7 @@ info:
     name: GNU General Public License v3.0
     url: https://github.com/sundowndev/PhoneInfoga/blob/master/LICENSE
   title: PhoneInfoga REST API
-  version: v2.3.5
+  version: v2
 paths:
   /:
     get:
@@ -139,6 +139,10 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/api.healthResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.JSONResponse'
       summary: Check if service is healthy.
       tags:
       - default
@@ -178,6 +182,10 @@ paths:
                 result:
                   $ref: '#/definitions/scanners.GoogleSearchResponse'
               type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.JSONResponse'
       summary: Perform a scan using Google Search engine.
       tags:
       - Numbers
@@ -202,6 +210,10 @@ paths:
                 result:
                   $ref: '#/definitions/scanners.Number'
               type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.JSONResponse'
       summary: Perform a scan using local phone number library.
       tags:
       - Numbers
@@ -226,6 +238,10 @@ paths:
                 result:
                   $ref: '#/definitions/scanners.NumverifyScannerResponse'
               type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.JSONResponse'
       summary: Perform a scan using Numverify's API.
       tags:
       - Numbers
@@ -250,6 +266,10 @@ paths:
                 result:
                   $ref: '#/definitions/scanners.OVHScannerResponse'
               type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.JSONResponse'
       summary: Perform a scan using OVH's API.
       tags:
       - Numbers
@@ -267,6 +287,10 @@ paths:
       responses:
         "200":
           description: OK
+          schema:
+            $ref: '#/definitions/api.JSONResponse'
+        "400":
+          description: Bad Request
           schema:
             $ref: '#/definitions/api.JSONResponse'
       summary: Check if a number is valid and possible.

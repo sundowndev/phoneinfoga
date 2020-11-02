@@ -44,6 +44,12 @@ var doc = `{
                         "schema": {
                             "$ref": "#/definitions/api.healthResponse"
                         }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/api.JSONResponse"
+                        }
                     }
                 }
             }
@@ -107,6 +113,12 @@ var doc = `{
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.JSONResponse"
+                        }
                     }
                 }
             }
@@ -147,6 +159,12 @@ var doc = `{
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.JSONResponse"
                         }
                     }
                 }
@@ -189,6 +207,12 @@ var doc = `{
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.JSONResponse"
+                        }
                     }
                 }
             }
@@ -230,6 +254,12 @@ var doc = `{
                                 }
                             ]
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.JSONResponse"
+                        }
                     }
                 }
             }
@@ -256,6 +286,12 @@ var doc = `{
                 "responses": {
                     "200": {
                         "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.JSONResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
                         "schema": {
                             "$ref": "#/definitions/api.JSONResponse"
                         }
@@ -462,8 +498,8 @@ type swaggerInfo struct {
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = swaggerInfo{
-	Version:     "v2.3.5",
-	Host:        "localhost:5000",
+	Version:     "v2",
+	Host:        "demo.phoneinfoga.crvx.fr",
 	BasePath:    "/api",
 	Schemes:     []string{"http", "https"},
 	Title:       "PhoneInfoga REST API",

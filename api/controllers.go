@@ -22,14 +22,14 @@ type healthResponse struct {
 	Commit  string `json:"commit"`
 }
 
-//@ID getAllNumbers
-//@Tags Numbers
-//@Summary Fetch all previously scanned numbers.
-//@Description This route is actually not used yet.
-//@Deprecated
-//@Produce  json
-//@Success 200 {object} getAllNumbersResponse
-//@Router /numbers [get]
+// @ID getAllNumbers
+// @Tags Numbers
+// @Summary Fetch all previously scanned numbers.
+// @Description This route is actually not used yet.
+// @Deprecated
+// @Produce  json
+// @Success 200 {object} getAllNumbersResponse
+// @Router /numbers [get]
 func getAllNumbers(c *gin.Context) {
 	c.JSON(200, getAllNumbersResponse{
 		JSONResponse: JSONResponse{Success: true},
@@ -42,6 +42,7 @@ func getAllNumbers(c *gin.Context) {
 // @Summary Check if a number is valid and possible.
 // @Produce  json
 // @Success 200 {object} JSONResponse
+// @Success 400 {object} JSONResponse
 // @Router /numbers/{number}/validate [get]
 // @Param number path string true "Input phone number" validate(required)
 func validate(c *gin.Context) {
@@ -53,6 +54,7 @@ func validate(c *gin.Context) {
 // @Summary Perform a scan using local phone number library.
 // @Produce  json
 // @Success 200 {object} scanResultResponse{result=scanners.Number}
+// @Success 400 {object} JSONResponse
 // @Router /numbers/{number}/scan/local [get]
 // @Param number path string true "Input phone number" validate(required)
 func localScan(c *gin.Context) {
@@ -69,6 +71,7 @@ func localScan(c *gin.Context) {
 // @Summary Perform a scan using Numverify's API.
 // @Produce  json
 // @Success 200 {object} scanResultResponse{result=scanners.NumverifyScannerResponse}
+// @Success 400 {object} JSONResponse
 // @Router /numbers/{number}/scan/numverify [get]
 // @Param number path string true "Input phone number" validate(required)
 func numverifyScan(c *gin.Context) {
@@ -92,6 +95,7 @@ func numverifyScan(c *gin.Context) {
 // @Summary Perform a scan using Google Search engine.
 // @Produce  json
 // @Success 200 {object} scanResultResponse{result=scanners.GoogleSearchResponse}
+// @Success 400 {object} JSONResponse
 // @Router /numbers/{number}/scan/googlesearch [get]
 // @Param number path string true "Input phone number" validate(required)
 func googleSearchScan(c *gin.Context) {
@@ -110,6 +114,7 @@ func googleSearchScan(c *gin.Context) {
 // @Summary Perform a scan using OVH's API.
 // @Produce  json
 // @Success 200 {object} scanResultResponse{result=scanners.OVHScannerResponse}
+// @Success 400 {object} JSONResponse
 // @Router /numbers/{number}/scan/ovh [get]
 // @Param number path string true "Input phone number" validate(required)
 func ovhScan(c *gin.Context) {
@@ -133,6 +138,7 @@ func ovhScan(c *gin.Context) {
 // @Summary Check if service is healthy.
 // @Produce  json
 // @Success 200 {object} healthResponse
+// @Success 500 {object} JSONResponse
 // @Router / [get]
 func healthHandler(c *gin.Context) {
 	c.JSON(200, healthResponse{
