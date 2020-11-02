@@ -1,15 +1,18 @@
 <template>
   <div v-if="loading || data.length > 0" class="mt-2">
     <hr />
-    <h3>{{ name }} <b-spinner v-if="loading" type="grow"></b-spinner></h3>
+    <h3>
+      {{ name }}
+      <b-spinner v-if="loading" type="grow"></b-spinner>
+    </h3>
 
     <b-button
       size="sm"
       variant="dark"
       v-b-toggle.ovh-collapse
       v-show="data.length > 0 && !loading"
-      >Toggle results</b-button
-    >
+      >Toggle results
+    </b-button>
     <b-collapse id="ovh-collapse" class="mt-2">
       <b-table
         outlined
@@ -24,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
 import axios from "axios";
 import { mapMutations } from "vuex";
 import config from "@/config";
@@ -49,7 +52,7 @@ export default class GoogleSearch extends Vue {
 
   @Prop() scan!: Vue;
 
-  mounted() {
+  mounted(): void {
     this.scan.$on("scan", async () => {
       this.loading = true;
 

@@ -53,7 +53,7 @@ export default class GoogleSearch extends Vue {
 
   @Prop() scan!: Vue;
 
-  mounted() {
+  mounted(): void {
     this.scan.$on("scan", async () => {
       this.loading = true;
 

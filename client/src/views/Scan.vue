@@ -24,7 +24,8 @@
         :disabled="loading"
         class="m-1"
       >
-        <b-icon-play-fill></b-icon-play-fill>Run scan
+        <b-icon-play-fill></b-icon-play-fill>
+        Run scan
       </b-button>
 
       <b-button
@@ -33,8 +34,8 @@
         v-on:click="clearData"
         v-show="number"
         :disabled="loading"
-        >Reset</b-button
-      >
+        >Reset
+      </b-button>
     </b-form>
 
     <hr />
@@ -55,13 +56,6 @@ import NumverifyScan from "../components/NumverifyScan.vue";
 import GoogleSearch from "../components/GoogleSearch.vue";
 import OVHScan from "../components/OVHScan.vue";
 import { AxiosResponse } from "axios";
-
-interface Scanner {
-  id: string;
-  name: string;
-  data: object[];
-  loading: boolean;
-}
 
 interface Data {
   loading: boolean;
