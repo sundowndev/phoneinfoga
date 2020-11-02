@@ -10,8 +10,6 @@ require (
 	github.com/golang/protobuf v1.3.4 // indirect
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
 	github.com/jessevdk/go-assets v0.0.0-20160921144138-4f4301a06e15
-	github.com/jessevdk/go-assets-builder v0.0.0-20130903091706-b8483521738f // indirect
-	github.com/jessevdk/go-flags v1.4.0 // indirect
 	github.com/mattn/go-colorable v0.1.6 // indirect
 	github.com/nyaruka/phonenumbers v1.0.59
 	github.com/onlinecity/go-phone-iso3166 v0.0.1
@@ -19,6 +17,5 @@ require (
 	github.com/stretchr/testify v1.6.1
 	github.com/sundowndev/dorkgen v1.2.0
 	github.com/swaggo/swag v1.6.8
-	golang.org/x/net v0.0.0-20200625001655-4c5254603344 // indirect
 	gopkg.in/h2non/gock.v1 v1.0.15
 )
