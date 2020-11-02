@@ -266,6 +266,8 @@ github.com/swaggo/gin-swagger v1.2.0/go.mod h1:qlH2+W7zXGZkczuL+r2nEBR2JTT+/lX05
 github.com/swaggo/swag v1.5.1/go.mod h1:1Bl9F/ZBpVWh22nY0zmYyASPO1lI/zIwRDrpZU+tv8Y=
 github.com/swaggo/swag v1.6.8 h1:z3ZNcpJs/NLMpZcKqXUsBELmmY2Ocy09JXKx5gu3L4M=
 github.com/swaggo/swag v1.6.8/go.mod h1:a0IpNeMfGidNOcm2TsqODUh9JHdHu3kxDA0UlGbBKjI=
+github.com/swaggo/swag v1.6.9 h1:BukKRwZjnEcUxQt7Xgfrt9fpav0hiWw9YimdNO9wssw=
+github.com/swaggo/swag v1.6.9/go.mod h1:a0IpNeMfGidNOcm2TsqODUh9JHdHu3kxDA0UlGbBKjI=
 github.com/tmc/grpc-websocket-proxy v0.0.0-20190109142713-0ad062ec5ee5/go.mod h1:ncp9v5uamzpCO7NfCPTXjqaC+bZgJeR0sMTm6dMHP7U=
 github.com/ugorji/go v1.1.4/go.mod h1:uQMGLiO92mf5W77hV/PUCpI3pbzQx3CRekS0kk+RGrc=
 github.com/ugorji/go v1.1.5-pre/go.mod h1:FwP/aQVg39TXzItUBMwnWp9T9gPQnXw4Poh4/oBQZ/0=
