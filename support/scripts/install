@@ -6,18 +6,21 @@
 os="$(uname -s)_$(uname -m)"
 
 if [ $os == "Linux_x86_64" ] || [ $os == "Linux_armv6" ] || [ $os == "Darwin_x86_64" ] || [ $os == "Linux_arm64" ] || [ $os == "Linux_i386" ]; then
-  echo "Installing PhoneInfoga..."
+  echo "Installing PhoneInfoga"
   phoneinfoga_version=$(curl -s https://api.github.com/repos/sundowndev/PhoneInfoga/releases/latest | grep tag_name | cut -d '"' -f 4)
   echo "Found version $phoneinfoga_version"
+
   echo "Downloading version $phoneinfoga_version..."
   wget "https://github.com/sundowndev/phoneinfoga/releases/download/$phoneinfoga_version/PhoneInfoga_$os.tar.gz"
+
   echo "Verifying checksum..."
   curl -sSL https://github.com/sundowndev/PhoneInfoga/releases/download/$phoneinfoga_version/PhoneInfoga_checksums.txt | grep "$(uname -s)_$(uname -p)" | sha256sum -c
   tar xfv "PhoneInfoga_$os.tar.gz"
   rm PhoneInfoga_$os.tar.gz
-  echo "Installation completed successfully."
+
+  echo "Installation completed successfully. Happy investigations\!\n"
   echo "Verify installation : ./phoneinfoga version"
-  echo "To install it globally : sudo mv ./phoneinfoga /usr/bin/phoneinfoga"
+  echo "To install the program globally : sudo mv ./phoneinfoga /usr/bin/phoneinfoga"
 else
   echo "Your OS/Arch is not supported."
   echo "Read more at https://sundowndev.github.io/PhoneInfoga/install/"
