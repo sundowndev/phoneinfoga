@@ -14,11 +14,13 @@ if [ $os == "Linux_x86_64" ] || [ $os == "Linux_armv6" ] || [ $os == "Darwin_x86
   wget "https://github.com/sundowndev/phoneinfoga/releases/download/$phoneinfoga_version/PhoneInfoga_$os.tar.gz"
 
   echo "Verifying checksum..."
-  curl -sSL https://github.com/sundowndev/PhoneInfoga/releases/download/$phoneinfoga_version/PhoneInfoga_checksums.txt | grep "$(uname -s)_$(uname -p)" | sha256sum -c
+  curl -sSL https://github.com/sundowndev/PhoneInfoga/releases/download/$phoneinfoga_version/PhoneInfoga_checksums.txt | sha256sum -c --strict --ignore-missing
+  [ $? -eq 0 ] || exit 1
+
   tar xfv "PhoneInfoga_$os.tar.gz"
   rm PhoneInfoga_$os.tar.gz
 
-  echo "Installation completed successfully.\n"
+  echo "Installation completed successfully."
   echo "Verify installation : ./phoneinfoga version"
   echo "You can now install the program globally : sudo mv ./phoneinfoga /usr/bin/phoneinfoga"
 else
