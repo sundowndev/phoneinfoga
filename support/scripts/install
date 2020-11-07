@@ -18,9 +18,9 @@ if [ $os == "Linux_x86_64" ] || [ $os == "Linux_armv6" ] || [ $os == "Darwin_x86
   tar xfv "PhoneInfoga_$os.tar.gz"
   rm PhoneInfoga_$os.tar.gz
 
-  echo "Installation completed successfully. Happy investigations\!\n"
+  echo "Installation completed successfully.\n"
   echo "Verify installation : ./phoneinfoga version"
-  echo "To install the program globally : sudo mv ./phoneinfoga /usr/bin/phoneinfoga"
+  echo "You can now install the program globally : sudo mv ./phoneinfoga /usr/bin/phoneinfoga"
 else
   echo "Your OS/Arch is not supported."
   echo "Read more at https://sundowndev.github.io/PhoneInfoga/install/"
