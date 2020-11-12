@@ -6,6 +6,8 @@ package api
 import (
 	"net/http"
 	"strings"
+	"path/filepath"
+	"mime"
 
 	"github.com/gin-gonic/gin"
 )
