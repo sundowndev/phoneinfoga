@@ -16,5 +16,5 @@ require (
 	github.com/stretchr/testify v1.6.1
 	github.com/sundowndev/dorkgen v1.2.0
 	github.com/swaggo/swag v1.6.9
-	gopkg.in/h2non/gock.v1 v1.0.15
+	gopkg.in/h2non/gock.v1 v1.0.16
 )
