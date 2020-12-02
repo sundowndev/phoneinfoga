@@ -26,7 +26,7 @@ jobs:
           go-version: 1.15.x
 
       - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v1
+        uses: goreleaser/goreleaser-action@v2.4.0
         with:
           version: latest
           args: release --rm-dist --skip-validate
