@@ -4,6 +4,15 @@ WORKDIR /app
 
 COPY ./client .
 
+ENV PYTHONUNBUFFERED=1
+RUN apk add --update --no-cache \
+      g++ \
+      make \
+      python3 && \
+  ln -sf python3 /usr/bin/python && \
+  python3 -m ensurepip && \
+  pip3 install --no-cache --upgrade pip setuptools
+
 RUN yarn
 
 RUN yarn build
