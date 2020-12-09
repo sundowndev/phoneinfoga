@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY ./client .
 
-RUN yarn
+RUN yarn install --ignore-scripts
 
 RUN yarn build
 
