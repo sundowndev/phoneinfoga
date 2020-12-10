@@ -4,7 +4,7 @@
 
 <div align="center">
   <a href="https://github.com/sundowndev/PhoneInfoga/actions">
-    <img src="https://img.shields.io/endpoint.svg?url=https://actions-badge.atrox.dev/sundowndev/PhoneInfoga/badge?ref=master" alt="build status" />
+    <img src="https://github.com/sundowndev/PhoneInfoga/workflows/Build/badge.svg" alt="build status" />
   </a>
   <a href="https://goreportcard.com/report/github.com/sundowndev/PhoneInfoga">
     <img src="https://goreportcard.com/badge/github.com/sundowndev/PhoneInfoga" alt="go report" />
