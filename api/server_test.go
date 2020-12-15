@@ -40,21 +40,21 @@ func TestApi(t *testing.T) {
 	r = gin.Default()
 	r = Serve(r, false)
 
-	t.Run("detectContentType", func(t *testing.T) {
-		contentType := detectContentType("/file.hash.css", []byte{})
-		assert.Equal("text/css", contentType, "should be equal")
-
-		contentType = detectContentType("/file.hash.js", []byte{})
-		assert.Equal("application/javascript", contentType, "should be equal")
-
-		contentType = detectContentType("/file.hash.svg", []byte{})
-		assert.Equal("image/svg+xml", contentType, "should be equal")
-
-		contentType = detectContentType("/file.html", []byte("<html></html>"))
-		assert.Equal("text/html; charset=utf-8", contentType, "should be equal")
-	})
-
 	t.Run("Serve", func(t *testing.T) {
+		t.Run("detectContentType", func(t *testing.T) {
+			contentType := detectContentType("/file.hash.css", []byte{})
+			assert.Equal("text/css; charset=utf-8", contentType, "should be equal")
+
+			contentType = detectContentType("/file.hash.js", []byte{})
+			assert.Equal("application/javascript", contentType, "should be equal")
+
+			contentType = detectContentType("/file.hash.svg", []byte{})
+			assert.Equal("image/svg+xml", contentType, "should be equal")
+
+			contentType = detectContentType("/file.html", []byte("<html></html>"))
+			assert.Equal("text/html; charset=utf-8", contentType, "should be equal")
+		})
+
 		t.Run("getAllNumbers - /api/numbers", func(t *testing.T) {
 			res, err := performRequest(r, "GET", "/api/numbers")
 

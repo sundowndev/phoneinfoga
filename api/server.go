@@ -4,6 +4,8 @@
 package api
 
 import (
+	"fmt"
+	"mime"
 	"net/http"
 	"strings"
 
@@ -28,16 +30,11 @@ func detectContentType(path string, data []byte) string {
 	arr := strings.Split(path, ".")
 	ext := arr[len(arr)-1]
 
-	switch ext {
-	case "js":
-		return "application/javascript"
-	case "css":
-		return "text/css"
-	case "svg":
-		return "image/svg+xml"
-	default:
-		return http.DetectContentType(data)
+	if mimeType := mime.TypeByExtension(fmt.Sprintf(".%s", ext)); mimeType != "" {
+		return mimeType
 	}
+
+	return http.DetectContentType(data)
 }
 
 func registerClientRoute(router *gin.Engine) {
