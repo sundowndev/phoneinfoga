@@ -1,10 +1,10 @@
-FROM node:12.18-alpine AS client_builder
+FROM node:15.3.0-alpine AS client_builder
 
 WORKDIR /app
 
 COPY ./client .
 
-RUN yarn
+RUN yarn install --ignore-scripts
 
 RUN yarn build
 

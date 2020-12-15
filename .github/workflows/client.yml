@@ -1,17 +1,23 @@
 name: Web client CI
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [12.18]
+        node-version: [15.3.0]
     steps:
     - uses: actions/checkout@v1
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v2.1.3
       with:
         node-version: ${{ matrix.node-version }}
     - name: Install & lint

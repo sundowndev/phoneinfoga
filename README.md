@@ -4,7 +4,7 @@
 
 <div align="center">
   <a href="https://github.com/sundowndev/PhoneInfoga/actions">
-    <img src="https://img.shields.io/endpoint.svg?url=https://actions-badge.atrox.dev/sundowndev/PhoneInfoga/badge?ref=master" alt="build status" />
+    <img src="https://github.com/sundowndev/PhoneInfoga/workflows/Build/badge.svg" alt="build status" />
   </a>
   <a href="https://goreportcard.com/report/github.com/sundowndev/PhoneInfoga">
     <img src="https://goreportcard.com/badge/github.com/sundowndev/PhoneInfoga" alt="go report" />
@@ -33,7 +33,7 @@
 
 ## About
 
-PhoneInfoga is one of the most advanced tools to scan international phone numbers using only free resources. The goal is to first gather standard information such as country, area, carrier and line type on any international phone numbers with a very good accuracy. Then search for footprints on search engines to try to find the VoIP provider or identify the owner.
+PhoneInfoga is one of the most advanced tools to scan international phone numbers using only free resources. It allows you to first gather standard information such as country, area, carrier and line type on any international phone number. Then search for footprints on search engines to try to find the VoIP provider or identify the owner.
 
 ## Unofficial video tutorials
 
@@ -56,10 +56,10 @@ Since [v2 was released on March 2020](https://github.com/sundowndev/PhoneInfoga/
 - OSINT footprinting using external APIs, Google Hacking, phone books & search engines
 - Check for reputation reports, social media, disposable numbers and more
 - Scan several numbers at once
-- Use custom formatting for more effective OSINT reconnaissance
-- **NEW**: Serve a web client along with a REST API to run scans from the browser
-- **NEW**: Run your own web instance as a service
-- **NEW**: Programmatic usage with Go modules
+- Use custom formatting for more effective OSINT reconnaissance (*v1 only*)
+- Use the graphical user interface to run scans from the browser
+- Run your own web instance as a service
+- Programmatic usage with the REST API
 
 ## Anti-features
 

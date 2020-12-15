@@ -1,6 +1,12 @@
 name: Build
 
-on: [ push ]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
   build:
@@ -8,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set up Go 1.15
-        uses: actions/setup-go@v1
+        uses: actions/setup-go@v2.1.3
         with:
           go-version: 1.15.x
         id: go
@@ -20,7 +26,7 @@ jobs:
           go get -v -t -d ./...
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2.1.3
         with:
           node-version: 12.18.x
 
