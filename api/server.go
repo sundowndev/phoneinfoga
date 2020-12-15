@@ -4,10 +4,10 @@
 package api
 
 import (
+	"fmt"
+	"mime"
 	"net/http"
 	"strings"
-	"path/filepath"
-	"mime"
 
 	"github.com/gin-gonic/gin"
 )
@@ -26,6 +26,17 @@ const (
 // @license.name GNU General Public License v3.0
 // @license.url https://github.com/sundowndev/PhoneInfoga/blob/master/LICENSE
 
+func detectContentType(path string, data []byte) string {
+	arr := strings.Split(path, ".")
+	ext := arr[len(arr)-1]
+
+	if mimeType := mime.TypeByExtension(fmt.Sprintf(".%s", ext)); mimeType != "" {
+		return mimeType
+	}
+
+	return http.DetectContentType(data)
+}
+
 func registerClientRoute(router *gin.Engine) {
 	for name, file := range Assets.Files {
 		if file.IsDir() {
@@ -40,7 +51,7 @@ func registerClientRoute(router *gin.Engine) {
 		}
 
 		router.GET(path, func(c *gin.Context) {
-			c.Header("Content-Type", mime.TypeByExtension(filepath.Ext(path)))
+			c.Header("Content-Type", detectContentType(path, data))
 			c.Writer.WriteHeader(http.StatusOK)
 			c.Writer.Write(data)
 			c.Abort()
