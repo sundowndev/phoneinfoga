@@ -1678,10 +1678,10 @@
   resolved "https://registry.yarnpkg.com/@vue/preload-webpack-plugin/-/preload-webpack-plugin-1.1.1.tgz#18723530d304f443021da2292d6ec9502826104a"
   integrity sha512-8VCoJeeH8tCkzhkpfOkt+abALQkS11OIHhte5MBzYaKMTqK0A3ZAKEUVAffsOklhEv7t0yrQt696Opnu9oAx+w==
 
-"@vue/test-utils@1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@vue/test-utils/-/test-utils-1.1.1.tgz#01c3e4b22ed2b85d2e276b34d32c8ac4b726e452"
-  integrity sha512-/32538ilZ9qSiu1gui7zfBn+IFy+zoTaQTZ1qiLfQXzZtaeAD23kJMrnqaoe2w8JzJoXuqHUl2ruuStG8rwFYQ==
+"@vue/test-utils@1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@vue/test-utils/-/test-utils-1.1.2.tgz#fdb487448dceefeaf3d01d465f7c836a3d666dbc"
+  integrity sha512-utbIL7zn9c+SjhybPwh48lpWCiluFCbP1yyRNAy1fQsw/6hiNFioaWy05FoVAFIZXC5WwBf+5r4ypfM1j/nI4A==
   dependencies:
     dom-event-types "^1.0.0"
     lodash "^4.17.15"
