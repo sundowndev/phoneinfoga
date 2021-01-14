@@ -1484,12 +1484,12 @@
     cypress "^3.8.3"
     eslint-plugin-cypress "^2.10.3"
 
-"@vue/cli-plugin-eslint@4.5.9":
-  version "4.5.9"
-  resolved "https://registry.yarnpkg.com/@vue/cli-plugin-eslint/-/cli-plugin-eslint-4.5.9.tgz#7d7f8a48b8e73e6b19fe2f54b39c78850a9ab33d"
-  integrity sha512-wTsWRiRWPW5ik4bgtlh4P4h63Zgjsyvqx2FY0kcj+bSAnQGPJ3bKUOMU9KQP5EyNH6pAXMVGh2LEXK9WwJMf1w==
+"@vue/cli-plugin-eslint@4.5.10":
+  version "4.5.10"
+  resolved "https://registry.yarnpkg.com/@vue/cli-plugin-eslint/-/cli-plugin-eslint-4.5.10.tgz#ba150292d7d51c96ce1a87f2782f05f644a0eb4b"
+  integrity sha512-2ud8lurlMJCtcErjhYBcTWhu5eN79sCBGz5dHBAmtLP0k7p7xZq7/1mo2ahnZioUskYrfz94Vo9i+D3pOUMuMQ==
   dependencies:
-    "@vue/cli-shared-utils" "^4.5.9"
+    "@vue/cli-shared-utils" "^4.5.10"
     eslint-loader "^2.2.1"
     globby "^9.2.0"
     inquirer "^7.1.0"
