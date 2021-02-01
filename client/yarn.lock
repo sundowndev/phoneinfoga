@@ -1448,10 +1448,10 @@
     "@typescript-eslint/types" "4.14.1"
     eslint-visitor-keys "^2.0.0"
 
-"@vue/cli-overlay@^4.5.10":
-  version "4.5.10"
-  resolved "https://registry.yarnpkg.com/@vue/cli-overlay/-/cli-overlay-4.5.10.tgz#4eeacca20973e6601ec916c85457bd19aa45f9de"
-  integrity sha512-BydPsWJTXHTzH8wBcN1rinwLe5QRee52sf/Tceixpn4VVZCio2k8VkNG/o6hRTA+MeGuetXOhmAz0UQfIxfX8w==
+"@vue/cli-overlay@^4.5.11":
+  version "4.5.11"
+  resolved "https://registry.yarnpkg.com/@vue/cli-overlay/-/cli-overlay-4.5.11.tgz#ea99493131182285f7ac2762290354d6e5b188e8"
+  integrity sha512-aDQNw+oGk5+KR0vL9TocjfzyYHTJxR2lS8iPbcL4lRglCs2dudOE7QWXypj5dM4rQus0jJ5fxJTS55o9uy9fcQ==
 
 "@vue/cli-plugin-e2e-cypress@4.5.11":
   version "4.5.11"
@@ -1474,7 +1474,7 @@
     webpack "^4.0.0"
     yorkie "^2.0.0"
 
-"@vue/cli-plugin-router@4.5.11", "@vue/cli-plugin-router@^4.5.10":
+"@vue/cli-plugin-router@4.5.11", "@vue/cli-plugin-router@^4.5.11":
   version "4.5.11"
   resolved "https://registry.yarnpkg.com/@vue/cli-plugin-router/-/cli-plugin-router-4.5.11.tgz#3b6df738c5a1a5f50376822bf661d9a3b0c3fa62"
   integrity sha512-09tzw3faOs48IUPwLutYaNC7eoyyL140fKruTwdFdXuBLDdSQVida57Brx0zj2UKXc5qF8hk4GoGrOshN0KfNg==
@@ -1520,15 +1520,15 @@
     ts-jest "^24.2.0"
     vue-jest "^3.0.5"
 
-"@vue/cli-plugin-vuex@4.5.11", "@vue/cli-plugin-vuex@^4.5.10":
+"@vue/cli-plugin-vuex@4.5.11", "@vue/cli-plugin-vuex@^4.5.11":
   version "4.5.11"
   resolved "https://registry.yarnpkg.com/@vue/cli-plugin-vuex/-/cli-plugin-vuex-4.5.11.tgz#f6f619bcfb66c86cc45340d73152844635e548bd"
   integrity sha512-JBPeZLubiSHbRkEKDj0tnLiU43AJ3vt6JULn4IKWH1XWZ6MFC8vElaP5/AA4O3Zko5caamDDBq3TRyxdA2ncUQ==
 
-"@vue/cli-service@4.5.10":
-  version "4.5.10"
-  resolved "https://registry.yarnpkg.com/@vue/cli-service/-/cli-service-4.5.10.tgz#f08df6689fe50809b5e14dad3d7bd7b86e5c639d"
-  integrity sha512-HnVkbc+Zb6J1lu0ojuKC6aQ4PjCW2fqlJE0G9Zqg+7VsUZ2e15UVRoIXj2hcIWtQiFF6n2FDxEkvZLslht9rkg==
+"@vue/cli-service@4.5.11":
+  version "4.5.11"
+  resolved "https://registry.yarnpkg.com/@vue/cli-service/-/cli-service-4.5.11.tgz#b157e2eee2351889cbbd4ccb4a4a9d8575409175"
+  integrity sha512-FXeJh2o6B8q/njv2Ebhe9EsLXt9sPMXGDY5zVvcV5jgj9wkoej9yLfnmwWCau5kegNClP6bcM+BEHuMYxJ+ubQ==
   dependencies:
     "@intervolga/optimize-cssnano-plugin" "^1.0.5"
     "@soda/friendly-errors-webpack-plugin" "^1.7.1"
@@ -1536,10 +1536,10 @@
     "@types/minimist" "^1.2.0"
     "@types/webpack" "^4.0.0"
     "@types/webpack-dev-server" "^3.11.0"
-    "@vue/cli-overlay" "^4.5.10"
-    "@vue/cli-plugin-router" "^4.5.10"
-    "@vue/cli-plugin-vuex" "^4.5.10"
-    "@vue/cli-shared-utils" "^4.5.10"
+    "@vue/cli-overlay" "^4.5.11"
+    "@vue/cli-plugin-router" "^4.5.11"
+    "@vue/cli-plugin-vuex" "^4.5.11"
+    "@vue/cli-shared-utils" "^4.5.11"
     "@vue/component-compiler-utils" "^3.1.2"
     "@vue/preload-webpack-plugin" "^1.1.0"
     "@vue/web-component-wrapper" "^1.2.0"
