@@ -9,7 +9,7 @@ require (
 	github.com/gin-gonic/gin v1.6.3
 	github.com/golang/protobuf v1.3.4 // indirect
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
-	github.com/nyaruka/phonenumbers v1.0.64
+	github.com/nyaruka/phonenumbers v1.0.65
 	github.com/onlinecity/go-phone-iso3166 v0.0.1
 	github.com/spf13/cobra v1.1.1
 	github.com/stretchr/testify v1.7.0

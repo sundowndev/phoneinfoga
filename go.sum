@@ -188,8 +188,8 @@ github.com/modern-go/reflect2 v1.0.1/go.mod h1:bx2lNnkwVCuqBIxFjflWJWanXIb3Rllmb
 github.com/mwitkow/go-conntrack v0.0.0-20161129095857-cc309e4a2223/go.mod h1:qRWi+5nqEBWmkhHvq77mSJWrCKwh8bxhgT7d/eI7P4U=
 github.com/nbio/st v0.0.0-20140626010706-e9e8d9816f32 h1:W6apQkHrMkS0Muv8G/TipAy/FJl/rCYT0+EuS8+Z0z4=
 github.com/nbio/st v0.0.0-20140626010706-e9e8d9816f32/go.mod h1:9wM+0iRr9ahx58uYLpLIr5fm8diHn0JbqRycJi6w0Ms=
-github.com/nyaruka/phonenumbers v1.0.64 h1:r2ldFIo3rGTg18XujRMnefKrcYDr4vcT6YiKXKmBaxk=
-github.com/nyaruka/phonenumbers v1.0.64/go.mod h1:sDaTZ/KPX5f8qyV9qN+hIm+4ZBARJrupC6LuhshJq1U=
+github.com/nyaruka/phonenumbers v1.0.65 h1:xey76OEQu7loamZ/hCWe77SBPQu0dpI8ibMWfSBuawk=
+github.com/nyaruka/phonenumbers v1.0.65/go.mod h1:sDaTZ/KPX5f8qyV9qN+hIm+4ZBARJrupC6LuhshJq1U=
 github.com/oklog/ulid v1.3.1/go.mod h1:CirwcVhetQ6Lv90oh/F+FBtV6XMibvdAFo93nm5qn4U=
 github.com/onlinecity/go-phone-iso3166 v0.0.1 h1:srN6o8NjxBWIrlK6Z+zD9wGMSGYi4itWA/fRyaxetqs=
 github.com/onlinecity/go-phone-iso3166 v0.0.1/go.mod h1:n8+yIOCu9O63MH3WVwlWq1YVF6ZuAG5xlZ4mZ5ZzKF8=
