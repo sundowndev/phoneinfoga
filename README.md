@@ -38,7 +38,6 @@ PhoneInfoga is one of the most advanced tools to scan international phone number
 ## Unofficial video tutorials
 
 <a href="https://www.youtube.com/watch?v=WW6myutKBYk"><img src="https://i.ytimg.com/vi_webp/WW6myutKBYk/maxresdefault.webp" width="128" /></a>
-<a href="https://www.youtube.com/watch?v=H1rhboJ8WKE"><img src="https://i.ytimg.com/vi_webp/H1rhboJ8WKE/maxresdefault.webp" width="128" /></a>
 
 ## Current status
 
