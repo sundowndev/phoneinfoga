@@ -1,9 +1,0 @@
-{
-  "extends": [
-    "config:base"
-  ],
-  "labels": [
-    "dependencies",
-    "renovate"
-  ]
-}
