@@ -207,6 +207,8 @@ func getSocialMediaDorks(number *Number, formats ...string) (results []*GoogleSe
 			Or().
 			Intext(number.E164).
 			Or().
+			Intext(number.Local).
+			Or().
 			Intext(number.RawLocal),
 		(&dorkgen.GoogleSearch{}).
 			Site("twitter.com").
