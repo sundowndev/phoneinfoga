@@ -8,7 +8,7 @@ RUN yarn install --ignore-scripts
 
 RUN yarn build
 
-FROM golang:1.16.0-alpine as go_builder
+FROM golang:1.16.2-alpine as go_builder
 
 LABEL maintainer="Sundowndev" \
   org.label-schema.name="phoneinfoga" \
@@ -31,7 +31,7 @@ RUN go generate ./...
 
 RUN go build -v -ldflags="-s -w -X 'gopkg.in/sundowndev/phoneinfoga.v2/config.Version=$(git describe --abbrev=0 --tags)' -X 'gopkg.in/sundowndev/phoneinfoga.v2/config.Commit=$(git rev-parse --short HEAD)'" -v -o phoneinfoga .
 
-FROM golang:1.16.0-alpine
+FROM golang:1.16.2-alpine
 
 WORKDIR /app
 
