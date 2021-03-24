@@ -3,6 +3,9 @@ name: Docker Image CI
 on:
   release:
     types: [published]
+  pull_request: # TODO: remove this event
+      branches:
+        - master
 
 jobs:
   build:
