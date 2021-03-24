@@ -17,7 +17,7 @@ spec:
         app: demo-phoneinfoga-app
     spec:
       containers:
-        - image: sundowndev/phoneinfoga@sha256:ac0af573805f9143000fd57717fd51b1af0c5d9b08b228398409d126d82bcf0b
+        - image: sundowndev/phoneinfoga@sha256:bdc2d924c01f9741d3252f808c7f70b863296ba13514584bf4ebbeb49e301ff0
           args:
             - serve
           name: demo-phoneinfoga-app
