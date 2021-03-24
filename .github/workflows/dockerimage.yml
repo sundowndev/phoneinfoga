@@ -18,6 +18,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           tags: "latest,v2,stable"
+          buildargs: --platform linux/amd64,linux/arm/v7,linux/arm64
 
       - uses: actions/checkout@v2
         with:
