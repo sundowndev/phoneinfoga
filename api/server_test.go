@@ -83,7 +83,7 @@ func TestApi(t *testing.T) {
 
 				assert.Equal(err, nil, "should be equal")
 				assert.Equal(res.Result().StatusCode, 400, "should be equal")
-				assert.Equal(string(body), "{\"success\":false,\"error\":\"Parameter 'number' must be a valid integer.\"}", "should be equal")
+				assert.Equal( "{\"success\":false,\"error\":\"strconv.ParseUint: parsing \\\"azerty\\\": invalid syntax\"}", string(body))
 			})
 
 			t.Run("invalid country code", func(t *testing.T) {
