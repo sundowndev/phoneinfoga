@@ -40,7 +40,7 @@ jobs:
         run: |
           wget https://github.com/mikefarah/yq/releases/download/3.4.0/yq_linux_amd64 -O ./yq
           chmod +x ./yq
-          ./yq w ./.deploy/deployment.yaml 'spec.template.spec.containers[0].image' ${{ steps.docker_build.outputs.digest }} -i
+          ./yq w ./.deploy/deployment.yaml 'spec.template.spec.containers[0].image' sundowndev/phoneinfoga@${{ steps.docker_build.outputs.digest }} -i
           git remote set-url origin https://$GITHUB_USER:$GITHUB_TOKEN@github.com/$GITHUB_USER/$GITHUB_REPO.git
           git config --global user.email "$GITHUB_USER@users.noreply.github.com"
           git config --global user.name "$GITHUB_USER"
