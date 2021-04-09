@@ -246,7 +246,7 @@ func TestGoogleSearchScan(t *testing.T) {
 		t.Run("should generate social media dorks", func(t *testing.T) {
 			expectedResult := []*GoogleSearchDork{
 				{
-					Number: "+33673421322",
+					Number: "+33365179268",
 					Dork:   "site:facebook.com intext:\"33365179268\" OR intext:\"+33365179268\" OR intext:\"0365179268\"",
 					URL:    "https://www.google.com/search?q=site%3Afacebook.com+intext%3A%2233365179268%22+OR+intext%3A%22%2B33365179268%22+OR+intext%3A%220365179268%22",
 				},
