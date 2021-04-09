@@ -234,6 +234,7 @@ func TestGoogleSearchScan(t *testing.T) {
 					Number: "+33673421322",
 					Dork:   "site:smslive.co intext:\"33673421322\" OR intext:\"0673421322\"",
 					URL:    "https://www.google.com/search?q=site%3Asmslive.co+intext%3A%2233673421322%22+OR+intext%3A%220673421322%22",
+
 				},
 			}
 
@@ -278,8 +279,8 @@ func TestGoogleSearchScan(t *testing.T) {
 			expectedResult := []*GoogleSearchDork{
 				{
 					Number: "+33673421322",
-					Dork:   "site:facebook.com intext:\"33673421322\" OR intext:\"+33673421322\" OR intext:\"0673421322\" OR intext:\"06.73.42.13.22\"",
-					URL:    "https://www.google.com/search?q=site%3Afacebook.com+intext%3A%2233673421322%22+OR+intext%3A%22%2B33673421322%22+OR+intext%3A%220673421322%22+OR+intext%3A%2206.73.42.13.22%22",
+					Dork:   "site:facebook.com intext:\"33673421322\" OR intext:\"+33673421322\" OR intext:\"06 73 42 13 22\" OR intext:\"0673421322\" OR intext:\"06.73.42.13.22\"",
+					URL:    "https://www.google.com/search?q=site%3Afacebook.com+intext%3A%2233673421322%22+OR+intext%3A%22%2B33673421322%22+OR+intext%3A%2206+73+42+13+22%22+OR+intext%3A%220673421322%22+OR+intext%3A%2206.73.42.13.22%22",
 				},
 				{
 					Number: "+33673421322",
