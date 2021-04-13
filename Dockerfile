@@ -13,8 +13,8 @@ FROM golang:1.16.2-alpine as go_builder
 LABEL maintainer="Sundowndev" \
   org.label-schema.name="phoneinfoga" \
   org.label-schema.description="Advanced information gathering & OSINT tool for phone numbers." \
-  org.label-schema.url="https://github.com/sundowndev/PhoneInfoga" \
-  org.label-schema.vcs-url="https://github.com/sundowndev/PhoneInfoga" \
+  org.label-schema.url="https://github.com/sundowndev/phoneinfoga" \
+  org.label-schema.vcs-url="https://github.com/sundowndev/phoneinfoga" \
   org.label-schema.vendor="Sundowndev" \
   org.label-schema.schema-version="1.0"
 
