@@ -21,7 +21,7 @@ var doc = `{
         "contact": {},
         "license": {
             "name": "GNU General Public License v3.0",
-            "url": "https://github.com/sundowndev/PhoneInfoga/blob/master/LICENSE"
+            "url": "https://github.com/sundowndev/phoneinfoga/blob/master/LICENSE"
         },
         "version": "{{.Version}}"
     },

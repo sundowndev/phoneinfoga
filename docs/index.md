@@ -25,7 +25,7 @@ PhoneInfoga is one of the most advanced tools to scan phone numbers using only f
 ----
 
 !!! bug
-    Found a bug ? Feel free to [open an issue](https://github.com/sundowndev/PhoneInfoga/issues).
+    Found a bug ? Feel free to [open an issue](https://github.com/sundowndev/phoneinfoga/issues).
 
     You can also [reach me on Twitter](https://twitter.com/sundowndev) or at raphael(at)crvx.fr.
 

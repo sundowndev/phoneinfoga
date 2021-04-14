@@ -24,7 +24,7 @@ const (
 // @BasePath /api
 // @schemes http https
 // @license.name GNU General Public License v3.0
-// @license.url https://github.com/sundowndev/PhoneInfoga/blob/master/LICENSE
+// @license.url https://github.com/sundowndev/phoneinfoga/blob/master/LICENSE
 
 func detectContentType(path string, data []byte) string {
 	arr := strings.Split(path, ".")

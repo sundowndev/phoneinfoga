@@ -125,7 +125,7 @@ info:
   description: Advanced information gathering & OSINT framework for phone numbers.
   license:
     name: GNU General Public License v3.0
-    url: https://github.com/sundowndev/PhoneInfoga/blob/master/LICENSE
+    url: https://github.com/sundowndev/phoneinfoga/blob/master/LICENSE
   title: PhoneInfoga REST API
   version: v2
 paths:
