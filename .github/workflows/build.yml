@@ -43,6 +43,13 @@ jobs:
           curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.24.0
           ./bin/golangci-lint run -D errcheck
 
+      - name: Check Codecov
+        run: |
+          curl -s -o codecov https://codecov.io/bash \
+            && VERSION=$(grep 'VERSION=\".*\"' codecov | cut -d'"' -f2) \
+            && shasum -a 512 -c <(curl -s https://raw.githubusercontent.com/codecov/codecov-bash/${VERSION}/SHA512SUM) \
+            && rm codecov
+
       - name: Test
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
