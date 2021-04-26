@@ -50,5 +50,6 @@ jobs:
           curl -s -o codecov https://codecov.io/bash \
             && VERSION=$(grep 'VERSION=\".*\"' codecov | cut -d'"' -f2) \
             && shasum -a 512 -c --ignore-missing <(curl -s https://raw.githubusercontent.com/codecov/codecov-bash/${VERSION}/SHA512SUM)
+          chmod +x codecov
           go test -race -coverprofile=coverage.txt -covermode=atomic -v ./...
           ./codecov
