@@ -22,7 +22,7 @@ jobs:
 
       - name: Build and push
         id: docker_build
-        uses: docker/build-push-action@v2.4.0
+        uses: docker/build-push-action@v2.6.1
         with:
           push: true
           tags: sundowndev/phoneinfoga:latest,sundowndev/phoneinfoga:v2,sundowndev/phoneinfoga:stable
