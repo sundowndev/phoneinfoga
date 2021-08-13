@@ -19,4 +19,4 @@
 coverage
 coverage.*
 .idea
-api/assets.go
+api/static

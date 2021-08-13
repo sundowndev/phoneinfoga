@@ -1,21 +1,25 @@
 // Package api is about the REST API of PhoneInfoga
-//go:generate go run github.com/jessevdk/go-assets-builder ../client/dist -o ./assets.go -p api
+//go:generate cp -r ../client/dist ./static
 //go:generate go run github.com/swaggo/swag/cmd/swag init -g ./server.go --parseDependency
 package api
 
 import (
+	"embed"
 	"fmt"
 	"mime"
 	"net/http"
+	"path/filepath"
 	"strings"
 
 	"github.com/gin-gonic/gin"
 )
 
 const (
-	clientDistPath = "/client/dist/"
-	staticPath     = "/"
+	staticPath = "/"
 )
+
+//go:embed static
+var clientFiles embed.FS
 
 // @title PhoneInfoga REST API
 // @description Advanced information gathering & OSINT framework for phone numbers.
@@ -37,14 +41,40 @@ func detectContentType(path string, data []byte) string {
 	return http.DetectContentType(data)
 }
 
-func registerClientRoute(router *gin.Engine) {
-	for name, file := range Assets.Files {
+func walkDir(dir string, efs embed.FS) ([]string, error) {
+	var arr []string
+	files, err := efs.ReadDir(dir)
+	if err != nil {
+		return arr, err
+	}
+
+	for _, file := range files {
 		if file.IsDir() {
+			filesInDir, err := walkDir(filepath.Join(dir, file.Name()), efs)
+			if err != nil {
+				return arr, err
+			}
+			arr = append(arr, filesInDir...)
 			continue
 		}
+		arr = append(arr, filepath.Join(dir, file.Name()))
+	}
 
-		path := strings.ReplaceAll(name, clientDistPath, staticPath)
-		data := file.Data
+	return arr, nil
+}
+
+func registerClientRoute(router *gin.Engine) error {
+	files, err := walkDir("static", clientFiles)
+	if err != nil {
+		return err
+	}
+
+	for _, name := range files {
+		path := strings.ReplaceAll(name, "static/", staticPath)
+		data, err := clientFiles.ReadFile(name)
+		if err != nil {
+			return err
+		}
 
 		if path == staticPath+"index.html" {
 			path = staticPath
@@ -53,10 +83,11 @@ func registerClientRoute(router *gin.Engine) {
 		router.GET(path, func(c *gin.Context) {
 			c.Header("Content-Type", detectContentType(path, data))
 			c.Writer.WriteHeader(http.StatusOK)
-			c.Writer.Write(data)
+			_, _ = c.Writer.Write(data)
 			c.Abort()
 		})
 	}
+	return nil
 }
 
 // Serve launches the web client
@@ -72,7 +103,10 @@ func Serve(router *gin.Engine, disableClient bool) *gin.Engine {
 		GET("/numbers/:number/scan/ovh", ValidateScanURL, ovhScan)
 
 	if !disableClient {
-		registerClientRoute(router)
+		err := registerClientRoute(router)
+		if err != nil {
+			panic(err)
+		}
 	}
 
 	router.Use(func(c *gin.Context) {
