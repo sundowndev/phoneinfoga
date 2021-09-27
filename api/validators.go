@@ -1,6 +1,7 @@
 package api
 
 import (
+	"gopkg.in/sundowndev/phoneinfoga.v2/utils"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -10,7 +11,8 @@ import (
 // JSONResponse is the default API response type
 type JSONResponse struct {
 	Success bool   `json:"success"`
-	Error   string `json:"error"`
+	Error   string `json:"error,omitempty"`
+	Message string `json:"message,omitempty"`
 }
 
 type scanURL struct {
@@ -29,6 +31,7 @@ func ValidateScanURL(c *gin.Context) {
 	number, err := scanners.LocalScan(c.Param("number"))
 
 	if err != nil {
+		utils.LoggerService.Errorln("Validation error", c.Param("number"), err.Error())
 		errorHandling(c, err.Error())
 		return
 	}

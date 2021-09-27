@@ -13,7 +13,7 @@ func successResponse(msg ...string) JSONResponse {
 
 	return JSONResponse{
 		Success: true,
-		Error:   message,
+		Message: message,
 	}
 }
 

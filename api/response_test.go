@@ -23,7 +23,8 @@ func TestResponse(t *testing.T) {
 
 			assert.IsType(JSONResponse{}, result)
 			assert.Equal(result.Success, true, "they should be equal")
-			assert.Equal(result.Error, "test", "they should be equal")
+			assert.Equal(result.Error, "", "they should be equal")
+			assert.Equal(result.Message, "test", "they should be equal")
 		})
 	})
 
