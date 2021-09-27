@@ -10,18 +10,24 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
+type numverifyError struct {
+	Code int    `json:"code"`
+	Info string `json:"info"`
+}
+
 // NumverifyScannerResponse REST API response
 type NumverifyScannerResponse struct {
-	Valid               bool   `json:"valid"`
-	Number              string `json:"number"`
-	LocalFormat         string `json:"local_format"`
-	InternationalFormat string `json:"international_format"`
-	CountryPrefix       string `json:"country_prefix"`
-	CountryCode         string `json:"country_code"`
-	CountryName         string `json:"country_name"`
-	Location            string `json:"location"`
-	Carrier             string `json:"carrier"`
-	LineType            string `json:"line_type"`
+	Valid               bool           `json:"valid"`
+	Number              string         `json:"number"`
+	LocalFormat         string         `json:"local_format"`
+	InternationalFormat string         `json:"international_format"`
+	CountryPrefix       string         `json:"country_prefix"`
+	CountryCode         string         `json:"country_code"`
+	CountryName         string         `json:"country_name"`
+	Location            string         `json:"location"`
+	Carrier             string         `json:"carrier"`
+	LineType            string         `json:"line_type"`
+	Error               numverifyError `json:"error"`
 }
 
 // NumverifyScan fetches Numverify's API
@@ -59,6 +65,10 @@ func NumverifyScan(number *Number) (res *NumverifyScannerResponse, err error) {
 	// Use json.Decode for reading streams of JSON data
 	if err := json.NewDecoder(response.Body).Decode(&result); err != nil {
 		return nil, err
+	}
+
+	if len(result.Error.Info) > 0 {
+		return nil, fmt.Errorf("the Numverify API returned an error: %v", result.Error.Info)
 	}
 
 	res = &NumverifyScannerResponse{
