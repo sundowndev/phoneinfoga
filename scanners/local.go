@@ -12,7 +12,6 @@ func LocalScan(number string) (res *Number, err error) {
 	country := utils.ParseCountryCode(n)
 
 	num, err := phonenumbers.Parse(n, country)
-
 	if err != nil {
 		return nil, err
 	}

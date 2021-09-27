@@ -78,9 +78,8 @@ func numverifyScan(c *gin.Context) {
 	number, _ := c.Get("number")
 
 	result, err := scanners.NumverifyScan(number.(*scanners.Number))
-
 	if err != nil {
-		c.JSON(500, errorResponse())
+		c.JSON(500, errorResponse(err.Error()))
 		return
 	}
 
