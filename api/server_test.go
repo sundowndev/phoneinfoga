@@ -83,7 +83,7 @@ func TestApi(t *testing.T) {
 
 				assert.Equal(err, nil, "should be equal")
 				assert.Equal(res.Result().StatusCode, 400, "should be equal")
-				assert.Equal( "{\"success\":false,\"error\":\"strconv.ParseUint: parsing \\\"azerty\\\": invalid syntax\"}", string(body))
+				assert.Equal("{\"success\":false,\"error\":\"strconv.ParseUint: parsing \\\"azerty\\\": invalid syntax\"}", string(body))
 			})
 
 			t.Run("invalid country code", func(t *testing.T) {
@@ -153,7 +153,7 @@ func TestApi(t *testing.T) {
 
 				assert.Equal(err, nil, "should be equal")
 				assert.Equal(res.Result().StatusCode, 200, "should be equal")
-				assert.Equal(string(body), `{"success":true,"error":"","result":{"valid":true,"number":"79516566591","local_format":"9516566591","international_format":"+79516566591","country_prefix":"+7","country_code":"RU","country_name":"Russian Federation","location":"Saint Petersburg and Leningrad Oblast","carrier":"OJSC St. Petersburg Telecom (OJSC Tele2-Saint-Petersburg)","line_type":"mobile"}}`, "should be equal")
+				assert.Equal(string(body), `{"success":true,"error":"","result":{"valid":true,"number":"79516566591","local_format":"9516566591","international_format":"+79516566591","country_prefix":"+7","country_code":"RU","country_name":"Russian Federation","location":"Saint Petersburg and Leningrad Oblast","carrier":"OJSC St. Petersburg Telecom (OJSC Tele2-Saint-Petersburg)","line_type":"mobile","error":{"code":0,"info":""}}}`, "should be equal")
 
 				assert.Equal(gock.IsDone(), true, "there should have no pending mocks")
 			})

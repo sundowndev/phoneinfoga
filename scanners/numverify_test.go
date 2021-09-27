@@ -107,4 +107,34 @@ func TestNumverifyScanner(t *testing.T) {
 
 		assert.Equal(gock.IsDone(), true, "there should have no pending mocks")
 	})
+
+	t.Run("should handle rate limit error", func(t *testing.T) {
+		defer gock.Off() // Flush pending mocks after test execution
+
+		number, _ := LocalScan("+79516566591")
+
+		gock.New("http://numverify.com").
+			Get("/").
+			Reply(200).BodyString(`<html><body><input type="hidden" name="scl_request_secret" value="secret"/></body></html>`)
+
+		gock.New("https://numverify.com").
+			Get("/php_helper_scripts/phone_api.php").
+			MatchParam("secret_key", "5ad5554ac240e4d3d31107941b35a5eb").
+			MatchParam("number", number.International).
+			Reply(200).
+			JSON(`{
+  "success": false,
+  "error": {
+    "code": 104,
+    "info": "Your monthly usage limit has been reached. Please upgrade your Subscription Plan."
+  }
+}`)
+
+		result, err := numverifyScanCLI(utils.LoggerService, number)
+
+		assert.Nil(result)
+		assert.EqualError(err, "the Numverify API returned an error: Your monthly usage limit has been reached. Please upgrade your Subscription Plan.")
+
+		assert.Equal(gock.IsDone(), true, "there should have no pending mocks")
+	})
 }
