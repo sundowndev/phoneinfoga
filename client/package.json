@@ -80,5 +80,6 @@
   "browserslist": [
     "> 1%",
     "last 2 versions"
-  ]
+  ],
+  "packageManager": "yarn@3.0.2"
 }
