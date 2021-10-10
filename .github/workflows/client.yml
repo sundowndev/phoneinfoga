@@ -20,10 +20,12 @@ jobs:
       uses: actions/setup-node@v2.1.5
       with:
         node-version: ${{ matrix.node-version }}
+    - name: Set yarn to v2
+      run: yarn set version berry
     - name: Install & lint
       run: |
         cd client
-        yarn
+        yarn install --immutable
         yarn lint
     - name: Build
       run: |

@@ -4399,6 +4399,7 @@ __metadata:
     eslint-plugin-vue: 7.8.0
     jest: 26.6.3
     jquery: 3.6.0
+    node-gyp: 8.2.0
     popper.js: 1.16.1
     prettier: 2.2.1
     ts-jest: 26.5.4
@@ -11185,7 +11186,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"node-gyp@npm:latest":
+"node-gyp@npm:8.2.0, node-gyp@npm:latest":
   version: 8.2.0
   resolution: "node-gyp@npm:8.2.0"
   dependencies:
