@@ -35,10 +35,6 @@
 
 PhoneInfoga is one of the most advanced tools to scan international phone numbers using only free resources. It allows you to first gather standard information such as country, area, carrier and line type on any international phone number. Then search for footprints on search engines to try to find the VoIP provider or identify the owner.
 
-## Unofficial video tutorials
-
-<a href="https://www.youtube.com/watch?v=WW6myutKBYk"><img src="https://i.ytimg.com/vi_webp/WW6myutKBYk/maxresdefault.webp" width="128" /></a>
-
 ## Current status
 
 This project is stable and production-ready. [Roadmap is here](https://github.com/sundowndev/phoneinfoga/projects/1).
