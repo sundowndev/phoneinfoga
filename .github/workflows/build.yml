@@ -40,16 +40,15 @@ jobs:
 
       - name: Lint
         run: |
-          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.24.0
+          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.43.0
           ./bin/golangci-lint run -D errcheck
 
       - name: Test
+        run: go test -race -coverprofile=./c.out -covermode=atomic -v ./...
+
+      - name: Report code coverage
         env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          COVERALLS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          curl -s -o codecov https://codecov.io/bash \
-            && VERSION=$(grep 'VERSION=\".*\"' codecov | cut -d'"' -f2) \
-            && shasum -a 512 -c --ignore-missing <(curl -s https://raw.githubusercontent.com/codecov/codecov-bash/${VERSION}/SHA512SUM)
-          chmod +x codecov
-          go test -race -coverprofile=coverage.txt -covermode=atomic -v ./...
-          ./codecov
+          go install github.com/mattn/goveralls@latest
+          goveralls -coverprofile=./c.out -service=github
