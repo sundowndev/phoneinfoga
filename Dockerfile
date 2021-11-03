@@ -4,8 +4,6 @@ WORKDIR /app
 
 COPY ./client .
 
-RUN yarn set version berry
-
 RUN yarn install --immutable
 
 RUN yarn build
