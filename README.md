@@ -12,8 +12,8 @@
   <a href="https://codeclimate.com/github/sundowndev/phoneinfoga/maintainability">
     <img src="https://api.codeclimate.com/v1/badges/3259feb1c68df1cd4f71/maintainability" />
   </a>
-  <a href="https://codecov.io/gh/sundowndev/phoneinfoga">
-    <img src="https://codecov.io/gh/sundowndev/phoneinfoga/branch/master/graph/badge.svg" />
+  <a href='https://coveralls.io/github/sundowndev/phoneinfoga'>
+    <img src='https://coveralls.io/repos/github/sundowndev/phoneinfoga/badge.svg' alt='Coverage Status' />
   </a>
   <a href="https://github.com/sundowndev/phoneinfoga/releases">
     <img src="https://img.shields.io/github/release/SundownDEV/phoneinfoga.svg" alt="Latest version" />
