@@ -32,7 +32,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: sundowndev/phoneinfoga:latest
+          tags: sundowndev/phoneinfoga:next
           platforms: linux/amd64
 
       - name: Display new image digest
