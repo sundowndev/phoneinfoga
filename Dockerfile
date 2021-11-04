@@ -31,7 +31,7 @@ RUN go generate ./...
 
 RUN go build -v -ldflags="-s -w -X 'gopkg.in/sundowndev/phoneinfoga.v2/config.Version=$(git describe --abbrev=0 --tags)' -X 'gopkg.in/sundowndev/phoneinfoga.v2/config.Commit=$(git rev-parse --short HEAD)'" -v -o phoneinfoga .
 
-FROM golang:1.16.2-alpine
+FROM golang:1.16.7-alpine
 
 WORKDIR /app
 
