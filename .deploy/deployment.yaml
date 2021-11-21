@@ -26,9 +26,6 @@ spec:
           ports:
             - containerPort: 5000
               name: http
-          volumeMounts:
-            - mountPath: /tmp
-              name: tmp-vol
           resources:
             requests:
               memory: "64Mi"
@@ -36,7 +33,3 @@ spec:
             limits:
               memory: "256Mi"
               cpu: "200m"
-          volumes:
-            - emptyDir:
-                medium: Memory
-              name: tmp-vol
