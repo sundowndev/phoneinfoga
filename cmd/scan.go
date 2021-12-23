@@ -4,8 +4,8 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
-	"gopkg.in/sundowndev/phoneinfoga.v2/scanners"
-	"gopkg.in/sundowndev/phoneinfoga.v2/utils"
+	"github.com/sundowndev/phoneinfoga/v2/scanners"
+	"github.com/sundowndev/phoneinfoga/v2/utils"
 )
 
 func init() {

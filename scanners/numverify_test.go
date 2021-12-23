@@ -4,8 +4,8 @@ import (
 	"testing"
 
 	assertion "github.com/stretchr/testify/assert"
+	"github.com/sundowndev/phoneinfoga/v2/utils"
 	gock "gopkg.in/h2non/gock.v1"
-	"gopkg.in/sundowndev/phoneinfoga.v2/utils"
 )
 
 func TestNumverifyScanner(t *testing.T) {

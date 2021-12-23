@@ -1,6 +1,7 @@
 package api
 
 import (
+	"github.com/sundowndev/phoneinfoga/v2/scanners"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -9,7 +10,6 @@ import (
 	"github.com/gin-gonic/gin"
 	assertTest "github.com/stretchr/testify/assert"
 	"gopkg.in/h2non/gock.v1"
-	"gopkg.in/sundowndev/phoneinfoga.v2/scanners"
 )
 
 var r *gin.Engine

@@ -307,6 +307,9 @@ var doc = `{
                 "error": {
                     "type": "string"
                 },
+                "message": {
+                    "type": "string"
+                },
                 "success": {
                     "type": "boolean"
                 }
@@ -316,6 +319,9 @@ var doc = `{
             "type": "object",
             "properties": {
                 "error": {
+                    "type": "string"
+                },
+                "message": {
                     "type": "string"
                 },
                 "numbers": {
@@ -347,6 +353,9 @@ var doc = `{
             "type": "object",
             "properties": {
                 "error": {
+                    "type": "string"
+                },
+                "message": {
                     "type": "string"
                 },
                 "result": {
@@ -447,6 +456,9 @@ var doc = `{
                 "country_prefix": {
                     "type": "string"
                 },
+                "error": {
+                    "$ref": "#/definitions/scanners.numverifyError"
+                },
                 "international_format": {
                     "type": "string"
                 },
@@ -480,6 +492,17 @@ var doc = `{
                     "type": "string"
                 },
                 "zipCode": {
+                    "type": "string"
+                }
+            }
+        },
+        "scanners.numverifyError": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "info": {
                     "type": "string"
                 }
             }

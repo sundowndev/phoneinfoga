@@ -3,8 +3,8 @@ package cmd
 import (
 	"fmt"
 	"github.com/spf13/cobra"
-	"gopkg.in/sundowndev/phoneinfoga.v2/config"
-	"gopkg.in/sundowndev/phoneinfoga.v2/utils"
+	"github.com/sundowndev/phoneinfoga/v2/config"
+	"github.com/sundowndev/phoneinfoga/v2/utils"
 )
 
 func init() {

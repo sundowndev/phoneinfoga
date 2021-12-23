@@ -2,8 +2,8 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
-	"gopkg.in/sundowndev/phoneinfoga.v2/config"
-	"gopkg.in/sundowndev/phoneinfoga.v2/scanners"
+	"github.com/sundowndev/phoneinfoga/v2/config"
+	"github.com/sundowndev/phoneinfoga/v2/scanners"
 )
 
 type scanResultResponse struct {

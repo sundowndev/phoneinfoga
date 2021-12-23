@@ -4,12 +4,16 @@ definitions:
     properties:
       error:
         type: string
+      message:
+        type: string
       success:
         type: boolean
     type: object
   api.getAllNumbersResponse:
     properties:
       error:
+        type: string
+      message:
         type: string
       numbers:
         items:
@@ -30,6 +34,8 @@ definitions:
   api.scanResultResponse:
     properties:
       error:
+        type: string
+      message:
         type: string
       result:
         type: object
@@ -95,6 +101,8 @@ definitions:
         type: string
       country_prefix:
         type: string
+      error:
+        $ref: '#/definitions/scanners.numverifyError'
       international_format:
         type: string
       line_type:
@@ -117,6 +125,13 @@ definitions:
       numberRange:
         type: string
       zipCode:
+        type: string
+    type: object
+  scanners.numverifyError:
+    properties:
+      code:
+        type: integer
+      info:
         type: string
     type: object
 host: demo.phoneinfoga.crvx.fr
