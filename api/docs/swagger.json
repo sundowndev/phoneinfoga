@@ -296,6 +296,9 @@
                 "error": {
                     "type": "string"
                 },
+                "message": {
+                    "type": "string"
+                },
                 "success": {
                     "type": "boolean"
                 }
@@ -305,6 +308,9 @@
             "type": "object",
             "properties": {
                 "error": {
+                    "type": "string"
+                },
+                "message": {
                     "type": "string"
                 },
                 "numbers": {
@@ -336,6 +342,9 @@
             "type": "object",
             "properties": {
                 "error": {
+                    "type": "string"
+                },
+                "message": {
                     "type": "string"
                 },
                 "result": {
@@ -436,6 +445,9 @@
                 "country_prefix": {
                     "type": "string"
                 },
+                "error": {
+                    "$ref": "#/definitions/scanners.numverifyError"
+                },
                 "international_format": {
                     "type": "string"
                 },
@@ -469,6 +481,17 @@
                     "type": "string"
                 },
                 "zipCode": {
+                    "type": "string"
+                }
+            }
+        },
+        "scanners.numverifyError": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "info": {
                     "type": "string"
                 }
             }

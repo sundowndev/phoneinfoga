@@ -1,11 +1,11 @@
 package api
 
 import (
-	"gopkg.in/sundowndev/phoneinfoga.v2/utils"
+	"github.com/sundowndev/phoneinfoga/v2/utils"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"gopkg.in/sundowndev/phoneinfoga.v2/scanners"
+	"github.com/sundowndev/phoneinfoga/v2/scanners"
 )
 
 // JSONResponse is the default API response type

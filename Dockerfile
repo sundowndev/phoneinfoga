@@ -29,7 +29,7 @@ COPY --from=client_builder /app/dist ./client/dist
 
 RUN go generate ./...
 
-RUN go build -v -ldflags="-s -w -X 'gopkg.in/sundowndev/phoneinfoga.v2/config.Version=$(git describe --abbrev=0 --tags)' -X 'gopkg.in/sundowndev/phoneinfoga.v2/config.Commit=$(git rev-parse --short HEAD)'" -v -o phoneinfoga .
+RUN go build -v -ldflags="-s -w -X 'github.com/sundowndev/phoneinfoga/v2/config.Version=$(git describe --abbrev=0 --tags)' -X 'github.com/sundowndev/phoneinfoga/v2/config.Commit=$(git rev-parse --short HEAD)'" -v -o phoneinfoga .
 
 FROM golang:1.17.5-alpine
 
