@@ -1,18 +1,15 @@
 package suppliers
 
 import (
-	"crypto/md5"
-	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"github.com/PuerkitoBio/goquery"
 	"net/http"
+	"os"
 )
 
 type NumverifySupplierInterface interface {
-	Configure() error
 	IsAvailable() bool
-	ScanNumber(string) (*NumverifyScannerResponse, error)
+	Validate(string) (*NumverifyScannerResponse, error)
 }
 
 type numverifyError struct {
@@ -35,43 +32,23 @@ type NumverifyScannerResponse struct {
 	Error               numverifyError `json:"error"`
 }
 
-type NumverifySupplier struct{}
-
-func NewNumverifySupplier() *NumverifySupplier {
-	return &NumverifySupplier{}
+type NumverifySupplier struct {
+	ApiKey string
 }
 
-func (s *NumverifySupplier) Configure() error {
-	return nil
+func NewNumverifySupplier() *NumverifySupplier {
+	return &NumverifySupplier{
+		ApiKey: os.Getenv("NUMVERIFY_API_KEY"),
+	}
 }
 
 func (s *NumverifySupplier) IsAvailable() bool {
-	return true
+	return s.ApiKey != ""
 }
 
-func (s *NumverifySupplier) ScanNumber(internationalNumber string) (res *NumverifyScannerResponse, err error) {
-	html, err := http.Get("http://numverify.com/")
-	if err != nil {
-		return nil, err
-	}
-	defer html.Body.Close()
-
-	// Load the HTML document
-	doc, err := goquery.NewDocumentFromReader(html.Body)
-	if err != nil {
-		return nil, err
-	}
-
-	secret, _ := doc.Find("[name=\"scl_request_secret\"]").Attr("value")
-
-	// Then fetch REST API
-	safeNumber := internationalNumber
-	apiKey := md5.Sum([]byte(safeNumber + secret))
-
-	url := fmt.Sprintf("https://numverify.com/php_helper_scripts/phone_api.php?secret_key=%s&number=%s", hex.EncodeToString(apiKey[:]), safeNumber)
-
+func (s *NumverifySupplier) Validate(internationalNumber string) (res *NumverifyScannerResponse, err error) {
 	// Build the request
-	response, err := http.Get(url)
+	response, err := http.Get(fmt.Sprintf("http://apilayer.net/api/validate?access_key=%s&number=%s", s.ApiKey, internationalNumber))
 	if err != nil {
 		return nil, err
 	}
@@ -86,7 +63,7 @@ func (s *NumverifySupplier) ScanNumber(internationalNumber string) (res *Numveri
 	}
 
 	if len(result.Error.Info) > 0 {
-		return nil, fmt.Errorf("the Numverify API returned an error: %v", result.Error.Info)
+		return nil, fmt.Errorf("%s", result.Error.Info)
 	}
 
 	res = &NumverifyScannerResponse{

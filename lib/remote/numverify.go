@@ -26,7 +26,7 @@ func (s *numverifyScanner) ShouldRun() bool {
 func (s *numverifyScanner) Scan(n *number.Number) (ScannerResult, error) {
 	data := make(ScannerResult, 0)
 
-	res, err := s.client.ScanNumber(n.International)
+	res, err := s.client.Validate(n.International)
 	if err != nil {
 		return data, err
 	}

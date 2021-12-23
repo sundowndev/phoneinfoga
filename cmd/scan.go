@@ -47,17 +47,17 @@ func runScan() {
 
 	result, errs := remoteLibrary.Scan(num)
 	for name, res := range result {
-		fmt.Printf("Results for %s", name)
+		fmt.Printf("\nResults for %s\n", name)
 		for k, v := range res {
-			fmt.Printf("%s: %v", k, fmt.Sprintf("%v", v))
+			fmt.Printf("%s: %v\n", k, fmt.Sprintf("%v", v))
 		}
 	}
 
 	if len(errs) > 0 {
-		fmt.Println("The following scanners returned errors:")
+		fmt.Println("\nThe following scanners returned errors:")
 	}
 	for name, err := range errs {
-		fmt.Printf("%s: %s", name, err)
+		fmt.Printf("%s: %s\n", name, err)
 	}
 
 	fmt.Printf("\n%d scanner(s) succeeded\n", len(result))
