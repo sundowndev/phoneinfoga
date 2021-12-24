@@ -1,9 +1,7 @@
-package config
-
-const unknown = "unknown"
+package build
 
 // Version is the corresponding release tag
-var Version = unknown
+var Version = "unknown"
 
 // Commit is the corresponding Git commit
-var Commit = unknown
+var Commit = "unknown"
