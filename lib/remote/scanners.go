@@ -5,10 +5,8 @@ import (
 	"github.com/sundowndev/phoneinfoga/v2/lib/remote/suppliers"
 )
 
-type ScannerResult map[string]interface{}
-
 type Scanner interface {
-	Scan(*number.Number) (ScannerResult, error)
+	Scan(*number.Number) (interface{}, error)
 	ShouldRun() bool
 	Identifier() string
 }
@@ -17,4 +15,5 @@ func InitScanners(remote *Library) {
 	numverifySupplier := suppliers.NewNumverifySupplier()
 
 	remote.AddScanner(NewNumverifyScanner(numverifySupplier))
+	remote.AddScanner(NewGoogleSearchScanner())
 }

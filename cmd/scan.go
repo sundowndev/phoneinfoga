@@ -3,8 +3,10 @@ package cmd
 import (
 	"fmt"
 	"github.com/fatih/color"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/sundowndev/phoneinfoga/v2/lib/number"
+	"github.com/sundowndev/phoneinfoga/v2/lib/output"
 	"github.com/sundowndev/phoneinfoga/v2/lib/remote"
 	"os"
 )
@@ -32,6 +34,10 @@ func runScan() {
 	fmt.Printf(color.WhiteString("Running scan for phone number %s...\n"), inputNumber)
 
 	if valid := number.IsValid(inputNumber); !valid {
+		logrus.WithFields(map[string]interface{}{
+			"input": inputNumber,
+			"valid": valid,
+		}).Debug("Input phone number is invalid")
 		fmt.Println(color.RedString("Given phone number is not valid"))
 		os.Exit(1)
 	}
@@ -46,19 +52,10 @@ func runScan() {
 	remote.InitScanners(remoteLibrary)
 
 	result, errs := remoteLibrary.Scan(num)
-	for name, res := range result {
-		fmt.Printf("\nResults for %s\n", name)
-		for k, v := range res {
-			fmt.Printf("%s: %v\n", k, fmt.Sprintf("%v", v))
-		}
-	}
 
-	if len(errs) > 0 {
-		fmt.Println("\nThe following scanners returned errors:")
+	err = output.GetOutput(output.Console).Write(result, errs)
+	if err != nil {
+		fmt.Println(color.RedString(err.Error()))
+		os.Exit(1)
 	}
-	for name, err := range errs {
-		fmt.Printf("%s: %s\n", name, err)
-	}
-
-	fmt.Printf("\n%d scanner(s) succeeded\n", len(result))
 }

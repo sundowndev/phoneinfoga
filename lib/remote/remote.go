@@ -21,8 +21,8 @@ func (r *Library) AddScanner(s Scanner) {
 	r.scanners[s.Identifier()] = s
 }
 
-func (r *Library) Scan(n *number.Number) (map[string]ScannerResult, map[string]error) {
-	allData := make(map[string]ScannerResult, 0)
+func (r *Library) Scan(n *number.Number) (map[string]interface{}, map[string]error) {
+	allData := make(map[string]interface{}, 0)
 	errors := make(map[string]error, 0)
 
 	for name, s := range r.scanners {

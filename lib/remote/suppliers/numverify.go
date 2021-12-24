@@ -9,7 +9,7 @@ import (
 
 type NumverifySupplierInterface interface {
 	IsAvailable() bool
-	Validate(string) (*NumverifyScannerResponse, error)
+	Validate(string) (*NumverifyValidateResponse, error)
 }
 
 type numverifyError struct {
@@ -17,8 +17,8 @@ type numverifyError struct {
 	Info string `json:"info"`
 }
 
-// NumverifyScannerResponse REST API response
-type NumverifyScannerResponse struct {
+// NumverifyValidateResponse REST API response
+type NumverifyValidateResponse struct {
 	Valid               bool           `json:"valid"`
 	Number              string         `json:"number"`
 	LocalFormat         string         `json:"local_format"`
@@ -46,7 +46,7 @@ func (s *NumverifySupplier) IsAvailable() bool {
 	return s.ApiKey != ""
 }
 
-func (s *NumverifySupplier) Validate(internationalNumber string) (res *NumverifyScannerResponse, err error) {
+func (s *NumverifySupplier) Validate(internationalNumber string) (res *NumverifyValidateResponse, err error) {
 	// Build the request
 	response, err := http.Get(fmt.Sprintf("http://apilayer.net/api/validate?access_key=%s&number=%s", s.ApiKey, internationalNumber))
 	if err != nil {
@@ -55,7 +55,7 @@ func (s *NumverifySupplier) Validate(internationalNumber string) (res *Numverify
 	defer response.Body.Close()
 
 	// Fill the response with the data from the JSON
-	var result NumverifyScannerResponse
+	var result NumverifyValidateResponse
 
 	// Use json.Decode for reading streams of JSON data
 	if err := json.NewDecoder(response.Body).Decode(&result); err != nil {
@@ -66,7 +66,7 @@ func (s *NumverifySupplier) Validate(internationalNumber string) (res *Numverify
 		return nil, fmt.Errorf("%s", result.Error.Info)
 	}
 
-	res = &NumverifyScannerResponse{
+	res = &NumverifyValidateResponse{
 		Valid:               result.Valid,
 		Number:              result.Number,
 		LocalFormat:         result.LocalFormat,
