@@ -1,5 +1,9 @@
 package output
 
+import (
+	"io"
+)
+
 type Output interface {
 	Write(map[string]interface{}, map[string]error) error
 }
@@ -10,10 +14,10 @@ const (
 	Console OutputKey = iota + 1
 )
 
-func GetOutput(o OutputKey) Output {
+func GetOutput(o OutputKey, w io.Writer) Output {
 	switch o {
 	case Console:
-		return NewConsoleOutput()
+		return NewConsoleOutput(w)
 	}
 	return nil
 }

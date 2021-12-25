@@ -31,7 +31,7 @@ var scanCmd = &cobra.Command{
 }
 
 func runScan() {
-	fmt.Printf(color.WhiteString("Running scan for phone number %s...\n"), inputNumber)
+	fmt.Printf(color.WhiteString("Running scan for phone number %s...\n\n"), inputNumber)
 
 	if valid := number.IsValid(inputNumber); !valid {
 		logrus.WithFields(map[string]interface{}{
@@ -53,7 +53,7 @@ func runScan() {
 
 	result, errs := remoteLibrary.Scan(num)
 
-	err = output.GetOutput(output.Console).Write(result, errs)
+	err = output.GetOutput(output.Console, os.Stdout).Write(result, errs)
 	if err != nil {
 		fmt.Println(color.RedString(err.Error()))
 		os.Exit(1)
