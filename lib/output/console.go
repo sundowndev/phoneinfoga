@@ -45,21 +45,3 @@ func (o *ConsoleOutput) Write(result map[string]interface{}, errs map[string]err
 
 	return nil
 }
-
-func (o *ConsoleOutput) unmarshal(res interface{}) string {
-	output := ""
-	typeOf := reflect.TypeOf(res)
-	for i := 0; i < typeOf.NumField(); i++ {
-		field, ok := typeOf.Field(i).Tag.Lookup("console")
-		if !ok || field == "-" {
-			logrus.WithFields(map[string]interface{}{
-				"found": ok,
-				"value": field,
-			}).Debug("Console field was ignored")
-			continue
-		}
-		v := reflect.ValueOf(res).FieldByName(typeOf.Field(i).Name)
-		output += fmt.Sprintf("%s: %v\n", field, fmt.Sprintf("%v", v))
-	}
-	return output
-}
