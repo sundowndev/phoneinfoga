@@ -8,8 +8,8 @@ import (
 func TestConfig(t *testing.T) {
 	t.Run("Version", func(t *testing.T) {
 		t.Run("version should be unknown by default", func(t *testing.T) {
-			assert.Equal(t, "unknown", Version)
-			assert.Equal(t, "unknown", Commit)
+			assert.Equal(t, "dev", Version)
+			assert.Equal(t, "dev", Commit)
 		})
 	})
 }
