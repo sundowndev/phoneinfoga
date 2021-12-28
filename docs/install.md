@@ -29,7 +29,7 @@ To ensure your system is supported, please check the output of `echo "$(uname -s
 ## Using Docker
 
 !!! info
-    Be careful when using `latest` tag, it's updated directly from the master branch. We recommend using [`v2` or `stable` tags](https://hub.docker.com/r/sundowndev/phoneinfoga/tags) to only get release updates.
+    If you want to use the beta channel, you can use the `next` tag, it's updated directly from the master branch. But in most cases we recommend using [`latest`, `v2` or `stable` tags](https://hub.docker.com/r/sundowndev/phoneinfoga/tags) to only get release updates.
 
 ### From docker hub
 
