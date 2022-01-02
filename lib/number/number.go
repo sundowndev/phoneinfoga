@@ -6,13 +6,13 @@ import (
 
 // Number is a phone number
 type Number struct {
-	RawLocal      string `json:"rawLocal"`
-	Local         string `json:"local"`
-	E164          string `json:"E164"`
-	International string `json:"international"`
-	CountryCode   int32  `json:"countryCode"`
-	Country       string `json:"country"`
-	Carrier       string `json:"carrier"`
+	RawLocal      string
+	Local         string
+	E164          string
+	International string
+	CountryCode   int32
+	Country       string
+	Carrier       string
 }
 
 func NewNumber(number string) (res *Number, err error) {
