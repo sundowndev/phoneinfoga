@@ -33,27 +33,24 @@
 
 ## About
 
-PhoneInfoga is one of the most advanced tools to scan international phone numbers using only free resources. It allows you to first gather standard information such as country, area, carrier and line type on any international phone number. Then search for footprints on search engines to try to find the VoIP provider or identify the owner.
+PhoneInfoga is one of the most advanced tools to scan international phone numbers. It allows you to first gather standard information such as country, area, carrier and line type on any international phone number, then search for footprints on search engines to try to find the VoIP provider or identify the owner.
 
 ## Current status
 
-This project is stable and production-ready. [Roadmap is here](https://github.com/sundowndev/phoneinfoga/projects/1).
+This project is stable and production-ready.
 
 **About demo instance**: This is a test service. Kittens will die if you abuse it. Numverify scan is pointless because my server's IP got blocked due to spam.
 
-Since [v2 was released on March 2020](https://github.com/sundowndev/phoneinfoga/releases/tag/v2.0-beta), this project has been rewritten in Go language (previously Python). Why ? To improve code base, maintainability, have a stronger test suite and be able to compile code base. PhoneInfoga v2 brings new features such as serving a REST API and a web client. Usage of scanners was improved in order to drop usage of Selenium/Geckodriver which has cause many users to have troubleshoots using the tool. You can still use the legacy version in [tag v1.11](https://github.com/sundowndev/phoneinfoga/tree/v1.11) and the legacy Docker image (`sundowndev/phoneinfoga:legacy`). Some features were not included in version 2 such as input/output CLI options. The roadmap of the project changed so we can focus on the web client features. **Version 2 does not scan Google results anymore**, [read more](https://sundowndev.github.io/phoneinfoga/usage/#available-scanners).
+Since [v2 was released on March 2020](https://github.com/sundowndev/phoneinfoga/releases/tag/v2.0-beta), this project has been rewritten in Go language (previously Python). Why ? To improve code base, maintainability, have a stronger test suite and be able to compile code base. PhoneInfoga v2 brings new features such as serving a REST API and a web client. Usage of scanners was improved in order to drop usage of Selenium/Geckodriver which has cause many users to have troubleshoots using the tool. You can still use the legacy version in [tag v1.11](https://github.com/sundowndev/phoneinfoga/tree/v1.11) and the legacy Docker image (`sundowndev/phoneinfoga:legacy`). **Version 2 does not scan Google results anymore**, [read more](https://sundowndev.github.io/phoneinfoga/usage/#available-scanners).
 
 ## Features
 
-- Check if phone number exists and is possible
+- Check if phone number exists and has connectivity status with [HLR lookups](https://www.hlr-lookups.com/en/what-is-an-hlr-lookup)
 - Gather standard informations such as country, line type and carrier
 - OSINT footprinting using external APIs, Google Hacking, phone books & search engines
 - Check for reputation reports, social media, disposable numbers and more
-- Scan several numbers at once
-- Use custom formatting for more effective OSINT reconnaissance (*v1 only*)
 - Use the graphical user interface to run scans from the browser
-- Run your own web instance as a service
-- Programmatic usage with the REST API
+- Programmatic usage with the REST API and [Go modules](https://pkg.go.dev/github.com/sundowndev/phoneinfoga/v2)
 
 ## Anti-features
 
@@ -61,8 +58,6 @@ Since [v2 was released on March 2020](https://github.com/sundowndev/phoneinfoga/
 - Does not allow to "track" a phone or its owner in real time
 - Does not allow to get the precise phone location
 - Does not allow to hack a phone
-
-![Footprinting process](https://i.imgur.com/qCkgzz8.png)
 
 ## License
 
