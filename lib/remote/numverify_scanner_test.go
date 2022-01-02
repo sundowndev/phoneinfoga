@@ -71,6 +71,18 @@ func TestNumverifyScanner(t *testing.T) {
 				"numverify": dummyError,
 			},
 		},
+		{
+			name: "should not run",
+			number: func() *number.Number {
+				n, _ := number.NewNumber("15556661212")
+				return n
+			}(),
+			mocks: func(s *mocks.NumverifySupplier) {
+				s.On("IsAvailable").Return(false)
+			},
+			expected:   map[string]interface{}{},
+			wantErrors: map[string]error{},
+		},
 	}
 
 	for _, tt := range testcases {
@@ -81,10 +93,6 @@ func TestNumverifyScanner(t *testing.T) {
 			scanner := NewNumverifyScanner(numverifySupplierMock)
 			remote := NewLibrary()
 			remote.AddScanner(scanner)
-
-			if !scanner.ShouldRun() {
-				t.Fatal("ShouldRun() should be truthy")
-			}
 
 			got, errs := remote.Scan(tt.number)
 			if len(tt.wantErrors) > 0 {

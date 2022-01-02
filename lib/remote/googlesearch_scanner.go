@@ -168,7 +168,7 @@ func getDisposableProvidersDorks(number *number.Number) (results []*GoogleSearch
 	return results
 }
 
-func getIndividualsDorks(number *number.Number, formats ...string) (results []*GoogleSearchDork) {
+func getIndividualsDorks(number *number.Number) (results []*GoogleSearchDork) {
 	var dorks = []*dorkgen.GoogleSearch{
 		(&dorkgen.GoogleSearch{}).
 			Site("numinfo.net").
@@ -214,10 +214,6 @@ func getIndividualsDorks(number *number.Number, formats ...string) (results []*G
 	}
 
 	for _, dork := range dorks {
-		for _, f := range formats {
-			dork.Or().Intext(f)
-		}
-
 		results = append(results, &GoogleSearchDork{
 			Number: number.E164,
 			Dork:   dork.String(),
@@ -228,7 +224,7 @@ func getIndividualsDorks(number *number.Number, formats ...string) (results []*G
 	return results
 }
 
-func getSocialMediaDorks(number *number.Number, formats ...string) (results []*GoogleSearchDork) {
+func getSocialMediaDorks(number *number.Number) (results []*GoogleSearchDork) {
 	var dorks = []*dorkgen.GoogleSearch{
 		(&dorkgen.GoogleSearch{}).
 			Site("facebook.com").
@@ -268,10 +264,6 @@ func getSocialMediaDorks(number *number.Number, formats ...string) (results []*G
 	}
 
 	for _, dork := range dorks {
-		for _, f := range formats {
-			dork.Or().Intext(f)
-		}
-
 		results = append(results, &GoogleSearchDork{
 			Number: number.E164,
 			Dork:   dork.String(),
@@ -282,7 +274,7 @@ func getSocialMediaDorks(number *number.Number, formats ...string) (results []*G
 	return results
 }
 
-func getReputationDorks(number *number.Number, formats ...string) (results []*GoogleSearchDork) {
+func getReputationDorks(number *number.Number) (results []*GoogleSearchDork) {
 	var dorks = []*dorkgen.GoogleSearch{
 		(&dorkgen.GoogleSearch{}).
 			Site("whosenumber.info").
@@ -326,10 +318,6 @@ func getReputationDorks(number *number.Number, formats ...string) (results []*Go
 	}
 
 	for _, dork := range dorks {
-		for _, f := range formats {
-			dork.Or().Intext(f)
-		}
-
 		results = append(results, &GoogleSearchDork{
 			Number: number.E164,
 			Dork:   dork.String(),
@@ -340,7 +328,7 @@ func getReputationDorks(number *number.Number, formats ...string) (results []*Go
 	return results
 }
 
-func getGeneralDorks(number *number.Number, formats ...string) (results []*GoogleSearchDork) {
+func getGeneralDorks(number *number.Number) (results []*GoogleSearchDork) {
 	var dorks = []*dorkgen.GoogleSearch{
 		(&dorkgen.GoogleSearch{}).
 			Intext(number.International).
@@ -385,10 +373,6 @@ func getGeneralDorks(number *number.Number, formats ...string) (results []*Googl
 	}
 
 	for _, dork := range dorks {
-		for _, f := range formats {
-			dork.Or().Intext(f)
-		}
-
 		results = append(results, &GoogleSearchDork{
 			Number: number.E164,
 			Dork:   dork.String(),
