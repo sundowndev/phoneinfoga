@@ -11,6 +11,16 @@ import (
 )
 
 func TestConsoleOutput(t *testing.T) {
+	type FakeScannerResponse struct {
+		Format string `console:"Number Format"`
+	}
+
+	type FakeScannerResponseRecursive2 struct {
+		Response struct {
+			Format FakeScannerResponse `console:"Format"`
+		} `console:"Response"`
+	}
+
 	testcases := []struct {
 		name    string
 		dirName string
@@ -60,11 +70,40 @@ func TestConsoleOutput(t *testing.T) {
 					Carrier:             "test",
 					LineType:            "test",
 				},
+				"testscanner2": FakeScannerResponse{
+					Format: "test",
+				},
 			},
 			errs: map[string]error{
 				"googlesearch": errors.New("dummy error"),
 				"fakescanner":  errors.New("dummy error 2"),
 			},
+		},
+		{
+			name:    "should follow recursive paths",
+			dirName: "testdata/console_valid_recursive.txt",
+			result: map[string]interface{}{
+				"testscanner": remote.GoogleSearchResponse{
+					SocialMedia: []*remote.GoogleSearchDork{
+						{
+							URL:    "http://example.com?q=111-555-1212",
+							Number: "111-555-1212",
+							Dork:   "intext:\"111-555-1212\"",
+						},
+						{
+							URL:    "http://example.com?q=222-666-2323",
+							Number: "222-666-2323",
+							Dork:   "intext:\"222-666-2323\"",
+						},
+					},
+				},
+				"testscanner2": FakeScannerResponseRecursive2{
+					Response: struct {
+						Format FakeScannerResponse `console:"Format"`
+					}{Format: FakeScannerResponse{Format: "test"}},
+				},
+			},
+			errs: map[string]error{},
 		},
 	}
 

@@ -19,11 +19,11 @@ type GoogleSearchDork struct {
 // GoogleSearchResponse is the output of Google search scanner.
 // It contains all dorks created ordered by types.
 type GoogleSearchResponse struct {
-	SocialMedia         []*GoogleSearchDork `json:"social_media" console:"Social media"`
-	DisposableProviders []*GoogleSearchDork `json:"disposable_providers" console:"Disposable providers"`
-	Reputation          []*GoogleSearchDork `json:"reputation" console:"Reputation"`
-	Individuals         []*GoogleSearchDork `json:"individuals" console:"Individuals"`
-	General             []*GoogleSearchDork `json:"general" console:"General"`
+	SocialMedia         []*GoogleSearchDork `json:"social_media" console:"Social media,omitempty"`
+	DisposableProviders []*GoogleSearchDork `json:"disposable_providers" console:"Disposable providers,omitempty"`
+	Reputation          []*GoogleSearchDork `json:"reputation" console:"Reputation,omitempty"`
+	Individuals         []*GoogleSearchDork `json:"individuals" console:"Individuals,omitempty"`
+	General             []*GoogleSearchDork `json:"general" console:"General,omitempty"`
 }
 
 func NewGoogleSearchScanner() *googlesearchScanner {
