@@ -85,18 +85,18 @@ func (o *ConsoleOutput) displayResult(val interface{}, prefix string) {
 		switch reflectValue.Field(i).Kind() {
 		case reflect.String:
 			_, _ = fmt.Fprintf(o.w, "%s%s: ", prefix, fieldTitle)
-			_, _ = fmt.Fprintf(o.w, "%s\n", valueValue)
+			_, _ = fmt.Fprintf(o.w, color.YellowString("%s\n"), valueValue)
 		case reflect.Bool:
 			_, _ = fmt.Fprintf(o.w, "%s%s: ", prefix, fieldTitle)
-			_, _ = fmt.Fprintf(o.w, "%v\n", valueValue)
-		case reflect.Int32:
+			_, _ = fmt.Fprintf(o.w, color.YellowString("%v\n"), valueValue)
+		case reflect.Int:
 			_, _ = fmt.Fprintf(o.w, "%s%s: ", prefix, fieldTitle)
-			_, _ = fmt.Fprintf(o.w, "%d\n", valueValue)
+			_, _ = fmt.Fprintf(o.w, color.YellowString("%d\n"), valueValue)
 		case reflect.Struct:
 			_, _ = fmt.Fprintf(o.w, "%s%s:\n", prefix, fieldTitle)
 			o.displayResult(valueValue, prefix+"\t")
 		case reflect.Slice:
-			_, _ = fmt.Fprintf(o.w, "%s:\n", fieldTitle)
+			_, _ = fmt.Fprintf(o.w, color.WhiteString("%s:\n"), fieldTitle)
 			o.displayResult(valueValue, prefix+"\t")
 		}
 	}
