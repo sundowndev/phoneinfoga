@@ -212,7 +212,7 @@ func TestApi(t *testing.T) {
 			body, _ := ioutil.ReadAll(res.Body)
 
 			assert.Equal(200, res.Result().StatusCode, "should be equal")
-			assert.Equal("{\"success\":true,\"version\":\"unknown\",\"commit\":\"unknown\"}", string(body), "should be equal")
+			assert.Equal("{\"success\":true,\"version\":\"dev\",\"commit\":\"dev\"}", string(body), "should be equal")
 		})
 
 		t.Run("404 error - /api/notfound", func(t *testing.T) {

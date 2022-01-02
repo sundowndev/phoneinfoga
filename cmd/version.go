@@ -3,8 +3,7 @@ package cmd
 import (
 	"fmt"
 	"github.com/spf13/cobra"
-	"github.com/sundowndev/phoneinfoga/v2/config"
-	"github.com/sundowndev/phoneinfoga/v2/utils"
+	"github.com/sundowndev/phoneinfoga/v2/build"
 )
 
 func init() {
@@ -15,7 +14,6 @@ var versionCmd = &cobra.Command{
 	Use:   "version",
 	Short: "Print current version of the tool",
 	Run: func(cmd *cobra.Command, args []string) {
-		utils.LoggerService.Infoln("PhoneInfoga", config.Version, fmt.Sprintf("(%s)", config.Commit))
-		utils.LoggerService.Infoln("Maintained by sundowndev https://github.com/sundowndev/phoneinfoga")
+		fmt.Printf("PhoneInfoga %s-%s\n", build.Version, build.Commit)
 	},
 }

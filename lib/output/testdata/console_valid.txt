@@ -1,0 +1,13 @@
+Results for numverify
+Valid: true
+Number: test
+Local format: test
+International format: test
+Country prefix: test
+Country code: test
+Country name: test
+Location: test
+Carrier: test
+Line type: test
+
+1 scanner(s) succeeded

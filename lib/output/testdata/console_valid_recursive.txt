@@ -1,0 +1,12 @@
+Results for testscanner
+Social media:
+	URL: http://example.com?q=111-555-1212
+
+	URL: http://example.com?q=222-666-2323
+
+Results for testscanner2
+Response:
+	Format:
+		Number Format: test
+
+2 scanner(s) succeeded

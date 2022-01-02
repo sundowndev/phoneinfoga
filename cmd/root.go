@@ -7,9 +7,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var number string
-var input string  // TODO: implement input
-var output string // TODO: implement output
+var inputNumber string
 
 var rootCmd = &cobra.Command{
 	Use:     "phoneinfoga [COMMANDS] [OPTIONS]",

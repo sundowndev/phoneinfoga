@@ -1,0 +1,20 @@
+Results for numverify
+Valid: true
+Number: test
+Local format: test
+International format: test
+Country prefix: test
+Country code: test
+Country name: test
+Location: test
+Carrier: test
+Line type: test
+
+Results for testscanner2
+Number Format: test
+
+The following scanners returned errors:
+fakescanner: dummy error 2
+googlesearch: dummy error
+
+2 scanner(s) succeeded
