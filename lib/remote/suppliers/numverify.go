@@ -2,7 +2,9 @@ package suppliers
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"net/http"
 	"os"
 )
@@ -33,12 +35,14 @@ type NumverifyValidateResponse struct {
 }
 
 type NumverifySupplier struct {
-	ApiKey string
+	ApiKey    string
+	EnableSSL string
 }
 
 func NewNumverifySupplier() *NumverifySupplier {
 	return &NumverifySupplier{
-		ApiKey: os.Getenv("NUMVERIFY_API_KEY"),
+		ApiKey:    os.Getenv("NUMVERIFY_API_KEY"),
+		EnableSSL: os.Getenv("NUMVERIFY_ENABLE_SSL"),
 	}
 }
 
@@ -47,8 +51,19 @@ func (s *NumverifySupplier) IsAvailable() bool {
 }
 
 func (s *NumverifySupplier) Validate(internationalNumber string) (res *NumverifyValidateResponse, err error) {
+	scheme := "http"
+
+	if s.EnableSSL != "" {
+		scheme = "https"
+	}
+
+	logrus.
+		WithField("number", internationalNumber).
+		WithField("scheme", scheme).
+		Debug("Running validate operation through Numverify API")
+
 	// Build the request
-	response, err := http.Get(fmt.Sprintf("http://apilayer.net/api/validate?access_key=%s&number=%s", s.ApiKey, internationalNumber))
+	response, err := http.Get(fmt.Sprintf("%s://apilayer.net/api/validate?access_key=%s&number=%s", scheme, s.ApiKey, internationalNumber))
 	if err != nil {
 		return nil, err
 	}
@@ -63,7 +78,7 @@ func (s *NumverifySupplier) Validate(internationalNumber string) (res *Numverify
 	}
 
 	if len(result.Error.Info) > 0 {
-		return nil, fmt.Errorf("%s", result.Error.Info)
+		return nil, errors.New(result.Error.Info)
 	}
 
 	res = &NumverifyValidateResponse{
