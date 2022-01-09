@@ -9,6 +9,17 @@ definitions:
       success:
         type: boolean
     type: object
+  api.ScanResultResponse:
+    properties:
+      error:
+        type: string
+      message:
+        type: string
+      result:
+        type: object
+      success:
+        type: boolean
+    type: object
   api.getAllNumbersResponse:
     properties:
       error:
@@ -30,17 +41,6 @@ definitions:
         type: boolean
       version:
         type: string
-    type: object
-  api.scanResultResponse:
-    properties:
-      error:
-        type: string
-      message:
-        type: string
-      result:
-        type: object
-      success:
-        type: boolean
     type: object
   scanners.GoogleSearchDork:
     properties:
@@ -160,7 +160,7 @@ paths:
             $ref: '#/definitions/api.JSONResponse'
       summary: Check if service is healthy.
       tags:
-      - default
+      - General
   /numbers:
     get:
       deprecated: true
@@ -192,7 +192,7 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/api.scanResultResponse'
+            - $ref: '#/definitions/api.ScanResultResponse'
             - properties:
                 result:
                   $ref: '#/definitions/scanners.GoogleSearchResponse'
@@ -220,7 +220,7 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/api.scanResultResponse'
+            - $ref: '#/definitions/api.ScanResultResponse'
             - properties:
                 result:
                   $ref: '#/definitions/scanners.Number'
@@ -248,7 +248,7 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/api.scanResultResponse'
+            - $ref: '#/definitions/api.ScanResultResponse'
             - properties:
                 result:
                   $ref: '#/definitions/scanners.NumverifyScannerResponse'
@@ -262,6 +262,7 @@ paths:
       - Numbers
   /numbers/{number}/scan/ovh:
     get:
+      deprecated: true
       operationId: ovhScan
       parameters:
       - description: Input phone number
@@ -276,7 +277,7 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/api.scanResultResponse'
+            - $ref: '#/definitions/api.ScanResultResponse'
             - properties:
                 result:
                   $ref: '#/definitions/scanners.OVHScannerResponse'

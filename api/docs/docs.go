@@ -34,7 +34,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "default"
+                    "General"
                 ],
                 "summary": "Check if service is healthy.",
                 "operationId": "healthCheck",
@@ -101,7 +101,7 @@ var doc = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/api.scanResultResponse"
+                                    "$ref": "#/definitions/api.ScanResultResponse"
                                 },
                                 {
                                     "type": "object",
@@ -148,7 +148,7 @@ var doc = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/api.scanResultResponse"
+                                    "$ref": "#/definitions/api.ScanResultResponse"
                                 },
                                 {
                                     "type": "object",
@@ -195,7 +195,7 @@ var doc = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/api.scanResultResponse"
+                                    "$ref": "#/definitions/api.ScanResultResponse"
                                 },
                                 {
                                     "type": "object",
@@ -227,6 +227,7 @@ var doc = `{
                 ],
                 "summary": "Perform a scan using OVH's API.",
                 "operationId": "ovhScan",
+                "deprecated": true,
                 "parameters": [
                     {
                         "type": "string",
@@ -242,7 +243,7 @@ var doc = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/api.scanResultResponse"
+                                    "$ref": "#/definitions/api.ScanResultResponse"
                                 },
                                 {
                                     "type": "object",
@@ -315,6 +316,23 @@ var doc = `{
                 }
             }
         },
+        "api.ScanResultResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "result": {
+                    "type": "object"
+                },
+                "success": {
+                    "type": "boolean"
+                }
+            }
+        },
         "api.getAllNumbersResponse": {
             "type": "object",
             "properties": {
@@ -346,23 +364,6 @@ var doc = `{
                 },
                 "version": {
                     "type": "string"
-                }
-            }
-        },
-        "api.scanResultResponse": {
-            "type": "object",
-            "properties": {
-                "error": {
-                    "type": "string"
-                },
-                "message": {
-                    "type": "string"
-                },
-                "result": {
-                    "type": "object"
-                },
-                "success": {
-                    "type": "boolean"
                 }
             }
         },
