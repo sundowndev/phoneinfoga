@@ -1,28 +1,3 @@
-Here is the documentation for CLI usage.
-
-```shell
-$ phoneinfoga
-
-PhoneInfoga is one of the most advanced tools to scan phone numbers using only free resources.
-
-Usage:
-  phoneinfoga [command]
-
-Examples:
-phoneinfoga scan -n <number>
-
-Available Commands:
-  help        Help about any command
-  scan        Scan a phone number
-  serve       Serve web client
-  version     Print current version of the tool
-
-Flags:
-  -h, --help   help for phoneinfoga
-
-Use "phoneinfoga [command] --help" for more information about a command.
-```
-
 ### Running a scan
 
 Use the `scan` command with the `-n` (or `--number`) option.
@@ -69,30 +44,24 @@ phoneinfoga recon -n +42837544833
 
 ## Available scanners
 
-- Numverify
-- Google search
-- OVH
+See page related to [scanners](scanners.md).
 
-**Numverify** provide standard but useful informations such as number's country code, location, line type and carrier.
+## Launching the server
 
-**OVH** is, besides being a web and cloud hosting company, a telecom provider with several VoIP numbers in Europe. Thanks to their API-key free [REST API](https://api.ovh.com/), we are able to tell if a number is owned by OVH Telecom or not.
+PhoneInfoga integrates a REST API along with a web client that you can deploy anywhere. The API has been written in Go and web client in Vue.js. The application is stateless, so it doesn't require any persistent storage.
 
-**Google search** uses Google search engine and [Google Dorks](https://en.wikipedia.org/wiki/Google_hacking) to search phone number's footprints everywhere on the web. It allows you to search for scam reports, social media profiles, documents and more. **This scanner does only one thing:** generating several Google search links from a given phone number. You then have to manually open them in your browser to see results. You may therefore have links that do not return any results.
-
-## Launch web client & REST API
-
-Run the tool through a REST API with a web client. The API has been written in Go and web client in Vue.js.
+See **[API documentation](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/sundowndev/phoneinfoga/master/api/docs/swagger.yaml)**.
 
 ```shell
 phoneinfoga serve
 phoneinfoga serve -p 8080 # default port is 5000
 ```
 
-You should then be able to see the web client at `http://localhost:<port>`.
+You should then be able to visit the web client from your browser at `http://localhost:<port>`.
 
 ![](./images/screenshot.png)
 
-### Run the REST API only
+**Running the REST API only**
 
 You can choose to only run the REST API without the web client :
 

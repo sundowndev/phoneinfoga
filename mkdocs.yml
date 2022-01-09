@@ -8,6 +8,7 @@ nav:
   - 'Introduction': index.md
   - 'Installation': install.md
   - 'Usage': usage.md
+  - 'Scanners': scanners.md
   - 'Formatting phone numbers': formatting.md
   - 'Go module usage': go-module-usage.md
   - 'Resources': resources.md
@@ -19,6 +20,8 @@ theme:
   palette:
     primary: 'blue grey'
     accent: 'brown'
+  features:
+    - content.tabs.link
 extra:
   social:
     - icon: fontawesome/brands/github-alt
@@ -29,6 +32,9 @@ extra:
 # Extensions
 markdown_extensions:
   - markdown.extensions.admonition
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
 plugins:
   - search
   - minify:
