@@ -13,8 +13,10 @@ type Scanner interface {
 
 func InitScanners(remote *Library) {
 	numverifySupplier := suppliers.NewNumverifySupplier()
+	ovhSupplier := suppliers.NewOVHSupplier()
 
 	remote.AddScanner(NewLocalScanner())
 	remote.AddScanner(NewNumverifyScanner(numverifySupplier))
 	remote.AddScanner(NewGoogleSearchScanner())
+	remote.AddScanner(NewOVHScanner(ovhSupplier))
 }
