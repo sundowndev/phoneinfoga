@@ -2,8 +2,13 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/sundowndev/phoneinfoga/v2/api/errors"
 	"github.com/sundowndev/phoneinfoga/v2/build"
+	"github.com/sundowndev/phoneinfoga/v2/lib/number"
+	"github.com/sundowndev/phoneinfoga/v2/lib/remote"
+	"github.com/sundowndev/phoneinfoga/v2/lib/remote/suppliers"
 	"github.com/sundowndev/phoneinfoga/v2/scanners"
+	"net/http"
 )
 
 type scanResultResponse struct {
@@ -75,15 +80,19 @@ func localScan(c *gin.Context) {
 // @Router /numbers/{number}/scan/numverify [get]
 // @Param number path string true "Input phone number" validate(required)
 func numverifyScan(c *gin.Context) {
-	number, _ := c.Get("number")
-
-	result, err := scanners.NumverifyScan(number.(*scanners.Number))
+	num, err := number.NewNumber(c.Param("number"))
 	if err != nil {
-		c.JSON(500, errorResponse(err.Error()))
+		handleError(c, errors.NewBadRequest(err))
 		return
 	}
 
-	c.JSON(200, scanResultResponse{
+	result, err := remote.NewNumverifyScanner(suppliers.NewNumverifySupplier()).Scan(num)
+	if err != nil {
+		handleError(c, errors.NewInternalError(err))
+		return
+	}
+
+	c.JSON(http.StatusOK, scanResultResponse{
 		JSONResponse: JSONResponse{Success: true},
 		Result:       result,
 	})
