@@ -28,7 +28,7 @@ definitions:
         type: string
       numbers:
         items:
-          $ref: '#/definitions/scanners.Number'
+          $ref: '#/definitions/number.Number'
         type: array
       success:
         type: boolean
@@ -42,7 +42,24 @@ definitions:
       version:
         type: string
     type: object
-  scanners.GoogleSearchDork:
+  number.Number:
+    properties:
+      carrier:
+        type: string
+      country:
+        type: string
+      countryCode:
+        type: integer
+      e164:
+        type: string
+      international:
+        type: string
+      local:
+        type: string
+      rawLocal:
+        type: string
+    type: object
+  remote.GoogleSearchDork:
     properties:
       dork:
         type: string
@@ -51,47 +68,30 @@ definitions:
       url:
         type: string
     type: object
-  scanners.GoogleSearchResponse:
+  remote.GoogleSearchResponse:
     properties:
-      disposableProviders:
+      disposable_providers:
         items:
-          $ref: '#/definitions/scanners.GoogleSearchDork'
+          $ref: '#/definitions/remote.GoogleSearchDork'
         type: array
       general:
         items:
-          $ref: '#/definitions/scanners.GoogleSearchDork'
+          $ref: '#/definitions/remote.GoogleSearchDork'
         type: array
       individuals:
         items:
-          $ref: '#/definitions/scanners.GoogleSearchDork'
+          $ref: '#/definitions/remote.GoogleSearchDork'
         type: array
       reputation:
         items:
-          $ref: '#/definitions/scanners.GoogleSearchDork'
+          $ref: '#/definitions/remote.GoogleSearchDork'
         type: array
-      socialMedia:
+      social_media:
         items:
-          $ref: '#/definitions/scanners.GoogleSearchDork'
+          $ref: '#/definitions/remote.GoogleSearchDork'
         type: array
     type: object
-  scanners.Number:
-    properties:
-      E164:
-        type: string
-      carrier:
-        type: string
-      country:
-        type: string
-      countryCode:
-        type: integer
-      international:
-        type: string
-      local:
-        type: string
-      rawLocal:
-        type: string
-    type: object
-  scanners.NumverifyScannerResponse:
+  remote.NumverifyScannerResponse:
     properties:
       carrier:
         type: string
@@ -101,8 +101,6 @@ definitions:
         type: string
       country_prefix:
         type: string
-      error:
-        $ref: '#/definitions/scanners.numverifyError'
       international_format:
         type: string
       line_type:
@@ -125,13 +123,6 @@ definitions:
       numberRange:
         type: string
       zipCode:
-        type: string
-    type: object
-  scanners.numverifyError:
-    properties:
-      code:
-        type: integer
-      info:
         type: string
     type: object
 host: demo.phoneinfoga.crvx.fr
@@ -195,7 +186,7 @@ paths:
             - $ref: '#/definitions/api.ScanResultResponse'
             - properties:
                 result:
-                  $ref: '#/definitions/scanners.GoogleSearchResponse'
+                  $ref: '#/definitions/remote.GoogleSearchResponse'
               type: object
         "400":
           description: Bad Request
@@ -223,7 +214,7 @@ paths:
             - $ref: '#/definitions/api.ScanResultResponse'
             - properties:
                 result:
-                  $ref: '#/definitions/scanners.Number'
+                  $ref: '#/definitions/number.Number'
               type: object
         "400":
           description: Bad Request
@@ -251,7 +242,7 @@ paths:
             - $ref: '#/definitions/api.ScanResultResponse'
             - properties:
                 result:
-                  $ref: '#/definitions/scanners.NumverifyScannerResponse'
+                  $ref: '#/definitions/remote.NumverifyScannerResponse'
               type: object
         "400":
           description: Bad Request

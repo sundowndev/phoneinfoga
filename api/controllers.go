@@ -18,7 +18,7 @@ type ScanResultResponse struct {
 
 type getAllNumbersResponse struct {
 	JSONResponse
-	Numbers []scanners.Number `json:"numbers"`
+	Numbers []number.Number `json:"numbers"`
 }
 
 type healthResponse struct {
@@ -38,7 +38,7 @@ type healthResponse struct {
 func getAllNumbers(c *gin.Context) {
 	c.JSON(http.StatusOK, getAllNumbersResponse{
 		JSONResponse: JSONResponse{Success: true},
-		Numbers:      []scanners.Number{},
+		Numbers:      []number.Number{},
 	})
 }
 
@@ -63,7 +63,7 @@ func validate(c *gin.Context) {
 // @Tags Numbers
 // @Summary Perform a scan using local phone number library.
 // @Produce  json
-// @Success 200 {object} ScanResultResponse{result=scanners.Number}
+// @Success 200 {object} ScanResultResponse{result=number.Number}
 // @Success 400 {object} JSONResponse
 // @Router /numbers/{number}/scan/local [get]
 // @Param number path string true "Input phone number" validate(required)
@@ -90,7 +90,7 @@ func localScan(c *gin.Context) {
 // @Tags Numbers
 // @Summary Perform a scan using Numverify's API.
 // @Produce  json
-// @Success 200 {object} ScanResultResponse{result=scanners.NumverifyScannerResponse}
+// @Success 200 {object} ScanResultResponse{result=remote.NumverifyScannerResponse}
 // @Success 400 {object} JSONResponse
 // @Router /numbers/{number}/scan/numverify [get]
 // @Param number path string true "Input phone number" validate(required)
@@ -117,7 +117,7 @@ func numverifyScan(c *gin.Context) {
 // @Tags Numbers
 // @Summary Perform a scan using Google Search engine.
 // @Produce  json
-// @Success 200 {object} ScanResultResponse{result=scanners.GoogleSearchResponse}
+// @Success 200 {object} ScanResultResponse{result=remote.GoogleSearchResponse}
 // @Success 400 {object} JSONResponse
 // @Router /numbers/{number}/scan/googlesearch [get]
 // @Param number path string true "Input phone number" validate(required)
