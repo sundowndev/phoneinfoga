@@ -158,3 +158,22 @@ You can however, use this scanner through the REST API in addition with another 
     
         URL: https://www.google.com/search?q=%28ext%3Adoc+OR+ext%3Adocx+OR+ext%3Aodt+OR+ext%3Apdf+OR+ext%3Artf+OR+ext%3Asxw+OR+ext%3Apsw+OR+ext%3Appt+OR+ext%3Apptx+OR+ext%3Apps+OR+ext%3Acsv+OR+ext%3Atxt+OR+ext%3Axls%29+intext%3A%224176418xxxx%22+OR+intext%3A%22%2B4176418xxxx%22+OR+intext%3A%22076418xxxx%22
     ```
+
+## OVH
+
+OVH, besides being a web and cloud hosting company, is a telecom provider with several VoIP numbers in Europe. Thanks to their API-key free REST API, we are able to tell if a number is owned by OVH Telecom or not.
+
+=== "Configuration"
+
+    There is no configuration required for this scanner.
+
+=== "Example"
+
+    ```shell
+    $ phoneinfoga scan -n +3336517xxxx
+
+    Results for ovh
+    Found: true
+    Number range: 036517xxxx
+    City: Abbeville
+    ```
