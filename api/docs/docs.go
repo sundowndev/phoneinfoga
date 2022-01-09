@@ -249,7 +249,7 @@ var doc = `{
                                     "type": "object",
                                     "properties": {
                                         "result": {
-                                            "$ref": "#/definitions/scanners.OVHScannerResponse"
+                                            "$ref": "#/definitions/remote.OVHScannerResponse"
                                         }
                                     }
                                 }
@@ -477,7 +477,7 @@ var doc = `{
                 }
             }
         },
-        "scanners.OVHScannerResponse": {
+        "remote.OVHScannerResponse": {
             "type": "object",
             "properties": {
                 "city": {
@@ -486,10 +486,10 @@ var doc = `{
                 "found": {
                     "type": "boolean"
                 },
-                "numberRange": {
+                "number_range": {
                     "type": "string"
                 },
-                "zipCode": {
+                "zip_code": {
                     "type": "string"
                 }
             }

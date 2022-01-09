@@ -7,7 +7,6 @@ import (
 	"github.com/sundowndev/phoneinfoga/v2/lib/number"
 	"github.com/sundowndev/phoneinfoga/v2/lib/remote"
 	"github.com/sundowndev/phoneinfoga/v2/lib/remote/suppliers"
-	"github.com/sundowndev/phoneinfoga/v2/scanners"
 	"net/http"
 )
 
@@ -144,18 +143,21 @@ func googleSearchScan(c *gin.Context) {
 // @Tags Numbers
 // @Summary Perform a scan using OVH's API.
 // @Produce  json
-// @Success 200 {object} ScanResultResponse{result=scanners.OVHScannerResponse}
+// @Success 200 {object} ScanResultResponse{result=remote.OVHScannerResponse}
 // @Success 400 {object} JSONResponse
 // @Deprecated
 // @Router /numbers/{number}/scan/ovh [get]
 // @Param number path string true "Input phone number" validate(required)
 func ovhScan(c *gin.Context) {
-	num, _ := scanners.LocalScan(c.Param("number"))
-
-	result, err := scanners.OVHScan(num)
-
+	num, err := number.NewNumber(c.Param("number"))
 	if err != nil {
-		c.JSON(500, errorResponse())
+		handleError(c, errors.NewBadRequest(err))
+		return
+	}
+
+	result, err := remote.NewOVHScanner(suppliers.NewOVHSupplier()).Scan(num)
+	if err != nil {
+		handleError(c, errors.NewInternalError(err))
 		return
 	}
 

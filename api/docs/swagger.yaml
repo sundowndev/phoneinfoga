@@ -114,15 +114,15 @@ definitions:
       valid:
         type: boolean
     type: object
-  scanners.OVHScannerResponse:
+  remote.OVHScannerResponse:
     properties:
       city:
         type: string
       found:
         type: boolean
-      numberRange:
+      number_range:
         type: string
-      zipCode:
+      zip_code:
         type: string
     type: object
 host: demo.phoneinfoga.crvx.fr
@@ -271,7 +271,7 @@ paths:
             - $ref: '#/definitions/api.ScanResultResponse'
             - properties:
                 result:
-                  $ref: '#/definitions/scanners.OVHScannerResponse'
+                  $ref: '#/definitions/remote.OVHScannerResponse'
               type: object
         "400":
           description: Bad Request

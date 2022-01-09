@@ -1,7 +1,8 @@
 package api
 
 import (
-	"github.com/sundowndev/phoneinfoga/v2/scanners"
+	"github.com/sundowndev/phoneinfoga/v2/lib/remote"
+	"github.com/sundowndev/phoneinfoga/v2/lib/remote/suppliers"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -127,7 +128,7 @@ func TestApi(t *testing.T) {
 
 				number := "79516566591"
 
-				expectedResult := scanners.NumverifyScannerResponse{
+				expectedResult := remote.NumverifyScannerResponse{
 					Valid:               true,
 					Number:              "79516566591",
 					LocalFormat:         "9516566591",
@@ -181,7 +182,7 @@ func TestApi(t *testing.T) {
 					Get("/1.0/telephony/number/detailedZones").
 					MatchParam("country", "fr").
 					Reply(200).
-					JSON([]scanners.OVHAPIResponseNumber{
+					JSON([]suppliers.OVHAPIResponseNumber{
 						{
 							ZneList:             []string{},
 							MatchingCriteria:    "",
@@ -201,7 +202,7 @@ func TestApi(t *testing.T) {
 
 				assert.Equal(t, err, nil)
 				assert.Equal(t, res.Result().StatusCode, 200)
-				assert.Equal(t, string(body), `{"success":true,"result":{"found":true,"numberRange":"036517xxxx","city":"Abbeville","zipCode":""}}`)
+				assert.Equal(t, string(body), `{"success":true,"result":{"found":true,"number_range":"036517xxxx","city":"Abbeville"}}`)
 
 				assert.Equal(t, gock.IsDone(), true, "there should have no pending mocks")
 			})
