@@ -110,7 +110,7 @@ We use [mkdocs](https://www.mkdocs.org/) to write our documentation.
 ### Install mkdocs
 
 ```shell
-python3 -m pip install mkdocs
+python3 -m pip install mkdocs==1.2.3 mkdocs-material==8.1.4 mkdocs-minify-plugin==0.5.0
 ```
 
 ### Serve documentation on localhost
