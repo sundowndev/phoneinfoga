@@ -15,20 +15,18 @@ package main
 
 import (
 	"fmt"
-	"log"
 
-	"github.com/sundowndev/phoneinfoga/v2/pkg/scanners"
+	"github.com/sundowndev/phoneinfoga/v2/lib/number"
+	"github.com/sundowndev/phoneinfoga/v2/lib/remote"
 )
 
 func main() {
-	number, err := scanners.LocalScan("<number>")
+	n, _ := number.NewNumber("...")
+	s := remote.NewGoogleSearchScanner()
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	res, _ := s.Scan(n)
 
-	links := scanners.GoogleSearchScan(number)
-
+	links := res.(remote.GoogleSearchResponse)
 	for _, link := range links.Individuals {
 		fmt.Println(link.URL) // Google search link to scan
 	}
