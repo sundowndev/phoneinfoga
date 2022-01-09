@@ -1,5 +1,5 @@
 <template>
-  <div v-if="loading || data.socialMedia.length > 0">
+  <div v-if="loading || data.social_media.length > 0">
     <hr />
     <h3>
       {{ name }}
@@ -10,7 +10,7 @@
       size="sm"
       variant="dark"
       v-b-toggle.googlesearch-collapse
-      v-show="data.socialMedia.length > 0 && !loading"
+      v-show="data.social_media.length > 0 && !loading"
       >Toggle results</b-button
     >
 
@@ -30,7 +30,7 @@
 
         <b-list-group>
           <b-list-group-item
-            :href="value.URL"
+            :href="value.url"
             target="blank"
             v-for="(value, i) in data.general"
             v-bind:key="i"
@@ -46,7 +46,7 @@
             <b-button
               variant="outline-primary"
               size="sm"
-              v-on:click="openLinks(data.socialMedia)"
+              v-on:click="openLinks(data.social_media)"
               >Open all links</b-button
             >
           </small>
@@ -54,9 +54,9 @@
 
         <b-list-group>
           <b-list-group-item
-            :href="value.URL"
+            :href="value.url"
             target="blank"
-            v-for="(value, i) in data.socialMedia"
+            v-for="(value, i) in data.social_media"
             v-bind:key="i"
             >{{ value.dork }}</b-list-group-item
           >
@@ -78,7 +78,7 @@
 
         <b-list-group>
           <b-list-group-item
-            :href="value.URL"
+            :href="value.url"
             target="blank"
             v-for="(value, i) in data.individuals"
             v-bind:key="i"
@@ -102,7 +102,7 @@
 
         <b-list-group>
           <b-list-group-item
-            :href="value.URL"
+            :href="value.url"
             target="blank"
             v-for="(value, i) in data.reputation"
             v-bind:key="i"
@@ -118,7 +118,7 @@
             <b-button
               variant="outline-primary"
               size="sm"
-              v-on:click="openLinks(data.disposableProviders)"
+              v-on:click="openLinks(data.disposable_providers)"
               >Open all links</b-button
             >
           </small>
@@ -126,9 +126,9 @@
 
         <b-list-group>
           <b-list-group-item
-            :href="value.URL"
+            :href="value.url"
             target="blank"
-            v-for="(value, i) in data.disposableProviders"
+            v-for="(value, i) in data.disposable_providers"
             v-bind:key="i"
             >{{ value.dork }}</b-list-group-item
           >
@@ -146,8 +146,8 @@ import config from "@/config";
 import { ScanResponse } from "@/views/Scan.vue";
 
 interface GoogleSearchScanResponse {
-  socialMedia: GoogleSearchDork[];
-  disposableProviders: GoogleSearchDork[];
+  social_media: GoogleSearchDork[];
+  disposable_providers: GoogleSearchDork[];
   reputation: GoogleSearchDork[];
   individuals: GoogleSearchDork[];
   general: GoogleSearchDork[];
@@ -156,7 +156,7 @@ interface GoogleSearchScanResponse {
 interface GoogleSearchDork {
   number: string;
   dork: string;
-  URL: string;
+  url: string;
 }
 
 @Component
@@ -164,8 +164,8 @@ export default class GoogleSearch extends Vue {
   id = "googlesearch";
   name = "Google search";
   data: GoogleSearchScanResponse = {
-    socialMedia: [],
-    disposableProviders: [],
+    social_media: [],
+    disposable_providers: [],
     reputation: [],
     individuals: [],
     general: [],
@@ -195,8 +195,8 @@ export default class GoogleSearch extends Vue {
 
   private clear() {
     this.data = {
-      socialMedia: [],
-      disposableProviders: [],
+      social_media: [],
+      disposable_providers: [],
       reputation: [],
       individuals: [],
       general: [],
@@ -220,7 +220,7 @@ export default class GoogleSearch extends Vue {
 
   openLinks(dork: GoogleSearchDork[]): void {
     for (const result of dork) {
-      window.open(result.URL, "_blank");
+      window.open(result.url, "_blank");
     }
   }
 }

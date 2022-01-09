@@ -34,7 +34,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "default"
+                    "General"
                 ],
                 "summary": "Check if service is healthy.",
                 "operationId": "healthCheck",
@@ -101,13 +101,13 @@ var doc = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/api.scanResultResponse"
+                                    "$ref": "#/definitions/api.ScanResultResponse"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "result": {
-                                            "$ref": "#/definitions/scanners.GoogleSearchResponse"
+                                            "$ref": "#/definitions/remote.GoogleSearchResponse"
                                         }
                                     }
                                 }
@@ -148,13 +148,13 @@ var doc = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/api.scanResultResponse"
+                                    "$ref": "#/definitions/api.ScanResultResponse"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "result": {
-                                            "$ref": "#/definitions/scanners.Number"
+                                            "$ref": "#/definitions/number.Number"
                                         }
                                     }
                                 }
@@ -195,13 +195,13 @@ var doc = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/api.scanResultResponse"
+                                    "$ref": "#/definitions/api.ScanResultResponse"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "result": {
-                                            "$ref": "#/definitions/scanners.NumverifyScannerResponse"
+                                            "$ref": "#/definitions/remote.NumverifyScannerResponse"
                                         }
                                     }
                                 }
@@ -227,6 +227,7 @@ var doc = `{
                 ],
                 "summary": "Perform a scan using OVH's API.",
                 "operationId": "ovhScan",
+                "deprecated": true,
                 "parameters": [
                     {
                         "type": "string",
@@ -242,13 +243,13 @@ var doc = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/api.scanResultResponse"
+                                    "$ref": "#/definitions/api.ScanResultResponse"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "result": {
-                                            "$ref": "#/definitions/scanners.OVHScannerResponse"
+                                            "$ref": "#/definitions/remote.OVHScannerResponse"
                                         }
                                     }
                                 }
@@ -315,6 +316,23 @@ var doc = `{
                 }
             }
         },
+        "api.ScanResultResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "result": {
+                    "type": "object"
+                },
+                "success": {
+                    "type": "boolean"
+                }
+            }
+        },
         "api.getAllNumbersResponse": {
             "type": "object",
             "properties": {
@@ -327,7 +345,7 @@ var doc = `{
                 "numbers": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/scanners.Number"
+                        "$ref": "#/definitions/number.Number"
                     }
                 },
                 "success": {
@@ -349,24 +367,33 @@ var doc = `{
                 }
             }
         },
-        "api.scanResultResponse": {
+        "number.Number": {
             "type": "object",
             "properties": {
-                "error": {
+                "carrier": {
                     "type": "string"
                 },
-                "message": {
+                "country": {
                     "type": "string"
                 },
-                "result": {
-                    "type": "object"
+                "countryCode": {
+                    "type": "integer"
                 },
-                "success": {
-                    "type": "boolean"
+                "e164": {
+                    "type": "string"
+                },
+                "international": {
+                    "type": "string"
+                },
+                "local": {
+                    "type": "string"
+                },
+                "rawLocal": {
+                    "type": "string"
                 }
             }
         },
-        "scanners.GoogleSearchDork": {
+        "remote.GoogleSearchDork": {
             "type": "object",
             "properties": {
                 "dork": {
@@ -380,68 +407,42 @@ var doc = `{
                 }
             }
         },
-        "scanners.GoogleSearchResponse": {
+        "remote.GoogleSearchResponse": {
             "type": "object",
             "properties": {
-                "disposableProviders": {
+                "disposable_providers": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/scanners.GoogleSearchDork"
+                        "$ref": "#/definitions/remote.GoogleSearchDork"
                     }
                 },
                 "general": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/scanners.GoogleSearchDork"
+                        "$ref": "#/definitions/remote.GoogleSearchDork"
                     }
                 },
                 "individuals": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/scanners.GoogleSearchDork"
+                        "$ref": "#/definitions/remote.GoogleSearchDork"
                     }
                 },
                 "reputation": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/scanners.GoogleSearchDork"
+                        "$ref": "#/definitions/remote.GoogleSearchDork"
                     }
                 },
-                "socialMedia": {
+                "social_media": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/scanners.GoogleSearchDork"
+                        "$ref": "#/definitions/remote.GoogleSearchDork"
                     }
                 }
             }
         },
-        "scanners.Number": {
-            "type": "object",
-            "properties": {
-                "E164": {
-                    "type": "string"
-                },
-                "carrier": {
-                    "type": "string"
-                },
-                "country": {
-                    "type": "string"
-                },
-                "countryCode": {
-                    "type": "integer"
-                },
-                "international": {
-                    "type": "string"
-                },
-                "local": {
-                    "type": "string"
-                },
-                "rawLocal": {
-                    "type": "string"
-                }
-            }
-        },
-        "scanners.NumverifyScannerResponse": {
+        "remote.NumverifyScannerResponse": {
             "type": "object",
             "properties": {
                 "carrier": {
@@ -455,9 +456,6 @@ var doc = `{
                 },
                 "country_prefix": {
                     "type": "string"
-                },
-                "error": {
-                    "$ref": "#/definitions/scanners.numverifyError"
                 },
                 "international_format": {
                     "type": "string"
@@ -479,7 +477,7 @@ var doc = `{
                 }
             }
         },
-        "scanners.OVHScannerResponse": {
+        "remote.OVHScannerResponse": {
             "type": "object",
             "properties": {
                 "city": {
@@ -488,21 +486,10 @@ var doc = `{
                 "found": {
                     "type": "boolean"
                 },
-                "numberRange": {
+                "number_range": {
                     "type": "string"
                 },
-                "zipCode": {
-                    "type": "string"
-                }
-            }
-        },
-        "scanners.numverifyError": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "integer"
-                },
-                "info": {
+                "zip_code": {
                     "type": "string"
                 }
             }

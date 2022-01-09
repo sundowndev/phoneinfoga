@@ -2,18 +2,22 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/sundowndev/phoneinfoga/v2/api/errors"
 	"github.com/sundowndev/phoneinfoga/v2/build"
-	"github.com/sundowndev/phoneinfoga/v2/scanners"
+	"github.com/sundowndev/phoneinfoga/v2/lib/number"
+	"github.com/sundowndev/phoneinfoga/v2/lib/remote"
+	"github.com/sundowndev/phoneinfoga/v2/lib/remote/suppliers"
+	"net/http"
 )
 
-type scanResultResponse struct {
+type ScanResultResponse struct {
 	JSONResponse
 	Result interface{} `json:"result"`
 }
 
 type getAllNumbersResponse struct {
 	JSONResponse
-	Numbers []scanners.Number `json:"numbers"`
+	Numbers []number.Number `json:"numbers"`
 }
 
 type healthResponse struct {
@@ -31,9 +35,9 @@ type healthResponse struct {
 // @Success 200 {object} getAllNumbersResponse
 // @Router /numbers [get]
 func getAllNumbers(c *gin.Context) {
-	c.JSON(200, getAllNumbersResponse{
+	c.JSON(http.StatusOK, getAllNumbersResponse{
 		JSONResponse: JSONResponse{Success: true},
-		Numbers:      []scanners.Number{},
+		Numbers:      []number.Number{},
 	})
 }
 
@@ -46,23 +50,38 @@ func getAllNumbers(c *gin.Context) {
 // @Router /numbers/{number}/validate [get]
 // @Param number path string true "Input phone number" validate(required)
 func validate(c *gin.Context) {
-	c.JSON(200, successResponse("The number is valid"))
+	_, err := number.NewNumber(c.Param("number"))
+	if err != nil {
+		handleError(c, errors.NewBadRequest(err))
+		return
+	}
+	c.JSON(http.StatusOK, successResponse("The number is valid"))
 }
 
 // @ID localScan
 // @Tags Numbers
 // @Summary Perform a scan using local phone number library.
 // @Produce  json
-// @Success 200 {object} scanResultResponse{result=scanners.Number}
+// @Success 200 {object} ScanResultResponse{result=number.Number}
 // @Success 400 {object} JSONResponse
 // @Router /numbers/{number}/scan/local [get]
 // @Param number path string true "Input phone number" validate(required)
 func localScan(c *gin.Context) {
-	result, _ := c.Get("number")
+	num, err := number.NewNumber(c.Param("number"))
+	if err != nil {
+		handleError(c, errors.NewBadRequest(err))
+		return
+	}
 
-	c.JSON(200, scanResultResponse{
+	result, err := remote.NewLocalScanner().Scan(num)
+	if err != nil {
+		handleError(c, errors.NewInternalError(err))
+		return
+	}
+
+	c.JSON(http.StatusOK, ScanResultResponse{
 		JSONResponse: JSONResponse{Success: true},
-		Result:       result.(*scanners.Number),
+		Result:       result,
 	})
 }
 
@@ -70,20 +89,24 @@ func localScan(c *gin.Context) {
 // @Tags Numbers
 // @Summary Perform a scan using Numverify's API.
 // @Produce  json
-// @Success 200 {object} scanResultResponse{result=scanners.NumverifyScannerResponse}
+// @Success 200 {object} ScanResultResponse{result=remote.NumverifyScannerResponse}
 // @Success 400 {object} JSONResponse
 // @Router /numbers/{number}/scan/numverify [get]
 // @Param number path string true "Input phone number" validate(required)
 func numverifyScan(c *gin.Context) {
-	number, _ := c.Get("number")
-
-	result, err := scanners.NumverifyScan(number.(*scanners.Number))
+	num, err := number.NewNumber(c.Param("number"))
 	if err != nil {
-		c.JSON(500, errorResponse(err.Error()))
+		handleError(c, errors.NewBadRequest(err))
 		return
 	}
 
-	c.JSON(200, scanResultResponse{
+	result, err := remote.NewNumverifyScanner(suppliers.NewNumverifySupplier()).Scan(num)
+	if err != nil {
+		handleError(c, errors.NewInternalError(err))
+		return
+	}
+
+	c.JSON(http.StatusOK, ScanResultResponse{
 		JSONResponse: JSONResponse{Success: true},
 		Result:       result,
 	})
@@ -93,16 +116,24 @@ func numverifyScan(c *gin.Context) {
 // @Tags Numbers
 // @Summary Perform a scan using Google Search engine.
 // @Produce  json
-// @Success 200 {object} scanResultResponse{result=scanners.GoogleSearchResponse}
+// @Success 200 {object} ScanResultResponse{result=remote.GoogleSearchResponse}
 // @Success 400 {object} JSONResponse
 // @Router /numbers/{number}/scan/googlesearch [get]
 // @Param number path string true "Input phone number" validate(required)
 func googleSearchScan(c *gin.Context) {
-	number, _ := c.Get("number")
+	num, err := number.NewNumber(c.Param("number"))
+	if err != nil {
+		handleError(c, errors.NewBadRequest(err))
+		return
+	}
 
-	result := scanners.GoogleSearchScan(number.(*scanners.Number))
+	result, err := remote.NewGoogleSearchScanner().Scan(num)
+	if err != nil {
+		handleError(c, errors.NewInternalError(err))
+		return
+	}
 
-	c.JSON(200, scanResultResponse{
+	c.JSON(http.StatusOK, ScanResultResponse{
 		JSONResponse: JSONResponse{Success: true},
 		Result:       result,
 	})
@@ -112,35 +143,39 @@ func googleSearchScan(c *gin.Context) {
 // @Tags Numbers
 // @Summary Perform a scan using OVH's API.
 // @Produce  json
-// @Success 200 {object} scanResultResponse{result=scanners.OVHScannerResponse}
+// @Success 200 {object} ScanResultResponse{result=remote.OVHScannerResponse}
 // @Success 400 {object} JSONResponse
+// @Deprecated
 // @Router /numbers/{number}/scan/ovh [get]
 // @Param number path string true "Input phone number" validate(required)
 func ovhScan(c *gin.Context) {
-	number, _ := c.Get("number")
-
-	result, err := scanners.OVHScan(number.(*scanners.Number))
-
+	num, err := number.NewNumber(c.Param("number"))
 	if err != nil {
-		c.JSON(500, errorResponse())
+		handleError(c, errors.NewBadRequest(err))
 		return
 	}
 
-	c.JSON(200, scanResultResponse{
+	result, err := remote.NewOVHScanner(suppliers.NewOVHSupplier()).Scan(num)
+	if err != nil {
+		handleError(c, errors.NewInternalError(err))
+		return
+	}
+
+	c.JSON(http.StatusOK, ScanResultResponse{
 		JSONResponse: JSONResponse{Success: true},
 		Result:       result,
 	})
 }
 
 // @ID healthCheck
-// @Tags default
+// @Tags General
 // @Summary Check if service is healthy.
 // @Produce  json
 // @Success 200 {object} healthResponse
 // @Success 500 {object} JSONResponse
 // @Router / [get]
 func healthHandler(c *gin.Context) {
-	c.JSON(200, healthResponse{
+	c.JSON(http.StatusOK, healthResponse{
 		Success: true,
 		Version: build.Version,
 		Commit:  build.Commit,

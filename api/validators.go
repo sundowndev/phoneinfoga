@@ -1,11 +1,9 @@
 package api
 
 import (
-	"github.com/sundowndev/phoneinfoga/v2/utils"
-	"net/http"
-
+	errors2 "errors"
 	"github.com/gin-gonic/gin"
-	"github.com/sundowndev/phoneinfoga/v2/scanners"
+	"github.com/sundowndev/phoneinfoga/v2/api/errors"
 )
 
 // JSONResponse is the default API response type
@@ -22,24 +20,7 @@ type scanURL struct {
 // ValidateScanURL validates scan URLs
 func ValidateScanURL(c *gin.Context) {
 	var v scanURL
-
 	if err := c.ShouldBindUri(&v); err != nil {
-		errorHandling(c, "the given phone number is not valid")
-		return
+		handleError(c, errors.NewBadRequest(errors2.New("the given phone number is not valid")))
 	}
-
-	number, err := scanners.LocalScan(c.Param("number"))
-
-	if err != nil {
-		utils.LoggerService.Errorln("Validation error", c.Param("number"), err.Error())
-		errorHandling(c, err.Error())
-		return
-	}
-
-	c.Set("number", number)
-}
-
-func errorHandling(c *gin.Context, msg string) {
-	c.JSON(http.StatusBadRequest, JSONResponse{Success: false, Error: msg})
-	c.Abort()
 }
