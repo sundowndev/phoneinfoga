@@ -34,7 +34,7 @@ Here’s the same phone number in E.164 formatting: +442071838750
 
 ## Custom formatting
 
-Sometimes the phone number has footprints but is used with a different formatting. This is a problem because for example if we search for "+15417543010", we'll not find web pages that write it that way : "(541) 754–3010". So the tool use a (optional) custom formatting given by the user to find further and more accurate results. To use this feature properly and make the results more valuable, try to use a format that someone of the number' country would usually use to share the phone number online.
+Sometimes the phone number has footprints but is used with a different formatting. This is a problem because for example if we search for "+15417543010", we'll not find web pages that write it that way : "(541) 754–3010". You should use a format that someone of the number's country would usually use to share the phone number online.
 
 For example, French people usually write numbers that way online : `06.20.30.40.50` or `06 20 30 40 50`.
 

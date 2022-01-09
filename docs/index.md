@@ -1,20 +1,17 @@
 # Welcome to the PhoneInfoga documentation
 
-PhoneInfoga is one of the most advanced tools to scan phone numbers using only free resources. The goal is to first gather standard information such as country, area, carrier and line type on any international phone numbers with a very good accuracy. Then search for footprints on search engines to try to find the VoIP provider or identify the owner.
+PhoneInfoga is one of the most advanced tools to scan international phone numbers. It allows you to first gather standard information such as country, area, carrier and line type on any international phone number, then search for footprints on search engines to try to find the VoIP provider or identify the owner.
 
 ### [Read the related blog post](https://medium.com/@SundownDEV/phone-number-scanning-osint-recon-tool-6ad8f0cac27b)
 
 ## Features
 
-- Check if phone number exists and is possible
+- Check if phone number exists and has connectivity status with [HLR lookups](https://www.hlr-lookups.com/en/what-is-an-hlr-lookup)
 - Gather standard informations such as country, line type and carrier
 - OSINT footprinting using external APIs, Google Hacking, phone books & search engines
 - Check for reputation reports, social media, disposable numbers and more
-- Scan several numbers at once
-- Use custom formatting for more effective OSINT reconnaissance
-- **NEW**: Serve a web client along with a REST API to run scans from the browser
-- **NEW**: Run your own web instance as a service
-- **NEW**: Programmatic usage with Go modules
+- Use the graphical user interface to run scans from the browser
+- Programmatic usage with the REST API and [Go modules](https://pkg.go.dev/github.com/sundowndev/phoneinfoga/v2)
 
 ## Anti-features
 
