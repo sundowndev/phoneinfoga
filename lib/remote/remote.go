@@ -31,7 +31,9 @@ func (r *Library) Scan(n *number.Number) (map[string]interface{}, map[string]err
 			errors[name] = err
 			continue
 		}
-		allData[name] = data
+		if data != nil {
+			allData[name] = data
+		}
 	}
 	return allData, errors
 }
