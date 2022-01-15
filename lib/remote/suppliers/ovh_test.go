@@ -68,3 +68,15 @@ func TestOVHSupplierError(t *testing.T) {
 		Err: dummyError,
 	}, err)
 }
+
+func TestOVHSupplierCountryCodeError(t *testing.T) {
+	defer gock.Off() // Flush pending mocks after test execution
+
+	num, _ := number.NewNumber("15556661212")
+
+	s := NewOVHSupplier()
+
+	got, err := s.Search(*num)
+	assert.Nil(t, got)
+	assert.EqualError(t, err, "country code +1 wasn't recognized")
+}

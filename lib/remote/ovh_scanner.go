@@ -32,6 +32,10 @@ func (s *ovhScanner) ShouldRun() bool {
 }
 
 func (s *ovhScanner) Scan(n *number.Number) (interface{}, error) {
+	if !s.isSupported(n.CountryCode) {
+		return nil, nil
+	}
+
 	res, err := s.client.Search(*n)
 	if err != nil {
 		return nil, err
@@ -45,4 +49,19 @@ func (s *ovhScanner) Scan(n *number.Number) (interface{}, error) {
 	}
 
 	return data, nil
+}
+
+func (s *ovhScanner) supportedCountryCodes() []int32 {
+	// See https://api.ovh.com/console/#/telephony/number/detailedZones#GET
+	return []int32{33, 32, 44, 34, 41}
+}
+
+func (s *ovhScanner) isSupported(code int32) bool {
+	supported := false
+	for _, c := range s.supportedCountryCodes() {
+		if code == c {
+			supported = true
+		}
+	}
+	return supported
 }

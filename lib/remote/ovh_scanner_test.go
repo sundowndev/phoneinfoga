@@ -12,7 +12,7 @@ import (
 func TestOVHScanner(t *testing.T) {
 	dummyError := errors.New("dummy")
 
-	dummyNumber, _ := number.NewNumber("15556661212")
+	dummyNumber, _ := number.NewNumber("33365174444")
 
 	testcases := []struct {
 		name       string
@@ -50,6 +50,16 @@ func TestOVHScanner(t *testing.T) {
 			wantErrors: map[string]error{
 				"ovh": dummyError,
 			},
+		},
+		{
+			name: "country not supported",
+			number: func() *number.Number {
+				num, _ := number.NewNumber("15556661212")
+				return num
+			}(),
+			mocks:      func(s *mocks.OVHSupplier) {},
+			expected:   map[string]interface{}{},
+			wantErrors: map[string]error{},
 		},
 	}
 

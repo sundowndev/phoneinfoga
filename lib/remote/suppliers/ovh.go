@@ -43,6 +43,10 @@ func NewOVHSupplier() *OVHSupplier {
 func (s *OVHSupplier) Search(num number.Number) (*OVHScannerResponse, error) {
 	countryCode := strings.ToLower(num.Country)
 
+	if countryCode == "" {
+		return nil, fmt.Errorf("country code +%d wasn't recognized", num.CountryCode)
+	}
+
 	// Build the request
 	response, err := http.Get(fmt.Sprintf("https://api.ovh.com/1.0/telephony/number/detailedZones?country=%s", countryCode))
 	if err != nil {
