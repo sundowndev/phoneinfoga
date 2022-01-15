@@ -29,10 +29,10 @@ Numverify provide standard but useful information such as country code, location
 
 === "Configuration"
 
-    | Environment variable | Description                                                                   |
-    |----------------------|-------------------------------------------------------------------------------|
-    | NUMVERIFY_API_KEY    | API key to authenticate to the Numverify API.                                 |
-    | NUMVERIFY_ENABLE_SSL | Whether to use HTTPS or plain HTTP for requests to the Numverify API.         |
+    | Environment variable | Default | Description                                                            |
+    |----------------------|---------|------------------------------------------------------------------------|
+    | NUMVERIFY_API_KEY    |         | API key to authenticate to the Numverify API.                          |
+    | NUMVERIFY_ENABLE_SSL | false   | Whether to use HTTPS or plain HTTP for requests to the Numverify API.  |
 === "Example"
 
     ```shell
