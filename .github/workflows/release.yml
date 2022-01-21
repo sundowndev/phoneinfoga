@@ -59,7 +59,7 @@ jobs:
           context: .
           push: true
           tags: sundowndev/phoneinfoga:latest,sundowndev/phoneinfoga:v2,sundowndev/phoneinfoga:stable
-          platforms: linux/amd64,linux/arm/v7,linux/arm64
+          platforms: linux/amd64 # ,linux/arm/v7,linux/arm64 - TODO(sundowndev): enable arm support back
 
       - uses: actions/checkout@v2.4.0
         with:
