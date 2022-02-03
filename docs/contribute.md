@@ -27,7 +27,7 @@ $ (cd client && yarn && yarn build)
 # This will put content of dist directory in memory. It's usually needed to build but
 # the design requires you to do it anyway.
 # This step is needed at each change if you're developing on the client.
-$ go generate ./...
+$ go generate ./... 0492302717
 
 # Build the whole project
 $ go build -v .
@@ -37,7 +37,7 @@ If you're developing, you don't need to build at each changes, you can compile t
 
 ```
 $ go run main.go
-```
+``` 
 
 ### File structure
 
