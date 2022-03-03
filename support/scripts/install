@@ -11,14 +11,14 @@ if [ $os == "Linux_x86_64" ] || [ $os == "Linux_armv6" ] || [ $os == "Darwin_x86
   echo "Found version $phoneinfoga_version"
 
   echo "Downloading version $phoneinfoga_version..."
-  wget "https://github.com/sundowndev/phoneinfoga/releases/download/$phoneinfoga_version/PhoneInfoga_$os.tar.gz"
+  wget "https://github.com/sundowndev/phoneinfoga/releases/download/$phoneinfoga_version/phoneinfoga_$os.tar.gz"
 
   echo "Verifying checksum..."
-  curl -sSL https://github.com/sundowndev/phoneinfoga/releases/download/$phoneinfoga_version/PhoneInfoga_checksums.txt | sha256sum -c --strict --ignore-missing
+  echo "$(curl -sSL https://github.com/sundowndev/phoneinfoga/releases/download/$phoneinfoga_version/phoneinfoga_checksums.txt) phoneinfoga_$os.tar.gz" | sha256sum --strict --check --ignore-missing
   [ $? -eq 0 ] || exit 1
 
-  tar xfv "PhoneInfoga_$os.tar.gz"
-  rm PhoneInfoga_$os.tar.gz
+  tar xfv "phoneinfoga_$os.tar.gz"
+  rm phoneinfoga_$os.tar.gz
 
   echo "Installation completed successfully."
   echo "Verify installation : ./phoneinfoga version"
@@ -30,3 +30,4 @@ else
 fi
 
 exit 0
+
