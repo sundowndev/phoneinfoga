@@ -14,7 +14,7 @@ if [ $os == "Linux_x86_64" ] || [ $os == "Linux_armv6" ] || [ $os == "Darwin_x86
   wget "https://github.com/sundowndev/phoneinfoga/releases/download/$phoneinfoga_version/phoneinfoga_$os.tar.gz"
 
   echo "Verifying checksum..."
-  echo "$(curl -sSL https://github.com/sundowndev/phoneinfoga/releases/download/$phoneinfoga_version/PhoneInfoga_checksums.txt) phoneinfoga_$os.tar.gz" | sha256sum --strict --check --ignore-missing
+  echo "$(curl -sSL https://github.com/sundowndev/phoneinfoga/releases/download/$phoneinfoga_version/phoneinfoga_checksums.txt) phoneinfoga_$os.tar.gz" | sha256sum --strict --check --ignore-missing
   [ $? -eq 0 ] || exit 1
 
   tar xfv "phoneinfoga_$os.tar.gz"
