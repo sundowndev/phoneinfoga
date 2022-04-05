@@ -56,7 +56,7 @@ services:
     phoneinfoga:
       container_name: phoneinfoga
       restart: on-failure
-      image: phoneinfoga:latest
+      image: sundowndev/phoneinfoga:latest
       command:
         - "serve"
       ports:
