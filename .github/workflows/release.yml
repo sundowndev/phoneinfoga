@@ -24,7 +24,7 @@ jobs:
         run: (cd client && yarn && yarn build)
 
       - name: Set up Go
-        uses: actions/setup-go@v2.2.0
+        uses: actions/setup-go@v3.0.0
         with:
           go-version: 1.16.x
 
@@ -85,7 +85,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2.4.0
       - name: Set up Python 3.8
-        uses: actions/setup-python@v2.3.2
+        uses: actions/setup-python@v3.1.0
         with:
           python-version: 3.8
 
