@@ -10,13 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3.0.0
 
       - name: Unshallow
         run: git fetch --prune --unshallow
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2.5.1
+        uses: actions/setup-node@v3.1.0
         with:
           node-version: 15.11.x
 
@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     if: contains(toJson(github.event.commits), '[action]') == false
     steps:
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3.0.0
         with:
           fetch-depth: 0
       - name: Set up QEMU
@@ -61,7 +61,7 @@ jobs:
           tags: sundowndev/phoneinfoga:latest,sundowndev/phoneinfoga:v2,sundowndev/phoneinfoga:stable
           platforms: linux/amd64 # ,linux/arm/v7,linux/arm64 - TODO(sundowndev): enable arm support back
 
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3.0.0
         with:
           ref: 'master'
 
@@ -83,9 +83,9 @@ jobs:
   publish-docs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3.0.0
       - name: Set up Python 3.8
-        uses: actions/setup-python@v2.3.2
+        uses: actions/setup-python@v3.1.0
         with:
           python-version: 3.8
 
