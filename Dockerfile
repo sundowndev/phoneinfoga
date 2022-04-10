@@ -1,4 +1,4 @@
-FROM node:16 AS client_builder
+FROM node:15.11.0-alpine AS client_builder
 
 WORKDIR /app
 
@@ -8,7 +8,7 @@ RUN yarn install --immutable && \
     yarn build && \
     yarn cache clean
 
-FROM golang:1.18-alpine AS go_builder
+FROM golang:1.17.8-alpine AS go_builder
 
 LABEL maintainer="Sundowndev" \
   org.label-schema.name="phoneinfoga" \
