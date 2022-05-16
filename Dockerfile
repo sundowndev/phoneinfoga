@@ -8,7 +8,7 @@ RUN yarn install --immutable
 
 RUN yarn build
 
-FROM golang:1.17.8-alpine as go_builder
+FROM golang:1.18.2-alpine as go_builder
 
 LABEL maintainer="Sundowndev" \
   org.label-schema.name="phoneinfoga" \
@@ -31,7 +31,7 @@ RUN go generate ./...
 
 RUN go build -v -ldflags="-s -w -X 'github.com/sundowndev/phoneinfoga/v2/config.Version=$(git describe --abbrev=0 --tags)' -X 'github.com/sundowndev/phoneinfoga/v2/config.Commit=$(git rev-parse --short HEAD)'" -v -o phoneinfoga .
 
-FROM golang:1.17.8-alpine
+FROM golang:1.18.2-alpine
 
 WORKDIR /app
 
