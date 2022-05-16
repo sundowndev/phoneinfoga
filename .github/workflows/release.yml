@@ -24,7 +24,7 @@ jobs:
         run: (cd client && yarn && yarn build)
 
       - name: Set up Go
-        uses: actions/setup-go@v2.2.0
+        uses: actions/setup-go@v3.1.0
         with:
           go-version: 1.16.x
 
