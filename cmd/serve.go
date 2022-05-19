@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -37,6 +38,7 @@ var serveCmd = &cobra.Command{
 			Handler: router,
 		}
 
+		fmt.Printf("Listening on %s\n", httpPort)
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			log.Fatalf("listen: %s\n", err)
 		}
