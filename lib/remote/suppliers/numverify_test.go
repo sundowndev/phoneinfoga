@@ -32,9 +32,9 @@ func TestNumverifySupplierSuccess(t *testing.T) {
 		LineType:            "mobile",
 	}
 
-	gock.New("https://apilayer.net").
-		Get("/api/validate").
-		MatchParam("access_key", "5ad5554ac240e4d3d31107941b35a5eb").
+	gock.New("https://api.apilayer.com").
+		Get("/number_verification/validate").
+		MatchHeader("apikey", "5ad5554ac240e4d3d31107941b35a5eb").
 		MatchParam("number", number).
 		Reply(200).
 		JSON(expectedResult)
@@ -70,9 +70,9 @@ func TestNumverifySupplierWithoutSSL(t *testing.T) {
 		LineType:            "mobile",
 	}
 
-	gock.New("http://apilayer.net").
-		Get("/api/validate").
-		MatchParam("access_key", "5ad5554ac240e4d3d31107941b35a5eb").
+	gock.New("http://api.apilayer.com").
+		Get("/number_verification/validate").
+		MatchHeader("apikey", "5ad5554ac240e4d3d31107941b35a5eb").
 		MatchParam("number", number).
 		Reply(200).
 		JSON(expectedResult)
@@ -103,9 +103,9 @@ func TestNumverifySupplierError(t *testing.T) {
 		},
 	}
 
-	gock.New("http://apilayer.net").
-		Get("/api/validate").
-		MatchParam("access_key", "5ad5554ac240e4d3d31107941b35a5eb").
+	gock.New("http://api.apilayer.com").
+		Get("/number_verification/validate").
+		MatchHeader("apikey", "5ad5554ac240e4d3d31107941b35a5eb").
 		MatchParam("number", number).
 		Reply(400).
 		JSON(expectedResult)
@@ -131,8 +131,8 @@ func TestNumverifySupplierHTTPError(t *testing.T) {
 
 	dummyError := errors.New("test")
 
-	gock.New("https://apilayer.net").
-		Get("/api/validate").
+	gock.New("https://api.apilayer.com").
+		Get("/number_verification/validate").
 		ReplyError(dummyError)
 
 	s := NewNumverifySupplier()
@@ -143,7 +143,7 @@ func TestNumverifySupplierHTTPError(t *testing.T) {
 	assert.Nil(t, got)
 	assert.Equal(t, &url.Error{
 		Op:  "Get",
-		URL: "https://apilayer.net/api/validate?access_key=5ad5554ac240e4d3d31107941b35a5eb&number=11115551212",
+		URL: "https://api.apilayer.com/number_verification/validate?&number=11115551212",
 		Err: dummyError,
 	}, err)
 }
