@@ -143,7 +143,7 @@ func TestNumverifySupplierHTTPError(t *testing.T) {
 	assert.Nil(t, got)
 	assert.Equal(t, &url.Error{
 		Op:  "Get",
-		URL: "https://api.apilayer.com/number_verification/validate?&number=11115551212",
+		URL: "https://api.apilayer.com/number_verification/validate?number=11115551212",
 		Err: dummyError,
 	}, err)
 }
