@@ -141,9 +141,9 @@ func TestApi(t *testing.T) {
 					LineType:            "mobile",
 				}
 
-				gock.New("http://apilayer.net").
-					Get("/api/validate").
-					MatchParam("access_key", "5ad5554ac240e4d3d31107941b35a5eb").
+				gock.New("http://api.apilayer.com").
+					Get("/number_verification/validate").
+					MatchHeader("Apikey", "5ad5554ac240e4d3d31107941b35a5eb").
 					MatchParam("number", number).
 					Reply(200).
 					JSON(expectedResult)

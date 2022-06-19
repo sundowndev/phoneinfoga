@@ -4,9 +4,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/sirupsen/logrus"
 	"net/http"
 	"os"
+
+	"github.com/sirupsen/logrus"
 )
 
 type NumverifySupplierInterface interface {
@@ -62,8 +63,16 @@ func (s *NumverifySupplier) Validate(internationalNumber string) (res *Numverify
 		WithField("scheme", scheme).
 		Debug("Running validate operation through Numverify API")
 
+
+	url := fmt.Sprintf("%s://api.apilayer.com/number_verification/validate?number=%s", scheme, internationalNumber)
+
 	// Build the request
-	response, err := http.Get(fmt.Sprintf("%s://apilayer.net/api/validate?access_key=%s&number=%s", scheme, s.ApiKey, internationalNumber))
+	client := &http.Client{}
+	req, _ := http.NewRequest("GET", url, nil)
+	req.Header.Set("Apikey", s.ApiKey)
+
+	response, err := client.Do(req)
+
 	if err != nil {
 		return nil, err
 	}
