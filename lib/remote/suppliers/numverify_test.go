@@ -34,7 +34,7 @@ func TestNumverifySupplierSuccess(t *testing.T) {
 
 	gock.New("https://api.apilayer.com").
 		Get("/number_verification/validate").
-		MatchHeader("apikey", "5ad5554ac240e4d3d31107941b35a5eb").
+		MatchHeader("Apikey", "5ad5554ac240e4d3d31107941b35a5eb").
 		MatchParam("number", number).
 		Reply(200).
 		JSON(expectedResult)
@@ -72,7 +72,7 @@ func TestNumverifySupplierWithoutSSL(t *testing.T) {
 
 	gock.New("http://api.apilayer.com").
 		Get("/number_verification/validate").
-		MatchHeader("apikey", "5ad5554ac240e4d3d31107941b35a5eb").
+		MatchHeader("Apikey", "5ad5554ac240e4d3d31107941b35a5eb").
 		MatchParam("number", number).
 		Reply(200).
 		JSON(expectedResult)
@@ -105,7 +105,7 @@ func TestNumverifySupplierError(t *testing.T) {
 
 	gock.New("http://api.apilayer.com").
 		Get("/number_verification/validate").
-		MatchHeader("apikey", "5ad5554ac240e4d3d31107941b35a5eb").
+		MatchHeader("Apikey", "5ad5554ac240e4d3d31107941b35a5eb").
 		MatchParam("number", number).
 		Reply(400).
 		JSON(expectedResult)

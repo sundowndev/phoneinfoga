@@ -69,7 +69,7 @@ func (s *NumverifySupplier) Validate(internationalNumber string) (res *Numverify
 	// Build the request
 	client := &http.Client{}
 	req, _ := http.NewRequest("GET", url, nil)
-	req.Header.Set("apikey", s.ApiKey)
+	req.Header.Set("Apikey", s.ApiKey)
 
 	response, err := client.Do(req)
 
