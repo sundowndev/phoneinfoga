@@ -1,6 +1,6 @@
 # Resources
 
-### Inderstanding phone numbers
+### Understanding phone numbers
 
 - [whitepages.fr/phonesystem](http://whitepages.fr/phonesystem/)
 - [Formatting-International-Phone-Numbers](https://support.twilio.com/hc/en-us/articles/223183008-Formatting-International-Phone-Numbers)
