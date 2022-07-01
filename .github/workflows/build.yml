@@ -33,6 +33,20 @@ jobs:
       - name: Building static assets
         run: (cd client && yarn install --immutable && yarn build)
 
+      - name: Enforce Go formatted code
+        run: |
+          make fmt
+          if [[ -z $(git status --porcelain) ]]; then
+            echo "Git directory is clean."
+          else
+            echo "Git directory is dirty. Run make fmt locally and commit any formatting fixes or generated code."
+            git status --porcelain
+            exit 1
+          fi
+
+      - name: Install tools
+        run: make install-tools
+
       - name: Build
         run: make build
 

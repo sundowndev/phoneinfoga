@@ -20,7 +20,7 @@ all: fmt lint test build go.mod
 .PHONY: build
 build:
 	go generate ./...
-	go build -v .
+	go build -v -o bin/phoneinfoga .
 
 .PHONY: test
 test:
@@ -52,7 +52,9 @@ lint:
 .PHONY: install-tools
 install-tools:
 	$(GOINSTALL) gotest.tools/gotestsum@v1.6.3
-	$(GOINSTALL) github.com/vektra/mockery/v2@latest
+	$(GOINSTALL) github.com/vektra/mockery/v2@v2.8.0
+	$(GOINSTALL) github.com/jessevdk/go-assets-builder@latest
+	$(GOINSTALL) github.com/swaggo/swag/cmd/swag@v1.8.3
 
 go.mod: FORCE
 	$(GOMOD) tidy
