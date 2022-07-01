@@ -253,7 +253,6 @@ paths:
       - Numbers
   /numbers/{number}/scan/ovh:
     get:
-      deprecated: true
       operationId: ovhScan
       parameters:
       - description: Input phone number
