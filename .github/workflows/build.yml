@@ -16,7 +16,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v3.2.0
         with:
-          go-version: 1.16.x
+          go-version: 1.17.8
         id: go
       - name: Check out code into the Go module directory
         uses: actions/checkout@v3.0.0
