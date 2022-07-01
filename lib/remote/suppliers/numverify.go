@@ -63,7 +63,6 @@ func (s *NumverifySupplier) Validate(internationalNumber string) (res *Numverify
 		WithField("scheme", scheme).
 		Debug("Running validate operation through Numverify API")
 
-
 	url := fmt.Sprintf("%s://api.apilayer.com/number_verification/validate?number=%s", scheme, internationalNumber)
 
 	// Build the request

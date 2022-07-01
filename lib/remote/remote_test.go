@@ -13,6 +13,11 @@ func TestRemoteLibrarySuccessScan(t *testing.T) {
 		Valid bool
 	}
 
+	expected := map[string]interface{}{
+		"fake":  fakeScannerResponse{Valid: true},
+		"fake2": fakeScannerResponse{Valid: false},
+	}
+
 	num, err := number.NewNumber("15556661212")
 	if err != nil {
 		t.Fatal(err)
@@ -23,15 +28,22 @@ func TestRemoteLibrarySuccessScan(t *testing.T) {
 	fakeScanner.On("Identifier").Return("fake").Once()
 	fakeScanner.On("Scan", num).Return(fakeScannerResponse{Valid: true}, nil).Once()
 
+	fakeScanner2 := &mocks.Scanner{}
+	fakeScanner2.On("ShouldRun").Return(true).Once()
+	fakeScanner2.On("Identifier").Return("fake2").Once()
+	fakeScanner2.On("Scan", num).Return(fakeScannerResponse{Valid: false}, nil).Once()
+
 	lib := NewLibrary()
 
 	lib.AddScanner(fakeScanner)
+	lib.AddScanner(fakeScanner2)
 
 	result, errs := lib.Scan(num)
-	assert.Equal(t, map[string]interface{}{"fake": fakeScannerResponse{Valid: true}}, result)
+	assert.Equal(t, expected, result)
 	assert.Equal(t, map[string]error{}, errs)
 
 	fakeScanner.AssertExpectations(t)
+	fakeScanner2.AssertExpectations(t)
 }
 
 func TestRemoteLibraryFailedScan(t *testing.T) {
