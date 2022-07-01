@@ -227,7 +227,6 @@ var doc = `{
                 ],
                 "summary": "Perform a scan using OVH's API.",
                 "operationId": "ovhScan",
-                "deprecated": true,
                 "parameters": [
                     {
                         "type": "string",

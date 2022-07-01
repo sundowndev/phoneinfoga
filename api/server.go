@@ -53,7 +53,7 @@ func registerClientRoute(router *gin.Engine) {
 		router.GET(path, func(c *gin.Context) {
 			c.Header("Content-Type", detectContentType(path, data))
 			c.Writer.WriteHeader(http.StatusOK)
-			c.Writer.Write(data)
+			_, _ = c.Writer.Write(data)
 			c.Abort()
 		})
 	}

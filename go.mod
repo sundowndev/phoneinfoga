@@ -1,6 +1,6 @@
 module github.com/sundowndev/phoneinfoga/v2
 
-go 1.13
+go 1.16
 
 require (
 	github.com/PuerkitoBio/goquery v1.6.1

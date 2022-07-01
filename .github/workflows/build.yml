@@ -34,14 +34,10 @@ jobs:
         run: (cd client && yarn install --immutable && yarn build)
 
       - name: Build
-        run: |
-          go generate ./...
-          go build -v .
+        run: make build
 
       - name: Lint
-        run: |
-          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.43.0
-          ./bin/golangci-lint run -D errcheck
+        run: make lint
 
       - name: Test
         run: go test -race -coverprofile=./c.out -covermode=atomic -v ./...
