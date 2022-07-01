@@ -1,6 +1,6 @@
 // Package api is about the REST API of PhoneInfoga
-//go:generate go run github.com/jessevdk/go-assets-builder ../client/dist -o ./assets.go -p api
-//go:generate go run github.com/swaggo/swag/cmd/swag init -g ./server.go --parseDependency
+//go:generate go-assets-builder ../client/dist -o ./assets.go -p api
+//go:generate swag init -g ./server.go --parseDependency
 package api
 
 import (
