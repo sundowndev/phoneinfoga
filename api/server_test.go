@@ -46,7 +46,7 @@ func TestApi(t *testing.T) {
 			assert.Equal(t, "text/css; charset=utf-8", contentType)
 
 			contentType = detectContentType("/file.hash.js", []byte{})
-			assert.Equal(t, "application/javascript", contentType)
+			assert.Equal(t, "text/javascript; charset=utf-8", contentType)
 
 			contentType = detectContentType("/file.hash.svg", []byte{})
 			assert.Equal(t, "image/svg+xml", contentType)
