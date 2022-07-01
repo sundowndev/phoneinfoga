@@ -19,6 +19,7 @@
 .DS_Store
 coverage
 coverage.*
+unit-tests.xml
 .idea
 api/assets.go
 

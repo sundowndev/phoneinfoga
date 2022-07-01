@@ -145,7 +145,6 @@ func googleSearchScan(c *gin.Context) {
 // @Produce  json
 // @Success 200 {object} ScanResultResponse{result=remote.OVHScannerResponse}
 // @Success 400 {object} JSONResponse
-// @Deprecated
 // @Router /numbers/{number}/scan/ovh [get]
 // @Param number path string true "Input phone number" validate(required)
 func ovhScan(c *gin.Context) {
