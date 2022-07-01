@@ -54,7 +54,7 @@ install-tools:
 	$(GOINSTALL) gotest.tools/gotestsum@v1.6.3
 	$(GOINSTALL) github.com/vektra/mockery/v2@v2.8.0
 	$(GOINSTALL) github.com/jessevdk/go-assets-builder@latest
-	$(GOINSTALL) github.com/swaggo/swag/cmd/swag@v1.8.3
+	$(GOINSTALL) github.com/swaggo/swag/cmd/swag@v1.7.0
 
 go.mod: FORCE
 	$(GOMOD) tidy
