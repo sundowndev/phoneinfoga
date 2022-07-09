@@ -4,6 +4,7 @@ go 1.17
 
 require (
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
+	github.com/emersion/go-vcard v0.0.0-20220507122617-d4056df0ec4a
 	github.com/fatih/color v1.10.0
 	github.com/gin-gonic/gin v1.6.3
 	github.com/jessevdk/go-assets v0.0.0-20160921144138-4f4301a06e15
