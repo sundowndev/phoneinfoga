@@ -15,12 +15,6 @@ type Library struct {
 	filter   filter.Filter
 }
 
-type Scanner interface {
-	Scan(*number.Number) (interface{}, error)
-	ShouldRun() bool
-	Identifier() string
-}
-
 func NewLibrary(filterEngine filter.Filter) *Library {
 	return &Library{
 		m:        &sync.RWMutex{},

@@ -2,12 +2,11 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/fatih/color"
 	"os"
 
 	"github.com/spf13/cobra"
 )
-
-var inputNumber string
 
 var rootCmd = &cobra.Command{
 	Use:     "phoneinfoga [COMMANDS] [OPTIONS]",
@@ -19,7 +18,11 @@ var rootCmd = &cobra.Command{
 // Execute is a function that executes the root command
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		exitWithError(err)
 	}
+}
+
+func exitWithError(err error) {
+	fmt.Println(color.RedString(err.Error()))
+	os.Exit(1)
 }
