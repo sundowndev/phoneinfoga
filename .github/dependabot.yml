@@ -6,7 +6,7 @@ updates:
   schedule:
     interval: "weekly"
     time: '00:00'
-  open-pull-requests-limit: 5
+  open-pull-requests-limit: 2
   reviewers:
     - sundowndev
   assignees:
@@ -22,3 +22,4 @@ updates:
   # Check for updates once a week
   schedule:
     interval: "weekly"
+  open-pull-requests-limit: 2
