@@ -1,5 +1,1 @@
 client/node_modules
-.git
-*Dockerfile*
-*docker-compose*
-node_modules

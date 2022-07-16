@@ -4,11 +4,11 @@ WORKDIR /app
 
 COPY ./client .
 
-RUN yarn install --immutable && \
-    yarn build && \
-    yarn cache clean
+RUN yarn install --immutable
 
-FROM golang:1.17.8-alpine AS go_builder
+RUN yarn build
+
+FROM golang:1.17.8-alpine as go_builder
 
 LABEL maintainer="Sundowndev" \
   org.label-schema.name="phoneinfoga" \
@@ -20,21 +20,18 @@ LABEL maintainer="Sundowndev" \
 
 WORKDIR /app
 
-COPY go.mod go.sum ./
-RUN go mod download 
 COPY . .
 
-RUN apk add --no-cache git && \
-    go get -v -t -d ./...
+RUN apk add git
+RUN go get -v -t -d ./...
 
 COPY --from=client_builder /app/dist ./client/dist
 
-RUN go generate ./... && \
-    go build -v -ldflags="-s -w \
-    -X 'github.com/sundowndev/phoneinfoga/v2/config.Version=$(git describe --abbrev=0 --tags)' \
-    -X 'github.com/sundowndev/phoneinfoga/v2/config.Commit=$(git rev-parse --short HEAD)'" -v -o phoneinfoga .
+RUN go generate ./...
 
-FROM alpine:3.15
+RUN go build -v -ldflags="-s -w -X 'github.com/sundowndev/phoneinfoga/v2/config.Version=$(git describe --abbrev=0 --tags)' -X 'github.com/sundowndev/phoneinfoga/v2/config.Commit=$(git rev-parse --short HEAD)'" -v -o phoneinfoga .
+
+FROM golang:1.17.8-alpine
 
 WORKDIR /app
 
