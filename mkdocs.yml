@@ -18,8 +18,18 @@ theme:
   logo: './images/logo_white.svg'
   favicon: './images/logo.svg'
   palette:
-    primary: 'blue grey'
-    accent: 'brown'
+    - scheme: default
+      primary: blue grey
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: blue grey
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
   features:
     - content.tabs.link
 extra:
