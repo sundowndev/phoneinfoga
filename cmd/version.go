@@ -14,6 +14,6 @@ var versionCmd = &cobra.Command{
 	Use:   "version",
 	Short: "Print current version of the tool",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf("PhoneInfoga %s-%s\n", build.Version, build.Commit)
+		fmt.Printf("PhoneInfoga %s\n", build.String())
 	},
 }
