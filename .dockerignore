@@ -1,1 +1,7 @@
+bin/
+Dockerfile
 client/node_modules
+*.md
+*.out
+*.xml
+support

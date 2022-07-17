@@ -11,6 +11,8 @@ GOGET=$(GOCMD) get
 GOINSTALL=$(GOCMD) install
 GOTOOL=$(GOCMD) tool
 GOFMT=$(GOCMD) fmt
+GIT_TAG=$(shell git describe --abbrev=0 --tags)
+GIT_COMMIT=$(shell git rev-parse --short HEAD)
 
 .PHONY: FORCE
 
@@ -20,7 +22,7 @@ all: fmt lint test build go.mod
 .PHONY: build
 build:
 	go generate ./...
-	go build -v -o bin/phoneinfoga .
+	go build -v -ldflags="-s -w -X 'github.com/sundowndev/phoneinfoga/v2/build.Version=${GIT_TAG}' -X 'github.com/sundowndev/phoneinfoga/v2/build.Commit=${GIT_COMMIT}'" -o ./bin/phoneinfoga .
 
 .PHONY: test
 test:
