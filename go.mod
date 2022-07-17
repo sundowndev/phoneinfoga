@@ -47,7 +47,7 @@ require (
 	github.com/stretchr/objx v0.1.1 // indirect
 	github.com/ugorji/go/codec v1.1.7 // indirect
 	golang.org/x/net v0.0.0-20201110031124-69a78807bb2b // indirect
-	golang.org/x/sys v0.0.0-20200930185726-fdedc70b468f // indirect
+	golang.org/x/sys v0.0.0-20220715151400-c0bba94af5f8 // indirect
 	golang.org/x/text v0.3.4 // indirect
 	golang.org/x/tools v0.0.0-20201120155355-20be4ac4bd6e // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
