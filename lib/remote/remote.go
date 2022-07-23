@@ -26,9 +26,6 @@ func NewLibrary(filterEngine filter.Filter) *Library {
 }
 
 func (r *Library) AddScanner(s Scanner) {
-	if !s.ShouldRun() {
-		return
-	}
 	r.scanners = append(r.scanners, s)
 }
 
@@ -48,8 +45,13 @@ func (r *Library) Scan(n *number.Number) (map[string]interface{}, map[string]err
 	var wg sync.WaitGroup
 
 	for _, s := range r.scanners {
-		if r.filter.Match(s.Identifier()) {
-			logrus.WithField("scanner", s.Identifier()).Debug("Scanner was ignored by filter")
+		if r.filter.Match(s.Name()) {
+			logrus.WithField("scanner", s.Name()).Debug("Scanner was ignored by filter")
+			continue
+		}
+
+		if !s.ShouldRun(*n) {
+			logrus.WithField("scanner", s.Name()).Debug("Scanner was ignored because it should not run")
 			continue
 		}
 
@@ -57,13 +59,13 @@ func (r *Library) Scan(n *number.Number) (map[string]interface{}, map[string]err
 
 		go func(s Scanner) {
 			defer wg.Done()
-			data, err := s.Scan(n)
+			data, err := s.Scan(*n)
 			if err != nil {
-				r.AddError(s.Identifier(), err)
+				r.AddError(s.Name(), err)
 				return
 			}
 			if data != nil {
-				r.AddResult(s.Identifier(), data)
+				r.AddResult(s.Name(), data)
 			}
 		}(s)
 	}

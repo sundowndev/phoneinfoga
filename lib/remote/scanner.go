@@ -12,9 +12,9 @@ type Plugin interface {
 }
 
 type Scanner interface {
-	Scan(*number.Number) (interface{}, error)
-	ShouldRun() bool
-	Identifier() string
+	Name() string
+	Scan(number.Number) (interface{}, error)
+	ShouldRun(number.Number) bool
 }
 
 func parseEntryFunc(p Plugin) (Scanner, error) {

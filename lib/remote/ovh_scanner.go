@@ -23,20 +23,16 @@ func NewOVHScanner(s suppliers.OVHSupplierInterface) *ovhScanner {
 	return &ovhScanner{client: s}
 }
 
-func (s *ovhScanner) Identifier() string {
+func (s *ovhScanner) Name() string {
 	return OVH
 }
 
-func (s *ovhScanner) ShouldRun() bool {
-	return true
+func (s *ovhScanner) ShouldRun(n number.Number) bool {
+	return s.isSupported(n.CountryCode)
 }
 
-func (s *ovhScanner) Scan(n *number.Number) (interface{}, error) {
-	if !s.isSupported(n.CountryCode) {
-		return nil, nil
-	}
-
-	res, err := s.client.Search(*n)
+func (s *ovhScanner) Scan(n number.Number) (interface{}, error) {
+	res, err := s.client.Search(n)
 	if err != nil {
 		return nil, err
 	}

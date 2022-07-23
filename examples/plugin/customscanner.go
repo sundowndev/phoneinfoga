@@ -19,11 +19,11 @@ func NewScanner() remote.Scanner {
 	return &customScanner{}
 }
 
-// Identifier returns the unique identifier this
+// Name returns the unique identifier this
 // scanner should be associated to.
 // Please keep in mind this value could be used for
 // automation and so must remain simple.
-func (s *customScanner) Identifier() string {
+func (s *customScanner) Name() string {
 	return "customscanner"
 }
 
@@ -31,13 +31,13 @@ func (s *customScanner) Identifier() string {
 // this scanner should be used or not.
 // This can be useful to check for authentication and
 // avoid running the scanner when it just can't work.
-func (s *customScanner) ShouldRun() bool {
+func (s *customScanner) ShouldRun(n number.Number) bool {
 	return true
 }
 
 // Scan does the actual scan of the phone number.
 // Note this function will be executed in a goroutine.
-func (s *customScanner) Scan(n *number.Number) (interface{}, error) {
+func (s *customScanner) Scan(n number.Number) (interface{}, error) {
 	data := customScannerResponse{
 		Valid:  true,
 		Info:   "This number is known for scams!",

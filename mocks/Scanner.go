@@ -13,7 +13,7 @@ type Scanner struct {
 }
 
 // Identifier provides a mock function with given fields:
-func (_m *Scanner) Identifier() string {
+func (_m *Scanner) Name() string {
 	ret := _m.Called()
 
 	var r0 string
@@ -27,11 +27,11 @@ func (_m *Scanner) Identifier() string {
 }
 
 // Scan provides a mock function with given fields: _a0
-func (_m *Scanner) Scan(_a0 *number.Number) (interface{}, error) {
+func (_m *Scanner) Scan(_a0 number.Number) (interface{}, error) {
 	ret := _m.Called(_a0)
 
 	var r0 interface{}
-	if rf, ok := ret.Get(0).(func(*number.Number) interface{}); ok {
+	if rf, ok := ret.Get(0).(func(number.Number) interface{}); ok {
 		r0 = rf(_a0)
 	} else {
 		if ret.Get(0) != nil {
@@ -40,7 +40,7 @@ func (_m *Scanner) Scan(_a0 *number.Number) (interface{}, error) {
 	}
 
 	var r1 error
-	if rf, ok := ret.Get(1).(func(*number.Number) error); ok {
+	if rf, ok := ret.Get(1).(func(number.Number) error); ok {
 		r1 = rf(_a0)
 	} else {
 		r1 = ret.Error(1)
@@ -49,13 +49,13 @@ func (_m *Scanner) Scan(_a0 *number.Number) (interface{}, error) {
 	return r0, r1
 }
 
-// ShouldRun provides a mock function with given fields:
-func (_m *Scanner) ShouldRun() bool {
-	ret := _m.Called()
+// ShouldRun provides a mock function with given fields: _a0
+func (_m *Scanner) ShouldRun(_a0 number.Number) bool {
+	ret := _m.Called(_a0)
 
 	var r0 bool
-	if rf, ok := ret.Get(0).(func() bool); ok {
-		r0 = rf()
+	if rf, ok := ret.Get(0).(func(number.Number) bool); ok {
+		r0 = rf(_a0)
 	} else {
 		r0 = ret.Get(0).(bool)
 	}
