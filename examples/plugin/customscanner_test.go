@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/stretchr/testify/assert"
 	"github.com/sundowndev/phoneinfoga/v2/lib/number"
-	"github.com/sundowndev/phoneinfoga/v2/lib/remote"
 	"testing"
 )
 
@@ -31,9 +30,6 @@ func TestCustomScanner(t *testing.T) {
 	for _, tt := range testcases {
 		t.Run(tt.name, func(t *testing.T) {
 			scanner := &customScanner{}
-
-			remoteLib := remote.NewLibrary()
-			remoteLib.AddScanner(scanner)
 
 			if !scanner.ShouldRun(*tt.number) {
 				t.Fatal("ShouldRun() should be truthy")
