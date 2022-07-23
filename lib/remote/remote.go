@@ -7,18 +7,15 @@ import (
 	"sync"
 )
 
+var mu sync.Locker = &sync.RWMutex{}
+var plugins []Scanner
+
 type Library struct {
 	m        *sync.RWMutex
 	scanners []Scanner
 	results  map[string]interface{}
 	errors   map[string]error
 	filter   filter.Filter
-}
-
-type Scanner interface {
-	Scan(*number.Number) (interface{}, error)
-	ShouldRun() bool
-	Identifier() string
 }
 
 func NewLibrary(filterEngine filter.Filter) *Library {
@@ -31,20 +28,23 @@ func NewLibrary(filterEngine filter.Filter) *Library {
 	}
 }
 
-func (r *Library) AddScanner(s Scanner) {
-	if !s.ShouldRun() {
-		return
+func (r *Library) LoadPlugins() {
+	for _, s := range plugins {
+		r.AddScanner(s)
 	}
+}
+
+func (r *Library) AddScanner(s Scanner) {
 	r.scanners = append(r.scanners, s)
 }
 
-func (r *Library) AddResult(k string, v interface{}) {
+func (r *Library) addResult(k string, v interface{}) {
 	r.m.Lock()
 	defer r.m.Unlock()
 	r.results[k] = v
 }
 
-func (r *Library) AddError(k string, err error) {
+func (r *Library) addError(k string, err error) {
 	r.m.Lock()
 	defer r.m.Unlock()
 	r.errors[k] = err
@@ -54,8 +54,13 @@ func (r *Library) Scan(n *number.Number) (map[string]interface{}, map[string]err
 	var wg sync.WaitGroup
 
 	for _, s := range r.scanners {
-		if r.filter.Match(s.Identifier()) {
-			logrus.WithField("scanner", s.Identifier()).Debug("Scanner was ignored by filter")
+		if r.filter.Match(s.Name()) {
+			logrus.WithField("scanner", s.Name()).Debug("Scanner was ignored by filter")
+			continue
+		}
+
+		if !s.ShouldRun(*n) {
+			logrus.WithField("scanner", s.Name()).Debug("Scanner was ignored because it should not run")
 			continue
 		}
 
@@ -63,13 +68,13 @@ func (r *Library) Scan(n *number.Number) (map[string]interface{}, map[string]err
 
 		go func(s Scanner) {
 			defer wg.Done()
-			data, err := s.Scan(n)
+			data, err := s.Scan(*n)
 			if err != nil {
-				r.AddError(s.Identifier(), err)
+				r.addError(s.Name(), err)
 				return
 			}
 			if data != nil {
-				r.AddResult(s.Identifier(), data)
+				r.addResult(s.Name(), data)
 			}
 		}(s)
 	}
@@ -77,4 +82,10 @@ func (r *Library) Scan(n *number.Number) (map[string]interface{}, map[string]err
 	wg.Wait()
 
 	return r.results, r.errors
+}
+
+func RegisterPlugin(s Scanner) {
+	mu.Lock()
+	defer mu.Unlock()
+	plugins = append(plugins, s)
 }

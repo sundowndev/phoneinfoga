@@ -22,15 +22,15 @@ func NewLocalScanner() *localScanner {
 	return &localScanner{}
 }
 
-func (s *localScanner) Identifier() string {
+func (s *localScanner) Name() string {
 	return Local
 }
 
-func (s *localScanner) ShouldRun() bool {
+func (s *localScanner) ShouldRun(_ number.Number) bool {
 	return true
 }
 
-func (s *localScanner) Scan(n *number.Number) (interface{}, error) {
+func (s *localScanner) Scan(n number.Number) (interface{}, error) {
 	data := LocalScannerResponse{
 		RawLocal:      n.RawLocal,
 		Local:         n.Local,

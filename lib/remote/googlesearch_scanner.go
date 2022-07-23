@@ -30,15 +30,15 @@ func NewGoogleSearchScanner() *googlesearchScanner {
 	return &googlesearchScanner{}
 }
 
-func (s *googlesearchScanner) Identifier() string {
+func (s *googlesearchScanner) Name() string {
 	return Googlesearch
 }
 
-func (s *googlesearchScanner) ShouldRun() bool {
+func (s *googlesearchScanner) ShouldRun(_ number.Number) bool {
 	return true
 }
 
-func (s *googlesearchScanner) Scan(n *number.Number) (interface{}, error) {
+func (s *googlesearchScanner) Scan(n number.Number) (interface{}, error) {
 	res := GoogleSearchResponse{
 		SocialMedia:         getSocialMediaDorks(n),
 		DisposableProviders: getDisposableProvidersDorks(n),
@@ -50,7 +50,7 @@ func (s *googlesearchScanner) Scan(n *number.Number) (interface{}, error) {
 	return res, nil
 }
 
-func getDisposableProvidersDorks(number *number.Number) (results []*GoogleSearchDork) {
+func getDisposableProvidersDorks(number number.Number) (results []*GoogleSearchDork) {
 	var dorks = []*dorkgen.GoogleSearch{
 		(&dorkgen.GoogleSearch{}).
 			Site("hs3x.com").
@@ -168,7 +168,7 @@ func getDisposableProvidersDorks(number *number.Number) (results []*GoogleSearch
 	return results
 }
 
-func getIndividualsDorks(number *number.Number) (results []*GoogleSearchDork) {
+func getIndividualsDorks(number number.Number) (results []*GoogleSearchDork) {
 	var dorks = []*dorkgen.GoogleSearch{
 		(&dorkgen.GoogleSearch{}).
 			Site("numinfo.net").
@@ -224,7 +224,7 @@ func getIndividualsDorks(number *number.Number) (results []*GoogleSearchDork) {
 	return results
 }
 
-func getSocialMediaDorks(number *number.Number) (results []*GoogleSearchDork) {
+func getSocialMediaDorks(number number.Number) (results []*GoogleSearchDork) {
 	var dorks = []*dorkgen.GoogleSearch{
 		(&dorkgen.GoogleSearch{}).
 			Site("facebook.com").
@@ -274,7 +274,7 @@ func getSocialMediaDorks(number *number.Number) (results []*GoogleSearchDork) {
 	return results
 }
 
-func getReputationDorks(number *number.Number) (results []*GoogleSearchDork) {
+func getReputationDorks(number number.Number) (results []*GoogleSearchDork) {
 	var dorks = []*dorkgen.GoogleSearch{
 		(&dorkgen.GoogleSearch{}).
 			Site("whosenumber.info").
@@ -328,7 +328,7 @@ func getReputationDorks(number *number.Number) (results []*GoogleSearchDork) {
 	return results
 }
 
-func getGeneralDorks(number *number.Number) (results []*GoogleSearchDork) {
+func getGeneralDorks(number number.Number) (results []*GoogleSearchDork) {
 	var dorks = []*dorkgen.GoogleSearch{
 		(&dorkgen.GoogleSearch{}).
 			Intext(number.International).

@@ -2,6 +2,19 @@
 
 PhoneInfoga provide several scanners to extract as much information as possible from a given phone number. Those scanners may require authentication, so they're automatically skipped when no authentication credentials are found. Note that all scanners use environment variables to find credentials.
 
+## Building your own scanner
+
+PhoneInfoga can now be extended with plugins! You can build your own scanner and PhoneInfoga will use it to scan the given phone number.
+
+```shell
+$ phoneinfoga scan -n +4176418xxxx --plugin ./custom_scanner.so
+```
+
+!!! info
+For now, plugins are only supported through the CLI.
+
+To get started, [see this example](https://github.com/sundowndev/phoneinfoga/tree/master/examples/plugin).
+
 ## Local
 
 The local scan is probably the simplest scan of PhoneInfoga. By default, the tool statically parse the phone number and convert it to several formats, it also tries to recognize the country and the carrier. Those information are passed to all scanners in order to provide further analysis. The local scanner simply return those information to the end user so they can exploit it as well.

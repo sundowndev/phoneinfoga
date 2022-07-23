@@ -39,7 +39,7 @@ func TestLocalScanner(t *testing.T) {
 			remote := NewLibrary(filter.NewEngine())
 			remote.AddScanner(scanner)
 
-			if !scanner.ShouldRun() {
+			if !scanner.ShouldRun(*tt.number) {
 				t.Fatal("ShouldRun() should be truthy")
 			}
 

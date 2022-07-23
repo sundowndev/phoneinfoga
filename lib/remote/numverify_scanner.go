@@ -28,15 +28,15 @@ func NewNumverifyScanner(s suppliers.NumverifySupplierInterface) *numverifyScann
 	return &numverifyScanner{client: s}
 }
 
-func (s *numverifyScanner) Identifier() string {
+func (s *numverifyScanner) Name() string {
 	return Numverify
 }
 
-func (s *numverifyScanner) ShouldRun() bool {
+func (s *numverifyScanner) ShouldRun(_ number.Number) bool {
 	return s.client.IsAvailable()
 }
 
-func (s *numverifyScanner) Scan(n *number.Number) (interface{}, error) {
+func (s *numverifyScanner) Scan(n number.Number) (interface{}, error) {
 	res, err := s.client.Validate(n.International)
 	if err != nil {
 		return nil, err
