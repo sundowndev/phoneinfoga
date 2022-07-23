@@ -78,6 +78,7 @@ func TestRemoteLibraryEmptyScan(t *testing.T) {
 	}
 
 	fakeScanner := &mocks.Scanner{}
+	fakeScanner.On("Name").Return("mockscanner").Times(2)
 	fakeScanner.On("ShouldRun", *num).Return(false).Once()
 
 	lib := NewLibrary(filter.NewEngine())
