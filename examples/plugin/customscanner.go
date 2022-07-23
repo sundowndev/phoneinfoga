@@ -13,24 +13,16 @@ type customScannerResponse struct {
 	Hidden string `json:"-" console:"-"`
 }
 
-// NewScanner creates a new instance of this scanner.
-// The name of the function MUST be NewScanner.
-func NewScanner() remote.Scanner {
-	return &customScanner{}
-}
-
-// Name returns the unique identifier this
-// scanner should be associated to.
-// Please keep in mind this value could be used for
-// automation and so must remain simple.
+// Name returns the unique name this scanner.
 func (s *customScanner) Name() string {
 	return "customscanner"
 }
 
 // ShouldRun returns a boolean indicating whether
 // this scanner should be used or not.
-// This can be useful to check for authentication and
-// avoid running the scanner when it just can't work.
+// This can be useful to check for authentication or
+// country code support for example, and avoid running
+// the scanner when it just can't work.
 func (s *customScanner) ShouldRun(n number.Number) bool {
 	return true
 }
@@ -44,4 +36,8 @@ func (s *customScanner) Scan(n number.Number) (interface{}, error) {
 		Hidden: "This will not appear in the output",
 	}
 	return data, nil
+}
+
+func init() {
+	remote.RegisterPlugin(&customScanner{})
 }

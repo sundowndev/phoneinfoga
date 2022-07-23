@@ -7,6 +7,9 @@ import (
 	"sync"
 )
 
+var mu sync.Locker = &sync.RWMutex{}
+var plugins []Scanner
+
 type Library struct {
 	m        *sync.RWMutex
 	scanners []Scanner
@@ -25,17 +28,23 @@ func NewLibrary(filterEngine filter.Filter) *Library {
 	}
 }
 
+func (r *Library) LoadPlugins() {
+	for _, s := range plugins {
+		r.AddScanner(s)
+	}
+}
+
 func (r *Library) AddScanner(s Scanner) {
 	r.scanners = append(r.scanners, s)
 }
 
-func (r *Library) AddResult(k string, v interface{}) {
+func (r *Library) addResult(k string, v interface{}) {
 	r.m.Lock()
 	defer r.m.Unlock()
 	r.results[k] = v
 }
 
-func (r *Library) AddError(k string, err error) {
+func (r *Library) addError(k string, err error) {
 	r.m.Lock()
 	defer r.m.Unlock()
 	r.errors[k] = err
@@ -61,11 +70,11 @@ func (r *Library) Scan(n *number.Number) (map[string]interface{}, map[string]err
 			defer wg.Done()
 			data, err := s.Scan(*n)
 			if err != nil {
-				r.AddError(s.Name(), err)
+				r.addError(s.Name(), err)
 				return
 			}
 			if data != nil {
-				r.AddResult(s.Name(), data)
+				r.addResult(s.Name(), data)
 			}
 		}(s)
 	}
@@ -73,4 +82,10 @@ func (r *Library) Scan(n *number.Number) (map[string]interface{}, map[string]err
 	wg.Wait()
 
 	return r.results, r.errors
+}
+
+func RegisterPlugin(s Scanner) {
+	mu.Lock()
+	defer mu.Unlock()
+	plugins = append(plugins, s)
 }
