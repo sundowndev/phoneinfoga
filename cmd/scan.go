@@ -54,6 +54,13 @@ func runScan() {
 		exitWithError(err)
 	}
 
+	for _, p := range pluginPaths {
+		err := remote.OpenPlugin(p)
+		if err != nil {
+			exitWithError(err)
+		}
+	}
+
 	f := filter.NewEngine()
 	f.AddRule(disabledScanners...)
 
