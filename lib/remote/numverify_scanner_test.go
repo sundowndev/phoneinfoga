@@ -3,6 +3,7 @@ package remote
 import (
 	"errors"
 	"github.com/stretchr/testify/assert"
+	"github.com/sundowndev/phoneinfoga/v2/lib/filter"
 	"github.com/sundowndev/phoneinfoga/v2/lib/number"
 	"github.com/sundowndev/phoneinfoga/v2/lib/remote/suppliers"
 	"github.com/sundowndev/phoneinfoga/v2/mocks"
@@ -91,7 +92,7 @@ func TestNumverifyScanner(t *testing.T) {
 			tt.mocks(numverifySupplierMock)
 
 			scanner := NewNumverifyScanner(numverifySupplierMock)
-			remote := NewLibrary()
+			remote := NewLibrary(filter.NewEngine())
 			remote.AddScanner(scanner)
 
 			got, errs := remote.Scan(tt.number)
