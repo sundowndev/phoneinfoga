@@ -1,6 +1,8 @@
 package remote
 
 import (
+	"github.com/sirupsen/logrus"
+	"github.com/sundowndev/phoneinfoga/v2/lib/filter"
 	"github.com/sundowndev/phoneinfoga/v2/lib/number"
 	"sync"
 )
@@ -10,6 +12,7 @@ type Library struct {
 	scanners []Scanner
 	results  map[string]interface{}
 	errors   map[string]error
+	filter   filter.Filter
 }
 
 type Scanner interface {
@@ -18,12 +21,13 @@ type Scanner interface {
 	Identifier() string
 }
 
-func NewLibrary() *Library {
+func NewLibrary(filterEngine filter.Filter) *Library {
 	return &Library{
 		m:        &sync.RWMutex{},
 		scanners: []Scanner{},
 		results:  map[string]interface{}{},
 		errors:   map[string]error{},
+		filter:   filterEngine,
 	}
 }
 
@@ -50,6 +54,11 @@ func (r *Library) Scan(n *number.Number) (map[string]interface{}, map[string]err
 	var wg sync.WaitGroup
 
 	for _, s := range r.scanners {
+		if r.filter.Match(s.Identifier()) {
+			logrus.WithField("scanner", s.Identifier()).Debug("Scanner was ignored by filter")
+			continue
+		}
+
 		wg.Add(1)
 
 		go func(s Scanner) {

@@ -2,6 +2,7 @@ package remote
 
 import (
 	"github.com/stretchr/testify/assert"
+	"github.com/sundowndev/phoneinfoga/v2/lib/filter"
 	"github.com/sundowndev/phoneinfoga/v2/lib/number"
 	"testing"
 )
@@ -35,7 +36,7 @@ func TestLocalScanner(t *testing.T) {
 	for _, tt := range testcases {
 		t.Run(tt.name, func(t *testing.T) {
 			scanner := NewLocalScanner()
-			remote := NewLibrary()
+			remote := NewLibrary(filter.NewEngine())
 			remote.AddScanner(scanner)
 
 			if !scanner.ShouldRun() {
