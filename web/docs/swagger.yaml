@@ -1,47 +1,5 @@
 basePath: /api
 definitions:
-  api.JSONResponse:
-    properties:
-      error:
-        type: string
-      message:
-        type: string
-      success:
-        type: boolean
-    type: object
-  api.ScanResultResponse:
-    properties:
-      error:
-        type: string
-      message:
-        type: string
-      result:
-        type: object
-      success:
-        type: boolean
-    type: object
-  api.getAllNumbersResponse:
-    properties:
-      error:
-        type: string
-      message:
-        type: string
-      numbers:
-        items:
-          $ref: '#/definitions/number.Number'
-        type: array
-      success:
-        type: boolean
-    type: object
-  api.healthResponse:
-    properties:
-      commit:
-        type: string
-      success:
-        type: boolean
-      version:
-        type: string
-    type: object
   number.Number:
     properties:
       carrier:
@@ -125,6 +83,48 @@ definitions:
       zip_code:
         type: string
     type: object
+  web.JSONResponse:
+    properties:
+      error:
+        type: string
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+  web.ScanResultResponse:
+    properties:
+      error:
+        type: string
+      message:
+        type: string
+      result:
+        type: object
+      success:
+        type: boolean
+    type: object
+  web.getAllNumbersResponse:
+    properties:
+      error:
+        type: string
+      message:
+        type: string
+      numbers:
+        items:
+          $ref: '#/definitions/number.Number'
+        type: array
+      success:
+        type: boolean
+    type: object
+  web.healthResponse:
+    properties:
+      commit:
+        type: string
+      success:
+        type: boolean
+      version:
+        type: string
+    type: object
 host: demo.phoneinfoga.crvx.fr
 info:
   contact: {}
@@ -144,11 +144,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.healthResponse'
+            $ref: '#/definitions/web.healthResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/api.JSONResponse'
+            $ref: '#/definitions/web.JSONResponse'
       summary: Check if service is healthy.
       tags:
       - General
@@ -163,7 +163,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.getAllNumbersResponse'
+            $ref: '#/definitions/web.getAllNumbersResponse'
       summary: Fetch all previously scanned numbers.
       tags:
       - Numbers
@@ -183,7 +183,7 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/api.ScanResultResponse'
+            - $ref: '#/definitions/web.ScanResultResponse'
             - properties:
                 result:
                   $ref: '#/definitions/remote.GoogleSearchResponse'
@@ -191,7 +191,7 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/api.JSONResponse'
+            $ref: '#/definitions/web.JSONResponse'
       summary: Perform a scan using Google Search engine.
       tags:
       - Numbers
@@ -211,7 +211,7 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/api.ScanResultResponse'
+            - $ref: '#/definitions/web.ScanResultResponse'
             - properties:
                 result:
                   $ref: '#/definitions/number.Number'
@@ -219,7 +219,7 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/api.JSONResponse'
+            $ref: '#/definitions/web.JSONResponse'
       summary: Perform a scan using local phone number library.
       tags:
       - Numbers
@@ -239,7 +239,7 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/api.ScanResultResponse'
+            - $ref: '#/definitions/web.ScanResultResponse'
             - properties:
                 result:
                   $ref: '#/definitions/remote.NumverifyScannerResponse'
@@ -247,7 +247,7 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/api.JSONResponse'
+            $ref: '#/definitions/web.JSONResponse'
       summary: Perform a scan using Numverify's API.
       tags:
       - Numbers
@@ -267,7 +267,7 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/api.ScanResultResponse'
+            - $ref: '#/definitions/web.ScanResultResponse'
             - properties:
                 result:
                   $ref: '#/definitions/remote.OVHScannerResponse'
@@ -275,7 +275,7 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/api.JSONResponse'
+            $ref: '#/definitions/web.JSONResponse'
       summary: Perform a scan using OVH's API.
       tags:
       - Numbers
@@ -294,11 +294,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.JSONResponse'
+            $ref: '#/definitions/web.JSONResponse'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/api.JSONResponse'
+            $ref: '#/definitions/web.JSONResponse'
       summary: Check if a number is valid and possible.
       tags:
       - Numbers

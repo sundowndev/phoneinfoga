@@ -26,7 +26,7 @@ jobs:
           go-version: 1.17.8
 
       - name: Building static assets
-        run: (cd client && yarn install --immutable && yarn build)
+        run: (cd web/client && yarn install --immutable && yarn build)
 
       - name: Install tools
         run: make install-tools

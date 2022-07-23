@@ -1,8 +1,8 @@
-package api
+package web
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/sundowndev/phoneinfoga/v2/api/errors"
+	"github.com/sundowndev/phoneinfoga/v2/web/errors"
 )
 
 func handleError(c *gin.Context, e *errors.Error) {

@@ -31,7 +31,7 @@ jobs:
           node-version: 15.11.x
 
       - name: Building static assets
-        run: (cd client && yarn install --immutable && yarn build)
+        run: (cd web/client && yarn install --immutable && yarn build)
 
       - name: Enforce Go formatted code
         run: |

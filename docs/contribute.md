@@ -21,7 +21,7 @@ The project is maintained by a single person: [sundowndev](https://github.com/su
 ```shell
 # Build static assets
 # This will create dist directory containing client's static files
-$ (cd client && yarn && yarn build)
+$ (cd web/client && yarn && yarn build)
 
 # Generate in-memory assets
 # This will put content of dist directory in memory. It's usually needed to build but
@@ -42,12 +42,16 @@ $ go run main.go
 ### File structure
 
 ```shell
-api         # REST API code
-client      # web client code
-cmd         # Command-line app code
-docs        # Documentation
-pkg         # Code base for scanners, utils ...
-scripts     # Development & deployment scripts
+bin/        # Local binaries
+build/      # Build package providing info about the current build
+cmd/        # Command-line app code
+docs/       # Documentation
+examples/   # Some code examples
+lib/        # Libraries 
+mocks/      # Mocks
+support/    # Utilities, manifests for production and local env
+test/       # Utilities for testing purposes
+web/        # Web server, including REST API and web client
 go.mod      # Go modules file
 main.go     # Application entrypoint
 ```
@@ -72,7 +76,7 @@ go tool cover -html=coverage.out
 Developping on the web client.
 
 ```shell
-cd client
+cd web/client
 
 yarn test
 yarn test:unit
@@ -85,19 +89,16 @@ If you're developing on the client, you can watch changes with `yarn build:watch
 
 ### Go code
 
-We use a shell script to format Go files.
+We use gofmt to format Go files.
 
 ```shell
-sh ./scripts/format.sh
-
-# You can also use GolangCI
-golangci-lint run -D errcheck
+make fmt
 ```
 
 ### Typescript code
 
 ```shell
-cd client
+cd web/client
 
 yarn lint
 yarn lint:fix
