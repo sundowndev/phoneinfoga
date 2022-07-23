@@ -1,4 +1,4 @@
-package api
+package web
 
 import (
 	"github.com/sundowndev/phoneinfoga/v2/lib/remote"
@@ -25,7 +25,7 @@ func performRequest(r http.Handler, method, path string) (*httptest.ResponseReco
 
 func BenchmarkAPI(b *testing.B) {
 	r = gin.Default()
-	r = Serve(r, true)
+	r, _ = Serve(r, true)
 
 	b.Run("localScan - /api/numbers/:number/scan/local", func(b *testing.B) {
 		for i := 0; i < b.N; i++ {
@@ -38,7 +38,7 @@ func BenchmarkAPI(b *testing.B) {
 
 func TestApi(t *testing.T) {
 	r = gin.Default()
-	r = Serve(r, false)
+	r, _ = Serve(r, false)
 
 	t.Run("Serve", func(t *testing.T) {
 		t.Run("detectContentType", func(t *testing.T) {

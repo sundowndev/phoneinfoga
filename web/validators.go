@@ -1,9 +1,9 @@
-package api
+package web
 
 import (
 	errors2 "errors"
 	"github.com/gin-gonic/gin"
-	"github.com/sundowndev/phoneinfoga/v2/api/errors"
+	"github.com/sundowndev/phoneinfoga/v2/web/errors"
 )
 
 // JSONResponse is the default API response type

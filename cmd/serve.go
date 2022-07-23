@@ -8,7 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cobra"
-	"github.com/sundowndev/phoneinfoga/v2/api"
+	"github.com/sundowndev/phoneinfoga/v2/web"
 )
 
 var httpPort int
@@ -29,7 +29,10 @@ var serveCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		router := gin.Default()
 
-		api.Serve(router, disableClient)
+		_, err := web.Serve(router, disableClient)
+		if err != nil {
+			log.Fatal(err)
+		}
 
 		httpPort := ":" + strconv.Itoa(httpPort)
 

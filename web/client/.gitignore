@@ -22,3 +22,6 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+.yarn/cache
+.yarn/*.gz
+!.yarn/releases/*.cjs

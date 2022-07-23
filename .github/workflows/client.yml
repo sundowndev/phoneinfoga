@@ -22,16 +22,16 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Install & lint
       run: |
-        cd client
+        cd web/client
         yarn install --immutable
         yarn lint
     - name: Build
       run: |
-        cd client
+        cd web/client
         yarn build
     - name: Test
       run: |
-        cd client
+        cd web/client
         yarn test:unit
     # - name: Upload coverage to Codecov
     #   uses: codecov/codecov-action@v1.0.2

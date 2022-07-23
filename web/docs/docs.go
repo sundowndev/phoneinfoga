@@ -42,13 +42,13 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.healthResponse"
+                            "$ref": "#/definitions/web.healthResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/api.JSONResponse"
+                            "$ref": "#/definitions/web.JSONResponse"
                         }
                     }
                 }
@@ -70,7 +70,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.getAllNumbersResponse"
+                            "$ref": "#/definitions/web.getAllNumbersResponse"
                         }
                     }
                 }
@@ -101,7 +101,7 @@ var doc = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/api.ScanResultResponse"
+                                    "$ref": "#/definitions/web.ScanResultResponse"
                                 },
                                 {
                                     "type": "object",
@@ -117,7 +117,7 @@ var doc = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/api.JSONResponse"
+                            "$ref": "#/definitions/web.JSONResponse"
                         }
                     }
                 }
@@ -148,7 +148,7 @@ var doc = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/api.ScanResultResponse"
+                                    "$ref": "#/definitions/web.ScanResultResponse"
                                 },
                                 {
                                     "type": "object",
@@ -164,7 +164,7 @@ var doc = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/api.JSONResponse"
+                            "$ref": "#/definitions/web.JSONResponse"
                         }
                     }
                 }
@@ -195,7 +195,7 @@ var doc = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/api.ScanResultResponse"
+                                    "$ref": "#/definitions/web.ScanResultResponse"
                                 },
                                 {
                                     "type": "object",
@@ -211,7 +211,7 @@ var doc = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/api.JSONResponse"
+                            "$ref": "#/definitions/web.JSONResponse"
                         }
                     }
                 }
@@ -242,7 +242,7 @@ var doc = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/api.ScanResultResponse"
+                                    "$ref": "#/definitions/web.ScanResultResponse"
                                 },
                                 {
                                     "type": "object",
@@ -258,7 +258,7 @@ var doc = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/api.JSONResponse"
+                            "$ref": "#/definitions/web.JSONResponse"
                         }
                     }
                 }
@@ -287,13 +287,13 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.JSONResponse"
+                            "$ref": "#/definitions/web.JSONResponse"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/api.JSONResponse"
+                            "$ref": "#/definitions/web.JSONResponse"
                         }
                     }
                 }
@@ -301,71 +301,6 @@ var doc = `{
         }
     },
     "definitions": {
-        "api.JSONResponse": {
-            "type": "object",
-            "properties": {
-                "error": {
-                    "type": "string"
-                },
-                "message": {
-                    "type": "string"
-                },
-                "success": {
-                    "type": "boolean"
-                }
-            }
-        },
-        "api.ScanResultResponse": {
-            "type": "object",
-            "properties": {
-                "error": {
-                    "type": "string"
-                },
-                "message": {
-                    "type": "string"
-                },
-                "result": {
-                    "type": "object"
-                },
-                "success": {
-                    "type": "boolean"
-                }
-            }
-        },
-        "api.getAllNumbersResponse": {
-            "type": "object",
-            "properties": {
-                "error": {
-                    "type": "string"
-                },
-                "message": {
-                    "type": "string"
-                },
-                "numbers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/number.Number"
-                    }
-                },
-                "success": {
-                    "type": "boolean"
-                }
-            }
-        },
-        "api.healthResponse": {
-            "type": "object",
-            "properties": {
-                "commit": {
-                    "type": "string"
-                },
-                "success": {
-                    "type": "boolean"
-                },
-                "version": {
-                    "type": "string"
-                }
-            }
-        },
         "number.Number": {
             "type": "object",
             "properties": {
@@ -489,6 +424,71 @@ var doc = `{
                     "type": "string"
                 },
                 "zip_code": {
+                    "type": "string"
+                }
+            }
+        },
+        "web.JSONResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "success": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "web.ScanResultResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "result": {
+                    "type": "object"
+                },
+                "success": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "web.getAllNumbersResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "numbers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/number.Number"
+                    }
+                },
+                "success": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "web.healthResponse": {
+            "type": "object",
+            "properties": {
+                "commit": {
+                    "type": "string"
+                },
+                "success": {
+                    "type": "boolean"
+                },
+                "version": {
                     "type": "string"
                 }
             }
