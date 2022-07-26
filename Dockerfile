@@ -11,7 +11,7 @@ FROM golang:1.17.8-alpine AS go_builder
 
 WORKDIR /app
 
-RUN apk add --update --no-cache git make bash
+RUN apk add --update --no-cache git make bash build-base
 COPY . .
 COPY --from=client_builder /app/dist ./web/client/dist
 RUN go get -v -t -d ./...
