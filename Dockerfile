@@ -2,7 +2,7 @@ FROM node:15.11.0-alpine AS client_builder
 
 WORKDIR /app
 
-COPY ./client .
+COPY ./web/client .
 RUN yarn install --immutable
 RUN yarn build
 RUN yarn cache clean
@@ -13,7 +13,7 @@ WORKDIR /app
 
 RUN apk add --update --no-cache git make bash
 COPY . .
-COPY --from=client_builder /app/dist ./client/dist
+COPY --from=client_builder /app/dist ./web/client/dist
 RUN go get -v -t -d ./...
 RUN make install-tools
 RUN make build
