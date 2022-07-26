@@ -1,10 +1,11 @@
+---
+hide:
+- navigation
+---
+
 # Contribute
 
-This page describe the project structure and gives you a bit of help to start contributing.
-
-The project is maintained by a single person: [sundowndev](https://github.com/sundowndev). Contributions are welcome !
-
-!!! tip "Want to contribute ? Clone the project and open some pull requests !"
+This page describe the project structure and gives you a bit of context to start contributing to the project.
 
 ## Project
 
