@@ -44,9 +44,11 @@ phoneinfoga recon -n +42837544833
 
 ## Available scanners
 
+PhoneInfoga embed a bunch of scanners that will provide information about the given phone number. Some of them will request external services, and so might require authentication. By default, unconfigured scanners won't run. The information gathered can then be used for a deeper manual analysis.
+
 See page related to [scanners](scanners.md).
 
-## Launching the server
+## Launching the web server
 
 PhoneInfoga integrates a REST API along with a web client that you can deploy anywhere. The API has been written in Go and web client in Vue.js. The application is stateless, so it doesn't require any persistent storage.
 

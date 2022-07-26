@@ -1,6 +1,6 @@
 # Scanners
 
-PhoneInfoga provide several scanners to extract as much information as possible from a given phone number. Those scanners may require authentication, so they're automatically skipped when no authentication credentials are found. Note that all scanners use environment variables to find credentials.
+PhoneInfoga provide several scanners to extract as much information as possible from a given phone number. Those scanners may require authentication, so they're automatically skipped when no authentication credentials are found. Note that all scanners use environment variables for configuration values.
 
 ## Building your own scanner
 
@@ -11,19 +11,19 @@ $ phoneinfoga scan -n +4176418xxxx --plugin ./custom_scanner.so
 ```
 
 !!! info
-For now, plugins are only supported through the CLI.
+    Plugins are written with the [Go programming language](https://golang.org/).
 
-To get started, [see this example](https://github.com/sundowndev/phoneinfoga/tree/master/examples/plugin).
+    For now, plugins are only supported through the CLI. To get started, [see this example plugin](https://github.com/sundowndev/phoneinfoga/tree/master/examples/plugin).
 
 ## Local
 
 The local scan is probably the simplest scan of PhoneInfoga. By default, the tool statically parse the phone number and convert it to several formats, it also tries to recognize the country and the carrier. Those information are passed to all scanners in order to provide further analysis. The local scanner simply return those information to the end user so they can exploit it as well.
 
-=== "Configuration"
+??? info "Configuration"
 
     There is no configuration required for this scanner.
 
-=== "Example"
+??? example "Output example"
 
     ```shell
     $ phoneinfoga scan -n +4176418xxxx
@@ -40,13 +40,14 @@ The local scan is probably the simplest scan of PhoneInfoga. By default, the too
 
 Numverify provide standard but useful information such as country code, location, line type and carrier. This scanners requires an API-key which you can get on their website after creating an account. You can use a free API key as long as you don't exceed the monthly quota.
 
-=== "Configuration"
+??? info "Configuration"
 
     | Environment variable | Default | Description                                                            |
     |----------------------|---------|------------------------------------------------------------------------|
     | NUMVERIFY_API_KEY    |         | API key to authenticate to the Numverify API.                          |
     | NUMVERIFY_ENABLE_SSL | false   | Whether to use HTTPS or plain HTTP for requests to the Numverify API.  |
-=== "Example"
+
+??? example "Output example"
 
     ```shell
     $ NUMVERIFY_API_KEY=<key> phoneinfoga scan -n +4176418xxxx
@@ -70,11 +71,11 @@ Googlesearch uses the Google search engine and [Google Dorks](https://en.wikiped
 
 You can however, use this scanner through the REST API in addition with another tool to fetch the result automatically.
 
-=== "Configuration"
+??? info "Configuration"
 
     There is no configuration required for this scanner.
 
-=== "Example"
+??? example "Output example"
 
     ```shell
     $ phoneinfoga scan -n +4176418xxxx
@@ -176,11 +177,11 @@ You can however, use this scanner through the REST API in addition with another 
 
 OVH, besides being a web and cloud hosting company, is a telecom provider with several VoIP numbers in Europe. Thanks to their API-key free REST API, we are able to tell if a number is owned by OVH Telecom or not.
 
-=== "Configuration"
+??? info "Configuration"
 
     There is no configuration required for this scanner.
 
-=== "Example"
+??? example "Output example"
 
     ```shell
     $ phoneinfoga scan -n +3336517xxxx

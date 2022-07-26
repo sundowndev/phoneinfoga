@@ -19,11 +19,11 @@ E.164 formatting for phone numbers entails the following:
 
 For example, here’s a US-based number in standard local formatting: (415) 555-2671
 
-![](https://i.imgur.com/0e2SMdL.png)
+![](/images/0e2SMdL.png)
 
 Here’s the same phone number in E.164 formatting: +14155552671
 
-![](https://i.imgur.com/KfrvacR.png)
+![](/images/KfrvacR.png)
 
 In the UK, and many other countries internationally, local dialing may require the addition of a '0' in front of the subscriber number. With E.164 formatting, this '0' must usually be removed.
 
