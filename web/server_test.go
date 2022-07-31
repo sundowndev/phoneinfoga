@@ -105,7 +105,7 @@ func TestApi(t *testing.T) {
 
 				assert.Equal(t, err, nil)
 				assert.Equal(t, res.Result().StatusCode, 200)
-				assert.Equal(t, string(body), `{"success":true,"result":{"raw_local":"12345253","local":"12345253","e164":"+3312345253","international":"3312345253","country_code":33,"country":"FR"}}`)
+				assert.Equal(t, `{"success":true,"result":{"raw_local":"12345253","local":"12345253","e164":"+3312345253","international":"3312345253","country_code":33,"country":"FR","valid":false}}`, string(body))
 			})
 
 			t.Run("invalid number", func(t *testing.T) {
