@@ -52,7 +52,7 @@ See page related to [scanners](scanners.md).
 
 PhoneInfoga integrates a REST API along with a web client that you can deploy anywhere. The API has been written in Go and web client in Vue.js. The application is stateless, so it doesn't require any persistent storage.
 
-See **[API documentation](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/sundowndev/phoneinfoga/master/api/docs/swagger.yaml)**.
+See **[API documentation](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/sundowndev/phoneinfoga/master/web/docs/swagger.yaml)**.
 
 ```shell
 phoneinfoga serve
