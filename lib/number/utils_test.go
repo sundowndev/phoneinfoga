@@ -20,26 +20,6 @@ func TestUtils(t *testing.T) {
 		})
 	})
 
-	t.Run("ParseCountryCode", func(t *testing.T) {
-		t.Run("should parse country code correctly", func(t *testing.T) {
-			result := ParseCountryCode("+33 679368229")
-
-			assert.Equal(t, result, "FR", "they should be equal")
-		})
-
-		t.Run("should parse country code correctly", func(t *testing.T) {
-			result := ParseCountryCode("+1 315-284-1580")
-
-			assert.Equal(t, result, "US", "they should be equal")
-		})
-
-		t.Run("should parse country code correctly", func(t *testing.T) {
-			result := ParseCountryCode("4566118311")
-
-			assert.Equal(t, result, "DK", "they should be equal")
-		})
-	})
-
 	t.Run("IsValid", func(t *testing.T) {
 		t.Run("should validate phone number", func(t *testing.T) {
 			result := IsValid("+1 315-284-1580")

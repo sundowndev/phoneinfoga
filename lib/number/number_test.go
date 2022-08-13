@@ -35,7 +35,7 @@ func TestNumber(t *testing.T) {
 				E164:          "+15552221212",
 				International: "15552221212",
 				CountryCode:   1,
-				Country:       "",
+				Country:       "US",
 				Carrier:       "",
 			},
 		},

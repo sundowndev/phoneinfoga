@@ -27,6 +27,8 @@ func TestLocalScanner(t *testing.T) {
 					E164:          "+15556661212",
 					International: "15556661212",
 					CountryCode:   1,
+					Country:       "US",
+					Valid:         false,
 				},
 			},
 			wantErrors: map[string]error{},

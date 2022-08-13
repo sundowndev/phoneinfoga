@@ -1,7 +1,10 @@
 package number
 
 import (
+	"errors"
+	"fmt"
 	"github.com/nyaruka/phonenumbers"
+	"github.com/sundowndev/phoneinfoga/v2/lib/phonegeocode"
 )
 
 // Number is a phone number
@@ -16,10 +19,14 @@ type Number struct {
 }
 
 func NewNumber(number string) (res *Number, err error) {
-	n := "+" + FormatNumber(number)
-	country := ParseCountryCode(n)
+	n := fmt.Sprintf("+%s", FormatNumber(number))
 
-	num, err := phonenumbers.Parse(n, country)
+	country, err := phonegeocode.Country(number)
+	if err != nil {
+		return nil, errors.New("country code not recognized")
+	}
+
+	num, err := phonenumbers.Parse(n, "")
 	if err != nil {
 		return nil, err
 	}
