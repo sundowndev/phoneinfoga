@@ -24,12 +24,16 @@ type NumverifyScannerResponse struct {
 	LineType            string `json:"line_type" console:"Line type"`
 }
 
-func NewNumverifyScanner(s suppliers.NumverifySupplierInterface) *numverifyScanner {
+func NewNumverifyScanner(s suppliers.NumverifySupplierInterface) Scanner {
 	return &numverifyScanner{client: s}
 }
 
 func (s *numverifyScanner) Name() string {
 	return Numverify
+}
+
+func (s *numverifyScanner) Description() string {
+	return "Request info about a given phone number through the Numverify API."
 }
 
 func (s *numverifyScanner) ShouldRun(_ number.Number) bool {

@@ -84,6 +84,10 @@ func (r *Library) Scan(n *number.Number) (map[string]interface{}, map[string]err
 	return r.results, r.errors
 }
 
+func (r *Library) GetAllScanners() []Scanner {
+	return r.scanners
+}
+
 func RegisterPlugin(s Scanner) {
 	mu.Lock()
 	defer mu.Unlock()

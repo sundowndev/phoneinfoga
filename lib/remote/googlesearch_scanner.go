@@ -26,12 +26,16 @@ type GoogleSearchResponse struct {
 	General             []*GoogleSearchDork `json:"general" console:"General,omitempty"`
 }
 
-func NewGoogleSearchScanner() *googlesearchScanner {
+func NewGoogleSearchScanner() Scanner {
 	return &googlesearchScanner{}
 }
 
 func (s *googlesearchScanner) Name() string {
 	return Googlesearch
+}
+
+func (s *googlesearchScanner) Description() string {
+	return "Generate several Google dork requests for a given phone number."
 }
 
 func (s *googlesearchScanner) ShouldRun(_ number.Number) bool {

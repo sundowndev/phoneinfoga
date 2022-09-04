@@ -62,6 +62,10 @@ func (s *googleCSEScanner) Name() string {
 	return GoogleCSE
 }
 
+func (s *googleCSEScanner) Description() string {
+	return "Googlecse searches for footprints of a given phone number on the web using Google Custom Search Engine."
+}
+
 func (s *googleCSEScanner) ShouldRun(_ number.Number) bool {
 	if s.Cx == "" || s.ApiKey == "" {
 		return false

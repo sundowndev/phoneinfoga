@@ -18,12 +18,16 @@ type LocalScannerResponse struct {
 	Carrier       string `json:"carrier,omitempty" console:"Carrier,omitempty"`
 }
 
-func NewLocalScanner() *localScanner {
+func NewLocalScanner() Scanner {
 	return &localScanner{}
 }
 
 func (s *localScanner) Name() string {
 	return Local
+}
+
+func (s *localScanner) Description() string {
+	return "Gather offline info about a given phone number."
 }
 
 func (s *localScanner) ShouldRun(_ number.Number) bool {
