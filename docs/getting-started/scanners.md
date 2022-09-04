@@ -69,7 +69,7 @@ Numverify provide standard but useful information such as country code, location
 
 Googlesearch uses the Google search engine and [Google Dorks](https://en.wikipedia.org/wiki/Google_hacking) to search phone number's footprints everywhere on the web. It allows you to search for scam reports, social media profiles, documents and more. **This scanner does only one thing:** generating several Google search links from a given phone number. You then have to manually open them in your browser to see results. So the tool may generate links that do not return any result. This is a design choice we made to avoid technical limitation around [Google scraping](https://en.wikipedia.org/wiki/Search_engine_scraping).
 
-You can however, use this scanner through the REST API in addition with another tool to fetch the result automatically.
+You can however, use this scanner through the REST API in addition with another tool to fetch the result automatically. If you wish to retrieve results automatically, see [Googlecse scanner](#googlecse) instead.
 
 ??? info "Configuration"
 
@@ -171,6 +171,42 @@ You can however, use this scanner through the REST API in addition with another 
         URL: https://www.google.com/search?q=intext%3A%224176418xxxx%22+OR+intext%3A%22%2B4176418xxxx%22+OR+intext%3A%22076418xxxx%22+OR+intext%3A%22076+418+xx+xx%22
     
         URL: https://www.google.com/search?q=%28ext%3Adoc+OR+ext%3Adocx+OR+ext%3Aodt+OR+ext%3Apdf+OR+ext%3Artf+OR+ext%3Asxw+OR+ext%3Apsw+OR+ext%3Appt+OR+ext%3Apptx+OR+ext%3Apps+OR+ext%3Acsv+OR+ext%3Atxt+OR+ext%3Axls%29+intext%3A%224176418xxxx%22+OR+intext%3A%22%2B4176418xxxx%22+OR+intext%3A%22076418xxxx%22
+    ```
+
+## Googlecse
+
+Google custom search is a Google product allowing users to create Programmable Search Engines for programmatic usage.
+This scanner takes an existing search engine you created to perform search queries on a given phone number.
+
+Custom Search JSON API provides 100 search queries (~50 scans) per day for free. If you need more, you may sign up for billing in the API Console. **Additional requests cost $5 per 1000 queries (~500 scans), up to 10k queries per day (~5000 scans)**.
+
+Follow the steps below to create a new search engine : 
+
+1. Go to [GCP console](https://console.cloud.google.com/apis/api/customsearch.googleapis.com/metrics) and enable the custom search API.
+2. Go to the [credentials page](https://console.cloud.google.com/apis/credentials) and create a new API token. You can restrict this token to the Custom Search API.
+3. [Follow this link](https://programmablesearchengine.google.com/controlpanel/all) and click on "Add" to create a new search engine.
+4. Fill the form and make sure you select "Search the entire web".
+5. Use the Search Engine ID and the API token to configure the scanner as per the configuration tab below.
+
+??? info "Configuration"
+
+    | Environment variable | Default | Description                                                            |
+    |-----------------------|---------|------------------------------------------------------------------------|
+    | GOOGLECSE_CX          |         | Search engine ID.            |
+    | GOOGLE_API_KEY     |         | API key to authenticate to the Google API.  |
+    | GOOGLECSE_MAX_RESULTS |   10    | Maximum results for each request. Each 10 results requires an additional request. This value cannot go above 100.  |
+
+??? example "Output example"
+
+    ```shell
+    $ phoneinfoga scan -n +1241325xxxx
+ 
+    Results for googlecse
+    Homepage: https://cse.google.com/cse?cx=<redacted>
+    Result count: 1
+    Items:
+        Title: Info about +1241325xxxx
+        URL: https://example.com/1241325xxxx
     ```
 
 ## OVH
