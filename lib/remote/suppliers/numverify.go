@@ -15,35 +15,31 @@ type NumverifySupplierInterface interface {
 	Validate(string) (*NumverifyValidateResponse, error)
 }
 
-type numverifyError struct {
-	Code int    `json:"code"`
-	Info string `json:"info"`
+type NumverifyErrorResponse struct {
+	Message string `json:"message"`
 }
 
 // NumverifyValidateResponse REST API response
 type NumverifyValidateResponse struct {
-	Valid               bool           `json:"valid"`
-	Number              string         `json:"number"`
-	LocalFormat         string         `json:"local_format"`
-	InternationalFormat string         `json:"international_format"`
-	CountryPrefix       string         `json:"country_prefix"`
-	CountryCode         string         `json:"country_code"`
-	CountryName         string         `json:"country_name"`
-	Location            string         `json:"location"`
-	Carrier             string         `json:"carrier"`
-	LineType            string         `json:"line_type"`
-	Error               numverifyError `json:"error"`
+	Valid               bool   `json:"valid"`
+	Number              string `json:"number"`
+	LocalFormat         string `json:"local_format"`
+	InternationalFormat string `json:"international_format"`
+	CountryPrefix       string `json:"country_prefix"`
+	CountryCode         string `json:"country_code"`
+	CountryName         string `json:"country_name"`
+	Location            string `json:"location"`
+	Carrier             string `json:"carrier"`
+	LineType            string `json:"line_type"`
 }
 
 type NumverifySupplier struct {
-	ApiKey    string
-	EnableSSL string
+	ApiKey string
 }
 
 func NewNumverifySupplier() *NumverifySupplier {
 	return &NumverifySupplier{
-		ApiKey:    os.Getenv("NUMVERIFY_API_KEY"),
-		EnableSSL: os.Getenv("NUMVERIFY_ENABLE_SSL"),
+		ApiKey: os.Getenv("NUMVERIFY_API_KEY"),
 	}
 }
 
@@ -52,18 +48,11 @@ func (s *NumverifySupplier) IsAvailable() bool {
 }
 
 func (s *NumverifySupplier) Validate(internationalNumber string) (res *NumverifyValidateResponse, err error) {
-	scheme := "http"
-
-	if s.EnableSSL != "" {
-		scheme = "https"
-	}
-
 	logrus.
 		WithField("number", internationalNumber).
-		WithField("scheme", scheme).
 		Debug("Running validate operation through Numverify API")
 
-	url := fmt.Sprintf("%s://api.apilayer.com/number_verification/validate?number=%s", scheme, internationalNumber)
+	url := fmt.Sprintf("https://api.apilayer.com/number_verification/validate?number=%s", internationalNumber)
 
 	// Build the request
 	client := &http.Client{}
@@ -80,13 +69,17 @@ func (s *NumverifySupplier) Validate(internationalNumber string) (res *Numverify
 	// Fill the response with the data from the JSON
 	var result NumverifyValidateResponse
 
+	if response.StatusCode >= 400 {
+		errorResponse := NumverifyErrorResponse{}
+		if err := json.NewDecoder(response.Body).Decode(&errorResponse); err != nil {
+			return nil, err
+		}
+		return nil, errors.New(errorResponse.Message)
+	}
+
 	// Use json.Decode for reading streams of JSON data
 	if err := json.NewDecoder(response.Body).Decode(&result); err != nil {
 		return nil, err
-	}
-
-	if len(result.Error.Info) > 0 {
-		return nil, errors.New(result.Error.Info)
 	}
 
 	res = &NumverifyValidateResponse{

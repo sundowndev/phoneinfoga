@@ -13,15 +13,15 @@ type numverifyScanner struct {
 
 type NumverifyScannerResponse struct {
 	Valid               bool   `json:"valid" console:"Valid"`
-	Number              string `json:"number" console:"Number"`
-	LocalFormat         string `json:"local_format" console:"Local format"`
-	InternationalFormat string `json:"international_format" console:"International format"`
-	CountryPrefix       string `json:"country_prefix" console:"Country prefix"`
-	CountryCode         string `json:"country_code" console:"Country code"`
-	CountryName         string `json:"country_name" console:"Country name"`
-	Location            string `json:"location" console:"Location"`
-	Carrier             string `json:"carrier" console:"Carrier"`
-	LineType            string `json:"line_type" console:"Line type"`
+	Number              string `json:"number" console:"Number,omitempty"`
+	LocalFormat         string `json:"local_format" console:"Local format,omitempty"`
+	InternationalFormat string `json:"international_format" console:"International format,omitempty"`
+	CountryPrefix       string `json:"country_prefix" console:"Country prefix,omitempty"`
+	CountryCode         string `json:"country_code" console:"Country code,omitempty"`
+	CountryName         string `json:"country_name" console:"Country name,omitempty"`
+	Location            string `json:"location" console:"Location,omitempty"`
+	Carrier             string `json:"carrier" console:"Carrier,omitempty"`
+	LineType            string `json:"line_type" console:"Line type,omitempty"`
 }
 
 func NewNumverifyScanner(s suppliers.NumverifySupplierInterface) Scanner {

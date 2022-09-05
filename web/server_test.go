@@ -1,7 +1,6 @@
 package web
 
 import (
-	"github.com/sundowndev/phoneinfoga/v2/lib/remote"
 	"github.com/sundowndev/phoneinfoga/v2/lib/remote/suppliers"
 	"io/ioutil"
 	"net/http"
@@ -128,7 +127,7 @@ func TestApi(t *testing.T) {
 
 				number := "79516566591"
 
-				expectedResult := remote.NumverifyScannerResponse{
+				expectedResult := suppliers.NumverifyValidateResponse{
 					Valid:               true,
 					Number:              "79516566591",
 					LocalFormat:         "9516566591",
@@ -141,7 +140,7 @@ func TestApi(t *testing.T) {
 					LineType:            "mobile",
 				}
 
-				gock.New("http://api.apilayer.com").
+				gock.New("https://api.apilayer.com").
 					Get("/number_verification/validate").
 					MatchHeader("Apikey", "5ad5554ac240e4d3d31107941b35a5eb").
 					MatchParam("number", number).
@@ -156,6 +155,37 @@ func TestApi(t *testing.T) {
 				assert.Equal(t, nil, err)
 				assert.Equal(t, 200, res.Result().StatusCode)
 				assert.Equal(t, `{"success":true,"result":{"valid":true,"number":"79516566591","local_format":"9516566591","international_format":"+79516566591","country_prefix":"+7","country_code":"RU","country_name":"Russian Federation","location":"Saint Petersburg and Leningrad Oblast","carrier":"OJSC St. Petersburg Telecom (OJSC Tele2-Saint-Petersburg)","line_type":"mobile"}}`, string(body))
+
+				assert.Equal(t, gock.IsDone(), true, "there should have no pending mocks")
+			})
+
+			t.Run("should handle error", func(t *testing.T) {
+				defer gock.Off() // Flush pending mocks after test execution
+
+				_ = os.Setenv("NUMVERIFY_API_KEY", "5ad5554ac240e4d3d31107941b35a5eb")
+				defer os.Unsetenv("NUMVERIFY_API_KEY")
+
+				number := "79516566591"
+
+				expectedResult := &suppliers.NumverifyErrorResponse{
+					Message: "You have exceeded your daily\\/monthly API rate limit. Please review and upgrade your subscription plan at https:\\/\\/apilayer.com\\/subscriptions to continue.",
+				}
+
+				gock.New("https://api.apilayer.com").
+					Get("/number_verification/validate").
+					MatchHeader("Apikey", "5ad5554ac240e4d3d31107941b35a5eb").
+					MatchParam("number", number).
+					Reply(429).
+					JSON(expectedResult)
+
+				res, err := performRequest(r, http.MethodGet, "/api/numbers/79516566591/scan/numverify")
+				assert.Equal(t, nil, err)
+
+				body, err := ioutil.ReadAll(res.Body)
+
+				assert.Equal(t, nil, err)
+				assert.Equal(t, 500, res.Result().StatusCode)
+				assert.Equal(t, `{"success":false,"error":"You have exceeded your daily\\/monthly API rate limit. Please review and upgrade your subscription plan at https:\\/\\/apilayer.com\\/subscriptions to continue."}`, string(body))
 
 				assert.Equal(t, gock.IsDone(), true, "there should have no pending mocks")
 			})

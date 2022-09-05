@@ -40,12 +40,17 @@ The local scan is probably the simplest scan of PhoneInfoga. By default, the too
 
 Numverify provide standard but useful information such as country code, location, line type and carrier. This scanners requires an API-key which you can get on their website after creating an account. You can use a free API key as long as you don't exceed the monthly quota.
 
+[Read documentation](https://apilayer.com/marketplace/number_verification-api#details-tab)
+
 ??? info "Configuration"
+
+    1. Go to the [Api layer website](https://apilayer.com/) and create an account
+    2. Go to "Number Verification API" in the marketplace, click on "Subscribe for free", then choose whatever plan you want
+    3. Copy the new API token and use it as an environment variable
 
     | Environment variable | Default | Description                                                            |
     |----------------------|---------|------------------------------------------------------------------------|
     | NUMVERIFY_API_KEY    |         | API key to authenticate to the Numverify API.                          |
-    | NUMVERIFY_ENABLE_SSL | false   | Whether to use HTTPS or plain HTTP for requests to the Numverify API.  |
 
 ??? example "Output example"
 
@@ -60,7 +65,6 @@ Numverify provide standard but useful information such as country code, location
     Country prefix: +41
     Country code: CH
     Country name: Switzerland (Confederation of)
-    Location:
     Carrier: Sunrise Communications AG
     Line type: mobile
     ```
