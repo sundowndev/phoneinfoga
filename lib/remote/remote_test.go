@@ -91,3 +91,15 @@ func TestRemoteLibraryEmptyScan(t *testing.T) {
 
 	fakeScanner.AssertExpectations(t)
 }
+
+func TestRemoteLibrary_GetAllScanners(t *testing.T) {
+	fakeScanner := &mocks.Scanner{}
+	fakeScanner2 := &mocks.Scanner{}
+
+	lib := NewLibrary(filter.NewEngine())
+
+	lib.AddScanner(fakeScanner)
+	lib.AddScanner(fakeScanner2)
+
+	assert.Equal(t, []Scanner{fakeScanner, fakeScanner2}, lib.GetAllScanners())
+}

@@ -7,6 +7,12 @@ import (
 	"testing"
 )
 
+func TestLocalScanner_Metadata(t *testing.T) {
+	scanner := NewLocalScanner()
+	assert.Equal(t, Local, scanner.Name())
+	assert.NotEmpty(t, scanner.Description())
+}
+
 func TestLocalScanner(t *testing.T) {
 	testcases := []struct {
 		name       string

@@ -6,6 +6,12 @@ import (
 	"testing"
 )
 
+func TestCustomScanner_Metadata(t *testing.T) {
+	scanner := &customScanner{}
+	assert.Equal(t, "customscanner", scanner.Name())
+	assert.NotEmpty(t, scanner.Description())
+}
+
 func TestCustomScanner(t *testing.T) {
 	testcases := []struct {
 		name      string

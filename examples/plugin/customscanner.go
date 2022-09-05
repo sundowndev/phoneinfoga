@@ -18,6 +18,11 @@ func (s *customScanner) Name() string {
 	return "customscanner"
 }
 
+// Description returns a short description for this scanner.
+func (s *customScanner) Description() string {
+	return "This is a dummy scanner"
+}
+
 // ShouldRun returns a boolean indicating whether
 // this scanner should be used or not.
 // This can be useful to check for authentication or

@@ -10,6 +10,12 @@ import (
 	"testing"
 )
 
+func TestOVHScanner_Metadata(t *testing.T) {
+	scanner := NewOVHScanner(&mocks.OVHSupplier{})
+	assert.Equal(t, OVH, scanner.Name())
+	assert.NotEmpty(t, scanner.Description())
+}
+
 func TestOVHScanner(t *testing.T) {
 	dummyError := errors.New("dummy")
 

@@ -14,6 +14,12 @@ import (
 	"testing"
 )
 
+func TestGoogleCSEScanner_Metadata(t *testing.T) {
+	scanner := NewGoogleCSEScanner(&http.Client{})
+	assert.Equal(t, GoogleCSE, scanner.Name())
+	assert.NotEmpty(t, scanner.Description())
+}
+
 func TestGoogleCSEScanner_Scan_Success(t *testing.T) {
 	testcases := []struct {
 		name       string
@@ -249,9 +255,6 @@ func TestGoogleCSEScanner_Scan_Success(t *testing.T) {
 
 func TestGoogleCSEScanner_ShouldRun(t *testing.T) {
 	scanner := NewGoogleCSEScanner(&http.Client{})
-	remote := NewLibrary(filter.NewEngine())
-	remote.AddScanner(scanner)
-
 	assert.False(t, scanner.ShouldRun(*test.NewFakeUSNumber()))
 }
 

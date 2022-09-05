@@ -13,6 +13,7 @@ type Plugin interface {
 
 type Scanner interface {
 	Name() string
+	Description() string
 	Scan(number.Number) (interface{}, error)
 	ShouldRun(number.Number) bool
 }

@@ -7,6 +7,12 @@ import (
 	"testing"
 )
 
+func TestGoogleSearchScanner_Metadata(t *testing.T) {
+	scanner := NewGoogleSearchScanner()
+	assert.Equal(t, Googlesearch, scanner.Name())
+	assert.NotEmpty(t, scanner.Description())
+}
+
 func TestGoogleSearchScanner(t *testing.T) {
 	testcases := []struct {
 		name       string

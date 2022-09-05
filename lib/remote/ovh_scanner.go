@@ -19,12 +19,16 @@ type OVHScannerResponse struct {
 	ZipCode     string `json:"zip_code,omitempty" console:"Zip code,omitempty"`
 }
 
-func NewOVHScanner(s suppliers.OVHSupplierInterface) *ovhScanner {
+func NewOVHScanner(s suppliers.OVHSupplierInterface) Scanner {
 	return &ovhScanner{client: s}
 }
 
 func (s *ovhScanner) Name() string {
 	return OVH
+}
+
+func (s *ovhScanner) Description() string {
+	return "Search a phone number through the OVH Telecom REST API."
 }
 
 func (s *ovhScanner) ShouldRun(n number.Number) bool {
