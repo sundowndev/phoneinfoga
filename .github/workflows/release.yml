@@ -63,26 +63,6 @@ jobs:
           push: true
           tags: sundowndev/phoneinfoga:latest,sundowndev/phoneinfoga:v2,sundowndev/phoneinfoga:stable
           platforms: linux/amd64 # ,linux/arm/v7,linux/arm64 - TODO(sundowndev): enable arm support back
-
-      - uses: actions/checkout@v3.0.0
-        with:
-          ref: 'master'
-
-      - name: Commit new image digest
-        env:
-          GITHUB_USER: sundowndev
-          GITHUB_REPO: PhoneInfoga
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          wget https://github.com/mikefarah/yq/releases/download/3.4.0/yq_linux_amd64 -O ./yq
-          chmod +x ./yq
-          ./yq w ./.deploy/deployment.yaml 'spec.template.spec.containers[0].image' sundowndev/phoneinfoga@${{ steps.docker_build.outputs.digest }} -i
-          git remote set-url origin https://$GITHUB_USER:$GITHUB_TOKEN@github.com/$GITHUB_USER/$GITHUB_REPO.git
-          git config --global user.email "$GITHUB_USER@users.noreply.github.com"
-          git config --global user.name "$GITHUB_USER"
-          git add ./.deploy && git commit -m "deploy: update docker image digest [action]"
-          git pull origin master --rebase
-          git push origin master
   publish-docs:
     runs-on: ubuntu-latest
     steps:
