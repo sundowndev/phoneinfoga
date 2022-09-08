@@ -33,24 +33,24 @@
 
 ## About
 
-PhoneInfoga is one of the most advanced tools to scan international phone numbers. It allows you to first gather standard information such as country, area, carrier and line type on any international phone number, then search for footprints on search engines to try to find the VoIP provider or identify the owner.
+PhoneInfoga is one of the most advanced tools to scan international phone numbers. It allows you to first gather basic information such as country, area, carrier and line type, then use various techniques to try to find the VoIP provider or identify the owner. It works with a colletion of scanners that must be configured in order for the tool to be effective. PhoneInfoga doesn't automate everything, it's just there to help investigating on phone numbers.
 
 ## Current status
 
 This project is stable and production-ready.
 
-**About demo instance**: This is a test service. Kittens will die if you abuse it. Numverify scan is pointless because my server's IP got blocked due to spam.
+:warning: However, we're working on a new UI and API version, so new features are only released for the CLI at this time.
 
-Since [v2 was released on March 2020](https://github.com/sundowndev/phoneinfoga/releases/tag/v2.0-beta), this project has been rewritten in Go language (previously Python). Why ? To improve code base, maintainability, have a stronger test suite and be able to compile code base. PhoneInfoga v2 brings new features such as serving a REST API and a web client. Usage of scanners was improved in order to drop usage of Selenium/Geckodriver which has cause many users to have troubleshoots using the tool. You can still use the legacy version in [tag v1.11](https://github.com/sundowndev/phoneinfoga/tree/v1.11) and the legacy Docker image (`sundowndev/phoneinfoga:legacy`). **Version 2 does not scan Google results anymore**, [read more](https://sundowndev.github.io/phoneinfoga/usage/#available-scanners).
+**About demo instance**: This is a test service. Kittens will die if you abuse it.
 
 ## Features
 
-- Check if phone number exists and has connectivity status with [HLR lookups](https://www.hlr-lookups.com/en/what-is-an-hlr-lookup)
-- Gather standard informations such as country, line type and carrier
-- OSINT footprinting using external APIs, Google Hacking, phone books & search engines
+- Check if phone number exists
+- Gather basic information such as country, line type and carrier
+- OSINT footprinting using external APIs, phone books & search engines
 - Check for reputation reports, social media, disposable numbers and more
 - Use the graphical user interface to run scans from the browser
-- Programmatic usage with the REST API and [Go modules](https://pkg.go.dev/github.com/sundowndev/phoneinfoga/v2)
+- Programmatic usage with the [REST API](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/sundowndev/phoneinfoga/master/web/docs/swagger.yaml) and [Go modules](https://pkg.go.dev/github.com/sundowndev/phoneinfoga/v2)
 
 ## Anti-features
 
