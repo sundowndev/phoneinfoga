@@ -6,8 +6,8 @@
   <a href="https://github.com/sundowndev/phoneinfoga/actions">
     <img src="https://github.com/sundowndev/phoneinfoga/workflows/Build/badge.svg" alt="build status" />
   </a>
-  <a href="https://goreportcard.com/report/github.com/sundowndev/phoneinfoga">
-    <img src="https://goreportcard.com/badge/github.com/sundowndev/phoneinfoga" alt="go report" />
+  <a href="https://goreportcard.com/report/github.com/sundowndev/phoneinfoga/v2">
+    <img src="https://goreportcard.com/badge/github.com/sundowndev/phoneinfoga/v2" alt="go report" />
   </a>
   <a href="https://codeclimate.com/github/sundowndev/phoneinfoga/maintainability">
     <img src="https://api.codeclimate.com/v1/badges/3259feb1c68df1cd4f71/maintainability" />
@@ -33,7 +33,7 @@
 
 ## About
 
-PhoneInfoga is one of the most advanced tools to scan international phone numbers. It allows you to first gather basic information such as country, area, carrier and line type, then use various techniques to try to find the VoIP provider or identify the owner. It works with a colletion of scanners that must be configured in order for the tool to be effective. PhoneInfoga doesn't automate everything, it's just there to help investigating on phone numbers.
+PhoneInfoga is one of the most advanced tools to scan international phone numbers. It allows you to first gather basic information such as country, area, carrier and line type, then use various techniques to try to find the VoIP provider or identify the owner. It works with a collection of scanners that must be configured in order for the tool to be effective. PhoneInfoga doesn't automate everything, it's just there to help investigating on phone numbers.
 
 ## Current status
 
