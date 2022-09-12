@@ -61,7 +61,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: sundowndev/phoneinfoga:latest,sundowndev/phoneinfoga:v2,sundowndev/phoneinfoga:stable
+          tags: sundowndev/phoneinfoga:latest,sundowndev/phoneinfoga:v2,sundowndev/phoneinfoga:stable,sundowndev/phoneinfoga:${{ github.ref_name }}
           platforms: linux/amd64 # ,linux/arm/v7,linux/arm64 - TODO(sundowndev): enable arm support back
   publish-docs:
     runs-on: ubuntu-latest
