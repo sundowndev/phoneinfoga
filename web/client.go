@@ -67,6 +67,6 @@ func walkEmbededClient(dir string, router *gin.Engine) error {
 	return nil
 }
 
-func registerClientRoute(router *gin.Engine) error {
+func registerClientRoutes(router *gin.Engine) error {
 	return walkEmbededClient("client/dist", router)
 }
