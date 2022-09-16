@@ -307,6 +307,9 @@ var doc = `{
         "/v2/numbers": {
             "post": {
                 "description": "This route returns information about a given phone number.",
+                "consumes": [
+                    "application/json"
+                ],
                 "produces": [
                     "application/json"
                 ],
@@ -315,6 +318,17 @@ var doc = `{
                 ],
                 "summary": "Add a new number.",
                 "operationId": "AddNumber",
+                "parameters": [
+                    {
+                        "description": "Request body",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.AddNumberInput"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -354,16 +368,28 @@ var doc = `{
         },
         "/v2/scanners/{scanner}/dryrun": {
             "post": {
-                "description": "This route dry runs a single scanner.",
+                "description": "This route performs a dry run with the given phone number. This doesn't perform an actual scan.",
+                "consumes": [
+                    "application/json"
+                ],
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "Numbers"
                 ],
-                "summary": "Dry run a single scanner.",
+                "summary": "Dry run a single scanner",
                 "operationId": "DryRunScanner",
                 "parameters": [
+                    {
+                        "description": "Request body",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.DryRunScannerInput"
+                        }
+                    },
                     {
                         "type": "string",
                         "description": "Scanner name",
@@ -396,16 +422,28 @@ var doc = `{
         },
         "/v2/scanners/{scanner}/run": {
             "post": {
-                "description": "This route runs a single scanner.",
+                "description": "This route runs a single scanner with the given phone number",
+                "consumes": [
+                    "application/json"
+                ],
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "Numbers"
                 ],
-                "summary": "Run a single scanner.",
+                "summary": "Run a single scanner",
                 "operationId": "RunScanner",
                 "parameters": [
+                    {
+                        "description": "Request body",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.RunScannerInput"
+                        }
+                    },
                     {
                         "type": "string",
                         "description": "Scanner name",
@@ -446,6 +484,17 @@ var doc = `{
                 }
             }
         },
+        "handlers.AddNumberInput": {
+            "type": "object",
+            "required": [
+                "number"
+            ],
+            "properties": {
+                "number": {
+                    "type": "string"
+                }
+            }
+        },
         "handlers.AddNumberResponse": {
             "type": "object",
             "properties": {
@@ -475,6 +524,17 @@ var doc = `{
                 }
             }
         },
+        "handlers.DryRunScannerInput": {
+            "type": "object",
+            "required": [
+                "number"
+            ],
+            "properties": {
+                "number": {
+                    "type": "string"
+                }
+            }
+        },
         "handlers.DryRunScannerResponse": {
             "type": "object",
             "properties": {
@@ -494,6 +554,17 @@ var doc = `{
                     "items": {
                         "$ref": "#/definitions/handlers.Scanner"
                     }
+                }
+            }
+        },
+        "handlers.RunScannerInput": {
+            "type": "object",
+            "required": [
+                "number"
+            ],
+            "properties": {
+                "number": {
+                    "type": "string"
                 }
             }
         },

@@ -27,7 +27,9 @@ type AddNumberResponse struct {
 // @Tags Numbers
 // @Summary Add a new number.
 // @Description This route returns information about a given phone number.
+// @Accept  json
 // @Produce  json
+// @Param request body AddNumberInput true "Request body"
 // @Success 200 {object} AddNumberResponse
 // @Success 500 {object} api.ErrorResponse
 // @Router /v2/numbers [post]

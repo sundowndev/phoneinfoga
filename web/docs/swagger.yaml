@@ -5,6 +5,13 @@ definitions:
       error:
         type: string
     type: object
+  handlers.AddNumberInput:
+    properties:
+      number:
+        type: string
+    required:
+    - number
+    type: object
   handlers.AddNumberResponse:
     properties:
       carrier:
@@ -24,6 +31,13 @@ definitions:
       valid:
         type: boolean
     type: object
+  handlers.DryRunScannerInput:
+    properties:
+      number:
+        type: string
+    required:
+    - number
+    type: object
   handlers.DryRunScannerResponse:
     properties:
       error:
@@ -37,6 +51,13 @@ definitions:
         items:
           $ref: '#/definitions/handlers.Scanner'
         type: array
+    type: object
+  handlers.RunScannerInput:
+    properties:
+      number:
+        type: string
+    required:
+    - number
     type: object
   handlers.RunScannerResponse:
     properties:
@@ -361,8 +382,17 @@ paths:
       - Numbers
   /v2/numbers:
     post:
+      consumes:
+      - application/json
       description: This route returns information about a given phone number.
       operationId: AddNumber
+      parameters:
+      - description: Request body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.AddNumberInput'
       produces:
       - application/json
       responses:
@@ -393,9 +423,17 @@ paths:
       - Numbers
   /v2/scanners/{scanner}/dryrun:
     post:
-      description: This route dry runs a single scanner.
+      consumes:
+      - application/json
+      description: This route performs a dry run with the given phone number. This doesn't perform an actual scan.
       operationId: DryRunScanner
       parameters:
+      - description: Request body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.DryRunScannerInput'
       - description: Scanner name
         in: path
         name: scanner
@@ -416,14 +454,22 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/api.ErrorResponse'
-      summary: Dry run a single scanner.
+      summary: Dry run a single scanner
       tags:
       - Numbers
   /v2/scanners/{scanner}/run:
     post:
-      description: This route runs a single scanner.
+      consumes:
+      - application/json
+      description: This route runs a single scanner with the given phone number
       operationId: RunScanner
       parameters:
+      - description: Request body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.RunScannerInput'
       - description: Scanner name
         in: path
         name: scanner
@@ -444,7 +490,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/api.ErrorResponse'
-      summary: Run a single scanner.
+      summary: Run a single scanner
       tags:
       - Numbers
 schemes:

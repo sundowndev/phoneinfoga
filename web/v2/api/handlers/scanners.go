@@ -54,9 +54,11 @@ type DryRunScannerResponse struct {
 // DryRunScanner is an HTTP handler
 // @ID DryRunScanner
 // @Tags Numbers
-// @Summary Dry run a single scanner.
-// @Description This route dry runs a single scanner.
+// @Summary Dry run a single scanner
+// @Description This route performs a dry run with the given phone number. This doesn't perform an actual scan.
+// @Accept  json
 // @Produce  json
+// @Param request body DryRunScannerInput true "Request body"
 // @Success 200 {object} DryRunScannerResponse
 // @Success 404 {object} api.ErrorResponse
 // @Success 500 {object} api.ErrorResponse
@@ -122,9 +124,11 @@ type RunScannerResponse struct {
 // RunScanner is an HTTP handler
 // @ID RunScanner
 // @Tags Numbers
-// @Summary Run a single scanner.
-// @Description This route runs a single scanner.
+// @Summary Run a single scanner
+// @Description This route runs a single scanner with the given phone number
+// @Accept  json
 // @Produce  json
+// @Param request body RunScannerInput true "Request body"
 // @Success 200 {object} RunScannerResponse
 // @Success 404 {object} api.ErrorResponse
 // @Success 500 {object} api.ErrorResponse
