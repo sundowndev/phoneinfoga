@@ -44,7 +44,7 @@ func AddNumber(ctx *gin.Context) *api.Response {
 	num, err := number.NewNumber(input.Number)
 	if err != nil {
 		return &api.Response{
-			Code: http.StatusInternalServerError,
+			Code: http.StatusBadRequest,
 			JSON: true,
 			Data: api.ErrorResponse{Error: err.Error()},
 		}

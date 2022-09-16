@@ -4,8 +4,7 @@ package web
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/sundowndev/phoneinfoga/v2/web/v2/api"
-	"github.com/sundowndev/phoneinfoga/v2/web/v2/api/handlers"
+	v2 "github.com/sundowndev/phoneinfoga/v2/web/v2/api/server"
 	"net/http"
 )
 
@@ -44,11 +43,10 @@ func (s *Server) registerRoutes(disableClient bool) error {
 		GET("/numbers/:number/scan/googlesearch", ValidateScanURL, googleSearchScan).
 		GET("/numbers/:number/scan/ovh", ValidateScanURL, ovhScan)
 
-	group.Group("/v2").
-		POST("/numbers", api.WrapHandler(handlers.AddNumber)).
-		POST("/scanners/:scanner/dryrun", api.WrapHandler(handlers.DryRunScanner)).
-		POST("/scanners/:scanner/run", api.WrapHandler(handlers.RunScanner)).
-		GET("/scanners", api.WrapHandler(handlers.GetAllScanners))
+	v2routes := v2.NewServer().Routes()
+	for _, r := range v2routes {
+		group.Handle(r.Method, r.Path, r.HandlerFunc)
+	}
 
 	if !disableClient {
 		err := registerClientRoutes(s.router)

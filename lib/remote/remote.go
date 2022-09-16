@@ -92,6 +92,8 @@ func (r *Library) GetAllScanners() []Scanner {
 }
 
 func (r *Library) GetScanner(name string) Scanner {
+	r.m.RLock()
+	defer r.m.RUnlock()
 	for _, s := range r.scanners {
 		if s.Name() == name {
 			return s

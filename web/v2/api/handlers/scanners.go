@@ -26,7 +26,7 @@ type GetAllScannersResponse struct {
 // @Router /v2/scanners [get]
 func GetAllScanners(*gin.Context) *api.Response {
 	var scanners []Scanner
-	for _, s := range remoteLibrary.GetAllScanners() {
+	for _, s := range RemoteLibrary.GetAllScanners() {
 		scanners = append(scanners, Scanner{
 			Name:        s.Name(),
 			Description: s.Description(),
@@ -72,7 +72,7 @@ func DryRunScanner(ctx *gin.Context) *api.Response {
 		}
 	}
 
-	scanner := remoteLibrary.GetScanner(ctx.Param("scanner"))
+	scanner := RemoteLibrary.GetScanner(ctx.Param("scanner"))
 	if scanner == nil {
 		return &api.Response{
 			Code: http.StatusNotFound,
@@ -84,7 +84,7 @@ func DryRunScanner(ctx *gin.Context) *api.Response {
 	num, err := number.NewNumber(input.Number)
 	if err != nil {
 		return &api.Response{
-			Code: http.StatusInternalServerError,
+			Code: http.StatusBadRequest,
 			JSON: true,
 			Data: api.ErrorResponse{Error: err.Error()},
 		}
@@ -140,7 +140,7 @@ func RunScanner(ctx *gin.Context) *api.Response {
 		}
 	}
 
-	scanner := remoteLibrary.GetScanner(ctx.Param("scanner"))
+	scanner := RemoteLibrary.GetScanner(ctx.Param("scanner"))
 	if scanner == nil {
 		return &api.Response{
 			Code: http.StatusNotFound,
@@ -152,7 +152,7 @@ func RunScanner(ctx *gin.Context) *api.Response {
 	num, err := number.NewNumber(input.Number)
 	if err != nil {
 		return &api.Response{
-			Code: http.StatusInternalServerError,
+			Code: http.StatusBadRequest,
 			JSON: true,
 			Data: api.ErrorResponse{Error: err.Error()},
 		}

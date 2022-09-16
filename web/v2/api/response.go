@@ -27,9 +27,13 @@ func WrapHandler(h HandlerFunc) gin.HandlerFunc {
 		}()
 
 		res := h(ctx)
+		if res == nil {
+			ctx.Abort()
+			return
+		}
 		for key, values := range res.Headers {
 			for _, val := range values {
-				ctx.Header(key, val)
+				ctx.Writer.Header().Add(key, val)
 			}
 		}
 		if res.JSON && res.Data != nil {
