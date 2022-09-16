@@ -86,6 +86,7 @@ var doc = `{
                 ],
                 "summary": "Perform a scan using Google Search engine.",
                 "operationId": "googleSearchScan",
+                "deprecated": true,
                 "parameters": [
                     {
                         "type": "string",
@@ -133,6 +134,7 @@ var doc = `{
                 ],
                 "summary": "Perform a scan using local phone number library.",
                 "operationId": "localScan",
+                "deprecated": true,
                 "parameters": [
                     {
                         "type": "string",
@@ -180,6 +182,7 @@ var doc = `{
                 ],
                 "summary": "Perform a scan using Numverify's API.",
                 "operationId": "numverifyScan",
+                "deprecated": true,
                 "parameters": [
                     {
                         "type": "string",
@@ -227,6 +230,7 @@ var doc = `{
                 ],
                 "summary": "Perform a scan using OVH's API.",
                 "operationId": "ovhScan",
+                "deprecated": true,
                 "parameters": [
                     {
                         "type": "string",
@@ -274,6 +278,7 @@ var doc = `{
                 ],
                 "summary": "Check if a number is valid and possible.",
                 "operationId": "validate",
+                "deprecated": true,
                 "parameters": [
                     {
                         "type": "string",

@@ -221,6 +221,7 @@ paths:
       - Numbers
   /numbers/{number}/scan/googlesearch:
     get:
+      deprecated: true
       operationId: googleSearchScan
       parameters:
       - description: Input phone number
@@ -249,6 +250,7 @@ paths:
       - Numbers
   /numbers/{number}/scan/local:
     get:
+      deprecated: true
       operationId: localScan
       parameters:
       - description: Input phone number
@@ -277,6 +279,7 @@ paths:
       - Numbers
   /numbers/{number}/scan/numverify:
     get:
+      deprecated: true
       operationId: numverifyScan
       parameters:
       - description: Input phone number
@@ -305,6 +308,7 @@ paths:
       - Numbers
   /numbers/{number}/scan/ovh:
     get:
+      deprecated: true
       operationId: ovhScan
       parameters:
       - description: Input phone number
@@ -333,6 +337,7 @@ paths:
       - Numbers
   /numbers/{number}/validate:
     get:
+      deprecated: true
       operationId: validate
       parameters:
       - description: Input phone number
