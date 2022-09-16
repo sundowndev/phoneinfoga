@@ -17,6 +17,7 @@ func TestNumber(t *testing.T) {
 			name:  "should succeed to parse number",
 			input: "33678342311",
 			expected: &Number{
+				Valid:         true,
 				RawLocal:      "0678342311",
 				Local:         "06 78 34 23 11",
 				E164:          "+33678342311",
@@ -30,6 +31,7 @@ func TestNumber(t *testing.T) {
 			name:  "should succeed to parse number",
 			input: "15552221212",
 			expected: &Number{
+				Valid:         false,
 				RawLocal:      "5552221212",
 				Local:         "(555) 222-1212",
 				E164:          "+15552221212",

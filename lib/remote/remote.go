@@ -62,7 +62,7 @@ func (r *Library) Scan(n *number.Number) (map[string]interface{}, map[string]err
 		if err := s.DryRun(*n); err != nil {
 			logrus.
 				WithField("scanner", s.Name()).
-				WithField("reason", s.Name()).
+				WithField("reason", err.Error()).
 				Debug("Scanner was ignored because it should not run")
 			continue
 		}

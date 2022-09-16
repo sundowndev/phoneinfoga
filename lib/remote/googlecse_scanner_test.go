@@ -238,8 +238,8 @@ func TestGoogleCSEScanner_Scan_Success(t *testing.T) {
 			remote := NewLibrary(filter.NewEngine())
 			remote.AddScanner(scanner)
 
-			if !scanner.ShouldRun(*tt.number) {
-				t.Fatal("ShouldRun() should be truthy")
+			if scanner.DryRun(*tt.number) != nil {
+				t.Fatal("DryRun() should return nil")
 			}
 
 			got, errs := remote.Scan(tt.number)
@@ -253,9 +253,18 @@ func TestGoogleCSEScanner_Scan_Success(t *testing.T) {
 	}
 }
 
-func TestGoogleCSEScanner_ShouldRun(t *testing.T) {
+func TestGoogleCSEScanner_DryRun(t *testing.T) {
+	_ = os.Setenv("GOOGLECSE_CX", "abc")
+	_ = os.Setenv("GOOGLE_API_KEY", "abc")
+	defer os.Unsetenv("GOOGLECSE_CX")
+	defer os.Unsetenv("GOOGLE_API_KEY")
 	scanner := NewGoogleCSEScanner(&http.Client{})
-	assert.False(t, scanner.ShouldRun(*test.NewFakeUSNumber()))
+	assert.Nil(t, scanner.DryRun(*test.NewFakeUSNumber()))
+}
+
+func TestGoogleCSEScanner_DryRun_Error(t *testing.T) {
+	scanner := NewGoogleCSEScanner(&http.Client{})
+	assert.EqualError(t, scanner.DryRun(*test.NewFakeUSNumber()), "search engine ID and/or API key is not defined")
 }
 
 func TestGoogleCSEScanner_MaxResults(t *testing.T) {
