@@ -1,6 +1,7 @@
 package remote
 
 import (
+	"errors"
 	"github.com/sundowndev/phoneinfoga/v2/lib/number"
 	"github.com/sundowndev/phoneinfoga/v2/lib/remote/suppliers"
 )
@@ -36,11 +37,14 @@ func (s *numverifyScanner) Description() string {
 	return "Request info about a given phone number through the Numverify API."
 }
 
-func (s *numverifyScanner) ShouldRun(_ number.Number) bool {
-	return s.client.IsAvailable()
+func (s *numverifyScanner) DryRun(_ number.Number) error {
+	if !s.client.IsAvailable() {
+		return errors.New("API key is not defined")
+	}
+	return nil
 }
 
-func (s *numverifyScanner) Scan(n number.Number) (interface{}, error) {
+func (s *numverifyScanner) Run(n number.Number) (interface{}, error) {
 	res, err := s.client.Validate(n.International)
 	if err != nil {
 		return nil, err

@@ -37,11 +37,11 @@ func TestCustomScanner(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			scanner := &customScanner{}
 
-			if !scanner.ShouldRun(*tt.number) {
-				t.Fatal("ShouldRun() should be truthy")
+			if scanner.DryRun(*tt.number) != nil {
+				t.Fatal("DryRun() should return nil")
 			}
 
-			got, err := scanner.Scan(*tt.number)
+			got, err := scanner.Run(*tt.number)
 			if tt.wantError != "" {
 				assert.EqualError(t, err, tt.wantError)
 			} else {

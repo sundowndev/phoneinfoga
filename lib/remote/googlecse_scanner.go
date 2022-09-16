@@ -66,14 +66,14 @@ func (s *googleCSEScanner) Description() string {
 	return "Googlecse searches for footprints of a given phone number on the web using Google Custom Search Engine."
 }
 
-func (s *googleCSEScanner) ShouldRun(_ number.Number) bool {
+func (s *googleCSEScanner) DryRun(_ number.Number) error {
 	if s.Cx == "" || s.ApiKey == "" {
-		return false
+		return errors.New("search engine ID and/or API key is not defined")
 	}
-	return true
+	return nil
 }
 
-func (s *googleCSEScanner) Scan(n number.Number) (interface{}, error) {
+func (s *googleCSEScanner) Run(n number.Number) (interface{}, error) {
 	var allItems []*customsearch.Result
 	var dorks []*GoogleSearchDork
 	var totalResultCount int

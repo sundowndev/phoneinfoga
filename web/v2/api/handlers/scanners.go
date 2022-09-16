@@ -90,14 +90,14 @@ func DryRunScanner(ctx *gin.Context) *api.Response {
 		}
 	}
 
-	ok := scanner.ShouldRun(*num)
-	if !ok {
+	err = scanner.DryRun(*num)
+	if err != nil {
 		return &api.Response{
 			Code: http.StatusBadRequest,
 			JSON: true,
 			Data: DryRunScannerResponse{
 				Success: false,
-				Error:   "This scanner can't run with the given phone number",
+				Error:   err.Error(),
 			},
 		}
 	}
@@ -158,7 +158,7 @@ func RunScanner(ctx *gin.Context) *api.Response {
 		}
 	}
 
-	result, err := scanner.Scan(*num)
+	result, err := scanner.Run(*num)
 	if err != nil {
 		return &api.Response{
 			Code: http.StatusInternalServerError,
