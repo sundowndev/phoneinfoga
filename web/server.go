@@ -4,13 +4,15 @@ package web
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/sundowndev/phoneinfoga/v2/web/v2/api"
+	"github.com/sundowndev/phoneinfoga/v2/web/v2/api/handlers"
 	"net/http"
 )
 
 // @title PhoneInfoga REST API
 // @description Advanced information gathering & OSINT framework for phone numbers.
 // @version v2
-// @host demo.phoneinfoga.crvx.fr
+// @host localhost:5000
 // @BasePath /api
 // @schemes http https
 // @license.name GNU General Public License v3.0
@@ -31,7 +33,9 @@ func NewServer(disableClient bool) (*Server, error) {
 }
 
 func (s *Server) registerRoutes(disableClient bool) error {
-	s.router.Group("/api").
+	group := s.router.Group("/api")
+
+	group.
 		GET("/", healthHandler).
 		GET("/numbers", getAllNumbers).
 		GET("/numbers/:number/validate", ValidateScanURL, validate).
@@ -39,6 +43,12 @@ func (s *Server) registerRoutes(disableClient bool) error {
 		GET("/numbers/:number/scan/numverify", ValidateScanURL, numverifyScan).
 		GET("/numbers/:number/scan/googlesearch", ValidateScanURL, googleSearchScan).
 		GET("/numbers/:number/scan/ovh", ValidateScanURL, ovhScan)
+
+	group.Group("/v2").
+		POST("/numbers", api.WrapHandler(handlers.AddNumber)).
+		POST("/scanners/:scanner/dryrun", api.WrapHandler(handlers.DryRunScanner)).
+		POST("/scanners/:scanner/run", api.WrapHandler(handlers.RunScanner)).
+		GET("/scanners", api.WrapHandler(handlers.GetAllScanners))
 
 	if !disableClient {
 		err := registerClientRoutes(s.router)

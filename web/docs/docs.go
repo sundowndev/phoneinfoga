@@ -298,9 +298,219 @@ var doc = `{
                     }
                 }
             }
+        },
+        "/v2/numbers": {
+            "post": {
+                "description": "This route returns information about a given phone number.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Numbers"
+                ],
+                "summary": "Add a new number.",
+                "operationId": "AddNumber",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.AddNumberResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/api.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v2/scanners": {
+            "get": {
+                "description": "This route returns all available scanners.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Numbers"
+                ],
+                "summary": "Get all available scanners.",
+                "operationId": "GetAllScanners",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.GetAllScannersResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v2/scanners/{scanner}/dryrun": {
+            "post": {
+                "description": "This route dry runs a single scanner.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Numbers"
+                ],
+                "summary": "Dry run a single scanner.",
+                "operationId": "DryRunScanner",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Scanner name",
+                        "name": "scanner",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.DryRunScannerResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/api.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v2/scanners/{scanner}/run": {
+            "post": {
+                "description": "This route runs a single scanner.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Numbers"
+                ],
+                "summary": "Run a single scanner.",
+                "operationId": "RunScanner",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Scanner name",
+                        "name": "scanner",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.RunScannerResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/api.ErrorResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "api.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.AddNumberResponse": {
+            "type": "object",
+            "properties": {
+                "carrier": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "countryCode": {
+                    "type": "integer"
+                },
+                "e164": {
+                    "type": "string"
+                },
+                "international": {
+                    "type": "string"
+                },
+                "local": {
+                    "type": "string"
+                },
+                "rawLocal": {
+                    "type": "string"
+                },
+                "valid": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "handlers.DryRunScannerResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                },
+                "success": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "handlers.GetAllScannersResponse": {
+            "type": "object",
+            "properties": {
+                "scanners": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/handlers.Scanner"
+                    }
+                }
+            }
+        },
+        "handlers.RunScannerResponse": {
+            "type": "object",
+            "properties": {
+                "result": {
+                    "type": "object"
+                }
+            }
+        },
+        "handlers.Scanner": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
         "number.Number": {
             "type": "object",
             "properties": {
@@ -324,6 +534,9 @@ var doc = `{
                 },
                 "rawLocal": {
                     "type": "string"
+                },
+                "valid": {
+                    "type": "boolean"
                 }
             }
         },
@@ -508,7 +721,7 @@ type swaggerInfo struct {
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = swaggerInfo{
 	Version:     "v2",
-	Host:        "demo.phoneinfoga.crvx.fr",
+	Host:        "localhost:5000",
 	BasePath:    "/api",
 	Schemes:     []string{"http", "https"},
 	Title:       "PhoneInfoga REST API",

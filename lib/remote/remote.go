@@ -88,6 +88,15 @@ func (r *Library) GetAllScanners() []Scanner {
 	return r.scanners
 }
 
+func (r *Library) GetScanner(name string) Scanner {
+	for _, s := range r.scanners {
+		if s.Name() == name {
+			return s
+		}
+	}
+	return nil
+}
+
 func RegisterPlugin(s Scanner) {
 	mu.Lock()
 	defer mu.Unlock()

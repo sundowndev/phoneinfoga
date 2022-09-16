@@ -1,5 +1,55 @@
 basePath: /api
 definitions:
+  api.ErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  handlers.AddNumberResponse:
+    properties:
+      carrier:
+        type: string
+      country:
+        type: string
+      countryCode:
+        type: integer
+      e164:
+        type: string
+      international:
+        type: string
+      local:
+        type: string
+      rawLocal:
+        type: string
+      valid:
+        type: boolean
+    type: object
+  handlers.DryRunScannerResponse:
+    properties:
+      error:
+        type: string
+      success:
+        type: boolean
+    type: object
+  handlers.GetAllScannersResponse:
+    properties:
+      scanners:
+        items:
+          $ref: '#/definitions/handlers.Scanner'
+        type: array
+    type: object
+  handlers.RunScannerResponse:
+    properties:
+      result:
+        type: object
+    type: object
+  handlers.Scanner:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+    type: object
   number.Number:
     properties:
       carrier:
@@ -16,6 +66,8 @@ definitions:
         type: string
       rawLocal:
         type: string
+      valid:
+        type: boolean
     type: object
   remote.GoogleSearchDork:
     properties:
@@ -125,7 +177,7 @@ definitions:
       version:
         type: string
     type: object
-host: demo.phoneinfoga.crvx.fr
+host: localhost:5000
 info:
   contact: {}
   description: Advanced information gathering & OSINT framework for phone numbers.
@@ -300,6 +352,94 @@ paths:
           schema:
             $ref: '#/definitions/web.JSONResponse'
       summary: Check if a number is valid and possible.
+      tags:
+      - Numbers
+  /v2/numbers:
+    post:
+      description: This route returns information about a given phone number.
+      operationId: AddNumber
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.AddNumberResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      summary: Add a new number.
+      tags:
+      - Numbers
+  /v2/scanners:
+    get:
+      description: This route returns all available scanners.
+      operationId: GetAllScanners
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.GetAllScannersResponse'
+      summary: Get all available scanners.
+      tags:
+      - Numbers
+  /v2/scanners/{scanner}/dryrun:
+    post:
+      description: This route dry runs a single scanner.
+      operationId: DryRunScanner
+      parameters:
+      - description: Scanner name
+        in: path
+        name: scanner
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.DryRunScannerResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      summary: Dry run a single scanner.
+      tags:
+      - Numbers
+  /v2/scanners/{scanner}/run:
+    post:
+      description: This route runs a single scanner.
+      operationId: RunScanner
+      parameters:
+      - description: Scanner name
+        in: path
+        name: scanner
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.RunScannerResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      summary: Run a single scanner.
       tags:
       - Numbers
 schemes:
