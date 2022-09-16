@@ -6,6 +6,7 @@ import (
 
 // Number is a phone number
 type Number struct {
+	Valid         bool
 	RawLocal      string
 	Local         string
 	E164          string
@@ -25,6 +26,7 @@ func NewNumber(number string) (res *Number, err error) {
 	}
 
 	res = &Number{
+		Valid:         phonenumbers.IsValidNumber(num),
 		RawLocal:      FormatNumber(phonenumbers.Format(num, phonenumbers.NATIONAL)),
 		Local:         phonenumbers.Format(num, phonenumbers.NATIONAL),
 		E164:          phonenumbers.Format(num, phonenumbers.E164),

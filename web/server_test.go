@@ -8,12 +8,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 	"gopkg.in/h2non/gock.v1"
 )
-
-var r *gin.Engine
 
 func performRequest(r http.Handler, method, path string) (*httptest.ResponseRecorder, error) {
 	req, err := http.NewRequest(method, path, nil)
@@ -23,12 +20,14 @@ func performRequest(r http.Handler, method, path string) (*httptest.ResponseReco
 }
 
 func BenchmarkAPI(b *testing.B) {
-	r = gin.Default()
-	r, _ = Serve(r, true)
+	srv, err := NewServer(true)
+	if err != nil {
+		b.Fatal(err)
+	}
 
 	b.Run("localScan - /api/numbers/:number/scan/local", func(b *testing.B) {
 		for i := 0; i < b.N; i++ {
-			res, err := performRequest(r, http.MethodGet, "/api/numbers/3312345253/scan/local")
+			res, err := performRequest(srv, http.MethodGet, "/api/numbers/3312345253/scan/local")
 			assert.Equal(b, nil, err)
 			assert.Equal(b, res.Result().StatusCode, 200)
 		}
@@ -36,8 +35,10 @@ func BenchmarkAPI(b *testing.B) {
 }
 
 func TestApi(t *testing.T) {
-	r = gin.Default()
-	r, _ = Serve(r, false)
+	srv, err := NewServer(false)
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	t.Run("Serve", func(t *testing.T) {
 		t.Run("detectContentType", func(t *testing.T) {
@@ -55,7 +56,7 @@ func TestApi(t *testing.T) {
 		})
 
 		t.Run("getAllNumbers - /api/numbers", func(t *testing.T) {
-			res, err := performRequest(r, http.MethodGet, "/api/numbers")
+			res, err := performRequest(srv, http.MethodGet, "/api/numbers")
 
 			body, _ := ioutil.ReadAll(res.Body)
 
@@ -66,7 +67,7 @@ func TestApi(t *testing.T) {
 
 		t.Run("validate - /api/numbers/:number/validate", func(t *testing.T) {
 			t.Run("valid number", func(t *testing.T) {
-				res, err := performRequest(r, http.MethodGet, "/api/numbers/3312345253/validate")
+				res, err := performRequest(srv, http.MethodGet, "/api/numbers/3312345253/validate")
 
 				body, _ := ioutil.ReadAll(res.Body)
 
@@ -76,7 +77,7 @@ func TestApi(t *testing.T) {
 			})
 
 			t.Run("invalid number", func(t *testing.T) {
-				res, err := performRequest(r, http.MethodGet, "/api/numbers/azerty/validate")
+				res, err := performRequest(srv, http.MethodGet, "/api/numbers/azerty/validate")
 
 				body, _ := ioutil.ReadAll(res.Body)
 
@@ -86,7 +87,7 @@ func TestApi(t *testing.T) {
 			})
 
 			t.Run("invalid country code", func(t *testing.T) {
-				res, err := performRequest(r, http.MethodGet, "/api/numbers/09880/validate")
+				res, err := performRequest(srv, http.MethodGet, "/api/numbers/09880/validate")
 
 				body, _ := ioutil.ReadAll(res.Body)
 
@@ -98,7 +99,7 @@ func TestApi(t *testing.T) {
 
 		t.Run("localScan - /api/numbers/:number/scan/local", func(t *testing.T) {
 			t.Run("valid number", func(t *testing.T) {
-				res, err := performRequest(r, http.MethodGet, "/api/numbers/3312345253/scan/local")
+				res, err := performRequest(srv, http.MethodGet, "/api/numbers/3312345253/scan/local")
 
 				body, _ := ioutil.ReadAll(res.Body)
 
@@ -108,7 +109,7 @@ func TestApi(t *testing.T) {
 			})
 
 			t.Run("invalid number", func(t *testing.T) {
-				res, err := performRequest(r, http.MethodGet, "/api/numbers/9999999999/scan/local")
+				res, err := performRequest(srv, http.MethodGet, "/api/numbers/9999999999/scan/local")
 
 				body, _ := ioutil.ReadAll(res.Body)
 
@@ -147,7 +148,7 @@ func TestApi(t *testing.T) {
 					Reply(200).
 					JSON(expectedResult)
 
-				res, err := performRequest(r, http.MethodGet, "/api/numbers/79516566591/scan/numverify")
+				res, err := performRequest(srv, http.MethodGet, "/api/numbers/79516566591/scan/numverify")
 				assert.Equal(t, nil, err)
 
 				body, err := ioutil.ReadAll(res.Body)
@@ -178,7 +179,7 @@ func TestApi(t *testing.T) {
 					Reply(429).
 					JSON(expectedResult)
 
-				res, err := performRequest(r, http.MethodGet, "/api/numbers/79516566591/scan/numverify")
+				res, err := performRequest(srv, http.MethodGet, "/api/numbers/79516566591/scan/numverify")
 				assert.Equal(t, nil, err)
 
 				body, err := ioutil.ReadAll(res.Body)
@@ -193,7 +194,7 @@ func TestApi(t *testing.T) {
 
 		t.Run("googleSearchScan - /api/numbers/:number/scan/googlesearch", func(t *testing.T) {
 			t.Run("should return google search dorks", func(t *testing.T) {
-				res, err := performRequest(r, http.MethodGet, "/api/numbers/330365179268/scan/googlesearch")
+				res, err := performRequest(srv, http.MethodGet, "/api/numbers/330365179268/scan/googlesearch")
 				assert.NoError(t, err)
 
 				body, err := ioutil.ReadAll(res.Body)
@@ -226,7 +227,7 @@ func TestApi(t *testing.T) {
 						},
 					})
 
-				res, err := performRequest(r, http.MethodGet, "/api/numbers/330365179268/scan/ovh")
+				res, err := performRequest(srv, http.MethodGet, "/api/numbers/330365179268/scan/ovh")
 
 				body, _ := ioutil.ReadAll(res.Body)
 
@@ -239,7 +240,7 @@ func TestApi(t *testing.T) {
 		})
 
 		t.Run("healthHandler - /api/", func(t *testing.T) {
-			res, err := performRequest(r, http.MethodGet, "/api/")
+			res, err := performRequest(srv, http.MethodGet, "/api/")
 			assert.Equal(t, nil, err)
 
 			body, _ := ioutil.ReadAll(res.Body)
@@ -249,17 +250,17 @@ func TestApi(t *testing.T) {
 		})
 
 		t.Run("404 error - /api/notfound", func(t *testing.T) {
-			res, err := performRequest(r, http.MethodGet, "/api/notfound")
+			res, err := performRequest(srv, http.MethodGet, "/api/notfound")
 			assert.Equal(t, err, nil)
 
 			body, _ := ioutil.ReadAll(res.Body)
 
 			assert.Equal(t, res.Result().StatusCode, 404)
-			assert.Equal(t, string(body), "{\"success\":false,\"error\":\"Resource not found\"}")
+			assert.Equal(t, string(body), "{\"success\":false,\"error\":\"resource not found\"}")
 		})
 
 		t.Run("Client - /", func(t *testing.T) {
-			res, err := performRequest(r, http.MethodGet, "/")
+			res, err := performRequest(srv, http.MethodGet, "/")
 
 			assert.Equal(t, nil, err)
 			assert.Equal(t, 200, res.Result().StatusCode)

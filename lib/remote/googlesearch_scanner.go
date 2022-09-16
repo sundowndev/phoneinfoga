@@ -38,11 +38,11 @@ func (s *googlesearchScanner) Description() string {
 	return "Generate several Google dork requests for a given phone number."
 }
 
-func (s *googlesearchScanner) ShouldRun(_ number.Number) bool {
-	return true
+func (s *googlesearchScanner) DryRun(_ number.Number) error {
+	return nil
 }
 
-func (s *googlesearchScanner) Scan(n number.Number) (interface{}, error) {
+func (s *googlesearchScanner) Run(n number.Number) (interface{}, error) {
 	res := GoogleSearchResponse{
 		SocialMedia:         getSocialMediaDorks(n),
 		DisposableProviders: getDisposableProvidersDorks(n),

@@ -1,6 +1,7 @@
 package remote
 
 import (
+	"fmt"
 	"github.com/sundowndev/phoneinfoga/v2/lib/number"
 	"github.com/sundowndev/phoneinfoga/v2/lib/remote/suppliers"
 )
@@ -31,11 +32,14 @@ func (s *ovhScanner) Description() string {
 	return "Search a phone number through the OVH Telecom REST API."
 }
 
-func (s *ovhScanner) ShouldRun(n number.Number) bool {
-	return s.isSupported(n.CountryCode)
+func (s *ovhScanner) DryRun(n number.Number) error {
+	if !s.isSupported(n.CountryCode) {
+		return fmt.Errorf("country code %d is not supported", n.CountryCode)
+	}
+	return nil
 }
 
-func (s *ovhScanner) Scan(n number.Number) (interface{}, error) {
+func (s *ovhScanner) Run(n number.Number) (interface{}, error) {
 	res, err := s.client.Search(n)
 	if err != nil {
 		return nil, err

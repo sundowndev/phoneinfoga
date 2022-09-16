@@ -25,14 +25,14 @@ func TestRemoteLibrarySuccessScan(t *testing.T) {
 	}
 
 	fakeScanner := &mocks.Scanner{}
-	fakeScanner.On("ShouldRun", *num).Return(true).Once()
+	fakeScanner.On("DryRun", *num).Return(nil).Once()
 	fakeScanner.On("Name").Return("fake").Times(2)
-	fakeScanner.On("Scan", *num).Return(fakeScannerResponse{Valid: true}, nil).Once()
+	fakeScanner.On("Run", *num).Return(fakeScannerResponse{Valid: true}, nil).Once()
 
 	fakeScanner2 := &mocks.Scanner{}
-	fakeScanner2.On("ShouldRun", *num).Return(true).Once()
+	fakeScanner2.On("DryRun", *num).Return(nil).Once()
 	fakeScanner2.On("Name").Return("fake2").Times(2)
-	fakeScanner2.On("Scan", *num).Return(fakeScannerResponse{Valid: false}, nil).Once()
+	fakeScanner2.On("Run", *num).Return(fakeScannerResponse{Valid: false}, nil).Once()
 
 	lib := NewLibrary(filter.NewEngine())
 
@@ -56,9 +56,9 @@ func TestRemoteLibraryFailedScan(t *testing.T) {
 	dummyError := errors.New("test")
 
 	fakeScanner := &mocks.Scanner{}
-	fakeScanner.On("ShouldRun", *num).Return(true).Once()
+	fakeScanner.On("DryRun", *num).Return(nil).Once()
 	fakeScanner.On("Name").Return("fake").Times(2)
-	fakeScanner.On("Scan", *num).Return(nil, dummyError).Once()
+	fakeScanner.On("Run", *num).Return(nil, dummyError).Once()
 
 	lib := NewLibrary(filter.NewEngine())
 
@@ -79,7 +79,7 @@ func TestRemoteLibraryEmptyScan(t *testing.T) {
 
 	fakeScanner := &mocks.Scanner{}
 	fakeScanner.On("Name").Return("mockscanner").Times(2)
-	fakeScanner.On("ShouldRun", *num).Return(false).Once()
+	fakeScanner.On("DryRun", *num).Return(errors.New("dummy error")).Once()
 
 	lib := NewLibrary(filter.NewEngine())
 

@@ -14,8 +14,8 @@ type Plugin interface {
 type Scanner interface {
 	Name() string
 	Description() string
-	Scan(number.Number) (interface{}, error)
-	ShouldRun(number.Number) bool
+	DryRun(number.Number) error
+	Run(number.Number) (interface{}, error)
 }
 
 func OpenPlugin(path string) error {
