@@ -9,7 +9,7 @@ import (
 	"testing"
 )
 
-func TestRemoteLibrarySuccessScan(t *testing.T) {
+func TestRemoteLibrary_SuccessScan(t *testing.T) {
 	type fakeScannerResponse struct {
 		Valid bool
 	}
@@ -47,7 +47,7 @@ func TestRemoteLibrarySuccessScan(t *testing.T) {
 	fakeScanner2.AssertExpectations(t)
 }
 
-func TestRemoteLibraryFailedScan(t *testing.T) {
+func TestRemoteLibrary_FailedScan(t *testing.T) {
 	num, err := number.NewNumber("15556661212")
 	if err != nil {
 		t.Fatal(err)
@@ -71,7 +71,7 @@ func TestRemoteLibraryFailedScan(t *testing.T) {
 	fakeScanner.AssertExpectations(t)
 }
 
-func TestRemoteLibraryEmptyScan(t *testing.T) {
+func TestRemoteLibrary_EmptyScan(t *testing.T) {
 	num, err := number.NewNumber("15556661212")
 	if err != nil {
 		t.Fatal(err)
@@ -88,6 +88,49 @@ func TestRemoteLibraryEmptyScan(t *testing.T) {
 	result, errs := lib.Scan(num)
 	assert.Equal(t, map[string]interface{}{}, result)
 	assert.Equal(t, map[string]error{}, errs)
+
+	fakeScanner.AssertExpectations(t)
+}
+
+func TestRemoteLibrary_PanicRun(t *testing.T) {
+	num, err := number.NewNumber("15556661212")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	fakeScanner := &mocks.Scanner{}
+	fakeScanner.On("Name").Return("fake")
+	fakeScanner.On("DryRun", *num).Return(nil).Once()
+	fakeScanner.On("Run", *num).Panic("dummy panic").Once()
+
+	lib := NewLibrary(filter.NewEngine())
+
+	lib.AddScanner(fakeScanner)
+
+	result, errs := lib.Scan(num)
+	assert.Equal(t, map[string]interface{}{}, result)
+	assert.Equal(t, map[string]error{"fake": errors.New("panic occurred while running scan, see debug logs")}, errs)
+
+	fakeScanner.AssertExpectations(t)
+}
+
+func TestRemoteLibrary_PanicDryRun(t *testing.T) {
+	num, err := number.NewNumber("15556661212")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	fakeScanner := &mocks.Scanner{}
+	fakeScanner.On("Name").Return("fake")
+	fakeScanner.On("DryRun", *num).Panic("dummy panic").Once()
+
+	lib := NewLibrary(filter.NewEngine())
+
+	lib.AddScanner(fakeScanner)
+
+	result, errs := lib.Scan(num)
+	assert.Equal(t, map[string]interface{}{}, result)
+	assert.Equal(t, map[string]error{"fake": errors.New("panic occurred while running scan, see debug logs")}, errs)
 
 	fakeScanner.AssertExpectations(t)
 }

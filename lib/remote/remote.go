@@ -1,6 +1,7 @@
 package remote
 
 import (
+	"errors"
 	"github.com/sirupsen/logrus"
 	"github.com/sundowndev/phoneinfoga/v2/lib/filter"
 	"github.com/sundowndev/phoneinfoga/v2/lib/number"
@@ -59,18 +60,24 @@ func (r *Library) Scan(n *number.Number) (map[string]interface{}, map[string]err
 			continue
 		}
 
-		if err := s.DryRun(*n); err != nil {
-			logrus.
-				WithField("scanner", s.Name()).
-				WithField("reason", err.Error()).
-				Debug("Scanner was ignored because it should not run")
-			continue
-		}
-
 		wg.Add(1)
-
 		go func(s Scanner) {
 			defer wg.Done()
+			defer func() {
+				if err := recover(); err != nil {
+					logrus.WithField("scanner", s.Name()).WithField("error", err).Debug("Scanner panicked")
+					r.addError(s.Name(), errors.New("panic occurred while running scan, see debug logs"))
+				}
+			}()
+
+			if err := s.DryRun(*n); err != nil {
+				logrus.
+					WithField("scanner", s.Name()).
+					WithField("reason", err.Error()).
+					Debug("Scanner was ignored because it should not run")
+				return
+			}
+
 			data, err := s.Run(*n)
 			if err != nil {
 				r.addError(s.Name(), err)
