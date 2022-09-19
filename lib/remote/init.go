@@ -13,6 +13,7 @@ func InitScanners(remote *Library) {
 	remote.AddScanner(NewGoogleSearchScanner())
 	remote.AddScanner(NewOVHScanner(ovhSupplier))
 	remote.AddScanner(NewGoogleCSEScanner(nil))
+	remote.AddScanner(NewTempophoneScanner())
 
 	remote.LoadPlugins()
 }
