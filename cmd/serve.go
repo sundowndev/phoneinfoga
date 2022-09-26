@@ -2,10 +2,13 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"github.com/spf13/cobra"
+	"github.com/sundowndev/phoneinfoga/v2/build"
 	"github.com/sundowndev/phoneinfoga/v2/web"
 	"log"
 	"net/http"
+	"os"
 )
 
 var httpPort int
@@ -24,6 +27,10 @@ var serveCmd = &cobra.Command{
 	Use:   "serve",
 	Short: "Serve web client",
 	Run: func(cmd *cobra.Command, args []string) {
+		if build.IsRelease() && os.Getenv("GIN_MODE") == "" {
+			gin.SetMode(gin.ReleaseMode)
+		}
+
 		srv, err := web.NewServer(disableClient)
 		if err != nil {
 			log.Fatal(err)
