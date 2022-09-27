@@ -13,15 +13,20 @@ Follow the instructions :
 
 You can also do it from the terminal (UNIX systems only) :
 
-```shell
-# Download latest release in the current directory
+1. Download latest release in the current directory
+
+```
 curl -sSL https://raw.githubusercontent.com/sundowndev/phoneinfoga/master/support/scripts/install | bash
+```
 
-# Check the binary
+2. Install phoneinfoga
+```
+sudo install ./phoneinfoga /usr/local/bin/phoneinfoga
+```
+
+3. Test to ensure the version you installed is up-to-date
+```
 ./phoneinfoga version
-
-# You can also install it globally
-sudo mv ./phoneinfoga /usr/bin/phoneinfoga
 ```
 
 To ensure your system is supported, please check the output of `echo "$(uname -s)_$(uname -m)"` in your terminal and see if it's available on the [GitHub release page](https://github.com/sundowndev/phoneinfoga/releases).
