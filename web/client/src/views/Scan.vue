@@ -40,6 +40,12 @@
 
     <hr />
 
+    <b-container class="border p-4">
+      <h3 class="text-center">Scanners</h3>
+      <Scanner />
+    </b-container>
+
+
     <LocalScan :scan="scanEvent" />
     <NumverifyScan :scan="scanEvent" />
     <GoogleSearch :scan="scanEvent" />
@@ -51,6 +57,7 @@
 import Vue from "vue";
 import { mapMutations, mapState } from "vuex";
 import { formatNumber, isValid } from "../utils";
+import Scanner from "../components/Scanner.vue";
 import LocalScan from "../components/LocalScan.vue";
 import NumverifyScan from "../components/NumverifyScan.vue";
 import GoogleSearch from "../components/GoogleSearch.vue";
@@ -70,7 +77,7 @@ export type ScanResponse<T> = AxiosResponse<{
 }>;
 
 export default Vue.extend({
-  components: { LocalScan, GoogleSearch, NumverifyScan, OVHScan },
+  components: { LocalScan, GoogleSearch, NumverifyScan, OVHScan, Scanner },
   computed: {
     ...mapState(["number"]),
     ...mapMutations(["pushError"]),
