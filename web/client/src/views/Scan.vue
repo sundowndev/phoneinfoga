@@ -42,14 +42,15 @@
 
     <b-container class="border p-4">
       <h3 class="text-center">Scanners</h3>
-      <Scanner />
+      <Scanner name="GoogleSearch" scanId="googlesearch" />
+      <Scanner name="Numverify Scan" scanId="numverify" />
+      <Scanner name="OVH Telecom scan" scanId="ovh" />
     </b-container>
 
-
-    <LocalScan :scan="scanEvent" />
+    <!-- <LocalScan :scan="scanEvent" />
     <NumverifyScan :scan="scanEvent" />
     <GoogleSearch :scan="scanEvent" />
-    <OVHScan :scan="scanEvent" />
+    <OVHScan :scan="scanEvent" /> -->
   </div>
 </template>
 
@@ -58,10 +59,10 @@ import Vue from "vue";
 import { mapMutations, mapState } from "vuex";
 import { formatNumber, isValid } from "../utils";
 import Scanner from "../components/Scanner.vue";
-import LocalScan from "../components/LocalScan.vue";
-import NumverifyScan from "../components/NumverifyScan.vue";
-import GoogleSearch from "../components/GoogleSearch.vue";
-import OVHScan from "../components/OVHScan.vue";
+// import LocalScan from "../components/LocalScan.vue";
+// import NumverifyScan from "../components/NumverifyScan.vue";
+// import GoogleSearch from "../components/GoogleSearch.vue";
+// import OVHScan from "../components/OVHScan.vue";
 import { AxiosResponse } from "axios";
 
 interface Data {
@@ -77,7 +78,7 @@ export type ScanResponse<T> = AxiosResponse<{
 }>;
 
 export default Vue.extend({
-  components: { LocalScan, GoogleSearch, NumverifyScan, OVHScan, Scanner },
+  components: { Scanner },
   computed: {
     ...mapState(["number"]),
     ...mapMutations(["pushError"]),

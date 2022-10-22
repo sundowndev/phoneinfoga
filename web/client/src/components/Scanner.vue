@@ -1,7 +1,7 @@
 <template>
-  <b-container>
+  <b-container class="mb-3">
     <b-row align-h="between" align-v="center">
-      <h3>GoogleSearch</h3>
+      <h3>{{ name }}</h3>
       <b-button
         v-if="!error && !loading"
         @click="runScan"
@@ -19,6 +19,9 @@
         >{{ error }}</b-alert
       >
     </b-row>
+    <b-collapse id="scanner-collapse" class="mt-2">
+      <JsonViewer :value="data"></JsonViewer>
+    </b-collapse>
   </b-container>
 </template>
 
@@ -26,20 +29,18 @@
 import { Component, Vue, Prop } from "vue-property-decorator";
 import axios from "axios";
 import { mapState, mapMutations } from "vuex";
+import JsonViewer from "vue-json-viewer";
 import config from "@/config";
-import { ScanResponse } from "@/views/Scan.vue";
 
-interface LocalScanResponse {
-  number: string;
-  dork: string;
-  URL: string;
-}
+// Vue.use(JsonViewer);
 
-@Component
+@Component({
+  components: {
+    JsonViewer,
+  },
+})
 export default class Scanner extends Vue {
-  id = "local";
-  name = "Google";
-  data: LocalScanResponse[] = [];
+  data = {};
   loading = false;
   error = null;
   computed = {
@@ -47,21 +48,14 @@ export default class Scanner extends Vue {
     ...mapMutations(["pushError"]),
   };
 
-  @Prop() scan!: Vue;
-
-  mounted(): void {
-    this.scan.$on("clear", this.clear);
-  }
-
-  private clear() {
-    this.data = [];
-  }
+  @Prop() scanId!: string;
+  @Prop() name!: string;
 
   private async runScan(): Promise<void> {
     this.loading = true;
     try {
-      const res: ScanResponse<LocalScanResponse> = await axios.get(
-        `${config.apiUrl}/numbers/${this.$store.state.number}/scan/${this.id}`,
+      const res = await axios.get(
+        `${config.apiUrl}/numbers/${this.$store.state.number}/scan/${this.scanId}`,
         {
           validateStatus: () => true,
         }
@@ -70,10 +64,12 @@ export default class Scanner extends Vue {
       if (!res.data.success && res.data.error) {
         throw res.data.error;
       }
-      this.data.push(res.data.result);
+      this.data = res.data.result;
+      this.$root.$emit("bv::toggle::collapse", "scanner-collapse");
     } catch (error) {
       this.error = error;
     }
+
     this.loading = false;
   }
 }
