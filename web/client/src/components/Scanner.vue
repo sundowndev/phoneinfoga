@@ -19,7 +19,7 @@
         >{{ error }}</b-alert
       >
     </b-row>
-    <b-collapse id="scanner-collapse" class="mt-2">
+    <b-collapse :id="collapseId" class="mt-2">
       <JsonViewer :value="data"></JsonViewer>
     </b-collapse>
   </b-container>
@@ -51,6 +51,8 @@ export default class Scanner extends Vue {
   @Prop() scanId!: string;
   @Prop() name!: string;
 
+  collapseId = "scanner-collapse" + this.scanId;
+
   private async runScan(): Promise<void> {
     this.loading = true;
     try {
@@ -65,7 +67,7 @@ export default class Scanner extends Vue {
         throw res.data.error;
       }
       this.data = res.data.result;
-      this.$root.$emit("bv::toggle::collapse", "scanner-collapse");
+      this.$root.$emit("bv::toggle::collapse", this.collapseId);
     } catch (error) {
       this.error = error;
     }
