@@ -3,7 +3,7 @@
     <b-row align-h="between" align-v="center">
       <h3>{{ name }}</h3>
       <b-button
-        v-if="!error && !loading"
+        v-if="!error && !loading && !data"
         @click="runScan"
         variant="outline-primary"
         size="lg"
@@ -40,7 +40,7 @@ import config from "@/config";
   },
 })
 export default class Scanner extends Vue {
-  data = {};
+  data = null;
   loading = false;
   error = null;
   computed = {

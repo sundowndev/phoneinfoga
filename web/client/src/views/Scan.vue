@@ -25,7 +25,7 @@
         class="m-1"
       >
         <b-icon-play-fill></b-icon-play-fill>
-        Run scan
+        Lookup
       </b-button>
 
       <b-button
@@ -40,7 +40,17 @@
 
     <hr />
 
-    <b-container class="border p-4">
+    <b-container v-if="isLookup" class="border p-4 mb-3">
+      <h3 class="text-center">Local</h3>
+      <b-container>
+        <b-row v-for="(value, name) in localData" :key="name" align-v="center">
+          <h5 class="text-capitalize m-0 mr-4">{{ name }}:</h5>
+          <p class="m-0">{{ value }}</p>
+        </b-row>
+      </b-container>
+    </b-container>
+
+    <b-container v-if="isLookup" class="border p-4">
       <h3 class="text-center">Scanners</h3>
       <Scanner name="GoogleSearch" scanId="googlesearch" />
       <Scanner name="Numverify Scan" scanId="numverify" />
@@ -63,12 +73,22 @@ import Scanner from "../components/Scanner.vue";
 // import NumverifyScan from "../components/NumverifyScan.vue";
 // import GoogleSearch from "../components/GoogleSearch.vue";
 // import OVHScan from "../components/OVHScan.vue";
-import { AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
+import config from "@/config";
 
 interface Data {
   loading: boolean;
+  isLookup: boolean;
   inputNumber: string;
   scanEvent: Vue;
+  localData: {
+    raw_local: string;
+    local: string;
+    e164: string;
+    international: string;
+    country_code: string;
+    country: string;
+  };
 }
 
 export type ScanResponse<T> = AxiosResponse<{
@@ -86,13 +106,23 @@ export default Vue.extend({
   data(): Data {
     return {
       loading: false,
+      isLookup: false,
       inputNumber: "",
       scanEvent: new Vue(),
+      localData: {
+        raw_local: "",
+        local: "",
+        e164: "",
+        international: "",
+        country_code: "",
+        country: "",
+      },
     };
   },
   methods: {
     clearData() {
-      this.scanEvent.$emit("clear");
+      // this.scanEvent.$emit("clear");
+      this.isLookup = false;
       this.$store.commit("resetState");
     },
     async runScans(): Promise<void> {
@@ -105,11 +135,26 @@ export default Vue.extend({
 
       this.$store.commit("setNumber", formatNumber(this.inputNumber));
 
-      this.scanEvent.$emit("scan");
+      try {
+        const res = await axios.get(
+          `${config.apiUrl}/numbers/${this.$store.state.number}/scan/local`,
+          {
+            validateStatus: () => true,
+          }
+        );
 
-      this.scanEvent.$on("finished", () => {
-        this.loading = false;
-      });
+        this.localData = res.data.result;
+      } catch (error) {
+        this.$store.commit("pushError", { message: error });
+      }
+
+      this.isLookup = true;
+      this.loading = false;
+      // this.scanEvent.$emit("scan");
+
+      // this.scanEvent.$on("finished", () => {
+      //   this.loading = false;
+      // });
     },
     onSubmit(evt: Event) {
       evt.preventDefault();
