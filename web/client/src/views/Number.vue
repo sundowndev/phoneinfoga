@@ -12,9 +12,12 @@
 
     <b-container v-if="isLookup" class="border p-4">
       <h3 class="text-center">Scanners</h3>
-      <Scanner name="GoogleSearch" scanId="googlesearch" />
-      <Scanner name="Numverify Scan" scanId="numverify" />
-      <Scanner name="OVH Telecom scan" scanId="ovh" />
+      <Scanner
+        v-for="(scanner, index) in scanners"
+        :key="index"
+        :name="scanner.name.charAt(0).toUpperCase() + scanner.name.slice(1)"
+        :scanId="scanner.name"
+      />
     </b-container>
   </div>
 </template>
@@ -27,9 +30,15 @@ import Scanner from "../components/Scanner.vue";
 import axios, { AxiosResponse } from "axios";
 import config from "@/config";
 
+interface ScannerObject {
+  name: string;
+  description: string;
+}
+
 interface Data {
   loading: boolean;
   isLookup: boolean;
+  scanners: Array<ScannerObject>;
   localData: {
     raw_local: string;
     local: string;
@@ -56,6 +65,7 @@ export default Vue.extend({
     return {
       loading: false,
       isLookup: false,
+      scanners: [],
       localData: {
         raw_local: "",
         local: "",
@@ -67,9 +77,21 @@ export default Vue.extend({
     };
   },
   mounted() {
+    this.getScanners();
     this.runScans();
   },
   methods: {
+    async getScanners() {
+      try {
+        const res = await axios.get(`${config.apiUrl}/v2/scanners`);
+
+        this.scanners = res.data.scanners.filter(
+          (scanner: ScannerObject) => scanner.name !== "local"
+        );
+      } catch (error) {
+        this.$store.commit("pushError", { message: error });
+      }
+    },
     async runScans(): Promise<void> {
       if (!isValid(this.$route.params.number)) {
         this.$store.commit("pushError", { message: "Number is not valid." });

@@ -57,15 +57,13 @@
 
     <b-container v-if="isLookup" class="border p-4">
       <h3 class="text-center">Scanners</h3>
-      <Scanner name="GoogleSearch" scanId="googlesearch" />
-      <Scanner name="Numverify Scan" scanId="numverify" />
-      <Scanner name="OVH Telecom scan" scanId="ovh" />
+      <Scanner
+        v-for="(scanner, index) in scanners"
+        :key="index"
+        :name="scanner.name.charAt(0).toUpperCase() + scanner.name.slice(1)"
+        :scanId="scanner.name"
+      />
     </b-container>
-
-    <!-- <LocalScan :scan="scanEvent" />
-    <NumverifyScan :scan="scanEvent" />
-    <GoogleSearch :scan="scanEvent" />
-    <OVHScan :scan="scanEvent" /> -->
   </div>
 </template>
 
@@ -75,12 +73,13 @@ import { mapMutations, mapState } from "vuex";
 import { formatNumber, isValid } from "../utils";
 import VuePhoneNumberInput from "vue-phone-number-input";
 import Scanner from "../components/Scanner.vue";
-// import LocalScan from "../components/LocalScan.vue";
-// import NumverifyScan from "../components/NumverifyScan.vue";
-// import GoogleSearch from "../components/GoogleSearch.vue";
-// import OVHScan from "../components/OVHScan.vue";
 import axios, { AxiosResponse } from "axios";
 import config from "@/config";
+
+interface ScannerObject {
+  name: string;
+  description: string;
+}
 
 interface Data {
   loading: boolean;
@@ -88,6 +87,7 @@ interface Data {
   inputNumber: string;
   inputNumberVal: string;
   scanEvent: Vue;
+  scanners: Array<ScannerObject>;
   localData: {
     raw_local: string;
     local: string;
@@ -117,6 +117,7 @@ export default Vue.extend({
       inputNumber: "",
       inputNumberVal: "",
       scanEvent: new Vue(),
+      scanners: [],
       localData: {
         raw_local: "",
         local: "",
@@ -156,6 +157,8 @@ export default Vue.extend({
         this.$store.commit("pushError", { message: error });
       }
 
+      this.getScanners();
+
       this.isLookup = true;
       this.loading = false;
       // this.scanEvent.$emit("scan");
@@ -170,6 +173,17 @@ export default Vue.extend({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     updateInputNumber(val: any) {
       this.inputNumber = val.e164;
+    },
+    async getScanners() {
+      try {
+        const res = await axios.get(`${config.apiUrl}/v2/scanners`);
+
+        this.scanners = res.data.scanners.filter(
+          (scanner: ScannerObject) => scanner.name !== "local"
+        );
+      } catch (error) {
+        this.$store.commit("pushError", { message: error });
+      }
     },
   },
 });

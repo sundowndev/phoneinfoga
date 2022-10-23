@@ -53,13 +53,34 @@ export default class Scanner extends Vue {
 
   collapseId = "scanner-collapse" + this.scanId;
 
+  mounted(): void {
+    this.testScan();
+  };
+
+  private async testScan(): Promise<void> {
+    try {
+      const res = await axios.post(
+        `${config.apiUrl}/v2/scanners/${this.scanId}/dryrun`,
+        {
+          number: this.$store.state.number,
+        }
+      );
+
+      if (!res.data.success && res.data.error) {
+        throw res.data.error;
+      }
+    } catch (error) {
+      this.error = error;
+    }
+  }
+
   private async runScan(): Promise<void> {
     this.loading = true;
     try {
-      const res = await axios.get(
-        `${config.apiUrl}/numbers/${this.$store.state.number}/scan/${this.scanId}`,
+      const res = await axios.post(
+        `${config.apiUrl}/v2/scanners/${this.scanId}/run`,
         {
-          validateStatus: () => true,
+          number: this.$store.state.number,
         }
       );
 
