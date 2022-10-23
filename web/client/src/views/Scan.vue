@@ -7,35 +7,40 @@
         label-for="input-1"
         description="Only accepts E164 and International formats as input."
       >
-        <b-form-input
-          id="input-number"
-          v-model="inputNumber"
-          type="text"
-          required
-          placeholder="e.g: 33678132393"
-          :disabled="loading"
-        ></b-form-input>
+        <b-input-group>
+          <!-- <b-form-input
+            id="input-number"
+            v-model="inputNumber"
+            type="text"
+            required
+            placeholder="e.g: 33678132393"
+            :disabled="loading"
+          ></b-form-input> -->
+          <VuePhoneNumberInput
+            v-model="inputNumberVal"
+            :disabled="loading"
+            @update="updateInputNumber"
+          />
+          <b-button
+            size="sm"
+            variant="dark"
+            v-on:click="runScans"
+            :disabled="loading"
+          >
+            <b-icon-play-fill></b-icon-play-fill>
+            Lookup
+          </b-button>
+
+          <b-button
+            variant="light"
+            size="sm"
+            v-on:click="clearData"
+            v-show="number"
+            :disabled="loading"
+            >Reset
+          </b-button>
+        </b-input-group>
       </b-form-group>
-
-      <b-button
-        size="sm"
-        variant="dark"
-        v-on:click="runScans"
-        :disabled="loading"
-        class="m-1"
-      >
-        <b-icon-play-fill></b-icon-play-fill>
-        Lookup
-      </b-button>
-
-      <b-button
-        variant="light"
-        size="sm"
-        v-on:click="clearData"
-        v-show="number"
-        :disabled="loading"
-        >Reset
-      </b-button>
     </b-form>
 
     <hr />
@@ -68,6 +73,7 @@
 import Vue from "vue";
 import { mapMutations, mapState } from "vuex";
 import { formatNumber, isValid } from "../utils";
+import VuePhoneNumberInput from "vue-phone-number-input";
 import Scanner from "../components/Scanner.vue";
 // import LocalScan from "../components/LocalScan.vue";
 // import NumverifyScan from "../components/NumverifyScan.vue";
@@ -80,6 +86,7 @@ interface Data {
   loading: boolean;
   isLookup: boolean;
   inputNumber: string;
+  inputNumberVal: string;
   scanEvent: Vue;
   localData: {
     raw_local: string;
@@ -98,7 +105,7 @@ export type ScanResponse<T> = AxiosResponse<{
 }>;
 
 export default Vue.extend({
-  components: { Scanner },
+  components: { Scanner, VuePhoneNumberInput },
   computed: {
     ...mapState(["number"]),
     ...mapMutations(["pushError"]),
@@ -108,6 +115,7 @@ export default Vue.extend({
       loading: false,
       isLookup: false,
       inputNumber: "",
+      inputNumberVal: "",
       scanEvent: new Vue(),
       localData: {
         raw_local: "",
@@ -159,6 +167,12 @@ export default Vue.extend({
     onSubmit(evt: Event) {
       evt.preventDefault();
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    updateInputNumber(val: any) {
+      this.inputNumber = val.e164;
+    },
   },
 });
 </script>
+
+<style src="vue-phone-number-input/dist/vue-phone-number-input.css"></style>
