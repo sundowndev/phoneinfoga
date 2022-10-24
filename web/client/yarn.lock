@@ -12724,7 +12724,7 @@
     "tsconfig" "^7.0.0"
     "vue-template-es2015-compiler" "^1.6.0"
 
-"vue-json-viewer@^2.2.22":
+"vue-json-viewer@2.2.22":
   "integrity" "sha512-3oPH5BxoUWva/qp7wNJj+15FBXyi9Yu5VDW4mCWivjHR1pUpMv34fjqqxML7jh2uOqm1S/3Xks5nQ5JjC5+OWw=="
   "resolved" "https://registry.npmjs.org/vue-json-viewer/-/vue-json-viewer-2.2.22.tgz"
   "version" "2.2.22"
@@ -12756,7 +12756,7 @@
   "resolved" "https://registry.npmjs.org/vue-observe-visibility/-/vue-observe-visibility-0.4.6.tgz"
   "version" "0.4.6"
 
-"vue-phone-number-input@^1.12.13":
+"vue-phone-number-input@1.12.13":
   "integrity" "sha512-ZEHNQvLnxnwZOO4bgf6RRPduV91Ph4HrkqS7QeWqiIanGycz0h7yUgMS5z1Qf6gU1l3Whk1EQD+zn+eQcnolyg=="
   "resolved" "https://registry.npmjs.org/vue-phone-number-input/-/vue-phone-number-input-1.12.13.tgz"
   "version" "1.12.13"

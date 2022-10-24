@@ -1,21 +1,8 @@
 <template>
   <div>
-    <b-form @submit="onSubmit">
-      <b-form-group
-        id="input-group-1"
-        label="Phone number :"
-        label-for="input-1"
-        description="Only accepts E164 and International formats as input."
-      >
+    <b-form @submit="onSubmit" class="d-flex justify-content-center mt-5">
+      <b-form-group id="input-group-1" label-for="input-1">
         <b-input-group>
-          <!-- <b-form-input
-            id="input-number"
-            v-model="inputNumber"
-            type="text"
-            required
-            placeholder="e.g: 33678132393"
-            :disabled="loading"
-          ></b-form-input> -->
           <VuePhoneNumberInput
             v-model="inputNumberVal"
             :disabled="loading"
@@ -46,7 +33,7 @@
     <hr />
 
     <b-container v-if="isLookup" class="border p-4 mb-3">
-      <h3 class="text-center">Local</h3>
+      <h3 class="text-center">Information</h3>
       <b-container>
         <b-row v-for="(value, name) in localData" :key="name" align-v="center">
           <h5 class="text-capitalize m-0 mr-4">{{ name }}:</h5>
@@ -89,12 +76,14 @@ interface Data {
   scanEvent: Vue;
   scanners: Array<ScannerObject>;
   localData: {
+    valid: boolean;
     raw_local: string;
     local: string;
     e164: string;
     international: string;
-    country_code: string;
+    countryCode: number;
     country: string;
+    carrier: string;
   };
 }
 
@@ -119,12 +108,14 @@ export default Vue.extend({
       scanEvent: new Vue(),
       scanners: [],
       localData: {
+        valid: false,
         raw_local: "",
         local: "",
         e164: "",
         international: "",
-        country_code: "",
+        countryCode: 33,
         country: "",
+        carrier: "",
       },
     };
   },
@@ -135,6 +126,7 @@ export default Vue.extend({
       this.$store.commit("resetState");
     },
     async runScans(): Promise<void> {
+      this.clearData();
       if (!isValid(this.inputNumber)) {
         this.$store.commit("pushError", { message: "Number is not valid." });
         return;
@@ -145,27 +137,21 @@ export default Vue.extend({
       this.$store.commit("setNumber", formatNumber(this.inputNumber));
 
       try {
-        const res = await axios.get(
-          `${config.apiUrl}/numbers/${this.$store.state.number}/scan/local`,
-          {
-            validateStatus: () => true,
-          }
-        );
+        const res = await axios.post(`${config.apiUrl}/v2/numbers`, {
+          number: this.$store.state.number,
+        });
 
-        this.localData = res.data.result;
+        this.localData = res.data;
+
+        if (this.localData.valid) {
+          this.getScanners();
+          this.isLookup = true;
+        }
       } catch (error) {
         this.$store.commit("pushError", { message: error });
       }
 
-      this.getScanners();
-
-      this.isLookup = true;
       this.loading = false;
-      // this.scanEvent.$emit("scan");
-
-      // this.scanEvent.$on("finished", () => {
-      //   this.loading = false;
-      // });
     },
     onSubmit(evt: Event) {
       evt.preventDefault();

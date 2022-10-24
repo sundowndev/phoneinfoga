@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-container v-if="isLookup" class="border p-4 mb-3">
-      <h3 class="text-center">Local</h3>
+      <h3 class="text-center">Information</h3>
       <b-container>
         <b-row v-for="(value, name) in localData" :key="name" align-v="center">
           <h5 class="text-capitalize m-0 mr-4">{{ name }}:</h5>
@@ -40,12 +40,14 @@ interface Data {
   isLookup: boolean;
   scanners: Array<ScannerObject>;
   localData: {
+    valid: boolean;
     raw_local: string;
     local: string;
     e164: string;
     international: string;
-    country_code: string;
+    countryCode: number;
     country: string;
+    carrier: string;
   };
 }
 
@@ -67,17 +69,18 @@ export default Vue.extend({
       isLookup: false,
       scanners: [],
       localData: {
+        valid: false,
         raw_local: "",
         local: "",
         e164: "",
         international: "",
-        country_code: "",
+        countryCode: 33,
         country: "",
+        carrier: "",
       },
     };
   },
   mounted() {
-    this.getScanners();
     this.runScans();
   },
   methods: {
@@ -103,19 +106,20 @@ export default Vue.extend({
       this.$store.commit("setNumber", formatNumber(this.$route.params.number));
 
       try {
-        const res = await axios.get(
-          `${config.apiUrl}/numbers/${this.$store.state.number}/scan/local`,
-          {
-            validateStatus: () => true,
-          }
-        );
+        const res = await axios.post(`${config.apiUrl}/v2/numbers`, {
+          number: this.$store.state.number,
+        });
 
-        this.localData = res.data.result;
+        this.localData = res.data;
+
+        if (this.localData.valid) {
+          this.getScanners();
+          this.isLookup = true;
+        }
       } catch (error) {
         this.$store.commit("pushError", { message: error });
       }
 
-      this.isLookup = true;
       this.loading = false;
     },
   },

@@ -10,14 +10,16 @@
         >Run</b-button
       >
       <b-spinner v-if="loading && !error" type="grow"></b-spinner>
-      <b-alert
-        class="m-0"
-        v-if="error && !loading"
-        show
-        variant="danger"
-        fade
-        >{{ error }}</b-alert
-      >
+      <b-row v-if="error && !loading">
+        <b-alert class="m-0" show variant="danger" fade>{{ error }}</b-alert>
+        <b-button
+          v-if="!dryrunError"
+          @click="runScan"
+          variant="outline-primary"
+          size="lg"
+          >Retry</b-button
+        >
+      </b-row>
     </b-row>
     <b-collapse :id="collapseId" class="mt-2">
       <JsonViewer :value="data"></JsonViewer>
@@ -42,6 +44,7 @@ import config from "@/config";
 export default class Scanner extends Vue {
   data = null;
   loading = false;
+  dryrunError = false;
   error = null;
   computed = {
     ...mapState(["number"]),
@@ -55,7 +58,7 @@ export default class Scanner extends Vue {
 
   mounted(): void {
     this.testScan();
-  };
+  }
 
   private async testScan(): Promise<void> {
     try {
@@ -63,6 +66,9 @@ export default class Scanner extends Vue {
         `${config.apiUrl}/v2/scanners/${this.scanId}/dryrun`,
         {
           number: this.$store.state.number,
+        },
+        {
+          validateStatus: () => true,
         }
       );
 
@@ -70,17 +76,22 @@ export default class Scanner extends Vue {
         throw res.data.error;
       }
     } catch (error) {
+      this.dryrunError = true;
       this.error = error;
     }
   }
 
   private async runScan(): Promise<void> {
+    this.error = null;
     this.loading = true;
     try {
       const res = await axios.post(
         `${config.apiUrl}/v2/scanners/${this.scanId}/run`,
         {
           number: this.$store.state.number,
+        },
+        {
+          validateStatus: () => true,
         }
       );
 
