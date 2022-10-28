@@ -32,7 +32,7 @@
 
     <hr />
 
-    <b-container v-if="isLookup" class="border p-4 mb-3">
+    <b-container v-if="isLookup || showInformations" class="border p-4 mb-3">
       <h3 class="text-center">Information</h3>
       <b-container>
         <b-row v-for="(value, name) in localData" :key="name" align-v="center">
@@ -63,6 +63,20 @@ import Scanner from "../components/Scanner.vue";
 import axios, { AxiosResponse } from "axios";
 import config from "@/config";
 
+interface InputNumberObject {
+  countryCallingCode: string;
+  countryCode: string;
+  e164: string;
+  formatInternational: string;
+  formatNational: string;
+  formattedNumber: string;
+  isValid: boolean;
+  nationalNumber: string;
+  phoneNumber: string;
+  type: string;
+  uri: string;
+}
+
 interface ScannerObject {
   name: string;
   description: string;
@@ -71,6 +85,7 @@ interface ScannerObject {
 interface Data {
   loading: boolean;
   isLookup: boolean;
+  showInformations: boolean;
   inputNumber: string;
   inputNumberVal: string;
   scanEvent: Vue;
@@ -103,6 +118,7 @@ export default Vue.extend({
     return {
       loading: false,
       isLookup: false,
+      showInformations: false,
       inputNumber: "",
       inputNumberVal: "",
       scanEvent: new Vue(),
@@ -121,8 +137,8 @@ export default Vue.extend({
   },
   methods: {
     clearData() {
-      // this.scanEvent.$emit("clear");
       this.isLookup = false;
+      this.showInformations = false;
       this.$store.commit("resetState");
     },
     async runScans(): Promise<void> {
@@ -146,6 +162,8 @@ export default Vue.extend({
         if (this.localData.valid) {
           this.getScanners();
           this.isLookup = true;
+        } else {
+          this.showInformations = true;
         }
       } catch (error) {
         this.$store.commit("pushError", { message: error });
@@ -156,8 +174,7 @@ export default Vue.extend({
     onSubmit(evt: Event) {
       evt.preventDefault();
     },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    updateInputNumber(val: any) {
+    updateInputNumber(val: InputNumberObject) {
       this.inputNumber = val.e164;
     },
     async getScanners() {

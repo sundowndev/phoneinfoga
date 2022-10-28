@@ -34,8 +34,6 @@ import { mapState, mapMutations } from "vuex";
 import JsonViewer from "vue-json-viewer";
 import config from "@/config";
 
-// Vue.use(JsonViewer);
-
 @Component({
   components: {
     JsonViewer,
@@ -57,10 +55,10 @@ export default class Scanner extends Vue {
   collapseId = "scanner-collapse" + this.scanId;
 
   mounted(): void {
-    this.testScan();
+    this.dryRun();
   }
 
-  private async testScan(): Promise<void> {
+  private async dryRun(): Promise<void> {
     try {
       const res = await axios.post(
         `${config.apiUrl}/v2/scanners/${this.scanId}/dryrun`,
