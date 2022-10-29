@@ -1,6 +1,23 @@
 # Scanners
 
-PhoneInfoga provide several scanners to extract as much information as possible from a given phone number. Those scanners may require authentication, so they're automatically skipped when no authentication credentials are found. Note that all scanners use environment variables for configuration values.
+PhoneInfoga provide several scanners to extract as much information as possible from a given phone number. Those scanners may require authentication, so they're automatically skipped when no authentication credentials are found.
+
+## Configuration
+
+Note that all scanners use environment variables for configuration values. You can define an environment variable inline or put them in a file called `.env` in the current directory. The tool will parse it automatically. To specify another filename, use the flag `--env-file`.
+
+**Example**
+
+```shell
+# .env.local
+NUMVERIFY_API_KEY="value"
+GOOGLECSE_CX="value"
+GOOGLE_API_KEY="value"
+```
+
+```shell
+phoneinfoga scan -n +4176418xxxx --env-file=.env.local
+```
 
 ## Building your own scanner
 
@@ -17,7 +34,7 @@ $ phoneinfoga scan -n +4176418xxxx --plugin ./custom_scanner.so
 
 ## Local
 
-The local scan is probably the simplest scan of PhoneInfoga. By default, the tool statically parse the phone number and convert it to several formats, it also tries to recognize the country and the carrier. Those information are passed to all scanners in order to provide further analysis. The local scanner simply return those information to the end user so they can exploit it as well.
+The local scan is probably the simplest scan of PhoneInfoga. By default, the tool statically parse the phone number and convert it to several formats, it also tries to recognize the country and the carrier. This information are passed to all scanners in order to provide further analysis. The local scanner simply return those information to the end user, so they can exploit it as well.
 
 ??? info "Configuration"
 
