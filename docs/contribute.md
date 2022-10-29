@@ -112,7 +112,7 @@ We use [mkdocs](https://www.mkdocs.org/) to generate our documentation website.
 ### Install mkdocs
 
 ```shell
-python3 -m pip install mkdocs==1.3.0 mkdocs-material==8.3.9 mkdocs-minify-plugin==0.5.0
+python3 -m pip install mkdocs==1.3.0 mkdocs-material==8.3.9 mkdocs-minify-plugin==0.5.0 mkdocs-redirects==1.1.0
 ```
 
 ### Serve documentation on localhost
