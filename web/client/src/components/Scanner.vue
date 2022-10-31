@@ -5,7 +5,7 @@
       <b-button
         v-if="!error && !loading && !data"
         @click="runScan"
-        variant="outline-primary"
+        variant="dark"
         size="lg"
         >Run</b-button
       >
@@ -15,13 +15,13 @@
         <b-button
           v-if="!dryrunError"
           @click="runScan"
-          variant="outline-primary"
+          variant="danger"
           size="lg"
           >Retry</b-button
         >
       </b-row>
     </b-row>
-    <b-collapse :id="collapseId" class="mt-2">
+    <b-collapse :id="collapseId" class="mt-2 text-left">
       <JsonViewer :value="data"></JsonViewer>
     </b-collapse>
   </b-container>

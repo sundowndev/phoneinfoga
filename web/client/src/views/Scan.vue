@@ -13,13 +13,14 @@
             variant="dark"
             v-on:click="runScans"
             :disabled="loading"
+            class="mr-2 ml-2"
           >
             <b-icon-play-fill></b-icon-play-fill>
             Lookup
           </b-button>
 
           <b-button
-            variant="light"
+            variant="danger"
             size="sm"
             v-on:click="clearData"
             v-show="number"
@@ -32,25 +33,32 @@
 
     <hr />
 
-    <b-container v-if="isLookup || showInformations" class="border p-4 mb-3">
-      <h3 class="text-center">Information</h3>
-      <b-container>
-        <b-row v-for="(value, name) in localData" :key="name" align-v="center">
+    <b-card
+      v-if="isLookup || showInformations"
+      header="Informations"
+      class="mb-3 text-center"
+    >
+      <!-- <h3 class="text-center">Information</h3> -->
+      <b-list-group flush>
+        <b-list-group-item
+          v-for="(value, name) in localData"
+          :key="name"
+          class="text-left d-flex"
+        >
           <h5 class="text-capitalize m-0 mr-4">{{ name }}:</h5>
           <p class="m-0">{{ value }}</p>
-        </b-row>
-      </b-container>
-    </b-container>
+        </b-list-group-item>
+      </b-list-group>
+    </b-card>
 
-    <b-container v-if="isLookup" class="border p-4">
-      <h3 class="text-center">Scanners</h3>
+    <b-card v-if="isLookup" header="Scanners" class="text-center">
       <Scanner
         v-for="(scanner, index) in scanners"
         :key="index"
         :name="scanner.name.charAt(0).toUpperCase() + scanner.name.slice(1)"
         :scanId="scanner.name"
       />
-    </b-container>
+    </b-card>
   </div>
 </template>
 
