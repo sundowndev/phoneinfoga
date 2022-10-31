@@ -31,12 +31,10 @@
       </b-form-group>
     </b-form>
 
-    <hr />
-
     <b-card
       v-if="isLookup || showInformations"
       header="Informations"
-      class="mb-3 text-center"
+      class="mb-3 mt-3 text-center"
     >
       <!-- <h3 class="text-center">Information</h3> -->
       <b-list-group flush>
