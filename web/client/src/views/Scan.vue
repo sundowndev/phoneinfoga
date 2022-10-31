@@ -187,6 +187,7 @@ export default Vue.extend({
       try {
         const res = await axios.get(`${config.apiUrl}/v2/scanners`);
 
+        // TODO: Remove this filter once the scanner local is remove
         this.scanners = res.data.scanners.filter(
           (scanner: ScannerObject) => scanner.name !== "local"
         );
