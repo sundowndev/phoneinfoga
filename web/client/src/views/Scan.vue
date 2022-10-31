@@ -36,14 +36,13 @@
       header="Informations"
       class="mb-3 mt-3 text-center"
     >
-      <!-- <h3 class="text-center">Information</h3> -->
       <b-list-group flush>
         <b-list-group-item
           v-for="(value, name) in localData"
           :key="name"
           class="text-left d-flex"
         >
-          <h5 class="text-capitalize m-0 mr-4">{{ name }}:</h5>
+          <h5 class="text-capitalize m-0 mr-4">{{ formatString(name) }}:</h5>
           <p class="m-0">{{ value }}</p>
         </b-list-group-item>
       </b-list-group>
@@ -63,7 +62,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapMutations, mapState } from "vuex";
-import { formatNumber, isValid } from "../utils";
+import { formatNumber, isValid, formatString } from "../utils";
 import VuePhoneNumberInput from "vue-phone-number-input";
 import Scanner from "../components/Scanner.vue";
 import axios, { AxiosResponse } from "axios";
@@ -142,6 +141,7 @@ export default Vue.extend({
     };
   },
   methods: {
+    formatString: formatString,
     clearData() {
       this.isLookup = false;
       this.showInformations = false;

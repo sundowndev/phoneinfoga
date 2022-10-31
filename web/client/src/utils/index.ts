@@ -8,4 +8,8 @@ const isValid = (number: string): boolean => {
   return formatted.match(/^[0-9]+$/) !== null && formatted.length > 2;
 };
 
-export { formatNumber, isValid };
+const formatString = (string: string): string => {
+  return string.replace(/([A-Z])/g, " $1").trim();
+};
+
+export { formatNumber, isValid, formatString };
