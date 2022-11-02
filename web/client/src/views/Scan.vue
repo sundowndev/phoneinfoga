@@ -62,7 +62,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapMutations, mapState } from "vuex";
-import { formatNumber, isValid, formatString } from "../utils";
+import { formatNumber, isValid, formatString, getScanners } from "../utils";
 import VuePhoneNumberInput from "vue-phone-number-input";
 import Scanner from "../components/Scanner.vue";
 import axios, { AxiosResponse } from "axios";
@@ -94,7 +94,7 @@ interface Data {
   inputNumber: string;
   inputNumberVal: string;
   scanEvent: Vue;
-  scanners: Array<ScannerObject>;
+  scanners: ScannerObject[];
   localData: {
     valid: boolean;
     raw_local: string;
@@ -185,12 +185,7 @@ export default Vue.extend({
     },
     async getScanners() {
       try {
-        const res = await axios.get(`${config.apiUrl}/v2/scanners`);
-
-        // TODO: Remove this filter once the scanner local is remove
-        this.scanners = res.data.scanners.filter(
-          (scanner: ScannerObject) => scanner.name !== "local"
-        );
+        this.scanners = await getScanners();
       } catch (error) {
         this.$store.commit("pushError", { message: error });
       }
