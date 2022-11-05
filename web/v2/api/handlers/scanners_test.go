@@ -47,10 +47,10 @@ func TestGetAllScanners(t *testing.T) {
 	for _, tt := range testcases {
 		t.Run(tt.Name, func(t *testing.T) {
 			fakeScanner := &mocks.Scanner{}
-			handlers.RemoteLibrary = remote.NewLibrary(filter.NewEngine())
-			handlers.RemoteLibrary.AddScanner(fakeScanner)
 			fakeScanner.On("Name").Return("fakeScanner")
 			fakeScanner.On("Description").Return("fakeScanner description")
+			handlers.RemoteLibrary = remote.NewLibrary(filter.NewEngine())
+			handlers.RemoteLibrary.AddScanner(fakeScanner)
 
 			r := server.NewServer()
 
@@ -124,7 +124,9 @@ func TestDryRunScanner(t *testing.T) {
 				Code: 400,
 				Body: api.ErrorResponse{Error: "Invalid phone number: please provide an integer without any special chars"},
 			},
-			Mocks: func(s *mocks.Scanner) {},
+			Mocks: func(s *mocks.Scanner) {
+				s.On("Name").Return("fakeScanner")
+			},
 		},
 		{
 			Name:   "test scanner not found",
@@ -240,7 +242,9 @@ func TestRunScanner(t *testing.T) {
 				Code: 400,
 				Body: api.ErrorResponse{Error: "Invalid phone number: please provide an integer without any special chars"},
 			},
-			Mocks: func(s *mocks.Scanner) {},
+			Mocks: func(s *mocks.Scanner) {
+				s.On("Name").Return("fakeScanner")
+			},
 		},
 		{
 			Name:   "test scanner not found",

@@ -137,7 +137,10 @@ func TestRemoteLibrary_PanicDryRun(t *testing.T) {
 
 func TestRemoteLibrary_GetAllScanners(t *testing.T) {
 	fakeScanner := &mocks.Scanner{}
+	fakeScanner.On("Name").Return("fake")
+
 	fakeScanner2 := &mocks.Scanner{}
+	fakeScanner2.On("Name").Return("fake2")
 
 	lib := NewLibrary(filter.NewEngine())
 
