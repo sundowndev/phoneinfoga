@@ -149,3 +149,20 @@ func TestRemoteLibrary_GetAllScanners(t *testing.T) {
 
 	assert.Equal(t, []Scanner{fakeScanner, fakeScanner2}, lib.GetAllScanners())
 }
+
+func TestRemoteLibrary_AddIgnoredScanner(t *testing.T) {
+	fakeScanner := &mocks.Scanner{}
+	fakeScanner.On("Name").Return("fake")
+
+	fakeScanner2 := &mocks.Scanner{}
+	fakeScanner2.On("Name").Return("fake2")
+
+	f := filter.NewEngine()
+	f.AddRule("fake2")
+	lib := NewLibrary(f)
+
+	lib.AddScanner(fakeScanner)
+	lib.AddScanner(fakeScanner2)
+
+	assert.Equal(t, []Scanner{fakeScanner}, lib.GetAllScanners())
+}
