@@ -28,9 +28,7 @@ $ phoneinfoga scan -n +4176418xxxx --plugin ./custom_scanner.so
 ```
 
 !!! info
-    Plugins are written with the [Go programming language](https://golang.org/).
-
-    For now, plugins are only supported through the CLI. To get started, [see this example plugin](https://github.com/sundowndev/phoneinfoga/tree/master/examples/plugin).
+    Plugins are written with the [Go programming language](https://golang.org/). To get started, [see this example plugin](https://github.com/sundowndev/phoneinfoga/tree/master/examples/plugin).
 
 ## Local
 
