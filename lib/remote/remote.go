@@ -36,6 +36,10 @@ func (r *Library) LoadPlugins() {
 }
 
 func (r *Library) AddScanner(s Scanner) {
+	if r.filter.Match(s.Name()) {
+		logrus.WithField("scanner", s.Name()).Debug("Scanner was ignored by filter")
+		return
+	}
 	r.scanners = append(r.scanners, s)
 }
 
@@ -55,11 +59,6 @@ func (r *Library) Scan(n *number.Number) (map[string]interface{}, map[string]err
 	var wg sync.WaitGroup
 
 	for _, s := range r.scanners {
-		if r.filter.Match(s.Name()) {
-			logrus.WithField("scanner", s.Name()).Debug("Scanner was ignored by filter")
-			continue
-		}
-
 		wg.Add(1)
 		go func(s Scanner) {
 			defer wg.Done()
