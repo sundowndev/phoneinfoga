@@ -10,9 +10,9 @@ import (
 var once sync.Once
 var RemoteLibrary *remote.Library
 
-func init() {
+func Init(filterEngine filter.Filter) {
 	once.Do(func() {
-		RemoteLibrary = remote.NewLibrary(filter.NewEngine())
+		RemoteLibrary = remote.NewLibrary(filterEngine)
 		remote.InitScanners(RemoteLibrary)
 		logrus.Debug("Scanners and plugins initialized")
 	})
