@@ -1,36 +1,5 @@
 <template>
   <div>
-    <b-form @submit="onSubmit" class="d-flex justify-content-center mt-5">
-      <b-form-group id="input-group-1" label-for="input-1">
-        <b-input-group>
-          <VuePhoneNumberInput
-            v-model="inputNumberVal"
-            :disabled="loading"
-            @update="updateInputNumber"
-          />
-          <b-button
-            size="sm"
-            variant="dark"
-            v-on:click="runScans"
-            :disabled="loading"
-            class="mr-2 ml-2"
-          >
-            <b-icon-play-fill></b-icon-play-fill>
-            Lookup
-          </b-button>
-
-          <b-button
-            variant="danger"
-            size="sm"
-            v-on:click="clearData"
-            v-show="number"
-            :disabled="loading"
-            >Reset
-          </b-button>
-        </b-input-group>
-      </b-form-group>
-    </b-form>
-
     <b-card
       v-if="isLookup || showInformations"
       header="Informations"
@@ -63,24 +32,9 @@
 import Vue from "vue";
 import { mapMutations, mapState } from "vuex";
 import { formatNumber, isValid, formatString, getScanners } from "../utils";
-import VuePhoneNumberInput from "vue-phone-number-input";
 import Scanner from "../components/Scanner.vue";
 import axios, { AxiosResponse } from "axios";
 import config from "@/config";
-
-interface InputNumberObject {
-  countryCallingCode: string;
-  countryCode: string;
-  e164: string;
-  formatInternational: string;
-  formatNational: string;
-  formattedNumber: string;
-  isValid: boolean;
-  nationalNumber: string;
-  phoneNumber: string;
-  type: string;
-  uri: string;
-}
 
 interface ScannerObject {
   name: string;
@@ -91,10 +45,7 @@ interface Data {
   loading: boolean;
   isLookup: boolean;
   showInformations: boolean;
-  inputNumber: string;
-  inputNumberVal: string;
-  scanEvent: Vue;
-  scanners: ScannerObject[];
+  scanners: Array<ScannerObject>;
   localData: {
     valid: boolean;
     raw_local: string;
@@ -114,7 +65,7 @@ export type ScanResponse<T> = AxiosResponse<{
 }>;
 
 export default Vue.extend({
-  components: { Scanner, VuePhoneNumberInput },
+  components: { Scanner },
   computed: {
     ...mapState(["number"]),
     ...mapMutations(["pushError"]),
@@ -124,9 +75,6 @@ export default Vue.extend({
       loading: false,
       isLookup: false,
       showInformations: false,
-      inputNumber: "",
-      inputNumberVal: "",
-      scanEvent: new Vue(),
       scanners: [],
       localData: {
         valid: false,
@@ -140,23 +88,27 @@ export default Vue.extend({
       },
     };
   },
+  mounted() {
+    this.runScans();
+  },
   methods: {
     formatString: formatString,
-    clearData() {
-      this.isLookup = false;
-      this.showInformations = false;
-      this.$store.commit("resetState");
+    async getScanners() {
+      try {
+        this.scanners = await getScanners();
+      } catch (error) {
+        this.$store.commit("pushError", { message: error });
+      }
     },
     async runScans(): Promise<void> {
-      this.clearData();
-      if (!isValid(this.inputNumber)) {
+      if (!isValid(this.$route.params.number)) {
         this.$store.commit("pushError", { message: "Number is not valid." });
         return;
       }
 
       this.loading = true;
 
-      this.$store.commit("setNumber", formatNumber(this.inputNumber));
+      this.$store.commit("setNumber", formatNumber(this.$route.params.number));
 
       try {
         const res = await axios.post(`${config.apiUrl}/v2/numbers`, {
@@ -177,21 +129,6 @@ export default Vue.extend({
 
       this.loading = false;
     },
-    onSubmit(evt: Event) {
-      evt.preventDefault();
-    },
-    updateInputNumber(val: InputNumberObject) {
-      this.inputNumber = val.e164;
-    },
-    async getScanners() {
-      try {
-        this.scanners = await getScanners();
-      } catch (error) {
-        this.$store.commit("pushError", { message: error });
-      }
-    },
   },
 });
 </script>
-
-<style src="vue-phone-number-input/dist/vue-phone-number-input.css"></style>
