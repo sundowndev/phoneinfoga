@@ -42,8 +42,6 @@ extra:
   social:
     - icon: fontawesome/brands/github-alt
       link: 'https://github.com/sundowndev/phoneinfoga'
-    - icon: fontawesome/brands/twitter
-      link: 'https://twitter.com/sundowndev'
 
 # Extensions
 markdown_extensions:
