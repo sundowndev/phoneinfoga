@@ -12,7 +12,7 @@ require (
 	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/cobra v1.1.3
 	github.com/stretchr/testify v1.7.1
-	github.com/sundowndev/dorkgen v1.2.0
+	github.com/sundowndev/dorkgen v1.3.1
 	github.com/swaggo/swag v1.7.0
 	google.golang.org/api v0.92.0
 	gopkg.in/h2non/gock.v1 v1.0.16
