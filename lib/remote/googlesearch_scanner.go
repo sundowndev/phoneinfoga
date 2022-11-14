@@ -2,6 +2,7 @@ package remote
 
 import (
 	"github.com/sundowndev/dorkgen"
+	"github.com/sundowndev/dorkgen/googlesearch"
 	"github.com/sundowndev/phoneinfoga/v2/lib/number"
 )
 
@@ -55,117 +56,117 @@ func (s *googlesearchScanner) Run(n number.Number) (interface{}, error) {
 }
 
 func getDisposableProvidersDorks(number number.Number) (results []*GoogleSearchDork) {
-	var dorks = []*dorkgen.GoogleSearch{
-		(&dorkgen.GoogleSearch{}).
+	var dorks = []*googlesearch.GoogleSearch{
+		dorkgen.NewGoogleSearch().
 			Site("hs3x.com").
-			Intext(number.International),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.International),
+		dorkgen.NewGoogleSearch().
 			Site("receive-sms-now.com").
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("smslisten.com").
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("smsnumbersonline.com").
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("freesmscode.com").
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("catchsms.com").
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("smstibo.com").
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("smsreceiving.com").
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("getfreesmsnumber.com").
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("sellaite.com").
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("receive-sms-online.info").
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("receivesmsonline.com").
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("receive-a-sms.com").
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("sms-receive.net").
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("receivefreesms.com").
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("receive-sms.com").
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("receivetxt.com").
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("freephonenum.com").
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("freesmsverification.com").
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("receive-sms-online.com").
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("smslive.co").
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.RawLocal),
+			InText(number.RawLocal),
 	}
 
 	for _, dork := range dorks {
 		results = append(results, &GoogleSearchDork{
 			Number: number.E164,
 			Dork:   dork.String(),
-			URL:    dork.ToURL(),
+			URL:    dork.URL(),
 		})
 	}
 
@@ -173,55 +174,55 @@ func getDisposableProvidersDorks(number number.Number) (results []*GoogleSearchD
 }
 
 func getIndividualsDorks(number number.Number) (results []*GoogleSearchDork) {
-	var dorks = []*dorkgen.GoogleSearch{
-		(&dorkgen.GoogleSearch{}).
+	var dorks = []*googlesearch.GoogleSearch{
+		dorkgen.NewGoogleSearch().
 			Site("numinfo.net").
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.E164).
+			InText(number.E164).
 			Or().
-			Intext(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("sync.me").
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.E164).
+			InText(number.E164).
 			Or().
-			Intext(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("whocallsyou.de").
-			Intext(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("pastebin.com").
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.E164).
+			InText(number.E164).
 			Or().
-			Intext(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("whycall.me").
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.E164).
+			InText(number.E164).
 			Or().
-			Intext(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("locatefamily.com").
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.E164).
+			InText(number.E164).
 			Or().
-			Intext(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("spytox.com").
-			Intext(number.RawLocal),
+			InText(number.RawLocal),
 	}
 
 	for _, dork := range dorks {
 		results = append(results, &GoogleSearchDork{
 			Number: number.E164,
 			Dork:   dork.String(),
-			URL:    dork.ToURL(),
+			URL:    dork.URL(),
 		})
 	}
 
@@ -229,49 +230,49 @@ func getIndividualsDorks(number number.Number) (results []*GoogleSearchDork) {
 }
 
 func getSocialMediaDorks(number number.Number) (results []*GoogleSearchDork) {
-	var dorks = []*dorkgen.GoogleSearch{
-		(&dorkgen.GoogleSearch{}).
+	var dorks = []*googlesearch.GoogleSearch{
+		dorkgen.NewGoogleSearch().
 			Site("facebook.com").
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.E164).
+			InText(number.E164).
 			Or().
-			Intext(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("twitter.com").
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.E164).
+			InText(number.E164).
 			Or().
-			Intext(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("linkedin.com").
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.E164).
+			InText(number.E164).
 			Or().
-			Intext(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("instagram.com").
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.E164).
+			InText(number.E164).
 			Or().
-			Intext(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("vk.com").
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.E164).
+			InText(number.E164).
 			Or().
-			Intext(number.RawLocal),
+			InText(number.RawLocal),
 	}
 
 	for _, dork := range dorks {
 		results = append(results, &GoogleSearchDork{
 			Number: number.E164,
 			Dork:   dork.String(),
-			URL:    dork.ToURL(),
+			URL:    dork.URL(),
 		})
 	}
 
@@ -279,53 +280,53 @@ func getSocialMediaDorks(number number.Number) (results []*GoogleSearchDork) {
 }
 
 func getReputationDorks(number number.Number) (results []*GoogleSearchDork) {
-	var dorks = []*dorkgen.GoogleSearch{
-		(&dorkgen.GoogleSearch{}).
+	var dorks = []*googlesearch.GoogleSearch{
+		dorkgen.NewGoogleSearch().
 			Site("whosenumber.info").
-			Intext(number.E164).
-			Intitle("who called"),
-		(&dorkgen.GoogleSearch{}).
-			Intitle("Phone Fraud").
-			Intext(number.International).
+			InText(number.E164).
+			InTitle("who called"),
+		dorkgen.NewGoogleSearch().
+			InTitle("Phone Fraud").
+			InText(number.International).
 			Or().
-			Intext(number.E164).
+			InText(number.E164).
 			Or().
-			Intext(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("findwhocallsme.com").
-			Intext(number.E164).
+			InText(number.E164).
 			Or().
-			Intext(number.International),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.International),
+		dorkgen.NewGoogleSearch().
 			Site("yellowpages.ca").
-			Intext(number.E164),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.E164),
+		dorkgen.NewGoogleSearch().
 			Site("phonenumbers.ie").
-			Intext(number.E164),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.E164),
+		dorkgen.NewGoogleSearch().
 			Site("who-calledme.com").
-			Intext(number.E164),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.E164),
+		dorkgen.NewGoogleSearch().
 			Site("usphonesearch.net").
-			Intext(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("whocalled.us").
-			Inurl(number.RawLocal),
-		(&dorkgen.GoogleSearch{}).
+			InURL(number.RawLocal),
+		dorkgen.NewGoogleSearch().
 			Site("quinumero.info").
-			Intext(number.RawLocal).
+			InText(number.RawLocal).
 			Or().
-			Intext(number.International),
-		(&dorkgen.GoogleSearch{}).
+			InText(number.International),
+		dorkgen.NewGoogleSearch().
 			Site("uk.popularphotolook.com").
-			Inurl(number.RawLocal),
+			InURL(number.RawLocal),
 	}
 
 	for _, dork := range dorks {
 		results = append(results, &GoogleSearchDork{
 			Number: number.E164,
 			Dork:   dork.String(),
-			URL:    dork.ToURL(),
+			URL:    dork.URL(),
 		})
 	}
 
@@ -333,17 +334,17 @@ func getReputationDorks(number number.Number) (results []*GoogleSearchDork) {
 }
 
 func getGeneralDorks(number number.Number) (results []*GoogleSearchDork) {
-	var dorks = []*dorkgen.GoogleSearch{
-		(&dorkgen.GoogleSearch{}).
-			Intext(number.International).
+	var dorks = []*googlesearch.GoogleSearch{
+		dorkgen.NewGoogleSearch().
+			InText(number.International).
 			Or().
-			Intext(number.E164).
+			InText(number.E164).
 			Or().
-			Intext(number.RawLocal).
+			InText(number.RawLocal).
 			Or().
-			Intext(number.Local),
-		(&dorkgen.GoogleSearch{}).
-			Group((&dorkgen.GoogleSearch{}).
+			InText(number.Local),
+		dorkgen.NewGoogleSearch().
+			Group(dorkgen.NewGoogleSearch().
 				Ext("doc").
 				Or().
 				Ext("docx").
@@ -369,18 +370,18 @@ func getGeneralDorks(number number.Number) (results []*GoogleSearchDork) {
 				Ext("txt").
 				Or().
 				Ext("xls")).
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.E164).
+			InText(number.E164).
 			Or().
-			Intext(number.RawLocal),
+			InText(number.RawLocal),
 	}
 
 	for _, dork := range dorks {
 		results = append(results, &GoogleSearchDork{
 			Number: number.E164,
 			Dork:   dork.String(),
-			URL:    dork.ToURL(),
+			URL:    dork.URL(),
 		})
 	}
 

@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/sundowndev/dorkgen"
+	"github.com/sundowndev/dorkgen/googlesearch"
 	"github.com/sundowndev/phoneinfoga/v2/lib/number"
 	"google.golang.org/api/customsearch/v1"
 	"google.golang.org/api/googleapi"
@@ -160,17 +161,17 @@ func (s *googleCSEScanner) isRateLimit(theError error) bool {
 }
 
 func (s *googleCSEScanner) generateDorkQueries(number number.Number) (results []*GoogleSearchDork) {
-	var dorks = []*dorkgen.GoogleSearch{
-		(&dorkgen.GoogleSearch{}).
-			Intext(number.International).
+	var dorks = []*googlesearch.GoogleSearch{
+		dorkgen.NewGoogleSearch().
+			InText(number.International).
 			Or().
-			Intext(number.E164).
+			InText(number.E164).
 			Or().
-			Intext(number.RawLocal).
+			InText(number.RawLocal).
 			Or().
-			Intext(number.Local),
-		(&dorkgen.GoogleSearch{}).
-			Group((&dorkgen.GoogleSearch{}).
+			InText(number.Local),
+		dorkgen.NewGoogleSearch().
+			Group(dorkgen.NewGoogleSearch().
 				Ext("doc").
 				Or().
 				Ext("docx").
@@ -196,20 +197,20 @@ func (s *googleCSEScanner) generateDorkQueries(number number.Number) (results []
 				Ext("txt").
 				Or().
 				Ext("xls")).
-			Intext(number.International).
+			InText(number.International).
 			Or().
-			Intext(number.E164).
+			InText(number.E164).
 			Or().
-			Intext(number.RawLocal).
+			InText(number.RawLocal).
 			Or().
-			Intext(number.Local),
+			InText(number.Local),
 	}
 
 	for _, dork := range dorks {
 		results = append(results, &GoogleSearchDork{
 			Number: number.E164,
 			Dork:   dork.String(),
-			URL:    dork.ToURL(),
+			URL:    dork.URL(),
 		})
 	}
 
