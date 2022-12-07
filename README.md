@@ -70,6 +70,6 @@ This tool is licensed under the GNU General Public License v3.0.
 
 ## Support
 
-[![](docs/jetbrains.svg)](https://www.jetbrains.com/?from=sundowndev)
-
-Thanks to [JetBrains](https://www.jetbrains.com/?from=sundowndev) for supporting my open-source projects.
+<div align="center">
+  <img src="https://github.com/sundowndev/static/raw/main/sponsors.svg?v=c68eba9" width="100%" heigh="auto" />
+</div>
