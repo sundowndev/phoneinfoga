@@ -55,8 +55,15 @@ PhoneInfoga integrates a REST API along with a web client that you can deploy an
 See **[API documentation](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/sundowndev/phoneinfoga/master/web/docs/swagger.yaml)**.
 
 ```shell
-phoneinfoga serve
-phoneinfoga serve -p 8080 # default port is 5000
+phoneinfoga serve # uses default port 5000
+phoneinfoga serve -p 8080 # use port 8080
+```
+
+Equivalent commands via docker:
+
+```shell
+docker run --rm -it -p 5000:5000 sundowndev/phoneinfoga serve # same as `phoneinfoga serve`
+docker run --rm -it -p 8080:8080 sundowndev/phoneinfoga serve -p 8080 # same as `phoneinfoga serve -p 8080`
 ```
 
 You should then be able to visit the web client from your browser at `http://localhost:<port>`.
@@ -65,8 +72,14 @@ You should then be able to visit the web client from your browser at `http://loc
 
 **Running the REST API only**
 
-You can choose to only run the REST API without the web client :
+You can choose to only run the REST API without the web client:
 
-```
+```shell
 phoneinfoga serve --no-client
+```
+
+Equivalent docker command:
+
+```shell
+docker run --rm -it -p 5000:5000 sundowndev/phoneinfoga serve --no-client
 ```
