@@ -44,11 +44,11 @@ The local scan is probably the simplest scan of PhoneInfoga. By default, the too
     $ phoneinfoga scan -n +4176418xxxx
     
     Results for local
-    Raw local: 076418xxxx
-    Local: 076 418 xx xx
-    E164: +4176418xxxx
-    International: 4176418xxxx
-    Country: CH
+    Raw local: 0654260181
+    Local: 0654260181
+    E164: +381654260181
+    International: 00389654260181
+    Country: srb
     ```
 
 ## Numverify
