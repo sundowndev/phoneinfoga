@@ -1,38 +1,69 @@
-#!/bin/bash
+#! /bin/bash
 
 # Bash installation script for UNIX systems only
 # Use it : curl -sSL https://raw.githubusercontent.com/sundowndev/phoneinfoga/master/support/scripts/install | bash
 
 os="$(uname -s)_$(uname -m)"
 
-if [ $os == "Linux_x86_64" ] || [ $os == "Linux_armv6" ] || [ $os == "Darwin_x86_64" ] || [ $os == "Darwin_arm64" ] || [ $os == "Linux_arm64" ] || [ $os == "Linux_i386" ]; then
-  echo "Installing PhoneInfoga"
-  phoneinfoga_version=$(curl -s https://api.github.com/repos/sundowndev/phoneinfoga/releases/latest | grep tag_name | cut -d '"' -f 4)
-  echo "Found version $phoneinfoga_version"
-
-  echo "Downloading version $phoneinfoga_version..."
-  wget "https://github.com/sundowndev/phoneinfoga/releases/download/$phoneinfoga_version/phoneinfoga_$os.tar.gz"
-
-  echo "Verifying checksum..."
-  curl -sSL "https://github.com/sundowndev/phoneinfoga/releases/download/$phoneinfoga_version/phoneinfoga_checksums.txt" -o phoneinfoga_SHA256SUMS
-  sha256sum --ignore-missing -c phoneinfoga_SHA256SUMS
-  [ $? -eq 0 ] || exit 1
-
-  tar xfv "phoneinfoga_$os.tar.gz"
-  [ $? -eq 0 ] || exit 1
-  
-  # Clear downloaded assets
-  rm phoneinfoga_$os.tar.gz
-  rm phoneinfoga_SHA256SUMS
-
-  echo "Installation completed successfully."
-  echo "Check the version : ./phoneinfoga version"
-  echo "You can now install the program globally : sudo mv ./phoneinfoga /usr/bin/phoneinfoga"
-else
-  echo "Your OS/Arch is not supported."
-  echo "Read more at https://sundowndev.github.io/phoneinfoga/install/"
-  exit 1
+if [[ -z "${os}" ]]; then
+    echo "Error: Unable to determine system type."
+    exit 1
 fi
 
-exit 0
+SUPPORTED_OS_TYPES=(
+    "Linux_x86_64"
+    "Linux_armv6"
+    "Linux_arm64"
+    "Linux_i386"
+    "Darwin_x86_64"
+    "Darwin_arm64"
+)
 
+if [[ "${SUPPORTED_OS_TYPES[*]}" =~ "${os}" ]]; then
+    echo "$os detected"
+else
+    echo "Error: $os is not supported"
+    echo "Please check the releases page for a list of all supported systems.
+    https://github.com/sundowndev/phoneinfoga/releases"
+    echo "Read more at https://sundowndev.github.io/phoneinfoga/install/"
+    exit 1
+fi
+
+echo "Installing PhoneInfoga"
+
+phoneinfoga_version=$(curl -s https://api.github.com/repos/sundowndev/phoneinfoga/releases/latest | grep tag_name | cut -d '"' -f 4)
+echo "Found version $phoneinfoga_version"
+
+echo "Downloading version $phoneinfoga_version..."
+wget "https://github.com/sundowndev/phoneinfoga/releases/download/$phoneinfoga_version/phoneinfoga_$os.tar.gz"
+
+echo "Verifying checksum..."
+curl -sSL "https://github.com/sundowndev/phoneinfoga/releases/download/$phoneinfoga_version/phoneinfoga_checksums.txt" -o phoneinfoga_SHA256SUMS
+
+if [[ $(uname -s) == "Darwin" ]]; then
+    EXPECTED_SHA=$(grep -i "${os}" phoneinfoga_SHA256SUMS | awk '{print $1}')
+    DOWNLOAD_SHA=$(shasum -a 256 phoneinfoga_$os.tar.gz | awk '{print $1}')
+
+    if [[ "${EXPECTED_SHA}" == "${DOWNLOAD_SHA}" ]]; then
+        echo "Checksum verified"
+    else
+        echo "Error: Checksum validation failed."
+        exit 1
+    fi
+
+else
+    sha256sum --ignore-missing -c phoneinfoga_SHA256SUMS
+    [ $? -eq 0 ] || exit 1
+fi
+
+tar xfv "phoneinfoga_$os.tar.gz"
+[ $? -eq 0 ] || exit 1
+
+rm phoneinfoga_$os.tar.gz
+rm phoneinfoga_SHA256SUMS
+
+echo "Installation completed successfully."
+echo "Check the version : ./phoneinfoga version"
+echo "You can now install the program globally : sudo mv ./phoneinfoga /usr/bin/phoneinfoga"
+
+exit 0
