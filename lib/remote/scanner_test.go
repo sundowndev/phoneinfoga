@@ -1,11 +1,19 @@
 package remote
 
 import (
-	"github.com/stretchr/testify/assert"
+	"fmt"
+	"path/filepath"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func Test_ValidatePlugin_Errors(t *testing.T) {
+	invalidPluginAbsPath, err := filepath.Abs("testdata/invalid.so")
+	if err != nil {
+		assert.FailNow(t, "failed to get the absolute path of test file: %v", err)
+	}
+
 	testcases := []struct {
 		name    string
 		path    string
@@ -19,7 +27,7 @@ func Test_ValidatePlugin_Errors(t *testing.T) {
 		{
 			name:    "test with invalid plugin",
 			path:    "testdata/invalid.so",
-			wantErr: "given plugin testdata/invalid.so is not valid",
+			wantErr: fmt.Sprintf("given plugin testdata/invalid.so is not valid: plugin.Open(\"testdata/invalid.so\"): %s: file too short", invalidPluginAbsPath),
 		},
 	}
 
