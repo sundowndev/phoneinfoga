@@ -15,7 +15,8 @@ This page describe the project structure and gives you a bit of context to start
 
 - Node.js >= v10.x
 - npm or yarn
-- Go >= 1.13
+- Go >= 1.16
+- [swag](https://github.com/swaggo/swag)
 
 **Note:** if you're using npm, just replace `yarn <command>` by `npm run <command>`.
 
