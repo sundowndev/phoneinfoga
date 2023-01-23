@@ -17,7 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3.0.0
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3.1.0
+      uses: actions/setup-node@v3.6.0
       with:
         node-version: ${{ matrix.node-version }}
     - name: Install & lint
