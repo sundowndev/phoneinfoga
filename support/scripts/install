@@ -3,67 +3,219 @@
 # Bash installation script for UNIX systems only
 # Use it : curl -sSL https://raw.githubusercontent.com/sundowndev/phoneinfoga/master/support/scripts/install | bash
 
-os="$(uname -s)_$(uname -m)"
+PHONEINFOGA_VERSION=$(curl -s https://api.github.com/repos/sundowndev/phoneinfoga/releases/latest | grep tag_name | cut -d '"' -f 4)
 
-if [[ -z "${os}" ]]; then
-    echo "Error: Unable to determine system type."
-    exit 1
-fi
+AUTOMATIC=0
+SKIP_CHECKSUM=0
 
-SUPPORTED_OS_TYPES=(
-    "Linux_x86_64"
-    "Linux_armv6"
-    "Linux_arm64"
-    "Linux_i386"
-    "Darwin_x86_64"
-    "Darwin_arm64"
-)
+usage() {
 
-if [[ "${SUPPORTED_OS_TYPES[*]}" =~ "${os}" ]]; then
-    echo "$os detected"
-else
-    echo "Error: $os is not supported"
-    echo "Please check the releases page for a list of all supported systems.
-    https://github.com/sundowndev/phoneinfoga/releases"
-    echo "Read more at https://sundowndev.github.io/phoneinfoga/install/"
-    exit 1
-fi
+    echo "PhoneInfoga Installer for version $PHONEINFOGA_VERSION"
+    echo
+    echo "DESCRIPTION: An installer script for downloading the latest release of PhoneInfoga. Without any arguments, $0 will detect your operating system and attempt to download the corresponding version of PhoneInfoga. Please submit an issue on GitHub if you encounter issues with this script."
+    echo
+    echo "USAGE: $0 [flag...] (-h|-s|-u)"
+    echo
+    echo "      -h | --help             Print this message and exit"
+    echo
+    echo "      -s | --skip-checksum    [Not Reccomended] Skip checksum validation"
+    echo "                              Only use this option if $0"
+    echo "                              is failing due to missing software."
+    echo
+    echo "      -u | --unsupported      Attempt to install on an unsupported OS."
+    echo "                              Useful when $0 is unable to detect"
+    echo "                              your OS automatically"
+    echo
+}
 
-echo "Installing PhoneInfoga"
 
-phoneinfoga_version=$(curl -s https://api.github.com/repos/sundowndev/phoneinfoga/releases/latest | grep tag_name | cut -d '"' -f 4)
-echo "Found version $phoneinfoga_version"
+validate_OS_type() {
 
-echo "Downloading version $phoneinfoga_version..."
-wget "https://github.com/sundowndev/phoneinfoga/releases/download/$phoneinfoga_version/phoneinfoga_$os.tar.gz"
+    if [[ -z "${OS}" ]]; then
+        echo "ERROR: Unable to determine your system type."
+        exit 1
+    fi
+}
 
-echo "Verifying checksum..."
-curl -sSL "https://github.com/sundowndev/phoneinfoga/releases/download/$phoneinfoga_version/phoneinfoga_checksums.txt" -o phoneinfoga_SHA256SUMS
 
-if [[ $(uname -s) == "Darwin" ]]; then
-    EXPECTED_SHA=$(grep -i "${os}" phoneinfoga_SHA256SUMS | awk '{print $1}')
-    DOWNLOAD_SHA=$(shasum -a 256 phoneinfoga_$os.tar.gz | awk '{print $1}')
+validate_supported_OS() {
 
-    if [[ "${EXPECTED_SHA}" == "${DOWNLOAD_SHA}" ]]; then
-        echo "Checksum verified"
+    SUPPORTED_OS_TYPES=(
+        "Linux_x86_64"
+        "Linux_armv6"
+        "Linux_arm64"
+        "Linux_i386"
+        "Darwin_x86_64"
+        "Darwin_arm64"
+    )
+
+    if [[ "${SUPPORTED_OS_TYPES[*]}" =~ "${OS}" ]]; then
+        return 0
     else
-        echo "Error: Checksum validation failed."
+        echo "Error: $OS is not supported, installation will attempt to proceed manually."
+        echo
+        echo "Please check the releases page for a list of supported systems."
+        echo "https://github.com/sundowndev/phoneinfoga/releases"
+        echo
+        echo "Read more at https://sundowndev.github.io/phoneinfoga/install/"
+        echo
+        AUTOMATIC=1
+        return 1
+    fi
+}
+
+
+validate_checksum() {
+
+    local WGET_INSTALLED=false
+    which wget > /dev/null
+    [ $? -eq 1 ] || WGET_INSTALLED=true
+
+    echo "Validating checksum ..."
+    if $WGET_INSTALLED; then
+        wget --quiet --show-progress "https://github.com/sundowndev/phoneinfoga/releases/download/$PHONEINFOGA_VERSION/phoneinfoga_checksums.txt"
+    elif ! $WGET_INSTALLED; then
+        curl --progress-bar -LOC - "https://github.com/sundowndev/phoneinfoga/releases/download/$PHONEINFOGA_VERSION/phoneinfoga_checksums.txt"
+    fi
+
+    local SHA256SUM_INSTALLED=false
+    which sha256sum > /dev/null
+    [ $? -eq 1 ] || SHA256SUM_INSTALLED=true
+
+    if $SHA256SUM_INSTALLED; then
+        sha256sum --ignore-missing -c phoneinfoga_checksums.txt
+        [ $? -eq 0 ] || exit 1
+    elif ! $SHA256SUM_INSTALLED; then
+        shasum --ignore-missing -c phoneinfoga_checksums.txt
+        [ $? -eq 0 ] || exit 1
+    fi
+
+    rm phoneinfoga_checksums.txt
+}
+
+
+download_latest_release() {
+
+    local WGET_INSTALLED=false
+    which wget > /dev/null
+    [ $? -eq 1 ] || local WGET_INSTALLED=true
+
+    echo "https://github.com/sundowndev/phoneinfoga/releases/download/$PHONEINFOGA_VERSION/phoneinfoga_$OS.tar.gz"
+
+    if $WGET_INSTALLED; then
+        wget --quiet --show-progress "https://github.com/sundowndev/phoneinfoga/releases/download/$PHONEINFOGA_VERSION/phoneinfoga_$OS.tar.gz"
+    elif ! $WGET_INSTALLED; then
+        curl --progress-bar -LOC - "https://github.com/sundowndev/phoneinfoga/releases/download/$PHONEINFOGA_VERSION/phoneinfoga_$OS.tar.gz"
+    fi
+}
+
+
+manual_download_latest_release() {
+
+    ASSETS=$(curl -s https://api.github.com/repos/sundowndev/phoneinfoga/releases/latest | jq --raw-output '.assets[] | .name' | grep --color=never tar.gz)
+
+    local WGET_INSTALLED=false
+    which wget > /dev/null
+    [ $? -eq 1 ] || WGET_INSTALLED=true
+
+    echo "Please select the version of PhoneInfoga that you need."
+    PS3="Enter a number: "
+    select OPT in $ASSETS; do
+        case $OPT in
+            *)
+                echo "trying https://github.com/sundowndev/phoneinfoga/releases/download/$PHONEINFOGA_VERSION/$OPT"
+
+                if $WGET_INSTALLED; then
+                    wget --quiet --show-progress "https://github.com/sundowndev/phoneinfoga/releases/download/$PHONEINFOGA_VERSION/$OPT"
+                elif ! $WGET_INSTALLED; then
+                    curl --progress-bar -LOC - "https://github.com/sundowndev/phoneinfoga/releases/download/$PHONEINFOGA_VERSION/$OPT"
+                fi
+
+                break
+                ;;
+        esac
+    done
+}
+
+
+unpack_and_cleanup() {
+
+    local FILE=$(find . -name phoneinfoga_*.tar.gz)
+
+    tar -xzf $FILE
+    [ $? -eq 0 ] || exit 1
+
+    echo "Cleaning up ..."
+    rm $FILE
+}
+
+
+main() {
+
+    if [[ -z "$1" ]]; then
+        echo "Downloading PhoneInfoga version $PHONEINFOGA_VERSION"
+    else
+        while [[ "$1" == -* ]]; do
+            case "$1" in
+
+                -h | --help)
+                    usage
+                    exit 0
+                    ;;
+
+                -s | --skip-checksum)
+                    SKIP_CHECKSUM=1
+                    ;;
+
+                -u | --unsupported)
+                    AUTOMATIC=1
+                    ;;
+
+                *)
+                    echo
+                    echo "ERROR: Unrecognized command '$1', run '$0 --help' for help."
+                    exit 1
+                    ;;
+
+                esac
+            shift
+        done
+    fi
+
+    if [[ $AUTOMATIC == 0 ]]; then
+        download_latest_release
+    elif [[ $AUTOMATIC == 1 ]]; then
+        manual_download_latest_release
+    else
+        echo "something bad happened"
         exit 1
     fi
 
-else
-    sha256sum --ignore-missing -c phoneinfoga_SHA256SUMS
-    [ $? -eq 0 ] || exit 1
-fi
+    if [[ $SKIP_CHECKSUM == 0 ]]; then
+        validate_checksum
+    elif [[ $SKIP_CHECKSUM == 1 ]]; then
+        echo
+        echo "WARNING: Skipping checksum validation."
+        echo "Please be sure to verify your download manually."
+        echo "You can find the checksum for your software version here"
+        echo
+        echo "https://github.com/sundowndev/phoneinfoga/releases/download/$PHONEINFOGA_VERSION/phoneinfoga_checksums.txt"
+    else
+        echo "something bad happened"
+        exit 1
+    fi
 
-tar xfv "phoneinfoga_$os.tar.gz"
-[ $? -eq 0 ] || exit 1
+    unpack_and_cleanup
 
-rm phoneinfoga_$os.tar.gz
-rm phoneinfoga_SHA256SUMS
+    echo
+    echo "Installation completed successfully."
+    echo "To check the version installed: ./phoneinfoga version"
+    echo
+    echo "Add it to your path by running"
+    echo "'sudo mv ./phoneinfoga /usr/local/bin/phoneinfoga'"
 
-echo "Installation completed successfully."
-echo "Check the version : ./phoneinfoga version"
-echo "You can now install the program globally : sudo mv ./phoneinfoga /usr/bin/phoneinfoga"
+    exit 0
+}
 
-exit 0
+
+main "${@}"
