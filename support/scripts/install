@@ -3,9 +3,10 @@
 # Bash installation script for UNIX systems only
 # Use it : curl -sSL https://raw.githubusercontent.com/sundowndev/phoneinfoga/master/support/scripts/install | bash
 
+OS="$(uname -s)_$(uname -m)"
 PHONEINFOGA_VERSION=$(curl -s https://api.github.com/repos/sundowndev/phoneinfoga/releases/latest | grep tag_name | cut -d '"' -f 4)
 
-AUTOMATIC=0
+AUTOMATIC=
 SKIP_CHECKSUM=0
 
 usage() {
@@ -50,7 +51,7 @@ validate_supported_OS() {
     )
 
     if [[ "${SUPPORTED_OS_TYPES[*]}" =~ "${OS}" ]]; then
-        return 0
+        AUTOMATIC=0
     else
         echo "Error: $OS is not supported, installation will attempt to proceed manually."
         echo
@@ -60,7 +61,6 @@ validate_supported_OS() {
         echo "Read more at https://sundowndev.github.io/phoneinfoga/install/"
         echo
         AUTOMATIC=1
-        return 1
     fi
 }
 
@@ -151,6 +151,8 @@ unpack_and_cleanup() {
 
 
 main() {
+
+    validate_supported_OS
 
     if [[ -z "$1" ]]; then
         echo "Downloading PhoneInfoga version $PHONEINFOGA_VERSION"
