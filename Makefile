@@ -19,6 +19,14 @@ GIT_COMMIT=$(shell git rev-parse --short HEAD)
 .PHONY: all
 all: fmt lint test build go.mod
 
+# Build static assets
+# This will create dist directory containing client's static files
+.PHONY: static 
+static:
+	cd web/client 
+	yarn 
+	yarn build
+
 .PHONY: build
 build:
 	go generate ./...
