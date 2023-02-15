@@ -15,8 +15,14 @@ if [ $os == "Linux_x86_64" ] || [ $os == "Linux_armv6" ] || [ $os == "Darwin_x86
 
   echo "Verifying checksum..."
   curl -sSL "https://github.com/sundowndev/phoneinfoga/releases/download/$phoneinfoga_version/phoneinfoga_checksums.txt" -o phoneinfoga_SHA256SUMS
+  
+  if [ $os == "Darwin_x86_64" ] || [ $os == "Darwin_arm64" ]; then
+  shasum -a 256 --ignore-missing -c phoneinfoga_SHA256SUMS
+  [ $? -eq 0 ] || exit 1
+  else
   sha256sum --ignore-missing -c phoneinfoga_SHA256SUMS
   [ $? -eq 0 ] || exit 1
+  fi
 
   tar xfv "phoneinfoga_$os.tar.gz"
   [ $? -eq 0 ] || exit 1
@@ -27,7 +33,8 @@ if [ $os == "Linux_x86_64" ] || [ $os == "Linux_armv6" ] || [ $os == "Darwin_x86
 
   echo "Installation completed successfully."
   echo "Check the version : ./phoneinfoga version"
-  echo "You can now install the program globally : sudo mv ./phoneinfoga /usr/bin/phoneinfoga"
+  echo "Linux users, you can now install the program globally : sudo mv ./phoneinfoga /usr/bin/phoneinfoga"
+  echo "MacOS users, you can now install the program globally : sudo mv ./phoneinfoga /usr/local/bin/phoneinfoga"
 else
   echo "Your OS/Arch is not supported."
   echo "Read more at https://sundowndev.github.io/phoneinfoga/install/"
