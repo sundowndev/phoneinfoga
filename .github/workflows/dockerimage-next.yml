@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     if: contains(toJson(github.event.commits), '[action]') == false
     steps:
-      - uses: actions/checkout@v3.0.0
+      - uses: actions/checkout@v3.3.0
         with:
           fetch-depth: 0
 
