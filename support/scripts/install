@@ -116,8 +116,6 @@ validate_checksum() {
     elif ! $SHA256SUM_INSTALLED; then
         shasum --ignore-missing -c phoneinfoga_checksums.txt
         [ $? -eq 0 ] || exit 1
-    else
-        echo -e "Error: \033[1mshasum\033[0m or \033[1msha256sum\033[0m command not found. Please install either one of those programs to validate your checksum." | fold -s
     fi
 
     rm phoneinfoga_checksums.txt
