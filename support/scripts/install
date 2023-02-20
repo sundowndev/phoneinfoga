@@ -10,12 +10,11 @@ SKIP_CHECKSUM=1
 CURL_INSTALLED=false
 WGET_INSTALLED=false
 
+
 choose_wget_or_curl() {
 
     which curl > /dev/null
     [ $? -eq 1 ] || CURL_INSTALLED=true
-    echo "CURL_INSTALLED=$CURL_INSTALLED"
-
 
     if $CURL_INSTALLED; then
         PHONEINFOGA_VERSION=$(curl -s https://api.github.com/repos/sundowndev/phoneinfoga/releases/latest | grep tag_name | cut -d '"' -f 4)
@@ -24,7 +23,6 @@ choose_wget_or_curl() {
 
     which wget > /dev/null
     [ $? -eq 1 ] || WGET_INSTALLED=true
-    echo "WGET_INSTALLED=$WGET_INSTALLED"
 
     if $WGET_INSTALLED; then
         PHONEINFOGA_VERSION=$(wget -q --output-document - https://api.github.com/repos/sundowndev/phoneinfoga/releases/latest | grep tag_name | cut -d '"' -f 4)
@@ -35,7 +33,6 @@ choose_wget_or_curl() {
     exit 1
 
 }
-
 
 
 usage() {
