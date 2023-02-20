@@ -4,28 +4,57 @@
 # Use it : curl -sSL https://raw.githubusercontent.com/sundowndev/phoneinfoga/master/support/scripts/install | bash
 
 OS="$(uname -s)_$(uname -m)"
-PHONEINFOGA_VERSION=$(curl -s https://api.github.com/repos/sundowndev/phoneinfoga/releases/latest | grep tag_name | cut -d '"' -f 4)
-
+PHONEINFOGA_VERSION=
 AUTOMATIC=
-SKIP_CHECKSUM=0
+SKIP_CHECKSUM=1
+CURL_INSTALLED=false
+WGET_INSTALLED=false
+
+choose_wget_or_curl() {
+
+    which curl > /dev/null
+    [ $? -eq 1 ] || CURL_INSTALLED=true
+    echo "CURL_INSTALLED=$CURL_INSTALLED"
+
+
+    if $CURL_INSTALLED; then
+        PHONEINFOGA_VERSION=$(curl -s https://api.github.com/repos/sundowndev/phoneinfoga/releases/latest | grep tag_name | cut -d '"' -f 4)
+        return
+    fi
+
+    which wget > /dev/null
+    [ $? -eq 1 ] || WGET_INSTALLED=true
+    echo "WGET_INSTALLED=$WGET_INSTALLED"
+
+    if $WGET_INSTALLED; then
+        PHONEINFOGA_VERSION=$(wget -q --output-document - https://api.github.com/repos/sundowndev/phoneinfoga/releases/latest | grep tag_name | cut -d '"' -f 4)
+        return
+    fi
+
+    echo "Error: You need to have either curl or wget installed to be able to use this script"
+    exit 1
+
+}
+
+
 
 usage() {
 
     echo "PhoneInfoga Installer for version $PHONEINFOGA_VERSION"
     echo
-    echo "DESCRIPTION: An installer script for downloading the latest release of PhoneInfoga. Without any arguments, $0 will detect your operating system and attempt to download the corresponding version of PhoneInfoga. Please submit an issue on GitHub if you encounter issues with this script."
+    echo "DESCRIPTION: An installer script for downloading the latest release of PhoneInfoga. Without any arguments, $0 will detect your operating system and attempt to download the corresponding version of PhoneInfoga. Please submit an issue on GitHub if you encounter issues with this script." | fold -s
     echo
-    echo "USAGE: $0 [flag...] (-h|-s|-u)"
+    echo "USAGE: $0 [flag...] (-h|-m|-s)"
     echo
     echo "      -h | --help             Print this message and exit"
+    echo
+    echo "      -m | --manual           Manually select version to download."
+    echo "                              Useful when $0 is unable to detect"
+    echo "                              your OS automatically"
     echo
     echo "      -s | --skip-checksum    [Not Reccomended] Skip checksum validation"
     echo "                              Only use this option if $0"
     echo "                              is failing due to missing software."
-    echo
-    echo "      -u | --unsupported      Attempt to install on an unsupported OS."
-    echo "                              Useful when $0 is unable to detect"
-    echo "                              your OS automatically"
     echo
 }
 
@@ -42,12 +71,18 @@ validate_OS_type() {
 validate_supported_OS() {
 
     SUPPORTED_OS_TYPES=(
-        "Linux_x86_64"
-        "Linux_armv6"
-        "Linux_arm64"
-        "Linux_i386"
-        "Darwin_x86_64"
         "Darwin_arm64"
+        "Darwin_x86_64"
+        "Linux_arm64"
+        "Linux_armv6"
+        "Linux_armv7"
+        "Linux_i386"
+        "Linux_x86_64"
+        "Windows_arm64"
+        "Windows_armv6"
+        "Windows_armv7"
+        "Windows_i386"
+        "Windows_x86_64"
     )
 
     if [[ "${SUPPORTED_OS_TYPES[*]}" =~ "${OS}" ]]; then
@@ -67,15 +102,11 @@ validate_supported_OS() {
 
 validate_checksum() {
 
-    local WGET_INSTALLED=false
-    which wget > /dev/null
-    [ $? -eq 1 ] || WGET_INSTALLED=true
-
     echo "Validating checksum ..."
-    if $WGET_INSTALLED; then
-        wget --quiet --show-progress "https://github.com/sundowndev/phoneinfoga/releases/download/$PHONEINFOGA_VERSION/phoneinfoga_checksums.txt"
-    elif ! $WGET_INSTALLED; then
+    if $CURL_INSTALLED; then
         curl --progress-bar -LOC - "https://github.com/sundowndev/phoneinfoga/releases/download/$PHONEINFOGA_VERSION/phoneinfoga_checksums.txt"
+    elif $WGET_INSTALLED; then
+        wget --quiet --show-progress "https://github.com/sundowndev/phoneinfoga/releases/download/$PHONEINFOGA_VERSION/phoneinfoga_checksums.txt"
     fi
 
     local SHA256SUM_INSTALLED=false
@@ -88,6 +119,8 @@ validate_checksum() {
     elif ! $SHA256SUM_INSTALLED; then
         shasum --ignore-missing -c phoneinfoga_checksums.txt
         [ $? -eq 0 ] || exit 1
+    else
+        echo -e "Error: \033[1mshasum\033[0m or \033[1msha256sum\033[0m command not found. Please install either one of those programs to validate your checksum." | fold -s
     fi
 
     rm phoneinfoga_checksums.txt
@@ -96,39 +129,45 @@ validate_checksum() {
 
 download_latest_release() {
 
-    local WGET_INSTALLED=false
-    which wget > /dev/null
-    [ $? -eq 1 ] || local WGET_INSTALLED=true
+    echo "Downloading PhoneInfoga Version $PHONEINFOGA_VERSION for $OS"
 
-    echo "https://github.com/sundowndev/phoneinfoga/releases/download/$PHONEINFOGA_VERSION/phoneinfoga_$OS.tar.gz"
-
-    if $WGET_INSTALLED; then
-        wget --quiet --show-progress "https://github.com/sundowndev/phoneinfoga/releases/download/$PHONEINFOGA_VERSION/phoneinfoga_$OS.tar.gz"
-    elif ! $WGET_INSTALLED; then
+    if $CURL_INSTALLED; then
         curl --progress-bar -LOC - "https://github.com/sundowndev/phoneinfoga/releases/download/$PHONEINFOGA_VERSION/phoneinfoga_$OS.tar.gz"
+
+    elif $WGET_INSTALLED; then
+        wget --quiet --show-progress "https://github.com/sundowndev/phoneinfoga/releases/download/$PHONEINFOGA_VERSION/phoneinfoga_$OS.tar.gz"
+
     fi
 }
 
 
 manual_download_latest_release() {
 
-    ASSETS=$(curl -s https://api.github.com/repos/sundowndev/phoneinfoga/releases/latest | jq --raw-output '.assets[] | .name' | grep --color=never tar.gz)
+    if $CURL_INSTALLED; then
+        ASSETS=$(curl -s https://api.github.com/repos/sundowndev/phoneinfoga/releases/latest | jq --raw-output '.assets[] | .name' | grep --color=never .tar.gz)
+    elif $WGET_INSTALLED; then
+        ASSETS=$(wget -q --output-document - https://api.github.com/repos/sundowndev/phoneinfoga/releases/latest | jq --raw-output '.assets[] | .name' | grep --color=never .tar.gz)
+    fi
 
-    local WGET_INSTALLED=false
-    which wget > /dev/null
-    [ $? -eq 1 ] || WGET_INSTALLED=true
-
-    echo "Please select the version of PhoneInfoga that you need."
+    echo "Please select a version of PhoneInfoga to download."
     PS3="Enter a number: "
     select OPT in $ASSETS; do
         case $OPT in
-            *)
-                echo "trying https://github.com/sundowndev/phoneinfoga/releases/download/$PHONEINFOGA_VERSION/$OPT"
 
-                if $WGET_INSTALLED; then
-                    wget --quiet --show-progress "https://github.com/sundowndev/phoneinfoga/releases/download/$PHONEINFOGA_VERSION/$OPT"
-                elif ! $WGET_INSTALLED; then
+            '')
+                echo "Error: Invalid option, please enter a number from the list."
+                ;;
+
+            *)
+                echo "Downloading $OPT version $PHONEINFOGA_VERSION"
+                echo "https://github.com/sundowndev/phoneinfoga/releases/download/$PHONEINFOGA_VERSION/$OPT"
+
+                if $CURL_INSTALLED; then
                     curl --progress-bar -LOC - "https://github.com/sundowndev/phoneinfoga/releases/download/$PHONEINFOGA_VERSION/$OPT"
+
+                elif $WGET_INSTALLED; then
+                    wget --quiet --show-progress "https://github.com/sundowndev/phoneinfoga/releases/download/$PHONEINFOGA_VERSION/$OPT"
+
                 fi
 
                 break
@@ -152,10 +191,12 @@ unpack_and_cleanup() {
 
 main() {
 
+    validate_OS_type
     validate_supported_OS
+    choose_wget_or_curl
 
     if [[ -z "$1" ]]; then
-        echo "Downloading PhoneInfoga version $PHONEINFOGA_VERSION"
+        echo
     else
         while [[ "$1" == -* ]]; do
             case "$1" in
@@ -165,12 +206,12 @@ main() {
                     exit 0
                     ;;
 
-                -s | --skip-checksum)
-                    SKIP_CHECKSUM=1
+                -m | --manual)
+                    AUTOMATIC=1
                     ;;
 
-                -u | --unsupported)
-                    AUTOMATIC=1
+                -s | --skip-checksum)
+                    SKIP_CHECKSUM=0
                     ;;
 
                 *)
@@ -193,18 +234,13 @@ main() {
         exit 1
     fi
 
-    if [[ $SKIP_CHECKSUM == 0 ]]; then
+    if [[ $SKIP_CHECKSUM == 1 ]]; then
         validate_checksum
-    elif [[ $SKIP_CHECKSUM == 1 ]]; then
+    elif [[ $SKIP_CHECKSUM == 0 ]]; then
         echo
-        echo "WARNING: Skipping checksum validation."
-        echo "Please be sure to verify your download manually."
-        echo "You can find the checksum for your software version here"
+        echo "WARNING: Skipping checksum validation. Please be sure to verify your download manually. You can find the checksum for your software version here:" | fold -s
         echo
         echo "https://github.com/sundowndev/phoneinfoga/releases/download/$PHONEINFOGA_VERSION/phoneinfoga_checksums.txt"
-    else
-        echo "something bad happened"
-        exit 1
     fi
 
     unpack_and_cleanup
