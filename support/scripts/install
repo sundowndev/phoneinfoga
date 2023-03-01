@@ -82,18 +82,22 @@ validate_supported_OS() {
         "Windows_x86_64"
     )
 
-    if [[ "${SUPPORTED_OS_TYPES[*]}" =~ "${OS}" ]]; then
-        AUTOMATIC=0
-    else
-        echo "Error: $OS is not supported, installation will attempt to proceed manually."
-        echo
-        echo "Please check the releases page for a list of supported systems."
-        echo "https://github.com/sundowndev/phoneinfoga/releases"
-        echo
-        echo "Read more at https://sundowndev.github.io/phoneinfoga/install/"
-        echo
-        AUTOMATIC=1
-    fi
+    for OS_TYPE in "${SUPPORTED_OS_TYPES[@]}"; do
+        if [[ "$OS_TYPE" == "$OS" ]]; then
+            AUTOMATIC=0
+            return
+        fi
+    done
+
+    echo "Error: $OS is not supported, installation will attempt to proceed manually."
+    echo
+    echo "Please check the releases page for a list of supported systems."
+    echo "https://github.com/sundowndev/phoneinfoga/releases"
+    echo
+    echo "Read more at https://sundowndev.github.io/phoneinfoga/install/"
+    echo
+    AUTOMATIC=1
+    
 }
 
 
