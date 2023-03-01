@@ -97,7 +97,7 @@ validate_supported_OS() {
     echo "Read more at https://sundowndev.github.io/phoneinfoga/install/"
     echo
     AUTOMATIC=1
-    
+
 }
 
 
@@ -178,7 +178,8 @@ manual_download_latest_release() {
 
 unpack_and_cleanup() {
 
-    local FILE=$(find . -name phoneinfoga_*.tar.gz)
+    local FILE
+    FILE=$(find . -name "phoneinfoga_*.tar.gz")
 
     tar -xzf $FILE
     [ $? -eq 0 ] || exit 1
