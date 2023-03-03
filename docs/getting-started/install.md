@@ -16,7 +16,8 @@ You can also do it from the terminal (UNIX systems only) :
 1. Download latest release in the current directory
 
 ```
-curl -sSL https://raw.githubusercontent.com/sundowndev/phoneinfoga/master/support/scripts/install | bash
+# Add --help at the end of the command for a list of install options
+bash <( curl -sSL https://raw.githubusercontent.com/sundowndev/phoneinfoga/master/support/scripts/install )
 ```
 
 2. Install phoneinfoga
