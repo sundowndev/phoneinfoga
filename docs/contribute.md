@@ -13,26 +13,26 @@ This page describe the project structure and gives you a bit of context to start
 
 **Requirements :**
 
-- Node.js >= v10.x
+- Node.js v15.x
 - npm or yarn
 - Go >= 1.16
-- [swag](https://github.com/swaggo/swag)
+- [swag](https://github.com/swaggo/swag) (included in `make install-tools` below)
 
 **Note:** if you're using npm, just replace `yarn <command>` by `npm run <command>`.
 
 ```shell
+# Install tools needed to build, creating mocks or running tests
+$ make install-tools
+
 # Build static assets
 # This will create dist directory containing client's static files
 $ (cd web/client && yarn && yarn build)
 
-# Generate in-memory assets
-# This will put content of dist directory in memory. It's usually needed to build but
-# the design requires you to do it anyway.
+# Generate in-memory assets, then build the project.
+# This will put content of dist directory in a single binary file.
+# It's needed to build but the design requires you to do it anyway.
 # This step is needed at each change if you're developing on the client.
-$ go generate ./...
-
-# Build the whole project
-$ go build -v .
+$ make build
 ```
 
 If you're developing, you don't need to build at each changes, you can compile then run with the `go run` command :
