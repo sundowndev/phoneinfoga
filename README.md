@@ -28,7 +28,6 @@
 <p align="center">
   <a href="https://sundowndev.github.io/phoneinfoga/">Documentation</a> •
   <a href="https://petstore.swagger.io/?url=https://raw.githubusercontent.com/sundowndev/phoneinfoga/master/web/docs/swagger.yaml">API documentation</a> •
-  <a href="https://demo.phoneinfoga.crvx.fr/">Demo instance</a> •
   <a href="https://medium.com/@SundownDEV/phone-number-scanning-osint-recon-tool-6ad8f0cac27b">Related blog post</a>
 </p>
 
@@ -36,13 +35,11 @@
 
 PhoneInfoga is one of the most advanced tools to scan international phone numbers. It allows you to first gather basic information such as country, area, carrier and line type, then use various techniques to try to find the VoIP provider or identify the owner. It works with a collection of scanners that must be configured in order for the tool to be effective. PhoneInfoga doesn't automate everything, it's just there to help investigating on phone numbers.
 
-![web client screenshot](./docs/images/screenshot.png)
-
 ## Current status
 
 This project is stable and production-ready.
 
-**About demo instance**: This is a test service. Kittens will die if you abuse it.
+You can try out the web client or REST API on the <a href="https://demo.phoneinfoga.crvx.fr/">demo instance</a>. **This is a test service**. Kittens will die if you abuse it. Most of scanners are not configured so you won't get relevant results.
 
 ## Features
 
