@@ -13,10 +13,9 @@ This page describe the project structure and gives you a bit of context to start
 
 **Requirements :**
 
-- Node.js v15.x
+- Nodejs >= v15
 - npm or yarn
 - Go >= 1.16
-- [swag](https://github.com/swaggo/swag) (included in `make install-tools` below)
 
 **Note:** if you're using npm, just replace `yarn <command>` by `npm run <command>`.
 
