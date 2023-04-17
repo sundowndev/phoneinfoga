@@ -19,7 +19,7 @@ jobs:
           go-version: 1.17.8
         id: go
       - name: Check out code into the Go module directory
-        uses: actions/checkout@v3.5.0
+        uses: actions/checkout@v3.5.2
 
       - name: Get dependencies
         run: |
