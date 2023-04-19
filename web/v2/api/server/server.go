@@ -1,6 +1,7 @@
 package server
 
 import (
+	"github.com/fatih/color"
 	"github.com/gin-gonic/gin"
 	"github.com/sundowndev/phoneinfoga/v2/web/v2/api"
 	"github.com/sundowndev/phoneinfoga/v2/web/v2/api/handlers"
@@ -12,6 +13,8 @@ type Server struct {
 }
 
 func NewServer() *Server {
+	gin.DefaultWriter = color.Output
+	gin.DefaultErrorWriter = color.Error
 	s := &Server{
 		router: gin.Default(),
 	}
