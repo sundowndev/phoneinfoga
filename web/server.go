@@ -1,11 +1,13 @@
 // Package web includes code for the web server of PhoneInfoga
+//
 //go:generate swag init -g ./server.go --parseDependency
 package web
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	v2 "github.com/sundowndev/phoneinfoga/v2/web/v2/api/server"
-	"net/http"
 )
 
 // @title PhoneInfoga REST API
@@ -67,6 +69,10 @@ func (s *Server) registerRoutes(disableClient bool) error {
 
 func (s *Server) ListenAndServe(addr string) error {
 	return s.router.Run(addr)
+}
+
+func (s *Server) ListenAndServeTLS(addr string, certfile, keyfile string) error {
+	return s.router.RunTLS(addr, certfile, keyfile)
 }
 
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
