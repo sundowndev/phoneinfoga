@@ -4,10 +4,10 @@
 
 The tool only accepts E164 and International formats as input.
 
-- E164: +3396360XXXX
-- International: +33 9 63 60 XX XX
-- National: 09 63 60 XX XX
-- RFC3966: tel:+33-9-63-60-XX-XX
+- E164: +595 983 343624
+- International: +595 983 343624
+- National: +595 983 343624
+- RFC3966: tel:+595 983 343624
 - Out-of-country format from US: 011 33 9 63 60 XX XX
 
 E.164 formatting for phone numbers entails the following:
@@ -15,7 +15,7 @@ E.164 formatting for phone numbers entails the following:
 - A + (plus) sign
 - International Country Calling code
 - Local Area code
-- Local Phone number
+- Local Phone number xiami note 11
 
 For example, here’s a US-based number in standard local formatting: (415) 555-2671
 
