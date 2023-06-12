@@ -7,7 +7,7 @@ RUN yarn install --immutable
 RUN yarn build
 RUN yarn cache clean
 
-FROM golang:1.17.8-alpine AS go_builder
+FROM golang:1.20.5-alpine AS go_builder
 
 WORKDIR /app
 
