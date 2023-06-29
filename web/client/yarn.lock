@@ -2,7 +2,7 @@
 # Manual changes might be lost - proceed with caution!
 
 __metadata:
-  version: 6
+  version: 5
   cacheKey: 8
 
 "@achrinza/node-ipc@npm:9.2.2":
@@ -2368,15 +2368,6 @@ __metadata:
   bin:
     acorn: bin/acorn
   checksum: 7270ca82b242eafe5687a11fea6e088c960af712683756abf0791b68855ea9cace3057bd5e998ffcef50c944810c1e0ca1da526d02b32110e13c722aa959afdc
-  languageName: node
-  linkType: hard
-
-"acorn@npm:^8.5.0":
-  version: 8.9.0
-  resolution: "acorn@npm:8.9.0"
-  bin:
-    acorn: bin/acorn
-  checksum: 25dfb94952386ecfb847e61934de04a4e7c2dc21c2e700fc4e2ef27ce78cb717700c4c4f279cd630bb4774948633c3859fc16063ec8573bda4568e0a312e6744
   languageName: node
   linkType: hard
 
@@ -15191,11 +15182,11 @@ __metadata:
 
 "typescript@patch:typescript@4.2.3#~builtin<compat/typescript>":
   version: 4.2.3
-  resolution: "typescript@patch:typescript@npm%3A4.2.3#~builtin<compat/typescript>::version=4.2.3&hash=701156"
+  resolution: "typescript@patch:typescript@npm%3A4.2.3#~builtin<compat/typescript>::version=4.2.3&hash=ddd1e8"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: f00e6e6e72c950865979d5beb66916c75d92eda09514eb2953828b95505cfd2ef3ae9ac776fdac9f841a9ce67744999b70d23779726e0072656a1841c8080860
+  checksum: f97b1f885444f13c340127a0918b17d0c4e5c248f99203a22712b3b43d7129c9c7b95437e4f1de99edf79d3046fa9e15356fb5d27d9d94e47a98158c8b18fda5
   languageName: node
   linkType: hard
 
