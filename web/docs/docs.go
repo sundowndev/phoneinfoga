@@ -774,6 +774,9 @@ var doc = `{
                 "commit": {
                     "type": "string"
                 },
+                "demo": {
+                    "type": "boolean"
+                },
                 "success": {
                     "type": "boolean"
                 },
