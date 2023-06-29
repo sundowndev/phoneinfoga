@@ -24,6 +24,7 @@ type healthResponse struct {
 	Success bool   `json:"success"`
 	Version string `json:"version"`
 	Commit  string `json:"commit"`
+	Demo    bool   `json:"demo"`
 }
 
 // @ID getAllNumbers
@@ -183,5 +184,6 @@ func healthHandler(c *gin.Context) {
 		Success: true,
 		Version: build.Version,
 		Commit:  build.Commit,
+		Demo:    build.IsDemo(),
 	})
 }

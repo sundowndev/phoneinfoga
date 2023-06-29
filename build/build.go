@@ -1,6 +1,9 @@
 package build
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
 // Version is the corresponding release tag
 var Version = "dev"
@@ -14,4 +17,8 @@ func IsRelease() bool {
 
 func String() string {
 	return fmt.Sprintf("%s-%s", Version, Commit)
+}
+
+func IsDemo() bool {
+	return os.Getenv("PHONEINFOGA_DEMO") == "true"
 }
