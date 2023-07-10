@@ -43,7 +43,7 @@ export default class Scanner extends Vue {
   data = null;
   loading = false;
   dryrunError = false;
-  error = null;
+  error: unknown = null;
   computed = {
     ...mapState(["number"]),
     ...mapMutations(["pushError"]),
@@ -73,7 +73,7 @@ export default class Scanner extends Vue {
       if (!res.data.success && res.data.error) {
         throw res.data.error;
       }
-    } catch (error) {
+    } catch (error: unknown) {
       this.dryrunError = true;
       this.error = error;
     }

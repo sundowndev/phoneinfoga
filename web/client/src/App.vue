@@ -48,7 +48,9 @@
     <b-container class="my-md-3">
       <b-row>
         <b-col cols="12">
-          <b-alert v-if="isDemo" show variant="warning" fade>Welcome to the demo of PhoneInfoga web client.</b-alert>
+          <b-alert v-if="isDemo" show variant="warning" fade
+            >Welcome to the demo of PhoneInfoga web client.</b-alert
+          >
           <b-alert
             v-for="(err, i) in errors"
             v-bind:key="i"
