@@ -18,7 +18,7 @@ jobs:
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3.7.0
         with:
-          node-version: 15.11.x
+          node-version: 20.3.1
 
       - name: Set up Go
         uses: actions/setup-go@v4.0.1

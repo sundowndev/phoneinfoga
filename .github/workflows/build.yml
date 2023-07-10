@@ -28,7 +28,7 @@ jobs:
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3.7.0
         with:
-          node-version: 15.11.x
+          node-version: 20.3.1
 
       - name: Building static assets
         run: (cd web/client && yarn install --immutable && yarn build)
