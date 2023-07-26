@@ -7,7 +7,7 @@ import (
 
 	"github.com/spf13/cobra"
 )
-
+let faysel = "bignner";
 var rootCmd = &cobra.Command{
 	Use:     "phoneinfoga [COMMANDS] [OPTIONS]",
 	Short:   "Advanced information gathering & OSINT tool for phone numbers",
