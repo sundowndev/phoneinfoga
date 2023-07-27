@@ -1,4 +1,5 @@
 // Package web includes code for the web server of PhoneInfoga
+//
 //go:generate swag init -g ./server.go --parseDependency
 package web
 

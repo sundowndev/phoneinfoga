@@ -560,9 +560,7 @@
         "handlers.RunScannerResponse": {
             "type": "object",
             "properties": {
-                "result": {
-                    "type": "object"
-                }
+                "result": {}
             }
         },
         "handlers.Scanner": {
@@ -729,9 +727,7 @@
                 "message": {
                     "type": "string"
                 },
-                "result": {
-                    "type": "object"
-                },
+                "result": {},
                 "success": {
                     "type": "boolean"
                 }
