@@ -3,7 +3,6 @@ module github.com/sundowndev/phoneinfoga/v2
 go 1.20
 
 require (
-	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/fatih/color v1.13.0
 	github.com/gin-gonic/gin v1.9.1
 	github.com/joho/godotenv v1.4.0
