@@ -61,8 +61,7 @@ definitions:
     type: object
   handlers.RunScannerResponse:
     properties:
-      result:
-        type: object
+      result: {}
     type: object
   handlers.Scanner:
     properties:
@@ -171,8 +170,7 @@ definitions:
         type: string
       message:
         type: string
-      result:
-        type: object
+      result: {}
       success:
         type: boolean
     type: object
@@ -427,7 +425,8 @@ paths:
     post:
       consumes:
       - application/json
-      description: This route performs a dry run with the given phone number. This doesn't perform an actual scan.
+      description: This route performs a dry run with the given phone number. This
+        doesn't perform an actual scan.
       operationId: DryRunScanner
       parameters:
       - description: Request body
