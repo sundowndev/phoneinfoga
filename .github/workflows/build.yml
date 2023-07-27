@@ -50,8 +50,10 @@ jobs:
       - name: Build
         run: make build
 
-      - name: Lint
-        run: make lint
+#     Temporary disabled lint job because of this issue
+#     https://github.com/golangci/golangci-lint/issues/3107
+#      - name: Lint
+#        run: make lint
 
       - name: Test
         run: go test -race -coverprofile=./c.out -covermode=atomic -v ./...
