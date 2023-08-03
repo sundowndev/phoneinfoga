@@ -1,8 +1,14 @@
 package number
 
 import (
+	"bytes"
+	"fmt"
 	"github.com/nyaruka/phonenumbers"
+	"strings"
+	"text/template"
 )
+
+const templateDigitPlaceholder = "x"
 
 // Number is a phone number
 type Number struct {
@@ -14,9 +20,15 @@ type Number struct {
 	CountryCode   int32
 	Country       string
 	Carrier       string
+	CustomFormats []string
 }
 
-func NewNumber(number string) (res *Number, err error) {
+type FormatTemplateData struct {
+	CountryCode string
+	Country     string
+}
+
+func NewNumber(number string, formats ...string) (res *Number, err error) {
 	n := "+" + FormatNumber(number)
 	country := ParseCountryCode(n)
 
@@ -34,7 +46,39 @@ func NewNumber(number string) (res *Number, err error) {
 		CountryCode:   num.GetCountryCode(),
 		Country:       country,
 		Carrier:       num.GetPreferredDomesticCarrierCode(),
+		CustomFormats: []string{},
+	}
+
+	for _, format := range formats {
+		res.CustomFormats = append(res.CustomFormats, convertFormatTemplate(res, format))
 	}
 
 	return res, nil
+}
+
+func convertFormatTemplate(n *Number, f string) string {
+	countryCodeStr := fmt.Sprintf("%d", n.CountryCode)
+
+	var out []string
+	splitNumber := strings.Split(strings.Replace(n.International, countryCodeStr, "", 1), "")
+	splitFormat := strings.Split(f, "")
+	for _, j := range splitFormat {
+		if strings.ToLower(j) == templateDigitPlaceholder && len(splitNumber) > 0 {
+			j = splitNumber[0]
+			splitNumber = splitNumber[1:]
+		}
+		out = append(out, j)
+	}
+
+	t := template.Must(template.New("custom-format").Parse(strings.Join(out, "")))
+
+	var tpl bytes.Buffer
+	err := t.Execute(&tpl, FormatTemplateData{
+		CountryCode: countryCodeStr,
+		Country:     n.Country,
+	})
+	if err != nil {
+		return strings.Join(out, "")
+	}
+	return tpl.String()
 }

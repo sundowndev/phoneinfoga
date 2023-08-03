@@ -43,7 +43,8 @@ func GetAllScanners(*gin.Context) *api.Response {
 }
 
 type DryRunScannerInput struct {
-	Number string `json:"number" binding:"number,required"`
+	Number  string   `json:"number" binding:"number,required"`
+	Formats []string `json:"formats" binding:"formats"`
 }
 
 type DryRunScannerResponse struct {
@@ -114,7 +115,8 @@ func DryRunScanner(ctx *gin.Context) *api.Response {
 }
 
 type RunScannerInput struct {
-	Number string `json:"number" binding:"number,required"`
+	Number  string   `json:"number" binding:"number,required"`
+	Formats []string `json:"formats" binding:"formats"`
 }
 
 type RunScannerResponse struct {
@@ -153,7 +155,7 @@ func RunScanner(ctx *gin.Context) *api.Response {
 		}
 	}
 
-	num, err := number.NewNumber(input.Number)
+	num, err := number.NewNumber(input.Number, input.Formats...)
 	if err != nil {
 		return &api.Response{
 			Code: http.StatusBadRequest,

@@ -206,6 +206,15 @@ func (s *googleCSEScanner) generateDorkQueries(number number.Number) (results []
 			InText(number.Local),
 	}
 
+	// Add custom formats to dork queries
+	if len(number.CustomFormats) > 0 {
+		for _, d := range dorks {
+			for _, f := range number.CustomFormats {
+				d.Or().InText(f)
+			}
+		}
+	}
+
 	for _, dork := range dorks {
 		results = append(results, &GoogleSearchDork{
 			Number: number.E164,

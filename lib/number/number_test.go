@@ -25,6 +25,7 @@ func TestNumber(t *testing.T) {
 				CountryCode:   33,
 				Country:       "FR",
 				Carrier:       "",
+				CustomFormats: []string{},
 			},
 		},
 		{
@@ -39,6 +40,7 @@ func TestNumber(t *testing.T) {
 				CountryCode:   1,
 				Country:       "",
 				Carrier:       "",
+				CustomFormats: []string{},
 			},
 		},
 
@@ -55,6 +57,57 @@ func TestNumber(t *testing.T) {
 			num, err := NewNumber(tt.input)
 			assert.Equal(t, tt.wantErr, err)
 			assert.Equal(t, tt.expected, num)
+		})
+	}
+}
+
+func TestFormatTemplate(t *testing.T) {
+	cases := []struct {
+		name     string
+		number   string
+		format   string
+		expected []string
+		wantErr  error
+	}{
+		{
+			name:     "should succeed to format with template",
+			number:   "+15552221212",
+			format:   "xxx-xxx-xxxx",
+			expected: []string{"555-222-1212"},
+		},
+		{
+			name:     "should succeed to format with template",
+			number:   "+33678342211",
+			format:   "0x-Xx-xx-xX-xx",
+			expected: []string{"06-78-34-22-11"},
+		},
+		{
+			name:     "should succeed to format with template",
+			number:   "+911401871759",
+			format:   "+{{.CountryCode}} xxxx-xxxxxx",
+			expected: []string{"+91 1401-871759"},
+		},
+		{
+			name:     "should fail to format with template",
+			number:   "+911401871759",
+			format:   "+{{.DummyVar}} xxxx-xxxxxx",
+			expected: []string{"+{{.DummyVar}} 1401-871759"},
+		},
+		{
+			name:     "should fail to format with template",
+			number:   "+333333",
+			format:   "+{{.DummyVar}} xxxx-xxxxxx",
+			expected: []string{"+{{.DummyVar}} 3333-xxxxxx"},
+		},
+	}
+
+	for _, tt := range cases {
+		t.Run(tt.name, func(t *testing.T) {
+			n, err := NewNumber(tt.number, tt.format)
+			if err != nil {
+				t.Error(err)
+			}
+			assert.Equal(t, tt.expected, n.CustomFormats)
 		})
 	}
 }
