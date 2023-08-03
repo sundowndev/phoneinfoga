@@ -44,7 +44,7 @@ func GetAllScanners(*gin.Context) *api.Response {
 
 type DryRunScannerInput struct {
 	Number  string   `json:"number" binding:"number,required"`
-	Formats []string `json:"formats" binding:"formats"`
+	Formats []string `json:"formats"`
 }
 
 type DryRunScannerResponse struct {
@@ -116,7 +116,7 @@ func DryRunScanner(ctx *gin.Context) *api.Response {
 
 type RunScannerInput struct {
 	Number  string   `json:"number" binding:"number,required"`
-	Formats []string `json:"formats" binding:"formats"`
+	Formats []string `json:"formats"`
 }
 
 type RunScannerResponse struct {

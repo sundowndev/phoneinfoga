@@ -9,7 +9,7 @@ import (
 
 type AddNumberInput struct {
 	Number  string   `json:"number" binding:"number,required"`
-	Formats []string `json:"formats" binding:"formats"`
+	Formats []string `json:"formats"`
 }
 
 type AddNumberResponse struct {
