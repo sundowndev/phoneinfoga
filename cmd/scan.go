@@ -32,7 +32,7 @@ func init() {
 	cmd.PersistentFlags().StringArrayVarP(&opts.DisabledScanners, "disable", "D", []string{}, "Scanner to skip for this scan")
 	cmd.PersistentFlags().StringArrayVar(&opts.PluginPaths, "plugin", []string{}, "Extra scanner plugin to use for the scan")
 	cmd.PersistentFlags().StringSliceVar(&opts.EnvFiles, "env-file", []string{}, "Env files to parse environment variables from (looks for .env by default)")
-	cmd.PersistentFlags().StringSliceVar(&opts.Formats, "format", []string{}, "Additional format for the given phone number(s)")
+	cmd.PersistentFlags().StringSliceVarP(&opts.Formats, "format", "f", []string{}, "Additional format for the given phone number(s)")
 	// scanCmd.PersistentFlags().StringVarP(&input, "input", "i", "", "Text file containing a list of phone numbers to scan (one per line)")
 	// scanCmd.PersistentFlags().StringVarP(&output, "output", "o", "", "Output to save scan results")
 }
