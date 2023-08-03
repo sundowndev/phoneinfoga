@@ -479,6 +479,12 @@
                 "number"
             ],
             "properties": {
+                "formats": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
                 "number": {
                     "type": "string"
                 }
@@ -495,6 +501,12 @@
                 },
                 "countryCode": {
                     "type": "integer"
+                },
+                "custom_formats": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "e164": {
                     "type": "string"
@@ -519,6 +531,12 @@
                 "number"
             ],
             "properties": {
+                "formats": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
                 "number": {
                     "type": "string"
                 }
@@ -552,6 +570,12 @@
                 "number"
             ],
             "properties": {
+                "formats": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
                 "number": {
                     "type": "string"
                 }
@@ -585,6 +609,12 @@
                 },
                 "countryCode": {
                     "type": "integer"
+                },
+                "customFormats": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "e164": {
                     "type": "string"

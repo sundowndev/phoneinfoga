@@ -7,6 +7,10 @@ definitions:
     type: object
   handlers.AddNumberInput:
     properties:
+      formats:
+        items:
+          type: string
+        type: array
       number:
         type: string
     required:
@@ -20,6 +24,10 @@ definitions:
         type: string
       countryCode:
         type: integer
+      custom_formats:
+        items:
+          type: string
+        type: array
       e164:
         type: string
       international:
@@ -33,6 +41,10 @@ definitions:
     type: object
   handlers.DryRunScannerInput:
     properties:
+      formats:
+        items:
+          type: string
+        type: array
       number:
         type: string
     required:
@@ -54,6 +66,10 @@ definitions:
     type: object
   handlers.RunScannerInput:
     properties:
+      formats:
+        items:
+          type: string
+        type: array
       number:
         type: string
     required:
@@ -78,6 +94,10 @@ definitions:
         type: string
       countryCode:
         type: integer
+      customFormats:
+        items:
+          type: string
+        type: array
       e164:
         type: string
       international:
