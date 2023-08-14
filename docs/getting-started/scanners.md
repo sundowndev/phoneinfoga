@@ -53,7 +53,7 @@ The local scan is probably the simplest scan of PhoneInfoga. By default, the too
 
 ## Numverify
 
-Numverify provide standard but useful information such as country code, location, line type and carrier. This scanners requires an API-key which you can get on their website after creating an account. You can use a free API key as long as you don't exceed the monthly quota.
+Numverify provide standard but useful information such as country code, location, line type and carrier. This scanners requires an API-key which you can get on their website after creating an account. You can use a free API key as long as you don't exceed the monthly quota. **This is an [apilayer](https://apilayer.com/marketplace/number_verification-api) key, not numverify itself.**
 
 [Read documentation](https://apilayer.com/marketplace/number_verification-api#details-tab)
 
