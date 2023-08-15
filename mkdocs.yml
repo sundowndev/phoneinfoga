@@ -1,4 +1,5 @@
 site_name: PhoneInfoga
+site_url: https://sundowndev.github.io/phoneinfoga
 repo_name: 'sundowndev/phoneinfoga'
 repo_url: 'https://github.com/sundowndev/phoneinfoga'
 site_description: 'Advanced information gathering & OSINT tool for phone numbers.'
@@ -9,10 +10,11 @@ nav:
   - 'Getting Started':
     - 'Installation': getting-started/install.md
     - 'Usage': getting-started/usage.md
-    - 'Formatting phone numbers': getting-started/formatting.md
     - 'Scanners': getting-started/scanners.md
     - 'Go module usage': getting-started/go-module-usage.md
-    - 'Additional resources': getting-started/resources.md
+  - 'Resources':
+      - 'Formatting phone numbers': resources/formatting.md
+      - 'Additional resources': resources/additional-resources.md
   - 'Contribute': contribute.md
 theme:
   name: material
@@ -40,8 +42,6 @@ extra:
   social:
     - icon: fontawesome/brands/github-alt
       link: 'https://github.com/sundowndev/phoneinfoga'
-    - icon: fontawesome/brands/twitter
-      link: 'https://twitter.com/sundowndev'
 
 # Extensions
 markdown_extensions:
@@ -56,3 +56,11 @@ plugins:
   - search
   - minify:
       minify_html: true
+  - redirects:
+      redirect_maps:
+        'install.md': 'getting-started/install.md'
+        'usage.md': 'getting-started/usage.md'
+        'scanners.md': 'getting-started/scanners.md'
+        'go-module-usage.md': 'getting-started/go-module-usage.md'
+        'formatting.md': 'resources/formatting.md'
+        'resources.md': 'resources/additional-resources.md'

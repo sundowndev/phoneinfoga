@@ -1,0 +1,13 @@
+name: Homebrew Bump Formula
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+jobs:
+  homebrew:
+    runs-on: macos-latest
+    steps:
+      - uses: dawidd6/action-homebrew-bump-formula@v3
+        with:
+          token: ${{ secrets.HOMEBREW_GITHUB_API_TOKEN }}
+          formula: phoneinfoga

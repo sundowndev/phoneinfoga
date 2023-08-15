@@ -24,6 +24,7 @@ type healthResponse struct {
 	Success bool   `json:"success"`
 	Version string `json:"version"`
 	Commit  string `json:"commit"`
+	Demo    bool   `json:"demo"`
 }
 
 // @ID getAllNumbers
@@ -45,6 +46,7 @@ func getAllNumbers(c *gin.Context) {
 // @Tags Numbers
 // @Summary Check if a number is valid and possible.
 // @Produce  json
+// @Deprecated
 // @Success 200 {object} JSONResponse
 // @Success 400 {object} JSONResponse
 // @Router /numbers/{number}/validate [get]
@@ -62,6 +64,7 @@ func validate(c *gin.Context) {
 // @Tags Numbers
 // @Summary Perform a scan using local phone number library.
 // @Produce  json
+// @Deprecated
 // @Success 200 {object} ScanResultResponse{result=number.Number}
 // @Success 400 {object} JSONResponse
 // @Router /numbers/{number}/scan/local [get]
@@ -73,7 +76,7 @@ func localScan(c *gin.Context) {
 		return
 	}
 
-	result, err := remote.NewLocalScanner().Scan(*num)
+	result, err := remote.NewLocalScanner().Run(*num)
 	if err != nil {
 		handleError(c, errors.NewInternalError(err))
 		return
@@ -88,6 +91,7 @@ func localScan(c *gin.Context) {
 // @ID numverifyScan
 // @Tags Numbers
 // @Summary Perform a scan using Numverify's API.
+// @Deprecated
 // @Produce  json
 // @Success 200 {object} ScanResultResponse{result=remote.NumverifyScannerResponse}
 // @Success 400 {object} JSONResponse
@@ -100,7 +104,7 @@ func numverifyScan(c *gin.Context) {
 		return
 	}
 
-	result, err := remote.NewNumverifyScanner(suppliers.NewNumverifySupplier()).Scan(*num)
+	result, err := remote.NewNumverifyScanner(suppliers.NewNumverifySupplier()).Run(*num)
 	if err != nil {
 		handleError(c, errors.NewInternalError(err))
 		return
@@ -115,6 +119,7 @@ func numverifyScan(c *gin.Context) {
 // @ID googleSearchScan
 // @Tags Numbers
 // @Summary Perform a scan using Google Search engine.
+// @Deprecated
 // @Produce  json
 // @Success 200 {object} ScanResultResponse{result=remote.GoogleSearchResponse}
 // @Success 400 {object} JSONResponse
@@ -127,7 +132,7 @@ func googleSearchScan(c *gin.Context) {
 		return
 	}
 
-	result, err := remote.NewGoogleSearchScanner().Scan(*num)
+	result, err := remote.NewGoogleSearchScanner().Run(*num)
 	if err != nil {
 		handleError(c, errors.NewInternalError(err))
 		return
@@ -142,6 +147,7 @@ func googleSearchScan(c *gin.Context) {
 // @ID ovhScan
 // @Tags Numbers
 // @Summary Perform a scan using OVH's API.
+// @Deprecated
 // @Produce  json
 // @Success 200 {object} ScanResultResponse{result=remote.OVHScannerResponse}
 // @Success 400 {object} JSONResponse
@@ -154,7 +160,7 @@ func ovhScan(c *gin.Context) {
 		return
 	}
 
-	result, err := remote.NewOVHScanner(suppliers.NewOVHSupplier()).Scan(*num)
+	result, err := remote.NewOVHScanner(suppliers.NewOVHSupplier()).Run(*num)
 	if err != nil {
 		handleError(c, errors.NewInternalError(err))
 		return
@@ -178,5 +184,6 @@ func healthHandler(c *gin.Context) {
 		Success: true,
 		Version: build.Version,
 		Commit:  build.Commit,
+		Demo:    build.IsDemo(),
 	})
 }

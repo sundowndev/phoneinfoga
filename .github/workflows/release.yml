@@ -10,20 +10,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.0.0
+        uses: actions/checkout@v3.5.3
 
       - name: Unshallow
         run: git fetch --prune --unshallow
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3.1.0
+        uses: actions/setup-node@v3.7.0
         with:
-          node-version: 15.11.x
+          node-version: 20.3.1
 
       - name: Set up Go
-        uses: actions/setup-go@v3.2.0
+        uses: actions/setup-go@v4.0.1
         with:
-          go-version: 1.17.8
+          go-version: 1.20.6
 
       - name: Building static assets
         run: (cd web/client && yarn install --immutable && yarn build)
@@ -32,7 +32,7 @@ jobs:
         run: make install-tools
 
       - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v3.0.0
+        uses: goreleaser/goreleaser-action@v4.3.0
         with:
           version: v1.10.2
           args: release --rm-dist
@@ -42,60 +42,40 @@ jobs:
     runs-on: ubuntu-latest
     if: contains(toJson(github.event.commits), '[action]') == false
     steps:
-      - uses: actions/checkout@v3.0.0
+      - uses: actions/checkout@v3.5.3
         with:
           fetch-depth: 0
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@v2
       - name: Login to DockerHub
-        uses: docker/login-action@v1.14.1
+        uses: docker/login-action@v2.2.0
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and push
         id: docker_build
-        uses: docker/build-push-action@v2.9.0
+        uses: docker/build-push-action@v4.1.1
         with:
           context: .
           push: true
-          tags: sundowndev/phoneinfoga:latest,sundowndev/phoneinfoga:v2,sundowndev/phoneinfoga:stable
+          tags: sundowndev/phoneinfoga:latest,sundowndev/phoneinfoga:v2,sundowndev/phoneinfoga:stable,sundowndev/phoneinfoga:${{ github.ref_name }}
           platforms: linux/amd64 # ,linux/arm/v7,linux/arm64 - TODO(sundowndev): enable arm support back
-
-      - uses: actions/checkout@v3.0.0
-        with:
-          ref: 'master'
-
-      - name: Commit new image digest
-        env:
-          GITHUB_USER: sundowndev
-          GITHUB_REPO: PhoneInfoga
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          wget https://github.com/mikefarah/yq/releases/download/3.4.0/yq_linux_amd64 -O ./yq
-          chmod +x ./yq
-          ./yq w ./.deploy/deployment.yaml 'spec.template.spec.containers[0].image' sundowndev/phoneinfoga@${{ steps.docker_build.outputs.digest }} -i
-          git remote set-url origin https://$GITHUB_USER:$GITHUB_TOKEN@github.com/$GITHUB_USER/$GITHUB_REPO.git
-          git config --global user.email "$GITHUB_USER@users.noreply.github.com"
-          git config --global user.name "$GITHUB_USER"
-          git add ./.deploy && git commit -m "deploy: update docker image digest [action]"
-          git pull origin master --rebase
-          git push origin master
   publish-docs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.0.0
+      - uses: actions/checkout@v3.5.3
       - name: Set up Python 3.8
-        uses: actions/setup-python@v3.1.0
+        uses: actions/setup-python@v4.7.0
         with:
           python-version: 3.8
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install mkdocs==1.3.0 mkdocs-material==8.3.9 mkdocs-minify-plugin==0.5.0
+          python -m pip install mkdocs==1.3.0 mkdocs-material==8.3.9 mkdocs-minify-plugin==0.5.0 mkdocs-redirects==1.1.0
 
       - name: Deploy
         run: |

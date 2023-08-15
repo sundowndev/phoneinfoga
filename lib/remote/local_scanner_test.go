@@ -7,6 +7,12 @@ import (
 	"testing"
 )
 
+func TestLocalScanner_Metadata(t *testing.T) {
+	scanner := NewLocalScanner()
+	assert.Equal(t, Local, scanner.Name())
+	assert.NotEmpty(t, scanner.Description())
+}
+
 func TestLocalScanner(t *testing.T) {
 	testcases := []struct {
 		name       string
@@ -41,8 +47,8 @@ func TestLocalScanner(t *testing.T) {
 			remote := NewLibrary(filter.NewEngine())
 			remote.AddScanner(scanner)
 
-			if !scanner.ShouldRun(*tt.number) {
-				t.Fatal("ShouldRun() should be truthy")
+			if scanner.DryRun(*tt.number) != nil {
+				t.Fatal("DryRun() should return nil")
 			}
 
 			got, errs := remote.Scan(tt.number)

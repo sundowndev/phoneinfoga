@@ -11,12 +11,12 @@ PhoneInfoga is one of the most advanced tools to scan international phone number
 
 ## Features
 
-- Check if phone number exists and has connectivity status with [HLR lookups](https://www.hlr-lookups.com/en/what-is-an-hlr-lookup)
-- Gather standard informations such as country, line type and carrier
-- OSINT footprinting using external APIs, Google Hacking, phone books & search engines
+- Check if phone number exists
+- Gather basic information such as country, line type and carrier
+- OSINT footprinting using external APIs, phone books & search engines
 - Check for reputation reports, social media, disposable numbers and more
 - Use the graphical user interface to run scans from the browser
-- Programmatic usage with the REST API and [Go modules](https://pkg.go.dev/github.com/sundowndev/phoneinfoga/v2)
+- Programmatic usage with the [REST API](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/sundowndev/phoneinfoga/master/web/docs/swagger.yaml) and [Go modules](https://pkg.go.dev/github.com/sundowndev/phoneinfoga/v2)
 
 ## Anti-features
 

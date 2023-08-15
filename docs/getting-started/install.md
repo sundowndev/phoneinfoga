@@ -13,20 +13,34 @@ Follow the instructions :
 
 You can also do it from the terminal (UNIX systems only) :
 
-```shell
-# Download latest release in the current directory
-curl -sSL https://raw.githubusercontent.com/sundowndev/phoneinfoga/master/support/scripts/install | bash
+1. Download the latest release in the current directory
 
-# Check the binary
+```
+# Add --help at the end of the command for a list of install options
+bash <( curl -sSL https://raw.githubusercontent.com/sundowndev/phoneinfoga/master/support/scripts/install )
+```
+
+2. Install it globally
+```
+sudo install ./phoneinfoga /usr/local/bin/phoneinfoga
+```
+
+3. Test to ensure the version you installed is up-to-date
+```
 ./phoneinfoga version
-
-# You can also install it globally
-sudo mv ./phoneinfoga /usr/bin/phoneinfoga
 ```
 
 To ensure your system is supported, please check the output of `echo "$(uname -s)_$(uname -m)"` in your terminal and see if it's available on the [GitHub release page](https://github.com/sundowndev/phoneinfoga/releases).
 
-## Using Docker
+## Homebrew
+
+PhoneInfoga is now available on Homebrew. Homebrew is a free and open-source package management system for Mac OS X. Install the official phoneinfoga formula from the terminal.
+
+```shell
+brew install phoneinfoga
+```
+
+## Docker
 
 !!! info
     If you want to use the beta channel, you can use the `next` tag, it's updated directly from the master branch. But in most cases we recommend using [`latest`, `v2` or `stable` tags](https://hub.docker.com/r/sundowndev/phoneinfoga/tags) to only get release updates.
@@ -63,7 +77,7 @@ services:
         - "80:5000"
 ```
 
-### From the source code
+### Build from source
 
 You can download the source code, then build the docker images
 

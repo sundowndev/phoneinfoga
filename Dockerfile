@@ -1,4 +1,4 @@
-FROM node:15.11.0-alpine AS client_builder
+FROM node:20.3.1-alpine AS client_builder
 
 WORKDIR /app
 
@@ -7,7 +7,7 @@ RUN yarn install --immutable
 RUN yarn build
 RUN yarn cache clean
 
-FROM golang:1.17.8-alpine AS go_builder
+FROM golang:1.20.6-alpine AS go_builder
 
 WORKDIR /app
 
@@ -18,7 +18,7 @@ RUN go get -v -t -d ./...
 RUN make install-tools
 RUN make build
 
-FROM alpine:3.16
+FROM alpine:3.18
 COPY --from=go_builder /app/bin/phoneinfoga /app/phoneinfoga
 EXPOSE 5000
 ENTRYPOINT ["/app/phoneinfoga"]

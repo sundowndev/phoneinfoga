@@ -18,18 +18,23 @@ func (s *customScanner) Name() string {
 	return "customscanner"
 }
 
-// ShouldRun returns a boolean indicating whether
-// this scanner should be used or not.
+// Description returns a short description for this scanner.
+func (s *customScanner) Description() string {
+	return "This is a dummy scanner"
+}
+
+// DryRun returns an error indicating whether
+// this scanner can be used with the given number.
 // This can be useful to check for authentication or
 // country code support for example, and avoid running
 // the scanner when it just can't work.
-func (s *customScanner) ShouldRun(n number.Number) bool {
-	return true
+func (s *customScanner) DryRun(n number.Number) error {
+	return nil
 }
 
-// Scan does the actual scan of the phone number.
+// Run does the actual scan of the phone number.
 // Note this function will be executed in a goroutine.
-func (s *customScanner) Scan(n number.Number) (interface{}, error) {
+func (s *customScanner) Run(n number.Number) (interface{}, error) {
 	data := customScannerResponse{
 		Valid:  true,
 		Info:   "This number is known for scams!",

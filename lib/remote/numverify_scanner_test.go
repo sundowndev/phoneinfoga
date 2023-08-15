@@ -10,6 +10,12 @@ import (
 	"testing"
 )
 
+func TestNumverifyScanner_Metadata(t *testing.T) {
+	scanner := NewNumverifyScanner(&mocks.NumverifySupplier{})
+	assert.Equal(t, Numverify, scanner.Name())
+	assert.NotEmpty(t, scanner.Description())
+}
+
 func TestNumverifyScanner(t *testing.T) {
 	dummyError := errors.New("dummy")
 

@@ -23,6 +23,6 @@ func Execute() {
 }
 
 func exitWithError(err error) {
-	fmt.Println(color.RedString(err.Error()))
+	fmt.Fprintf(color.Error, "%s\n", color.RedString(err.Error()))
 	os.Exit(1)
 }

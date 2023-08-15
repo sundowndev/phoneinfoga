@@ -2,9 +2,10 @@ package remote
 
 import (
 	"fmt"
-	"github.com/sundowndev/phoneinfoga/v2/lib/number"
 	"os"
 	"plugin"
+
+	"github.com/sundowndev/phoneinfoga/v2/lib/number"
 )
 
 type Plugin interface {
@@ -13,8 +14,9 @@ type Plugin interface {
 
 type Scanner interface {
 	Name() string
-	Scan(number.Number) (interface{}, error)
-	ShouldRun(number.Number) bool
+	Description() string
+	DryRun(number.Number) error
+	Run(number.Number) (interface{}, error)
 }
 
 func OpenPlugin(path string) error {
@@ -24,7 +26,7 @@ func OpenPlugin(path string) error {
 
 	_, err := plugin.Open(path)
 	if err != nil {
-		return fmt.Errorf("given plugin %s is not valid", path)
+		return fmt.Errorf("given plugin %s is not valid: %v", path, err)
 	}
 
 	return nil

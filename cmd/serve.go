@@ -2,48 +2,79 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
+	"github.com/sirupsen/logrus"
+	"github.com/spf13/cobra"
+	"github.com/sundowndev/phoneinfoga/v2/build"
+	"github.com/sundowndev/phoneinfoga/v2/lib/filter"
+	"github.com/sundowndev/phoneinfoga/v2/lib/remote"
+	"github.com/sundowndev/phoneinfoga/v2/web"
+	"github.com/sundowndev/phoneinfoga/v2/web/v2/api/handlers"
 	"log"
 	"net/http"
-	"strconv"
-
-	"github.com/gin-gonic/gin"
-	"github.com/spf13/cobra"
-	"github.com/sundowndev/phoneinfoga/v2/web"
+	"os"
 )
 
-var httpPort int
-var disableClient bool
+type ServeCmdOptions struct {
+	HttpPort         int
+	DisableClient    bool
+	DisabledScanners []string
+	PluginPaths      []string
+	EnvFiles         []string
+}
 
 func init() {
 	// Register command
-	rootCmd.AddCommand(serveCmd)
+	opts := &ServeCmdOptions{}
+	cmd := NewServeCmd(opts)
+	rootCmd.AddCommand(cmd)
 
 	// Register flags
-	serveCmd.PersistentFlags().IntVarP(&httpPort, "port", "p", 5000, "HTTP port")
-	serveCmd.PersistentFlags().BoolVar(&disableClient, "no-client", false, "Disable web client (REST API only)")
+	cmd.PersistentFlags().IntVarP(&opts.HttpPort, "port", "p", 5000, "HTTP port")
+	cmd.PersistentFlags().BoolVar(&opts.DisableClient, "no-client", false, "Disable web client (REST API only)")
+	cmd.PersistentFlags().StringArrayVarP(&opts.DisabledScanners, "disable", "D", []string{}, "Scanner to skip for the scans")
+	cmd.PersistentFlags().StringArrayVar(&opts.PluginPaths, "plugin", []string{}, "Extra scanner plugin to use for the scans")
+	cmd.PersistentFlags().StringSliceVar(&opts.EnvFiles, "env-file", []string{}, "Env files to parse environment variables from (looks for .env by default)")
 }
 
-var serveCmd = &cobra.Command{
-	Use:   "serve",
-	Short: "Serve web client",
-	Run: func(cmd *cobra.Command, args []string) {
-		router := gin.Default()
+func NewServeCmd(opts *ServeCmdOptions) *cobra.Command {
+	return &cobra.Command{
+		Use:   "serve",
+		Short: "Serve web client",
+		PreRun: func(cmd *cobra.Command, args []string) {
+			err := godotenv.Load(opts.EnvFiles...)
+			if err != nil {
+				logrus.WithField("error", err).Debug("Error loading .env file")
+			}
 
-		_, err := web.Serve(router, disableClient)
-		if err != nil {
-			log.Fatal(err)
-		}
+			for _, p := range opts.PluginPaths {
+				err := remote.OpenPlugin(p)
+				if err != nil {
+					exitWithError(err)
+				}
+			}
 
-		httpPort := ":" + strconv.Itoa(httpPort)
+			// Initialize remote library
+			f := filter.NewEngine()
+			f.AddRule(opts.DisabledScanners...)
+			handlers.Init(f)
+		},
+		Run: func(cmd *cobra.Command, args []string) {
+			if build.IsRelease() && os.Getenv("GIN_MODE") == "" {
+				gin.SetMode(gin.ReleaseMode)
+			}
 
-		srv := &http.Server{
-			Addr:    httpPort,
-			Handler: router,
-		}
+			srv, err := web.NewServer(opts.DisableClient)
+			if err != nil {
+				log.Fatal(err)
+			}
 
-		fmt.Printf("Listening on %s\n", httpPort)
-		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			log.Fatalf("listen: %s\n", err)
-		}
-	},
+			addr := fmt.Sprintf(":%d", opts.HttpPort)
+			fmt.Printf("Listening on %s\n", addr)
+			if err := srv.ListenAndServe(addr); err != nil && err != http.ErrServerClosed {
+				log.Fatalf("listen: %s\n", err)
+			}
+		},
+	}
 }

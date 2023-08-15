@@ -1,6 +1,7 @@
 package remote
 
 import (
+	"errors"
 	"github.com/sirupsen/logrus"
 	"github.com/sundowndev/phoneinfoga/v2/lib/filter"
 	"github.com/sundowndev/phoneinfoga/v2/lib/number"
@@ -35,6 +36,10 @@ func (r *Library) LoadPlugins() {
 }
 
 func (r *Library) AddScanner(s Scanner) {
+	if r.filter.Match(s.Name()) {
+		logrus.WithField("scanner", s.Name()).Debug("Scanner was ignored by filter")
+		return
+	}
 	r.scanners = append(r.scanners, s)
 }
 
@@ -54,21 +59,25 @@ func (r *Library) Scan(n *number.Number) (map[string]interface{}, map[string]err
 	var wg sync.WaitGroup
 
 	for _, s := range r.scanners {
-		if r.filter.Match(s.Name()) {
-			logrus.WithField("scanner", s.Name()).Debug("Scanner was ignored by filter")
-			continue
-		}
-
-		if !s.ShouldRun(*n) {
-			logrus.WithField("scanner", s.Name()).Debug("Scanner was ignored because it should not run")
-			continue
-		}
-
 		wg.Add(1)
-
 		go func(s Scanner) {
 			defer wg.Done()
-			data, err := s.Scan(*n)
+			defer func() {
+				if err := recover(); err != nil {
+					logrus.WithField("scanner", s.Name()).WithField("error", err).Debug("Scanner panicked")
+					r.addError(s.Name(), errors.New("panic occurred while running scan, see debug logs"))
+				}
+			}()
+
+			if err := s.DryRun(*n); err != nil {
+				logrus.
+					WithField("scanner", s.Name()).
+					WithField("reason", err.Error()).
+					Debug("Scanner was ignored because it should not run")
+				return
+			}
+
+			data, err := s.Run(*n)
 			if err != nil {
 				r.addError(s.Name(), err)
 				return
@@ -82,6 +91,21 @@ func (r *Library) Scan(n *number.Number) (map[string]interface{}, map[string]err
 	wg.Wait()
 
 	return r.results, r.errors
+}
+
+func (r *Library) GetAllScanners() []Scanner {
+	return r.scanners
+}
+
+func (r *Library) GetScanner(name string) Scanner {
+	r.m.RLock()
+	defer r.m.RUnlock()
+	for _, s := range r.scanners {
+		if s.Name() == name {
+			return s
+		}
+	}
+	return nil
 }
 
 func RegisterPlugin(s Scanner) {

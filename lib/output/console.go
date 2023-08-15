@@ -70,10 +70,6 @@ func (o *ConsoleOutput) displayResult(val interface{}, prefix string) {
 
 		field, ok := reflectType.Field(i).Tag.Lookup("console")
 		if !ok || field == "-" {
-			logrus.WithFields(map[string]interface{}{
-				"found": ok,
-				"value": field,
-			}).Debug("Console field was ignored")
 			continue
 		}
 

@@ -48,6 +48,9 @@
     <b-container class="my-md-3">
       <b-row>
         <b-col cols="12">
+          <b-alert v-if="isDemo" show variant="warning" fade
+            >Welcome to the demo of PhoneInfoga web client.</b-alert
+          >
           <b-alert
             v-for="(err, i) in errors"
             v-bind:key="i"
@@ -84,6 +87,13 @@
         </b-navbar-nav>
       </b-container>
     </b-navbar>
+    <script
+      v-if="isDemo"
+      type="application/javascript"
+      defer
+      data-domain="demo.phoneinfoga.crvx.fr"
+      src="https://analytics.crvx.fr/js/script.js"
+    ></script>
   </div>
 </template>
 
@@ -93,10 +103,10 @@ import { mapState } from "vuex";
 import config from "@/config";
 import axios, { AxiosResponse } from "axios";
 
-type HealthResponse = { success: boolean; version: string };
+type HealthResponse = { success: boolean; version: string; demo: boolean };
 
 export default Vue.extend({
-  data: () => ({ config, version: "" }),
+  data: () => ({ config, version: "", isDemo: false }),
   computed: {
     ...mapState(["number", "errors"]),
   },
@@ -104,6 +114,7 @@ export default Vue.extend({
     const res: AxiosResponse<HealthResponse> = await axios.get(config.apiUrl);
 
     this.version = res.data.version;
+    this.isDemo = res.data.demo;
   },
 });
 </script>
