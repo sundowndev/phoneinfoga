@@ -2,6 +2,10 @@ before:
   hooks:
     - go generate ./...
     - go mod download
+signs:
+  - artifacts: checksum
+    args: ["--batch", "-u", "{{ .Env.GPG_FINGERPRINT }}", "--output", "${signature}", "--detach-sign", "${artifact}"]
+    signature: "${artifact}.gpg"
 builds:
 - env:
   - CGO_ENABLED=0
