@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@v3.6.0
 
       - name: Unshallow
         run: git fetch --prune --unshallow
@@ -50,7 +50,7 @@ jobs:
     runs-on: ubuntu-latest
     if: contains(toJson(github.event.commits), '[action]') == false
     steps:
-      - uses: actions/checkout@v3.5.3
+      - uses: actions/checkout@v3.6.0
         with:
           fetch-depth: 0
       - name: Set up QEMU
@@ -74,7 +74,7 @@ jobs:
   publish-docs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.5.3
+      - uses: actions/checkout@v3.6.0
       - name: Set up Python 3.8
         uses: actions/setup-python@v4.7.0
         with:
