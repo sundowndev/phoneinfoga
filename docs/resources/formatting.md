@@ -52,7 +52,8 @@ Here are some examples of custom formatting for US-based phone numbers :
 - `(618) 555.xxxx`
 - `(618)555xxxx`
 - `(618)555-xxxx`
-- `(618)555.xxxx`
+- '1(681)-389-1022
+- 
 
 For European countries (France as example) : 
 
@@ -74,5 +75,6 @@ For European countries (France as example) :
 - `(+33)018-648-xxx-x`
 - `(+33)01-86-48-xx-xx`
 - `(0033)01-86-48-xx-xx`
-- `(0033)018-648-xxx-x`
-- `+33/018 648 xxx x`
+  1-681-389-
+  1022
+  
