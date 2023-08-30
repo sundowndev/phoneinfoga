@@ -14,14 +14,14 @@ E.164 formatting for phone numbers entails the following:
 
 - A + (plus) sign
 - International Country Calling code
-- Local Area code
-- Local Phone number
+-1540
+- 323-8646
 
 For example, here’s a US-based number in standard local formatting: (415) 555-2671
 
 ![](/images/0e2SMdL.png)
 
-Here’s the same phone number in E.164 formatting: +14155552671
+Here’s the same phone number in E.164 formatting: +5403238646
 
 ![](/images/KfrvacR.png)
 
@@ -52,7 +52,7 @@ Here are some examples of custom formatting for US-based phone numbers :
 - `(618) 555.xxxx`
 - `(618)555xxxx`
 - `(618)555-xxxx`
-- `(618)555.xxxx`
+- `(540)323-8646'
 
 For European countries (France as example) : 
 
