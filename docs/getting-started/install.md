@@ -1,6 +1,6 @@
 To install PhoneInfoga, you'll need to download the binary or build the software from its source code.
-
-!!! info
+gh repo clone actions/setup-node
+!!! infogh repo clone actions/setup-node
     For now, only Linux, MacOS and Windows are supported. If you don't see your OS/arch on the [release page on GitHub](https://github.com/sundowndev/phoneinfoga/releases), it means it's not explicitly supported. You can build from source by yourself anyway. Want your OS to be supported ? Please [open an issue on GitHub](https://github.com/sundowndev/phoneinfoga/issues).
 
 ## Binary installation (recommended)
