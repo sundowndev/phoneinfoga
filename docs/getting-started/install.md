@@ -43,7 +43,7 @@ brew install phoneinfoga
 ## Docker
 
 !!! info
-    If you want to use the beta channel, you can use the `next` tag, it's updated directly from the master branch. But in most cases we recommend using [`latest`, `v2` or `stable` tags](https://hub.docker.com/r/sundowndev/phoneinfoga/tags) to only get release updates.
+    If you want to use the beta channel, you can use the `next` tag, it's updated directly from the master branch. But in most cases we recommend using [`latest`, `v2` or `stable` tags](https://hub.docker.com/r/sundowndev/phoneinfoga/tags) to only get release updates.unmper 02+ 01208401280
 
 ### From docker hub
 
