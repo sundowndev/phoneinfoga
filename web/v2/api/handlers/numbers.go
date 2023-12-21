@@ -8,18 +8,20 @@ import (
 )
 
 type AddNumberInput struct {
-	Number string `json:"number" binding:"number,required"`
+	Number  string   `json:"number" binding:"number,required"`
+	Formats []string `json:"formats"`
 }
 
 type AddNumberResponse struct {
-	Valid         bool   `json:"valid"`
-	RawLocal      string `json:"rawLocal"`
-	Local         string `json:"local"`
-	E164          string `json:"e164"`
-	International string `json:"international"`
-	CountryCode   int32  `json:"countryCode"`
-	Country       string `json:"country"`
-	Carrier       string `json:"carrier"`
+	Valid         bool     `json:"valid"`
+	RawLocal      string   `json:"rawLocal"`
+	Local         string   `json:"local"`
+	E164          string   `json:"e164"`
+	International string   `json:"international"`
+	CountryCode   int32    `json:"countryCode"`
+	Country       string   `json:"country"`
+	Carrier       string   `json:"carrier"`
+	CustomFormats []string `json:"custom_formats"`
 }
 
 // AddNumber is an HTTP handler
@@ -43,7 +45,7 @@ func AddNumber(ctx *gin.Context) *api.Response {
 		}
 	}
 
-	num, err := number.NewNumber(input.Number)
+	num, err := number.NewNumber(input.Number, input.Formats...)
 	if err != nil {
 		return &api.Response{
 			Code: http.StatusBadRequest,
@@ -64,6 +66,7 @@ func AddNumber(ctx *gin.Context) *api.Response {
 			CountryCode:   num.CountryCode,
 			Country:       num.Country,
 			Carrier:       num.Carrier,
+			CustomFormats: num.CustomFormats,
 		},
 	}
 }

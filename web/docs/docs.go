@@ -482,6 +482,12 @@ const docTemplate = `{
                 "number"
             ],
             "properties": {
+                "formats": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
                 "number": {
                     "type": "string"
                 }
@@ -498,6 +504,12 @@ const docTemplate = `{
                 },
                 "countryCode": {
                     "type": "integer"
+                },
+                "custom_formats": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "e164": {
                     "type": "string"
@@ -522,6 +534,12 @@ const docTemplate = `{
                 "number"
             ],
             "properties": {
+                "formats": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
                 "number": {
                     "type": "string"
                 }
@@ -555,6 +573,12 @@ const docTemplate = `{
                 "number"
             ],
             "properties": {
+                "formats": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
                 "number": {
                     "type": "string"
                 }
@@ -588,6 +612,12 @@ const docTemplate = `{
                 },
                 "countryCode": {
                     "type": "integer"
+                },
+                "customFormats": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "e164": {
                     "type": "string"

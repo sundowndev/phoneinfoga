@@ -18,6 +18,7 @@ type ScanCmdOptions struct {
 	DisabledScanners []string
 	PluginPaths      []string
 	EnvFiles         []string
+	Formats          []string
 }
 
 func init() {
@@ -31,6 +32,7 @@ func init() {
 	cmd.PersistentFlags().StringArrayVarP(&opts.DisabledScanners, "disable", "D", []string{}, "Scanner to skip for this scan")
 	cmd.PersistentFlags().StringArrayVar(&opts.PluginPaths, "plugin", []string{}, "Extra scanner plugin to use for the scan")
 	cmd.PersistentFlags().StringSliceVar(&opts.EnvFiles, "env-file", []string{}, "Env files to parse environment variables from (looks for .env by default)")
+	cmd.PersistentFlags().StringSliceVarP(&opts.Formats, "format", "f", []string{}, "Additional format for the given phone number(s)")
 	// scanCmd.PersistentFlags().StringVarP(&input, "input", "i", "", "Text file containing a list of phone numbers to scan (one per line)")
 	// scanCmd.PersistentFlags().StringVarP(&output, "output", "o", "", "Output to save scan results")
 }
@@ -62,7 +64,7 @@ func runScan(opts *ScanCmdOptions) {
 		exitWithError(errors.New("given phone number is not valid"))
 	}
 
-	num, err := number.NewNumber(opts.Number)
+	num, err := number.NewNumber(opts.Number, opts.Formats...)
 	if err != nil {
 		exitWithError(err)
 	}

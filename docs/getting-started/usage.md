@@ -16,6 +16,30 @@ phoneinfoga scan -n "+1 555-444-3333"
 
 !!! note "Note that the country code is essential. You don't know which country code to use ? [Find it here](https://www.countrycode.org/)"
 
+## Custom formats
+
+There's several ways to write down phone numbers and the way they're indexed by search engine makes it difficult to find them without applying custom formatting according to the country they come from. So you can specify a custom template that will be used by scanners and enhance the results.
+
+The letter `x` will be replaced by each digit of the local phone number (excluding 0). Some variables can be used in the template such as :
+
+| Variable    | Description                               | Example      |
+|:------------|:------------------------------------------|:-------------|
+| CountryCode | Country code of the phone number          | 34           |
+| Country     | Country of the phone number as letters    | US           |
+
+### Examples
+
+```bash
+# Add custom format +1 555.444.3333
+phoneinfoga scan -n "+1 555-444-3333" -f "+{{.CountryCode}} xxx.xxx.xxxx"
+
+# You can specify multiple formats at once
+phoneinfoga scan -n "+1 555-444-3333" -f "xxx.xxx.xxxx" -f "xxx-xxx-xxxx"
+
+# Add custom format 06.78.23.22.11
+phoneinfoga scan -n "+34678232211" -f "0x.xx.xx.xx.xx"
+```
+
 <!--
 #### Input & output file
 

@@ -37,6 +37,7 @@ func TestAddNumber(t *testing.T) {
 					CountryCode:   1,
 					Country:       "US",
 					Carrier:       "",
+					CustomFormats: []string{},
 				},
 			},
 		},

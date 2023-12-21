@@ -268,6 +268,15 @@ func getSocialMediaDorks(number number.Number) (results []*GoogleSearchDork) {
 			InText(number.RawLocal),
 	}
 
+	// Add custom formats to dork queries
+	if len(number.CustomFormats) > 0 {
+		for _, d := range dorks {
+			for _, f := range number.CustomFormats {
+				d.Or().InText(f)
+			}
+		}
+	}
+
 	for _, dork := range dorks {
 		results = append(results, &GoogleSearchDork{
 			Number: number.E164,
@@ -375,6 +384,15 @@ func getGeneralDorks(number number.Number) (results []*GoogleSearchDork) {
 			InText(number.E164).
 			Or().
 			InText(number.RawLocal),
+	}
+
+	// Add custom formats to dork queries
+	if len(number.CustomFormats) > 0 {
+		for _, d := range dorks {
+			for _, f := range number.CustomFormats {
+				d.Or().InText(f)
+			}
+		}
 	}
 
 	for _, dork := range dorks {
