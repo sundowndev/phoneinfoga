@@ -69,6 +69,10 @@ This tool is licensed under the GNU General Public License v3.0.
 
 ## Support
 
+Support me by signing up to DigitalOcean using my link ($200 free credits)
+
+[![DigitalOcean Referral Badge](https://web-platforms.sfo2.cdn.digitaloceanspaces.com/WWW/Badge%203.svg)](https://www.digitalocean.com/?refcode=31f5ef768eb3&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge)
+
 <div align="center">
   <img src="https://github.com/sundowndev/static/raw/main/sponsors.svg?v=c68eba9" width="100%" heigh="auto" />
 </div>
