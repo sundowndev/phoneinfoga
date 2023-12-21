@@ -39,7 +39,9 @@ PhoneInfoga is one of the most advanced tools to scan international phone number
 
 This project is stable and production-ready.
 
-You can try out the web client or REST API on the <a href="https://demo.phoneinfoga.crvx.fr/">demo instance</a>. **This is a test service**. Kittens will die if you abuse it. Most of scanners are not configured so you won't get relevant results.
+#### Demo instance termination
+
+The demo instance has been terminated on December 21th, 2023. It's been expensive to maintain this instance throughout the years given the number of requests it received (~20K/month), without bringing much value to users compared to using it locally. Use it locally with your own API keys for a better experience.
 
 ## Features
 
