@@ -519,11 +519,15 @@ const docTemplate = `{
         "handlers.DryRunScannerInput": {
             "type": "object",
             "required": [
-                "number"
+                "number",
+                "options"
             ],
             "properties": {
                 "number": {
                     "type": "string"
+                },
+                "options": {
+                    "$ref": "#/definitions/remote.ScannerOptions"
                 }
             }
         },
@@ -552,11 +556,15 @@ const docTemplate = `{
         "handlers.RunScannerInput": {
             "type": "object",
             "required": [
-                "number"
+                "number",
+                "options"
             ],
             "properties": {
                 "number": {
                     "type": "string"
+                },
+                "options": {
+                    "$ref": "#/definitions/remote.ScannerOptions"
                 }
             }
         },
@@ -706,6 +714,10 @@ const docTemplate = `{
                     "type": "string"
                 }
             }
+        },
+        "remote.ScannerOptions": {
+            "type": "object",
+            "additionalProperties": true
         },
         "web.JSONResponse": {
             "type": "object",
