@@ -3,6 +3,7 @@ package handlers
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/sundowndev/phoneinfoga/v2/lib/number"
+	"github.com/sundowndev/phoneinfoga/v2/lib/remote"
 	"github.com/sundowndev/phoneinfoga/v2/web/v2/api"
 	"net/http"
 )
@@ -43,7 +44,8 @@ func GetAllScanners(*gin.Context) *api.Response {
 }
 
 type DryRunScannerInput struct {
-	Number string `json:"number" binding:"number,required"`
+	Number  string                `json:"number" binding:"number,required"`
+	Options remote.ScannerOptions `json:"options" validate:"dive,required"`
 }
 
 type DryRunScannerResponse struct {
@@ -74,6 +76,10 @@ func DryRunScanner(ctx *gin.Context) *api.Response {
 		}
 	}
 
+	if input.Options == nil {
+		input.Options = make(remote.ScannerOptions)
+	}
+
 	scanner := RemoteLibrary.GetScanner(ctx.Param("scanner"))
 	if scanner == nil {
 		return &api.Response{
@@ -92,7 +98,7 @@ func DryRunScanner(ctx *gin.Context) *api.Response {
 		}
 	}
 
-	err = scanner.DryRun(*num)
+	err = scanner.DryRun(*num, input.Options)
 	if err != nil {
 		return &api.Response{
 			Code: http.StatusBadRequest,
@@ -114,7 +120,8 @@ func DryRunScanner(ctx *gin.Context) *api.Response {
 }
 
 type RunScannerInput struct {
-	Number string `json:"number" binding:"number,required"`
+	Number  string                `json:"number" binding:"number,required"`
+	Options remote.ScannerOptions `json:"options" validate:"dive,required"`
 }
 
 type RunScannerResponse struct {
@@ -144,6 +151,10 @@ func RunScanner(ctx *gin.Context) *api.Response {
 		}
 	}
 
+	if input.Options == nil {
+		input.Options = make(remote.ScannerOptions)
+	}
+
 	scanner := RemoteLibrary.GetScanner(ctx.Param("scanner"))
 	if scanner == nil {
 		return &api.Response{
@@ -162,7 +173,7 @@ func RunScanner(ctx *gin.Context) *api.Response {
 		}
 	}
 
-	result, err := scanner.Run(*num)
+	result, err := scanner.Run(*num, input.Options)
 	if err != nil {
 		return &api.Response{
 			Code: http.StatusInternalServerError,

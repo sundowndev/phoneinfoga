@@ -32,14 +32,14 @@ func (s *ovhScanner) Description() string {
 	return "Search a phone number through the OVH Telecom REST API."
 }
 
-func (s *ovhScanner) DryRun(n number.Number) error {
+func (s *ovhScanner) DryRun(n number.Number, _ ScannerOptions) error {
 	if !s.isSupported(n.CountryCode) {
 		return fmt.Errorf("country code %d is not supported", n.CountryCode)
 	}
 	return nil
 }
 
-func (s *ovhScanner) Run(n number.Number) (interface{}, error) {
+func (s *ovhScanner) Run(n number.Number, _ ScannerOptions) (interface{}, error) {
 	res, err := s.client.Search(n)
 	if err != nil {
 		return nil, err

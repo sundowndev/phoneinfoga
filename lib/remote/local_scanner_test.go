@@ -45,7 +45,7 @@ func TestLocalScanner(t *testing.T) {
 			remote := NewLibrary(filter.NewEngine())
 			remote.AddScanner(scanner)
 
-			if scanner.DryRun(*tt.number) != nil {
+			if scanner.DryRun(*tt.number, map[string]interface{}{}) != nil {
 				t.Fatal("DryRun() should return nil")
 			}
 

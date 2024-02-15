@@ -12,7 +12,7 @@ import (
 
 type NumverifySupplierInterface interface {
 	IsAvailable() bool
-	Validate(string) (*NumverifyValidateResponse, error)
+	Validate(string, string) (*NumverifyValidateResponse, error)
 }
 
 type NumverifyErrorResponse struct {
@@ -47,7 +47,14 @@ func (s *NumverifySupplier) IsAvailable() bool {
 	return s.ApiKey != ""
 }
 
-func (s *NumverifySupplier) Validate(internationalNumber string) (res *NumverifyValidateResponse, err error) {
+func (s *NumverifySupplier) Validate(internationalNumber string, customApiKey string) (res *NumverifyValidateResponse, err error) {
+	apiKey := s.ApiKey
+
+	// User-provided credentials
+	if customApiKey != "" {
+		apiKey = customApiKey
+	}
+
 	logrus.
 		WithField("number", internationalNumber).
 		Debug("Running validate operation through Numverify API")
@@ -57,7 +64,7 @@ func (s *NumverifySupplier) Validate(internationalNumber string) (res *Numverify
 	// Build the request
 	client := &http.Client{}
 	req, _ := http.NewRequest("GET", url, nil)
-	req.Header.Set("Apikey", s.ApiKey)
+	req.Header.Set("Apikey", apiKey)
 
 	response, err := client.Do(req)
 

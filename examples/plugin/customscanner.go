@@ -28,13 +28,13 @@ func (s *customScanner) Description() string {
 // This can be useful to check for authentication or
 // country code support for example, and avoid running
 // the scanner when it just can't work.
-func (s *customScanner) DryRun(n number.Number) error {
+func (s *customScanner) DryRun(n number.Number, opts remote.ScannerOptions) error {
 	return nil
 }
 
 // Run does the actual scan of the phone number.
 // Note this function will be executed in a goroutine.
-func (s *customScanner) Run(n number.Number) (interface{}, error) {
+func (s *customScanner) Run(n number.Number, opts remote.ScannerOptions) (interface{}, error) {
 	data := customScannerResponse{
 		Valid:  true,
 		Info:   "This number is known for scams!",

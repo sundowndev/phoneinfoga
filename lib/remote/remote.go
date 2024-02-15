@@ -69,7 +69,7 @@ func (r *Library) Scan(n *number.Number) (map[string]interface{}, map[string]err
 				}
 			}()
 
-			if err := s.DryRun(*n); err != nil {
+			if err := s.DryRun(*n, make(ScannerOptions)); err != nil {
 				logrus.
 					WithField("scanner", s.Name()).
 					WithField("reason", err.Error()).
@@ -77,7 +77,7 @@ func (r *Library) Scan(n *number.Number) (map[string]interface{}, map[string]err
 				return
 			}
 
-			data, err := s.Run(*n)
+			data, err := s.Run(*n, make(ScannerOptions))
 			if err != nil {
 				r.addError(s.Name(), err)
 				return

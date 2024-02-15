@@ -229,7 +229,8 @@ func TestGoogleCSEScanner_Scan_Success(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			_ = os.Setenv("GOOGLECSE_CX", "fake_search_engine_id")
 			_ = os.Setenv("GOOGLE_API_KEY", "fake_api_key")
-			defer os.Clearenv()
+			defer os.Unsetenv("GOOGLECSE_CX")
+			defer os.Unsetenv("GOOGLE_API_KEY")
 
 			tt.mocks()
 			defer gock.Off() // Flush pending mocks after test execution
@@ -238,7 +239,7 @@ func TestGoogleCSEScanner_Scan_Success(t *testing.T) {
 			remote := NewLibrary(filter.NewEngine())
 			remote.AddScanner(scanner)
 
-			if scanner.DryRun(*tt.number) != nil {
+			if scanner.DryRun(*tt.number, ScannerOptions{}) != nil {
 				t.Fatal("DryRun() should return nil")
 			}
 
@@ -259,12 +260,12 @@ func TestGoogleCSEScanner_DryRun(t *testing.T) {
 	defer os.Unsetenv("GOOGLECSE_CX")
 	defer os.Unsetenv("GOOGLE_API_KEY")
 	scanner := NewGoogleCSEScanner(&http.Client{})
-	assert.Nil(t, scanner.DryRun(*test.NewFakeUSNumber()))
+	assert.Nil(t, scanner.DryRun(*test.NewFakeUSNumber(), ScannerOptions{}))
 }
 
 func TestGoogleCSEScanner_DryRun_Error(t *testing.T) {
 	scanner := NewGoogleCSEScanner(&http.Client{})
-	assert.EqualError(t, scanner.DryRun(*test.NewFakeUSNumber()), "search engine ID and/or API key is not defined")
+	assert.EqualError(t, scanner.DryRun(*test.NewFakeUSNumber(), ScannerOptions{}), "search engine ID and/or API key is not defined")
 }
 
 func TestGoogleCSEScanner_MaxResults(t *testing.T) {

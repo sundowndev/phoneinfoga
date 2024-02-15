@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/stretchr/testify/assert"
 	"github.com/sundowndev/phoneinfoga/v2/lib/number"
+	"github.com/sundowndev/phoneinfoga/v2/lib/remote"
 	"testing"
 )
 
@@ -37,11 +38,11 @@ func TestCustomScanner(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			scanner := &customScanner{}
 
-			if scanner.DryRun(*tt.number) != nil {
+			if scanner.DryRun(*tt.number, remote.ScannerOptions{}) != nil {
 				t.Fatal("DryRun() should return nil")
 			}
 
-			got, err := scanner.Run(*tt.number)
+			got, err := scanner.Run(*tt.number, remote.ScannerOptions{})
 			if tt.wantError != "" {
 				assert.EqualError(t, err, tt.wantError)
 			} else {
