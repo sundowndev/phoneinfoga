@@ -279,7 +279,7 @@ func TestGoogleSearchScanner(t *testing.T) {
 				t.Fatal("DryRun() should return nil")
 			}
 
-			got, errs := lib.Scan(tt.number)
+			got, errs := lib.Scan(tt.number, remote.ScannerOptions{})
 			if len(tt.wantErrors) > 0 {
 				assert.Equal(t, tt.wantErrors, errs)
 			} else {

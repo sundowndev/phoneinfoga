@@ -23,6 +23,7 @@ func TestNumverifyScanner(t *testing.T) {
 	testcases := []struct {
 		name       string
 		number     *number.Number
+		opts       remote.ScannerOptions
 		mocks      func(s *mocks.NumverifySupplier)
 		expected   map[string]interface{}
 		wantErrors map[string]error
@@ -91,6 +92,45 @@ func TestNumverifyScanner(t *testing.T) {
 			expected:   map[string]interface{}{},
 			wantErrors: map[string]error{},
 		},
+		{
+			name: "should run with options defined",
+			opts: remote.ScannerOptions{
+				"api_key": "secret",
+			},
+			number: func() *number.Number {
+				n, _ := number.NewNumber("15556661212")
+				return n
+			}(),
+			mocks: func(s *mocks.NumverifySupplier) {
+				s.On("Validate", "15556661212", "secret").Return(&suppliers.NumverifyValidateResponse{
+					Valid:               true,
+					Number:              "test",
+					LocalFormat:         "test",
+					InternationalFormat: "test",
+					CountryPrefix:       "test",
+					CountryCode:         "test",
+					CountryName:         "test",
+					Location:            "test",
+					Carrier:             "test",
+					LineType:            "test",
+				}, nil).Once()
+			},
+			expected: map[string]interface{}{
+				"numverify": remote.NumverifyScannerResponse{
+					Valid:               true,
+					Number:              "test",
+					LocalFormat:         "test",
+					InternationalFormat: "test",
+					CountryPrefix:       "test",
+					CountryCode:         "test",
+					CountryName:         "test",
+					Location:            "test",
+					Carrier:             "test",
+					LineType:            "test",
+				},
+			},
+			wantErrors: map[string]error{},
+		},
 	}
 
 	for _, tt := range testcases {
@@ -102,7 +142,7 @@ func TestNumverifyScanner(t *testing.T) {
 			lib := remote.NewLibrary(filter.NewEngine())
 			lib.AddScanner(scanner)
 
-			got, errs := lib.Scan(tt.number)
+			got, errs := lib.Scan(tt.number, tt.opts)
 			if len(tt.wantErrors) > 0 {
 				assert.Equal(t, tt.wantErrors, errs)
 			} else {

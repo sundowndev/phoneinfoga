@@ -80,7 +80,7 @@ func TestOVHScanner(t *testing.T) {
 			lib := remote.NewLibrary(filter.NewEngine())
 			lib.AddScanner(scanner)
 
-			got, errs := lib.Scan(tt.number)
+			got, errs := lib.Scan(tt.number, remote.ScannerOptions{})
 			if len(tt.wantErrors) > 0 {
 				assert.Equal(t, tt.wantErrors, errs)
 			} else {

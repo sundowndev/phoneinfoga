@@ -80,7 +80,8 @@ func runScan(opts *ScanCmdOptions) {
 	remoteLibrary := remote.NewLibrary(f)
 	remote.InitScanners(remoteLibrary)
 
-	result, errs := remoteLibrary.Scan(num)
+	// Scanner options are currently not used in CLI
+	result, errs := remoteLibrary.Scan(num, remote.ScannerOptions{})
 
 	err = output.GetOutput(output.Console, color.Output).Write(result, errs)
 	if err != nil {

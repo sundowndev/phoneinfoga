@@ -40,7 +40,7 @@ func TestRemoteLibrary_SuccessScan(t *testing.T) {
 	lib.AddScanner(fakeScanner)
 	lib.AddScanner(fakeScanner2)
 
-	result, errs := lib.Scan(num)
+	result, errs := lib.Scan(num, remote.ScannerOptions{})
 	assert.Equal(t, expected, result)
 	assert.Equal(t, map[string]error{}, errs)
 
@@ -65,7 +65,7 @@ func TestRemoteLibrary_FailedScan(t *testing.T) {
 
 	lib.AddScanner(fakeScanner)
 
-	result, errs := lib.Scan(num)
+	result, errs := lib.Scan(num, remote.ScannerOptions{})
 	assert.Equal(t, map[string]interface{}{}, result)
 	assert.Equal(t, map[string]error{"fake": dummyError}, errs)
 
@@ -86,7 +86,7 @@ func TestRemoteLibrary_EmptyScan(t *testing.T) {
 
 	lib.AddScanner(fakeScanner)
 
-	result, errs := lib.Scan(num)
+	result, errs := lib.Scan(num, remote.ScannerOptions{})
 	assert.Equal(t, map[string]interface{}{}, result)
 	assert.Equal(t, map[string]error{}, errs)
 
@@ -108,7 +108,7 @@ func TestRemoteLibrary_PanicRun(t *testing.T) {
 
 	lib.AddScanner(fakeScanner)
 
-	result, errs := lib.Scan(num)
+	result, errs := lib.Scan(num, remote.ScannerOptions{})
 	assert.Equal(t, map[string]interface{}{}, result)
 	assert.Equal(t, map[string]error{"fake": errors.New("panic occurred while running scan, see debug logs")}, errs)
 
@@ -129,7 +129,7 @@ func TestRemoteLibrary_PanicDryRun(t *testing.T) {
 
 	lib.AddScanner(fakeScanner)
 
-	result, errs := lib.Scan(num)
+	result, errs := lib.Scan(num, remote.ScannerOptions{})
 	assert.Equal(t, map[string]interface{}{}, result)
 	assert.Equal(t, map[string]error{"fake": errors.New("panic occurred while running scan, see debug logs")}, errs)
 
