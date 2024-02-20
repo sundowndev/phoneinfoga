@@ -94,8 +94,8 @@ func TestGoogleCSEScanner_Scan_Success(t *testing.T) {
 			name:   "test with options and no results",
 			number: test.NewFakeUSNumber(),
 			opts: ScannerOptions{
-				"cx":      "custom_cx",
-				"api_key": "secret",
+				"GOOGLECSE_CX":   "custom_cx",
+				"GOOGLE_API_KEY": "secret",
 			},
 			expected: map[string]interface{}{
 				"googlecse": GoogleCSEScannerResponse{
@@ -337,10 +337,10 @@ func TestGoogleCSEScanner_DryRunWithOptions(t *testing.T) {
 	errStr := "search engine ID and/or API key is not defined"
 
 	scanner := NewGoogleCSEScanner(&http.Client{})
-	assert.Nil(t, scanner.DryRun(*test.NewFakeUSNumber(), ScannerOptions{"cx": "test", "api_key": "secret"}))
-	assert.EqualError(t, scanner.DryRun(*test.NewFakeUSNumber(), ScannerOptions{"cx": "", "api_key": ""}), errStr)
-	assert.EqualError(t, scanner.DryRun(*test.NewFakeUSNumber(), ScannerOptions{"cx": "test"}), errStr)
-	assert.EqualError(t, scanner.DryRun(*test.NewFakeUSNumber(), ScannerOptions{"api_key": "test"}), errStr)
+	assert.Nil(t, scanner.DryRun(*test.NewFakeUSNumber(), ScannerOptions{"GOOGLECSE_CX": "test", "GOOGLE_API_KEY": "secret"}))
+	assert.EqualError(t, scanner.DryRun(*test.NewFakeUSNumber(), ScannerOptions{"GOOGLECSE_CX": "", "GOOGLE_API_KEY": ""}), errStr)
+	assert.EqualError(t, scanner.DryRun(*test.NewFakeUSNumber(), ScannerOptions{"GOOGLECSE_CX": "test"}), errStr)
+	assert.EqualError(t, scanner.DryRun(*test.NewFakeUSNumber(), ScannerOptions{"GOOGLE_API_KEY": "test"}), errStr)
 }
 
 func TestGoogleCSEScanner_DryRun_Error(t *testing.T) {

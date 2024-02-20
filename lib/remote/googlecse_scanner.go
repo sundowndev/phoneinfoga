@@ -18,8 +18,6 @@ import (
 const GoogleCSE = "googlecse"
 
 type googleCSEScanner struct {
-	Cx         string
-	ApiKey     string
 	MaxResults int64
 	httpClient *http.Client
 }
@@ -52,8 +50,6 @@ func NewGoogleCSEScanner(HTTPclient *http.Client) Scanner {
 	}
 
 	return &googleCSEScanner{
-		Cx:         os.Getenv("GOOGLECSE_CX"),
-		ApiKey:     os.Getenv("GOOGLE_API_KEY"),
 		MaxResults: int64(maxResults),
 		httpClient: HTTPclient,
 	}
@@ -68,16 +64,7 @@ func (s *googleCSEScanner) Description() string {
 }
 
 func (s *googleCSEScanner) DryRun(_ number.Number, opts ScannerOptions) error {
-	var cx = s.Cx
-	var apikey = s.ApiKey
-
-	if v, ok := opts["cx"].(string); ok {
-		cx = v
-	}
-	if v, ok := opts["api_key"].(string); ok {
-		apikey = v
-	}
-	if cx == "" || apikey == "" {
+	if opts.GetStringEnv("GOOGLECSE_CX") == "" || opts.GetStringEnv("GOOGLE_API_KEY") == "" {
 		return errors.New("search engine ID and/or API key is not defined")
 	}
 	return nil
@@ -88,15 +75,8 @@ func (s *googleCSEScanner) Run(n number.Number, opts ScannerOptions) (interface{
 	var dorks []*GoogleSearchDork
 	var totalResultCount int
 	var totalRequestCount int
-	var cx = s.Cx
-	var apikey = s.ApiKey
-
-	if v, ok := opts["cx"].(string); ok {
-		cx = v
-	}
-	if v, ok := opts["api_key"].(string); ok {
-		apikey = v
-	}
+	var cx = opts.GetStringEnv("GOOGLECSE_CX")
+	var apikey = opts.GetStringEnv("GOOGLE_API_KEY")
 
 	dorks = append(dorks, s.generateDorkQueries(n)...)
 
@@ -169,7 +149,8 @@ func (s *googleCSEScanner) isRateLimit(theError error) bool {
 	if theError == nil {
 		return false
 	}
-	if _, ok := theError.(*googleapi.Error); !ok {
+	var err *googleapi.Error
+	if !errors.As(theError, &err) {
 		return false
 	}
 	if theError.(*googleapi.Error).Code != 429 {
