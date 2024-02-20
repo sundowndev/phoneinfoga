@@ -38,23 +38,16 @@ func (s *numverifyScanner) Description() string {
 }
 
 func (s *numverifyScanner) DryRun(_ number.Number, opts ScannerOptions) error {
-	if _, ok := opts["api_key"]; ok {
+	if opts.GetStringEnv("NUMVERIFY_API_KEY") != "" {
 		return nil
 	}
-	if !s.client.IsAvailable() {
-		return errors.New("API key is not defined")
-	}
-	return nil
+	return errors.New("API key is not defined")
 }
 
 func (s *numverifyScanner) Run(n number.Number, opts ScannerOptions) (interface{}, error) {
-	var apiKey string
+	apiKey := opts.GetStringEnv("NUMVERIFY_API_KEY")
 
-	if v, ok := opts["api_key"].(string); ok {
-		apiKey = v
-	}
-
-	res, err := s.client.Validate(n.International, apiKey)
+	res, err := s.client.Request().SetApiKey(apiKey).ValidateNumber(n.International)
 	if err != nil {
 		return nil, err
 	}

@@ -24,7 +24,7 @@ func TestNumverifyScanner(t *testing.T) {
 		name       string
 		number     *number.Number
 		opts       remote.ScannerOptions
-		mocks      func(s *mocks.NumverifySupplier)
+		mocks      func(*mocks.NumverifySupplier, *mocks.NumverifySupplierReq)
 		expected   map[string]interface{}
 		wantErrors map[string]error
 	}{
@@ -34,9 +34,13 @@ func TestNumverifyScanner(t *testing.T) {
 				n, _ := number.NewNumber("15556661212")
 				return n
 			}(),
-			mocks: func(s *mocks.NumverifySupplier) {
-				s.On("IsAvailable").Return(true)
-				s.On("Validate", "15556661212", "").Return(&suppliers.NumverifyValidateResponse{
+			opts: map[string]interface{}{
+				"NUMVERIFY_API_KEY": "secret",
+			},
+			mocks: func(s *mocks.NumverifySupplier, r *mocks.NumverifySupplierReq) {
+				s.On("Request").Return(r)
+				r.On("SetApiKey", "secret").Return(r)
+				r.On("ValidateNumber", "15556661212").Return(&suppliers.NumverifyValidateResponse{
 					Valid:               true,
 					Number:              "test",
 					LocalFormat:         "test",
@@ -71,9 +75,13 @@ func TestNumverifyScanner(t *testing.T) {
 				n, _ := number.NewNumber("15556661212")
 				return n
 			}(),
-			mocks: func(s *mocks.NumverifySupplier) {
-				s.On("IsAvailable").Return(true)
-				s.On("Validate", "15556661212", "").Return(nil, dummyError).Once()
+			opts: map[string]interface{}{
+				"NUMVERIFY_API_KEY": "secret",
+			},
+			mocks: func(s *mocks.NumverifySupplier, r *mocks.NumverifySupplierReq) {
+				s.On("Request").Return(r)
+				r.On("SetApiKey", "secret").Return(r)
+				r.On("ValidateNumber", "15556661212").Return(nil, dummyError).Once()
 			},
 			expected: map[string]interface{}{},
 			wantErrors: map[string]error{
@@ -86,49 +94,8 @@ func TestNumverifyScanner(t *testing.T) {
 				n, _ := number.NewNumber("15556661212")
 				return n
 			}(),
-			mocks: func(s *mocks.NumverifySupplier) {
-				s.On("IsAvailable").Return(false)
-			},
+			mocks:      func(s *mocks.NumverifySupplier, r *mocks.NumverifySupplierReq) {},
 			expected:   map[string]interface{}{},
-			wantErrors: map[string]error{},
-		},
-		{
-			name: "should run with options defined",
-			opts: remote.ScannerOptions{
-				"api_key": "secret",
-			},
-			number: func() *number.Number {
-				n, _ := number.NewNumber("15556661212")
-				return n
-			}(),
-			mocks: func(s *mocks.NumverifySupplier) {
-				s.On("Validate", "15556661212", "secret").Return(&suppliers.NumverifyValidateResponse{
-					Valid:               true,
-					Number:              "test",
-					LocalFormat:         "test",
-					InternationalFormat: "test",
-					CountryPrefix:       "test",
-					CountryCode:         "test",
-					CountryName:         "test",
-					Location:            "test",
-					Carrier:             "test",
-					LineType:            "test",
-				}, nil).Once()
-			},
-			expected: map[string]interface{}{
-				"numverify": remote.NumverifyScannerResponse{
-					Valid:               true,
-					Number:              "test",
-					LocalFormat:         "test",
-					InternationalFormat: "test",
-					CountryPrefix:       "test",
-					CountryCode:         "test",
-					CountryName:         "test",
-					Location:            "test",
-					Carrier:             "test",
-					LineType:            "test",
-				},
-			},
 			wantErrors: map[string]error{},
 		},
 	}
@@ -136,7 +103,8 @@ func TestNumverifyScanner(t *testing.T) {
 	for _, tt := range testcases {
 		t.Run(tt.name, func(t *testing.T) {
 			numverifySupplierMock := &mocks.NumverifySupplier{}
-			tt.mocks(numverifySupplierMock)
+			numverifySupplierReqMock := &mocks.NumverifySupplierReq{}
+			tt.mocks(numverifySupplierMock, numverifySupplierReqMock)
 
 			scanner := remote.NewNumverifyScanner(numverifySupplierMock)
 			lib := remote.NewLibrary(filter.NewEngine())

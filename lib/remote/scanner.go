@@ -10,6 +10,13 @@ import (
 
 type ScannerOptions map[string]interface{}
 
+func (o ScannerOptions) GetStringEnv(k string) string {
+	if v, ok := o[k].(string); ok {
+		return v
+	}
+	return os.Getenv(k)
+}
+
 type Plugin interface {
 	Lookup(string) (plugin.Symbol, error)
 }

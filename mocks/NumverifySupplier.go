@@ -12,52 +12,24 @@ type NumverifySupplier struct {
 	mock.Mock
 }
 
-// IsAvailable provides a mock function with given fields:
-func (_m *NumverifySupplier) IsAvailable() bool {
+// Request provides a mock function with given fields:
+func (_m *NumverifySupplier) Request() suppliers.NumverifySupplierRequestInterface {
 	ret := _m.Called()
 
 	if len(ret) == 0 {
-		panic("no return value specified for IsAvailable")
+		panic("no return value specified for Request")
 	}
 
-	var r0 bool
-	if rf, ok := ret.Get(0).(func() bool); ok {
+	var r0 suppliers.NumverifySupplierRequestInterface
+	if rf, ok := ret.Get(0).(func() suppliers.NumverifySupplierRequestInterface); ok {
 		r0 = rf()
 	} else {
-		r0 = ret.Get(0).(bool)
-	}
-
-	return r0
-}
-
-// Validate provides a mock function with given fields: _a0, _a1
-func (_m *NumverifySupplier) Validate(_a0 string, _a1 string) (*suppliers.NumverifyValidateResponse, error) {
-	ret := _m.Called(_a0, _a1)
-
-	if len(ret) == 0 {
-		panic("no return value specified for Validate")
-	}
-
-	var r0 *suppliers.NumverifyValidateResponse
-	var r1 error
-	if rf, ok := ret.Get(0).(func(string, string) (*suppliers.NumverifyValidateResponse, error)); ok {
-		return rf(_a0, _a1)
-	}
-	if rf, ok := ret.Get(0).(func(string, string) *suppliers.NumverifyValidateResponse); ok {
-		r0 = rf(_a0, _a1)
-	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*suppliers.NumverifyValidateResponse)
+			r0 = ret.Get(0).(suppliers.NumverifySupplierRequestInterface)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(string, string) error); ok {
-		r1 = rf(_a0, _a1)
-	} else {
-		r1 = ret.Error(1)
-	}
-
-	return r0, r1
+	return r0
 }
 
 // NewNumverifySupplier creates a new instance of NumverifySupplier. It also registers a testing interface on the mock and a cleanup function to assert the mocks expectations.
