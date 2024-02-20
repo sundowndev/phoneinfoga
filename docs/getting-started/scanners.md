@@ -19,7 +19,12 @@ GOOGLE_API_KEY="value"
 phoneinfoga scan -n +4176418xxxx --env-file=.env.local
 ```
 
-**HTTP API consumers**: You can also specify scanner options such as api keys on a per-request basis. Each scanner supports its own options, see below. For details on how to specify those options, see [API docs](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/sundowndev/phoneinfoga/master/web/docs/swagger.yaml). Scanner options will override environment variables for the current request.
+### Scanner options
+
+When using the **REST API**, you can also specify those values on a per-request basis. Each scanner supports its own options, see below. For details on how to specify those options, see [API docs](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/sundowndev/phoneinfoga/master/web/docs/swagger.yaml#/Numbers/RunScanner). For readability and simplicity, options are named exactly like their environment variable equivalent.
+
+!!! warning
+    Scanner options will override environment variables for the current request.
 
 ## Building your own scanner
 
@@ -67,7 +72,7 @@ Numverify provide standard but useful information such as country code, location
 
     | Environment variable |   Option   | Default | Description                                          |
     |----------------------|------------|---------|-------------------------------------------------------|
-    | NUMVERIFY_API_KEY    |   api_key  |         | API key to authenticate to the Numverify API.        |
+    | NUMVERIFY_API_KEY    |   NUMVERIFY_API_KEY  |         | API key to authenticate to the Numverify API.        |
 
 ??? example "Output example"
 
@@ -213,8 +218,8 @@ Follow the steps below to create a new search engine :
 
     |  Environment variable |  Option  | Default  | Description                                                 |
     |-----------------------|----------|----------|-------------------------------------------------------------|
-    | GOOGLECSE_CX          |    cx    |          | Search engine ID.            |
-    | GOOGLE_API_KEY        |  api_key |          | API key to authenticate to the Google API.  |
+    | GOOGLECSE_CX          |    GOOGLECSE_CX    |          | Search engine ID.            |
+    | GOOGLE_API_KEY        |  GOOGLE_API_KEY |          | API key to authenticate to the Google API.  |
     | GOOGLECSE_MAX_RESULTS |          |   10     | Maximum results for each request. Each 10 results requires an additional request. This value cannot go above 100.  |
 
 ??? example "Output example"
