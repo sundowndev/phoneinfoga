@@ -18,8 +18,6 @@ import (
 const GoogleCSE = "googlecse"
 
 type googleCSEScanner struct {
-	Cx         string
-	ApiKey     string
 	MaxResults int64
 	httpClient *http.Client
 }
@@ -52,8 +50,6 @@ func NewGoogleCSEScanner(HTTPclient *http.Client) Scanner {
 	}
 
 	return &googleCSEScanner{
-		Cx:         os.Getenv("GOOGLECSE_CX"),
-		ApiKey:     os.Getenv("GOOGLE_API_KEY"),
 		MaxResults: int64(maxResults),
 		httpClient: HTTPclient,
 	}
@@ -67,24 +63,26 @@ func (s *googleCSEScanner) Description() string {
 	return "Googlecse searches for footprints of a given phone number on the web using Google Custom Search Engine."
 }
 
-func (s *googleCSEScanner) DryRun(_ number.Number) error {
-	if s.Cx == "" || s.ApiKey == "" {
+func (s *googleCSEScanner) DryRun(_ number.Number, opts ScannerOptions) error {
+	if opts.GetStringEnv("GOOGLECSE_CX") == "" || opts.GetStringEnv("GOOGLE_API_KEY") == "" {
 		return errors.New("search engine ID and/or API key is not defined")
 	}
 	return nil
 }
 
-func (s *googleCSEScanner) Run(n number.Number) (interface{}, error) {
+func (s *googleCSEScanner) Run(n number.Number, opts ScannerOptions) (interface{}, error) {
 	var allItems []*customsearch.Result
 	var dorks []*GoogleSearchDork
 	var totalResultCount int
 	var totalRequestCount int
+	var cx = opts.GetStringEnv("GOOGLECSE_CX")
+	var apikey = opts.GetStringEnv("GOOGLE_API_KEY")
 
 	dorks = append(dorks, s.generateDorkQueries(n)...)
 
 	customsearchService, err := customsearch.NewService(
 		context.Background(),
-		option.WithAPIKey(s.ApiKey),
+		option.WithAPIKey(apikey),
 		option.WithHTTPClient(s.httpClient),
 	)
 	if err != nil {
@@ -92,7 +90,7 @@ func (s *googleCSEScanner) Run(n number.Number) (interface{}, error) {
 	}
 
 	for _, req := range dorks {
-		n, items, err := s.search(customsearchService, req.Dork)
+		n, items, err := s.search(customsearchService, req.Dork, cx)
 		if err != nil {
 			if s.isRateLimit(err) {
 				return nil, errors.New("rate limit exceeded, see https://developers.google.com/custom-search/v1/overview#pricing")
@@ -111,7 +109,7 @@ func (s *googleCSEScanner) Run(n number.Number) (interface{}, error) {
 			URL:   item.Link,
 		})
 	}
-	data.Homepage = fmt.Sprintf("https://cse.google.com/cse?cx=%s", s.Cx)
+	data.Homepage = fmt.Sprintf("https://cse.google.com/cse?cx=%s", cx)
 	data.ResultCount = len(allItems)
 	data.TotalResultCount = totalResultCount
 	data.TotalRequestCount = totalRequestCount
@@ -119,14 +117,14 @@ func (s *googleCSEScanner) Run(n number.Number) (interface{}, error) {
 	return data, nil
 }
 
-func (s *googleCSEScanner) search(service *customsearch.Service, q string) (int, []*customsearch.Result, error) {
+func (s *googleCSEScanner) search(service *customsearch.Service, q string, cx string) (int, []*customsearch.Result, error) {
 	var results []*customsearch.Result
 	var totalResultCount int
 
 	offset := int64(0)
 	for offset < s.MaxResults {
 		search := service.Cse.List()
-		search.Cx(s.Cx)
+		search.Cx(cx)
 		search.Q(q)
 		search.Start(offset)
 		searchQuery, err := search.Do()
@@ -151,7 +149,8 @@ func (s *googleCSEScanner) isRateLimit(theError error) bool {
 	if theError == nil {
 		return false
 	}
-	if _, ok := theError.(*googleapi.Error); !ok {
+	var err *googleapi.Error
+	if !errors.As(theError, &err) {
 		return false
 	}
 	if theError.(*googleapi.Error).Code != 429 {

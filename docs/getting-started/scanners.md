@@ -19,6 +19,13 @@ GOOGLE_API_KEY="value"
 phoneinfoga scan -n +4176418xxxx --env-file=.env.local
 ```
 
+### Scanner options
+
+When using the **REST API**, you can also specify those values on a per-request basis. Each scanner supports its own options, see below. For details on how to specify those options, see [API docs](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/sundowndev/phoneinfoga/master/web/docs/swagger.yaml#/Numbers/RunScanner). For readability and simplicity, options are named exactly like their environment variable equivalent.
+
+!!! warning
+    Scanner options will override environment variables for the current request.
+
 ## Building your own scanner
 
 PhoneInfoga can now be extended with plugins! You can build your own scanner and PhoneInfoga will use it to scan the given phone number.
@@ -63,9 +70,9 @@ Numverify provide standard but useful information such as country code, location
     2. Go to "Number Verification API" in the marketplace, click on "Subscribe for free", then choose whatever plan you want
     3. Copy the new API token and use it as an environment variable
 
-    | Environment variable | Default | Description                                                            |
-    |----------------------|---------|------------------------------------------------------------------------|
-    | NUMVERIFY_API_KEY    |         | API key to authenticate to the Numverify API.                          |
+    | Environment variable |   Option   | Default | Description                                          |
+    |----------------------|------------|---------|-------------------------------------------------------|
+    | NUMVERIFY_API_KEY    |   NUMVERIFY_API_KEY  |         | API key to authenticate to the Numverify API.        |
 
 ??? example "Output example"
 
@@ -209,11 +216,11 @@ Follow the steps below to create a new search engine :
 
 ??? info "Configuration"
 
-    | Environment variable | Default | Description                                                            |
-    |-----------------------|---------|------------------------------------------------------------------------|
-    | GOOGLECSE_CX          |         | Search engine ID.            |
-    | GOOGLE_API_KEY     |         | API key to authenticate to the Google API.  |
-    | GOOGLECSE_MAX_RESULTS |   10    | Maximum results for each request. Each 10 results requires an additional request. This value cannot go above 100.  |
+    |  Environment variable |  Option  | Default  | Description                                                 |
+    |-----------------------|----------|----------|-------------------------------------------------------------|
+    | GOOGLECSE_CX          |    GOOGLECSE_CX    |          | Search engine ID.            |
+    | GOOGLE_API_KEY        |  GOOGLE_API_KEY |          | API key to authenticate to the Google API.  |
+    | GOOGLECSE_MAX_RESULTS |          |   10     | Maximum results for each request. Each 10 results requires an additional request. This value cannot go above 100.  |
 
 ??? example "Output example"
 

@@ -1,15 +1,16 @@
-package remote
+package remote_test
 
 import (
 	"github.com/stretchr/testify/assert"
 	"github.com/sundowndev/phoneinfoga/v2/lib/filter"
 	"github.com/sundowndev/phoneinfoga/v2/lib/number"
+	"github.com/sundowndev/phoneinfoga/v2/lib/remote"
 	"testing"
 )
 
 func TestGoogleSearchScanner_Metadata(t *testing.T) {
-	scanner := NewGoogleSearchScanner()
-	assert.Equal(t, Googlesearch, scanner.Name())
+	scanner := remote.NewGoogleSearchScanner()
+	assert.Equal(t, remote.Googlesearch, scanner.Name())
 	assert.NotEmpty(t, scanner.Description())
 }
 
@@ -27,8 +28,8 @@ func TestGoogleSearchScanner(t *testing.T) {
 				return n
 			}(),
 			expected: map[string]interface{}{
-				"googlesearch": GoogleSearchResponse{
-					SocialMedia: []*GoogleSearchDork{
+				"googlesearch": remote.GoogleSearchResponse{
+					SocialMedia: []*remote.GoogleSearchDork{
 						{
 							Number: "+15556661212",
 							Dork:   "site:facebook.com intext:\"15556661212\" | intext:\"+15556661212\" | intext:\"5556661212\"",
@@ -55,7 +56,7 @@ func TestGoogleSearchScanner(t *testing.T) {
 							URL:    "https://www.google.com/search?q=site%3Avk.com+intext%3A%2215556661212%22+%7C+intext%3A%22%2B15556661212%22+%7C+intext%3A%225556661212%22",
 						},
 					},
-					DisposableProviders: []*GoogleSearchDork{
+					DisposableProviders: []*remote.GoogleSearchDork{
 						{
 							Number: "+15556661212",
 							Dork:   "site:hs3x.com intext:\"15556661212\"",
@@ -161,7 +162,7 @@ func TestGoogleSearchScanner(t *testing.T) {
 							URL:    "https://www.google.com/search?q=site%3Asmslive.co+intext%3A%2215556661212%22+%7C+intext%3A%225556661212%22",
 						},
 					},
-					Reputation: []*GoogleSearchDork{
+					Reputation: []*remote.GoogleSearchDork{
 						{
 							Number: "+15556661212",
 							Dork:   "site:whosenumber.info intext:\"+15556661212\" intitle:\"who called\"",
@@ -213,7 +214,7 @@ func TestGoogleSearchScanner(t *testing.T) {
 							URL:    "https://www.google.com/search?q=site%3Auk.popularphotolook.com+inurl%3A%225556661212%22",
 						},
 					},
-					Individuals: []*GoogleSearchDork{
+					Individuals: []*remote.GoogleSearchDork{
 						{
 							Number: "+15556661212",
 							Dork:   "site:numinfo.net intext:\"15556661212\" | intext:\"+15556661212\" | intext:\"5556661212\"",
@@ -250,7 +251,7 @@ func TestGoogleSearchScanner(t *testing.T) {
 							URL:    "https://www.google.com/search?q=site%3Aspytox.com+intext%3A%225556661212%22",
 						},
 					},
-					General: []*GoogleSearchDork{
+					General: []*remote.GoogleSearchDork{
 						{
 							Number: "+15556661212",
 							Dork:   "intext:\"15556661212\" | intext:\"+15556661212\" | intext:\"5556661212\" | intext:\"(555) 666-1212\"",
@@ -270,15 +271,15 @@ func TestGoogleSearchScanner(t *testing.T) {
 
 	for _, tt := range testcases {
 		t.Run(tt.name, func(t *testing.T) {
-			scanner := NewGoogleSearchScanner()
-			remote := NewLibrary(filter.NewEngine())
-			remote.AddScanner(scanner)
+			scanner := remote.NewGoogleSearchScanner()
+			lib := remote.NewLibrary(filter.NewEngine())
+			lib.AddScanner(scanner)
 
-			if scanner.DryRun(*tt.number) != nil {
+			if scanner.DryRun(*tt.number, remote.ScannerOptions{}) != nil {
 				t.Fatal("DryRun() should return nil")
 			}
 
-			got, errs := remote.Scan(tt.number)
+			got, errs := lib.Scan(tt.number, remote.ScannerOptions{})
 			if len(tt.wantErrors) > 0 {
 				assert.Equal(t, tt.wantErrors, errs)
 			} else {

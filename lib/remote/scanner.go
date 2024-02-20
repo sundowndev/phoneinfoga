@@ -8,6 +8,15 @@ import (
 	"github.com/sundowndev/phoneinfoga/v2/lib/number"
 )
 
+type ScannerOptions map[string]interface{}
+
+func (o ScannerOptions) GetStringEnv(k string) string {
+	if v, ok := o[k].(string); ok {
+		return v
+	}
+	return os.Getenv(k)
+}
+
 type Plugin interface {
 	Lookup(string) (plugin.Symbol, error)
 }
@@ -15,8 +24,8 @@ type Plugin interface {
 type Scanner interface {
 	Name() string
 	Description() string
-	DryRun(number.Number) error
-	Run(number.Number) (interface{}, error)
+	DryRun(number.Number, ScannerOptions) error
+	Run(number.Number, ScannerOptions) (interface{}, error)
 }
 
 func OpenPlugin(path string) error {

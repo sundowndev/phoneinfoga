@@ -45,11 +45,11 @@ func TestLocalScanner(t *testing.T) {
 			remote := NewLibrary(filter.NewEngine())
 			remote.AddScanner(scanner)
 
-			if scanner.DryRun(*tt.number) != nil {
+			if scanner.DryRun(*tt.number, ScannerOptions{}) != nil {
 				t.Fatal("DryRun() should return nil")
 			}
 
-			got, errs := remote.Scan(tt.number)
+			got, errs := remote.Scan(tt.number, ScannerOptions{})
 			if len(tt.wantErrors) > 0 {
 				assert.Equal(t, tt.wantErrors, errs)
 			} else {

@@ -53,8 +53,8 @@ lint:
 .PHONY: install-tools
 install-tools:
 	$(GOINSTALL) gotest.tools/gotestsum@v1.6.3
-	$(GOINSTALL) github.com/vektra/mockery/v2@v2.8.0
-	$(GOINSTALL) github.com/swaggo/swag/cmd/swag@v1.16.1
+	$(GOINSTALL) github.com/vektra/mockery/v2@v2.38.0
+	$(GOINSTALL) github.com/swaggo/swag/cmd/swag@v1.16.3
 	@which golangci-lint > /dev/null 2>&1 || (curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | bash -s -- -b $(GOBINPATH) v1.46.2)
 
 go.mod: FORCE

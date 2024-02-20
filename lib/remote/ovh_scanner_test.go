@@ -1,18 +1,19 @@
-package remote
+package remote_test
 
 import (
 	"errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/sundowndev/phoneinfoga/v2/lib/filter"
 	"github.com/sundowndev/phoneinfoga/v2/lib/number"
+	"github.com/sundowndev/phoneinfoga/v2/lib/remote"
 	"github.com/sundowndev/phoneinfoga/v2/lib/remote/suppliers"
 	"github.com/sundowndev/phoneinfoga/v2/mocks"
 	"testing"
 )
 
 func TestOVHScanner_Metadata(t *testing.T) {
-	scanner := NewOVHScanner(&mocks.OVHSupplier{})
-	assert.Equal(t, OVH, scanner.Name())
+	scanner := remote.NewOVHScanner(&mocks.OVHSupplier{})
+	assert.Equal(t, remote.OVH, scanner.Name())
 	assert.NotEmpty(t, scanner.Description())
 }
 
@@ -39,7 +40,7 @@ func TestOVHScanner(t *testing.T) {
 				}, nil).Once()
 			},
 			expected: map[string]interface{}{
-				"ovh": OVHScannerResponse{
+				"ovh": remote.OVHScannerResponse{
 					Found: false,
 				},
 			},
@@ -75,11 +76,11 @@ func TestOVHScanner(t *testing.T) {
 			OVHSupplierMock := &mocks.OVHSupplier{}
 			tt.mocks(OVHSupplierMock)
 
-			scanner := NewOVHScanner(OVHSupplierMock)
-			remote := NewLibrary(filter.NewEngine())
-			remote.AddScanner(scanner)
+			scanner := remote.NewOVHScanner(OVHSupplierMock)
+			lib := remote.NewLibrary(filter.NewEngine())
+			lib.AddScanner(scanner)
 
-			got, errs := remote.Scan(tt.number)
+			got, errs := lib.Scan(tt.number, remote.ScannerOptions{})
 			if len(tt.wantErrors) > 0 {
 				assert.Equal(t, tt.wantErrors, errs)
 			} else {

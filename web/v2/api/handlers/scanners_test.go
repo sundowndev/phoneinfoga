@@ -100,7 +100,39 @@ func TestDryRunScanner(t *testing.T) {
 			},
 			Mocks: func(s *mocks.Scanner) {
 				s.On("Name").Return("fakeScanner")
-				s.On("DryRun", *test.NewFakeUSNumber()).Return(nil)
+				s.On("DryRun", *test.NewFakeUSNumber(), remote.ScannerOptions{}).Return(nil)
+			},
+		},
+		{
+			Name:   "test dry running scanner with options",
+			Params: params{Supplier: "fakeScanner"},
+			Body: handlers.DryRunScannerInput{
+				Number:  "14152229670",
+				Options: remote.ScannerOptions{"api_key": "secret"},
+			},
+			Expected: expectedResponse{
+				Code: 200,
+				Body: handlers.DryRunScannerResponse{Success: true},
+			},
+			Mocks: func(s *mocks.Scanner) {
+				s.On("Name").Return("fakeScanner")
+				s.On("DryRun", *test.NewFakeUSNumber(), remote.ScannerOptions{"api_key": "secret"}).Return(nil)
+			},
+		},
+		{
+			Name:   "test dry running scanner with empty options",
+			Params: params{Supplier: "fakeScanner"},
+			Body: handlers.DryRunScannerInput{
+				Number:  "14152229670",
+				Options: remote.ScannerOptions{},
+			},
+			Expected: expectedResponse{
+				Code: 200,
+				Body: handlers.DryRunScannerResponse{Success: true},
+			},
+			Mocks: func(s *mocks.Scanner) {
+				s.On("Name").Return("fakeScanner")
+				s.On("DryRun", *test.NewFakeUSNumber(), remote.ScannerOptions{}).Return(nil)
 			},
 		},
 		{
@@ -113,7 +145,7 @@ func TestDryRunScanner(t *testing.T) {
 			},
 			Mocks: func(s *mocks.Scanner) {
 				s.On("Name").Return("fakeScanner")
-				s.On("DryRun", *test.NewFakeUSNumber()).Return(errors.New("dummy error"))
+				s.On("DryRun", *test.NewFakeUSNumber(), make(remote.ScannerOptions)).Return(errors.New("dummy error"))
 			},
 		},
 		{
@@ -218,7 +250,7 @@ func TestRunScanner(t *testing.T) {
 			},
 			Mocks: func(s *mocks.Scanner) {
 				s.On("Name").Return("fakeScanner")
-				s.On("Run", *test.NewFakeUSNumber()).Return(FakeScannerResponse{Info: "test"}, nil)
+				s.On("Run", *test.NewFakeUSNumber(), remote.ScannerOptions{}).Return(FakeScannerResponse{Info: "test"}, nil)
 			},
 		},
 		{
@@ -231,7 +263,7 @@ func TestRunScanner(t *testing.T) {
 			},
 			Mocks: func(s *mocks.Scanner) {
 				s.On("Name").Return("fakeScanner")
-				s.On("Run", *test.NewFakeUSNumber()).Return(nil, errors.New("dummy error"))
+				s.On("Run", *test.NewFakeUSNumber(), remote.ScannerOptions{}).Return(nil, errors.New("dummy error"))
 			},
 		},
 		{

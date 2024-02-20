@@ -1,18 +1,19 @@
-package remote
+package remote_test
 
 import (
 	"errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/sundowndev/phoneinfoga/v2/lib/filter"
 	"github.com/sundowndev/phoneinfoga/v2/lib/number"
+	"github.com/sundowndev/phoneinfoga/v2/lib/remote"
 	"github.com/sundowndev/phoneinfoga/v2/lib/remote/suppliers"
 	"github.com/sundowndev/phoneinfoga/v2/mocks"
 	"testing"
 )
 
 func TestNumverifyScanner_Metadata(t *testing.T) {
-	scanner := NewNumverifyScanner(&mocks.NumverifySupplier{})
-	assert.Equal(t, Numverify, scanner.Name())
+	scanner := remote.NewNumverifyScanner(&mocks.NumverifySupplier{})
+	assert.Equal(t, remote.Numverify, scanner.Name())
 	assert.NotEmpty(t, scanner.Description())
 }
 
@@ -22,7 +23,8 @@ func TestNumverifyScanner(t *testing.T) {
 	testcases := []struct {
 		name       string
 		number     *number.Number
-		mocks      func(s *mocks.NumverifySupplier)
+		opts       remote.ScannerOptions
+		mocks      func(*mocks.NumverifySupplier, *mocks.NumverifySupplierReq)
 		expected   map[string]interface{}
 		wantErrors map[string]error
 	}{
@@ -32,9 +34,13 @@ func TestNumverifyScanner(t *testing.T) {
 				n, _ := number.NewNumber("15556661212")
 				return n
 			}(),
-			mocks: func(s *mocks.NumverifySupplier) {
-				s.On("IsAvailable").Return(true)
-				s.On("Validate", "15556661212").Return(&suppliers.NumverifyValidateResponse{
+			opts: map[string]interface{}{
+				"NUMVERIFY_API_KEY": "secret",
+			},
+			mocks: func(s *mocks.NumverifySupplier, r *mocks.NumverifySupplierReq) {
+				s.On("Request").Return(r)
+				r.On("SetApiKey", "secret").Return(r)
+				r.On("ValidateNumber", "15556661212").Return(&suppliers.NumverifyValidateResponse{
 					Valid:               true,
 					Number:              "test",
 					LocalFormat:         "test",
@@ -48,7 +54,7 @@ func TestNumverifyScanner(t *testing.T) {
 				}, nil).Once()
 			},
 			expected: map[string]interface{}{
-				"numverify": NumverifyScannerResponse{
+				"numverify": remote.NumverifyScannerResponse{
 					Valid:               true,
 					Number:              "test",
 					LocalFormat:         "test",
@@ -69,9 +75,13 @@ func TestNumverifyScanner(t *testing.T) {
 				n, _ := number.NewNumber("15556661212")
 				return n
 			}(),
-			mocks: func(s *mocks.NumverifySupplier) {
-				s.On("IsAvailable").Return(true)
-				s.On("Validate", "15556661212").Return(nil, dummyError).Once()
+			opts: map[string]interface{}{
+				"NUMVERIFY_API_KEY": "secret",
+			},
+			mocks: func(s *mocks.NumverifySupplier, r *mocks.NumverifySupplierReq) {
+				s.On("Request").Return(r)
+				r.On("SetApiKey", "secret").Return(r)
+				r.On("ValidateNumber", "15556661212").Return(nil, dummyError).Once()
 			},
 			expected: map[string]interface{}{},
 			wantErrors: map[string]error{
@@ -84,9 +94,7 @@ func TestNumverifyScanner(t *testing.T) {
 				n, _ := number.NewNumber("15556661212")
 				return n
 			}(),
-			mocks: func(s *mocks.NumverifySupplier) {
-				s.On("IsAvailable").Return(false)
-			},
+			mocks:      func(s *mocks.NumverifySupplier, r *mocks.NumverifySupplierReq) {},
 			expected:   map[string]interface{}{},
 			wantErrors: map[string]error{},
 		},
@@ -95,13 +103,14 @@ func TestNumverifyScanner(t *testing.T) {
 	for _, tt := range testcases {
 		t.Run(tt.name, func(t *testing.T) {
 			numverifySupplierMock := &mocks.NumverifySupplier{}
-			tt.mocks(numverifySupplierMock)
+			numverifySupplierReqMock := &mocks.NumverifySupplierReq{}
+			tt.mocks(numverifySupplierMock, numverifySupplierReqMock)
 
-			scanner := NewNumverifyScanner(numverifySupplierMock)
-			remote := NewLibrary(filter.NewEngine())
-			remote.AddScanner(scanner)
+			scanner := remote.NewNumverifyScanner(numverifySupplierMock)
+			lib := remote.NewLibrary(filter.NewEngine())
+			lib.AddScanner(scanner)
 
-			got, errs := remote.Scan(tt.number)
+			got, errs := lib.Scan(tt.number, tt.opts)
 			if len(tt.wantErrors) > 0 {
 				assert.Equal(t, tt.wantErrors, errs)
 			} else {

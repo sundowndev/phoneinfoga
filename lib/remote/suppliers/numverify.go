@@ -4,15 +4,17 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"net/http"
-	"os"
-
 	"github.com/sirupsen/logrus"
+	"net/http"
 )
 
 type NumverifySupplierInterface interface {
-	IsAvailable() bool
-	Validate(string) (*NumverifyValidateResponse, error)
+	Request() NumverifySupplierRequestInterface
+}
+
+type NumverifySupplierRequestInterface interface {
+	SetApiKey(string) NumverifySupplierRequestInterface
+	ValidateNumber(string) (*NumverifyValidateResponse, error)
 }
 
 type NumverifyErrorResponse struct {
@@ -34,30 +36,40 @@ type NumverifyValidateResponse struct {
 }
 
 type NumverifySupplier struct {
-	ApiKey string
+	Uri string
 }
 
 func NewNumverifySupplier() *NumverifySupplier {
 	return &NumverifySupplier{
-		ApiKey: os.Getenv("NUMVERIFY_API_KEY"),
+		Uri: "https://api.apilayer.com",
 	}
 }
 
-func (s *NumverifySupplier) IsAvailable() bool {
-	return s.ApiKey != ""
+type NumverifyRequest struct {
+	apiKey string
+	uri    string
 }
 
-func (s *NumverifySupplier) Validate(internationalNumber string) (res *NumverifyValidateResponse, err error) {
+func (s *NumverifySupplier) Request() NumverifySupplierRequestInterface {
+	return &NumverifyRequest{uri: s.Uri}
+}
+
+func (r *NumverifyRequest) SetApiKey(k string) NumverifySupplierRequestInterface {
+	r.apiKey = k
+	return r
+}
+
+func (r *NumverifyRequest) ValidateNumber(internationalNumber string) (res *NumverifyValidateResponse, err error) {
 	logrus.
 		WithField("number", internationalNumber).
 		Debug("Running validate operation through Numverify API")
 
-	url := fmt.Sprintf("https://api.apilayer.com/number_verification/validate?number=%s", internationalNumber)
+	url := fmt.Sprintf("%s/number_verification/validate?number=%s", r.uri, internationalNumber)
 
 	// Build the request
 	client := &http.Client{}
 	req, _ := http.NewRequest("GET", url, nil)
-	req.Header.Set("Apikey", s.ApiKey)
+	req.Header.Set("Apikey", r.apiKey)
 
 	response, err := client.Do(req)
 

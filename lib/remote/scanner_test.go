@@ -2,6 +2,7 @@ package remote
 
 import (
 	"fmt"
+	"os"
 	"path/filepath"
 	"testing"
 
@@ -35,6 +36,45 @@ func Test_ValidatePlugin_Errors(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			err := OpenPlugin(tt.path)
 			assert.EqualError(t, err, tt.wantErr)
+		})
+	}
+}
+
+func TestScannerOptions(t *testing.T) {
+	testcases := []struct {
+		name  string
+		opts  ScannerOptions
+		check func(*testing.T, ScannerOptions)
+	}{
+		{
+			name: "test GetStringEnv with simple options",
+			opts: map[string]interface{}{
+				"foo": "bar",
+			},
+			check: func(t *testing.T, opts ScannerOptions) {
+				assert.Equal(t, opts.GetStringEnv("foo"), "bar")
+				assert.Equal(t, opts.GetStringEnv("bar"), "")
+			},
+		},
+		{
+			name: "test GetStringEnv with env vars",
+			opts: map[string]interface{}{
+				"foo_bar": "bar",
+			},
+			check: func(t *testing.T, opts ScannerOptions) {
+				_ = os.Setenv("FOO_BAR", "secret")
+				defer os.Unsetenv("FOO_BAR")
+
+				assert.Equal(t, opts.GetStringEnv("FOO_BAR"), "secret")
+				assert.Equal(t, opts.GetStringEnv("foo_bar"), "bar")
+				assert.Equal(t, opts.GetStringEnv("foo"), "")
+			},
+		},
+	}
+
+	for _, tt := range testcases {
+		t.Run(tt.name, func(t *testing.T) {
+			tt.check(t, tt.opts)
 		})
 	}
 }

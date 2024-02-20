@@ -55,7 +55,7 @@ func (r *Library) addError(k string, err error) {
 	r.errors[k] = err
 }
 
-func (r *Library) Scan(n *number.Number) (map[string]interface{}, map[string]error) {
+func (r *Library) Scan(n *number.Number, opts ScannerOptions) (map[string]interface{}, map[string]error) {
 	var wg sync.WaitGroup
 
 	for _, s := range r.scanners {
@@ -69,7 +69,7 @@ func (r *Library) Scan(n *number.Number) (map[string]interface{}, map[string]err
 				}
 			}()
 
-			if err := s.DryRun(*n); err != nil {
+			if err := s.DryRun(*n, opts); err != nil {
 				logrus.
 					WithField("scanner", s.Name()).
 					WithField("reason", err.Error()).
@@ -77,7 +77,7 @@ func (r *Library) Scan(n *number.Number) (map[string]interface{}, map[string]err
 				return
 			}
 
-			data, err := s.Run(*n)
+			data, err := s.Run(*n, opts)
 			if err != nil {
 				r.addError(s.Name(), err)
 				return

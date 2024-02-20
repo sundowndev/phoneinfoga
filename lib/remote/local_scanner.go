@@ -30,11 +30,11 @@ func (s *localScanner) Description() string {
 	return "Gather offline info about a given phone number."
 }
 
-func (s *localScanner) DryRun(_ number.Number) error {
+func (s *localScanner) DryRun(_ number.Number, _ ScannerOptions) error {
 	return nil
 }
 
-func (s *localScanner) Run(n number.Number) (interface{}, error) {
+func (s *localScanner) Run(n number.Number, _ ScannerOptions) (interface{}, error) {
 	data := LocalScannerResponse{
 		RawLocal:      n.RawLocal,
 		Local:         n.Local,

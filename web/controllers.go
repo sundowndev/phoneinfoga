@@ -76,7 +76,7 @@ func localScan(c *gin.Context) {
 		return
 	}
 
-	result, err := remote.NewLocalScanner().Run(*num)
+	result, err := remote.NewLocalScanner().Run(*num, make(remote.ScannerOptions))
 	if err != nil {
 		handleError(c, errors.NewInternalError(err))
 		return
@@ -104,7 +104,7 @@ func numverifyScan(c *gin.Context) {
 		return
 	}
 
-	result, err := remote.NewNumverifyScanner(suppliers.NewNumverifySupplier()).Run(*num)
+	result, err := remote.NewNumverifyScanner(suppliers.NewNumverifySupplier()).Run(*num, make(remote.ScannerOptions))
 	if err != nil {
 		handleError(c, errors.NewInternalError(err))
 		return
@@ -132,7 +132,7 @@ func googleSearchScan(c *gin.Context) {
 		return
 	}
 
-	result, err := remote.NewGoogleSearchScanner().Run(*num)
+	result, err := remote.NewGoogleSearchScanner().Run(*num, make(remote.ScannerOptions))
 	if err != nil {
 		handleError(c, errors.NewInternalError(err))
 		return
@@ -160,7 +160,7 @@ func ovhScan(c *gin.Context) {
 		return
 	}
 
-	result, err := remote.NewOVHScanner(suppliers.NewOVHSupplier()).Run(*num)
+	result, err := remote.NewOVHScanner(suppliers.NewOVHSupplier()).Run(*num, make(remote.ScannerOptions))
 	if err != nil {
 		handleError(c, errors.NewInternalError(err))
 		return

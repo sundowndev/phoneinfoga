@@ -37,15 +37,17 @@ func (s *numverifyScanner) Description() string {
 	return "Request info about a given phone number through the Numverify API."
 }
 
-func (s *numverifyScanner) DryRun(_ number.Number) error {
-	if !s.client.IsAvailable() {
-		return errors.New("API key is not defined")
+func (s *numverifyScanner) DryRun(_ number.Number, opts ScannerOptions) error {
+	if opts.GetStringEnv("NUMVERIFY_API_KEY") != "" {
+		return nil
 	}
-	return nil
+	return errors.New("API key is not defined")
 }
 
-func (s *numverifyScanner) Run(n number.Number) (interface{}, error) {
-	res, err := s.client.Validate(n.International)
+func (s *numverifyScanner) Run(n number.Number, opts ScannerOptions) (interface{}, error) {
+	apiKey := opts.GetStringEnv("NUMVERIFY_API_KEY")
+
+	res, err := s.client.Request().SetApiKey(apiKey).ValidateNumber(n.International)
 	if err != nil {
 		return nil, err
 	}
