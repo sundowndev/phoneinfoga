@@ -39,7 +39,7 @@ jobs:
         run: make install-tools
 
       - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v4.4.0
+        uses: goreleaser/goreleaser-action@v5.0.0
         with:
           version: v1.10.2
           args: release --rm-dist
