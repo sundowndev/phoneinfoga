@@ -2,7 +2,7 @@
 # Manual changes might be lost - proceed with caution!
 
 __metadata:
-  version: 5
+  version: 6
   cacheKey: 8
 
 "@aashutoshrathi/word-wrap@npm:^1.2.3":
@@ -4736,12 +4736,12 @@ __metadata:
   linkType: hard
 
 "deasync@npm:^0.1.15":
-  version: 0.1.28
-  resolution: "deasync@npm:0.1.28"
+  version: 0.1.29
+  resolution: "deasync@npm:0.1.29"
   dependencies:
     bindings: ^1.5.0
     node-addon-api: ^1.7.1
-  checksum: e0c1ef427875c897e0d903a08410df1d0a3dfd0d2a0a1e43fb6c2824dfbc504b810bd08a0d30653117259316e1aa65409c96dbed40101c934f75bac7499e1265
+  checksum: 60a23d893153832cd2e2da7afcdb7e21afdd63b0450f67466aefd387e8ca49b649484527ce7bd9e6282a1ea27be9db45a83e6a6cf8ddedd71c51aaf8c10cc323
   languageName: node
   linkType: hard
 
@@ -12288,7 +12288,7 @@ __metadata:
 
 "typescript@patch:typescript@4.9.5#~builtin<compat/typescript>":
   version: 4.9.5
-  resolution: "typescript@patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=ddd1e8"
+  resolution: "typescript@patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=701156"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
