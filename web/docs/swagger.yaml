@@ -83,6 +83,7 @@ definitions:
       country:
         type: string
       countryCode:
+        format: int32
         type: integer
       e164:
         type: string

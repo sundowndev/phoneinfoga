@@ -594,7 +594,8 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "countryCode": {
-                    "type": "integer"
+                    "type": "integer",
+                    "format": "int32"
                 },
                 "e164": {
                     "type": "string"
