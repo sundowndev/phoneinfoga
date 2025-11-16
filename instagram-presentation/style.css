@@ -1,0 +1,536 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Tajawal', Arial, sans-serif;
+    overflow: hidden;
+}
+
+.reveal {
+    font-family: 'Tajawal', Arial, sans-serif;
+}
+
+.reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+    font-family: 'Tajawal', Arial, sans-serif;
+    font-weight: 900;
+    text-transform: none;
+}
+
+/* Canvas Container for 3D Background */
+#canvas-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.3;
+}
+
+/* Title Slide */
+.title-slide {
+    text-align: center;
+    padding: 40px;
+}
+
+.instagram-icon {
+    font-size: 120px;
+    color: #fff;
+    margin-bottom: 30px;
+    animation: float 3s ease-in-out infinite;
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.glitch {
+    font-size: 80px;
+    font-weight: 900;
+    text-transform: uppercase;
+    position: relative;
+    color: #fff;
+    letter-spacing: 5px;
+    animation: glitch-text 5s infinite;
+    text-shadow:
+        0 0 10px rgba(255, 255, 255, 0.8),
+        0 0 20px rgba(255, 255, 255, 0.6),
+        0 0 30px rgba(255, 255, 255, 0.4);
+}
+
+@keyframes glitch-text {
+    0%, 90%, 100% {
+        transform: translate(0);
+    }
+    20% {
+        transform: translate(-2px, 2px);
+    }
+    40% {
+        transform: translate(-2px, -2px);
+    }
+    60% {
+        transform: translate(2px, 2px);
+    }
+    80% {
+        transform: translate(2px, -2px);
+    }
+}
+
+.title-slide h2 {
+    font-size: 36px;
+    margin: 20px 0;
+    color: #fff;
+}
+
+.subtitle {
+    font-size: 24px;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 300;
+}
+
+/* Section Title */
+.section-title {
+    font-size: 48px;
+    margin-bottom: 40px;
+    color: #fff;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+    animation: fadeInDown 1s;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Content Box */
+.content-box {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.icon-large {
+    font-size: 80px;
+    color: #fff;
+    margin-bottom: 30px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.feature-list {
+    list-style: none;
+    text-align: right;
+    font-size: 24px;
+    line-height: 2;
+    color: #fff;
+}
+
+.feature-list li {
+    margin: 15px 0;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    transition: all 0.3s;
+}
+
+.feature-list li:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateX(-10px);
+}
+
+/* Features Grid */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    padding: 20px;
+}
+
+.feature-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    transition: all 0.4s ease;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: rotate(45deg);
+    transition: all 0.5s;
+}
+
+.feature-card:hover::before {
+    left: 100%;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.card-icon {
+    font-size: 60px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.feature-card h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+.feature-card p {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+}
+
+/* Features List */
+.features-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 20px;
+    border-radius: 15px;
+    transition: all 0.3s;
+}
+
+.feature-item:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateX(-10px);
+}
+
+.feature-item i {
+    font-size: 40px;
+    color: #fff;
+    min-width: 50px;
+}
+
+.feature-item h4 {
+    font-size: 22px;
+    margin-bottom: 5px;
+    color: #fff;
+}
+
+.feature-item p {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Pros and Cons Container */
+.pros-cons-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.advantage-item,
+.disadvantage-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 15px;
+    transition: all 0.3s;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.advantage-item:hover,
+.disadvantage-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.advantage-item i {
+    font-size: 30px;
+    color: #4caf50;
+    min-width: 40px;
+}
+
+.disadvantage-item i {
+    font-size: 30px;
+    color: #f44336;
+    min-width: 40px;
+}
+
+.advantage-item span,
+.disadvantage-item span {
+    font-size: 18px;
+    color: #fff;
+    text-align: right;
+}
+
+/* Statistics Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    padding: 20px;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 40px 20px;
+    text-align: center;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s;
+}
+
+.stat-card:hover {
+    transform: translateY(-10px) rotate(5deg);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+.stat-number {
+    font-size: 56px;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.stat-label {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Tips Container */
+.tips-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    padding: 20px;
+}
+
+.tip-box {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s;
+}
+
+.tip-box:hover {
+    transform: scale(1.08);
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.tip-box i {
+    font-size: 50px;
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+.tip-box p {
+    font-size: 18px;
+    color: #fff;
+    line-height: 1.6;
+}
+
+/* Conclusion Slide */
+.conclusion-slide {
+    padding: 40px;
+}
+
+.conclusion-content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.conclusion-box {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s;
+}
+
+.conclusion-box:hover {
+    transform: translateX(-15px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.conclusion-box i {
+    font-size: 50px;
+    color: #ffd700;
+}
+
+.conclusion-box p {
+    font-size: 24px;
+    color: #fff;
+    text-align: right;
+}
+
+/* Thank You Slide */
+.thankyou-slide {
+    text-align: center;
+    padding: 60px;
+}
+
+.instagram-icon-large {
+    font-size: 150px;
+    color: #fff;
+    margin-bottom: 30px;
+    animation: rotateIcon 4s linear infinite;
+    text-shadow: 0 0 50px rgba(255, 255, 255, 0.6);
+}
+
+@keyframes rotateIcon {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    50% {
+        transform: rotate(180deg) scale(1.2);
+    }
+    100% {
+        transform: rotate(360deg) scale(1);
+    }
+}
+
+.thankyou-title {
+    font-size: 80px;
+    color: #fff;
+    margin: 20px 0;
+    text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.5);
+}
+
+.thankyou-subtitle {
+    font-size: 40px;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 40px;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.social-icons i {
+    font-size: 60px;
+    color: #fff;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.social-icons i:hover {
+    transform: scale(1.3) rotate(360deg);
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .features-grid,
+    .pros-cons-container,
+    .stats-grid,
+    .tips-container {
+        grid-template-columns: 1fr;
+    }
+
+    .glitch {
+        font-size: 48px;
+    }
+
+    .section-title {
+        font-size: 36px;
+    }
+
+    .instagram-icon {
+        font-size: 80px;
+    }
+}
+
+/* Reveal.js Custom Styles */
+.reveal .slides section {
+    padding: 20px;
+}
+
+.reveal .controls {
+    color: #fff;
+}
+
+.reveal .progress {
+    background: rgba(255, 255, 255, 0.2);
+    color: #E1306C;
+}
+
+.reveal .slide-number {
+    color: #fff;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
