@@ -30,7 +30,7 @@ Input file must contain one phone number per line. Invalid numbers will be skipp
 #### Footprinting
 
 ```
-phoneinfoga scan -n +42837544833 -s footprints
+phoneinfoga scan -n +573219587248-s footprints
 ```
 
 #### Custom format reconnaissance
