@@ -1,3 +1,6 @@
+phoneinfoga scan -n "+1 (555) 444-1212"
+phoneinfoga scan -n "+33 06 79368229"
+phoneinfoga scan -n "33679368229"
 # Scanners
 
 PhoneInfoga provide several scanners to extract as much information as possible from a given phone number. Those scanners may require authentication, so they're automatically skipped when no authentication credentials are found.
