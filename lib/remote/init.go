@@ -10,6 +10,7 @@ func InitScanners(remote *Library) {
 	nomoroboSupplier := suppliers.NewNomoroboSupplier()
 	shouldianswerSupplier := suppliers.NewShouldIAnswerSupplier()
 	veriphoneSupplier := suppliers.NewVeriphoneSupplier()
+	ftcSupplier := suppliers.NewFTCSupplier()
 
 	remote.AddScanner(NewLocalScanner())
 	remote.AddScanner(NewNumverifyScanner(numverifySupplier))
@@ -19,6 +20,7 @@ func InitScanners(remote *Library) {
 	remote.AddScanner(NewNomoroboScanner(nomoroboSupplier))
 	remote.AddScanner(NewShouldIAnswerScanner(shouldianswerSupplier))
 	remote.AddScanner(NewVeriphoneScanner(veriphoneSupplier))
+	remote.AddScanner(NewFTCScanner(ftcSupplier))
 
 	remote.LoadPlugins()
 }
