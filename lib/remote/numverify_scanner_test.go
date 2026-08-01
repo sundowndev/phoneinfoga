@@ -65,6 +65,7 @@ func TestNumverifyScanner(t *testing.T) {
 					Location:            "test",
 					Carrier:             "test",
 					LineType:            "test",
+					SpoofRisk:           "unknown - not enough data",
 				},
 			},
 			wantErrors: map[string]error{},
