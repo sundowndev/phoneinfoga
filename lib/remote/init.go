@@ -9,6 +9,7 @@ func InitScanners(remote *Library) {
 	ovhSupplier := suppliers.NewOVHSupplier()
 	nomoroboSupplier := suppliers.NewNomoroboSupplier()
 	shouldianswerSupplier := suppliers.NewShouldIAnswerSupplier()
+	veriphoneSupplier := suppliers.NewVeriphoneSupplier()
 
 	remote.AddScanner(NewLocalScanner())
 	remote.AddScanner(NewNumverifyScanner(numverifySupplier))
@@ -17,6 +18,7 @@ func InitScanners(remote *Library) {
 	remote.AddScanner(NewGoogleCSEScanner(nil))
 	remote.AddScanner(NewNomoroboScanner(nomoroboSupplier))
 	remote.AddScanner(NewShouldIAnswerScanner(shouldianswerSupplier))
+	remote.AddScanner(NewVeriphoneScanner(veriphoneSupplier))
 
 	remote.LoadPlugins()
 }
