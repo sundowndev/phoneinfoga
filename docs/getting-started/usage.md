@@ -3,9 +3,9 @@
 Use the `scan` command with the `-n` (or `--number`) option.
 
 ```
-phoneinfoga scan -n "+1 (555) 444-1212"
-phoneinfoga scan -n "+33 06 79368229"
-phoneinfoga scan -n "33679368229"
+phoneinfoga scan -n "+92 305 8195588”
+phoneinfoga scan -n "+92 305 8195588"
+phoneinfoga scan -n "+92 305 8195588"
 ```
 
 Special chars such as `( ) - +` will be escaped so typing US-based numbers stay easy : 
