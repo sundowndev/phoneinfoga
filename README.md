@@ -48,6 +48,28 @@ This project is stable but unmaintained. Upcoming bugs won't be fixed and reposi
 - Use the graphical user interface to run scans from the browser
 - Programmatic usage with the [REST API](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/sundowndev/phoneinfoga/master/web/docs/swagger.yaml) and [Go modules](https://pkg.go.dev/github.com/sundowndev/phoneinfoga/v2)
 
+## Telegram bot (workspace addition)
+
+This workspace includes a lightweight Telegram bot in `telegram_bot.py` for quick phone checks.
+
+### What it does
+
+- Supports `/start`, `/help`, `/search <phone>`, `/ip <address>`, `/email <address>`
+- Accepts plain text phone numbers in chat
+- Uses local search engine from `universal_search_system.py`
+- Returns basic phone info, local owner candidates, and redacted breach summary
+- Supports optional chat allowlist via `TELEGRAM_ALLOWED_CHAT_IDS`
+
+### Quick start
+
+1. Install dependencies from `requirements.txt`
+2. Set `TELEGRAM_BOT_TOKEN` in `.env`
+   - Optional: set `TELEGRAM_ALLOWED_CHAT_IDS` as comma-separated Telegram chat IDs
+3. Run the bot:
+  - direct: `python telegram_bot.py`
+  - integrated CLI: `python osint_cli.py telegram-bot`
+  - make target: `make telegram-bot`
+
 ## Anti-features
 
 - Does not claim to provide relevant or verified data, it's just a tool !

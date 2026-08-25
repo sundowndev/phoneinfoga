@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhoneInfoga Python</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 0;
+        }
+        .scanner-card {
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .scanner-card:hover {
+            transform: translateY(-5px);
+        }
+        .result-section {
+            display: none;
+        }
+        .loading-spinner {
+            display: none;
+        }
+        .phone-input {
+            font-size: 1.2rem;
+            padding: 1rem;
+        }
+        .scanner-checkbox {
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold mb-4">
+                        <i class="fas fa-phone-alt me-3"></i>PhoneInfoga Python
+                    </h1>
+                    <p class="lead mb-4">
+                        Advanced phone number information gathering framework - Python version
+                    </p>
+                    <p class="mb-0">
+                        Scan international phone numbers, gather basic information, 
+                        and perform OSINT footprinting using various techniques.
+                    </p>
+                </div>
+                <div class="col-lg-4">
+                    <div class="text-center">
+                        <i class="fas fa-search-location" style="font-size: 8rem; opacity: 0.7;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <!-- Input Section -->
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title mb-4">
+                            <i class="fas fa-search me-2"></i>Scan Phone Number
+                        </h3>
+                        
+                        <form id="scanForm">
+                            <div class="mb-4">
+                                <label for="phoneNumber" class="form-label fw-bold">
+                                    Phone Number
+                                </label>
+                                <input 
+                                    type="text" 
+                                    class="form-control phone-input" 
+                                    id="phoneNumber" 
+                                    placeholder="+1234567890 or 1234567890"
+                                    required
+                                >
+                                <div class="form-text">
+                                    Enter phone number with country code (e.g., +1234567890)
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label fw-bold">
+                                    <i class="fas fa-tools me-2"></i>Scanners
+                                </label>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="scanner-checkbox">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" 
+                                                       id="scanner-basic" value="basic" checked>
+                                                <label class="form-check-label" for="scanner-basic">
+                                                    <i class="fas fa-info-circle me-2"></i>Basic Information
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="scanner-checkbox">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" 
+                                                       id="scanner-google" value="google_search" checked>
+                                                <label class="form-check-label" for="scanner-google">
+                                                    <i class="fab fa-google me-2"></i>Google Search
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="scanner-checkbox">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" 
+                                                       id="scanner-numverify" value="numverify">
+                                                <label class="form-check-label" for="scanner-numverify">
+                                                    <i class="fas fa-key me-2"></i>Numverify API
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="scanner-checkbox">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" 
+                                                       id="scanner-ovh" value="ovh">
+                                                <label class="form-check-label" for="scanner-ovh">
+                                                    <i class="fas fa-server me-2"></i>OVH API
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-lg w-100">
+                                <i class="fas fa-search me-2"></i>Scan Number
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Section -->
+        <div class="row mb-5 loading-spinner">
+            <div class="col-lg-8 mx-auto text-center">
+                <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-3 fs-5">Scanning phone number...</p>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="row result-section">
+            <div class="col-lg-10 mx-auto">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="mb-0">
+                            <i class="fas fa-check-circle me-2"></i>Scan Results
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div id="resultsContent">
+                            <!-- Results will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scanner Information -->
+        <div class="row mt-5">
+            <div class="col-lg-12">
+                <h3 class="mb-4">Available Scanners</h3>
+                <div class="row">
+                    <div class="col-md-6 col-lg-3 mb-3">
+                        <div class="card scanner-card h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-info-circle fa-3x text-primary mb-3"></i>
+                                <h5 class="card-title">Basic Information</h5>
+                                <p class="card-text">
+                                    Get country, carrier, and formatting information
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 mb-3">
+                        <div class="card scanner-card h-100">
+                            <div class="card-body text-center">
+                                <i class="fab fa-google fa-3x text-danger mb-3"></i>
+                                <h5 class="card-title">Google Search</h5>
+                                <p class="card-text">
+                                    Generate Google dorks for OSINT research
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 mb-3">
+                        <div class="card scanner-card h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-key fa-3x text-warning mb-3"></i>
+                                <h5 class="card-title">Numverify API</h5>
+                                <p class="card-text">
+                                    Advanced validation using Numverify service
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 mb-3">
+                        <div class="card scanner-card h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-server fa-3x text-info mb-3"></i>
+                                <h5 class="card-title">OVH API</h5>
+                                <p class="card-text">
+                                    Carrier information via OVH service
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h5>PhoneInfoga Python</h5>
+                    <p class="mb-0">Phone number information gathering framework</p>
+                </div>
+                <div class="col-lg-4 text-end">
+                    <p class="mb-0">
+                        <i class="fab fa-python me-2"></i>Python Version
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('scanForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            if (!phoneNumber) {
+                alert('Please enter a phone number');
+                return;
+            }
+            
+            // Get selected scanners
+            const scanners = [];
+            document.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
+                scanners.push(checkbox.value);
+            });
+            
+            if (scanners.length === 0) {
+                alert('Please select at least one scanner');
+                return;
+            }
+            
+            // Show loading
+            document.querySelector('.loading-spinner').style.display = 'block';
+            document.querySelector('.result-section').style.display = 'none';
+            
+            try {
+                const response = await fetch('/api/scan', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        phone: phoneNumber,
+                        scanners: scanners
+                    })
+                });
+                
+                const result = await response.json();
+                
+                // Hide loading, show results
+                document.querySelector('.loading-spinner').style.display = 'none';
+                document.querySelector('.result-section').style.display = 'block';
+                
+                // Display results
+                displayResults(result);
+                
+            } catch (error) {
+                document.querySelector('.loading-spinner').style.display = 'none';
+                alert('Error: ' + error.message);
+            }
+        });
+        
+        function displayResults(result) {
+            const resultsContent = document.getElementById('resultsContent');
+            
+            if (result.error) {
+                resultsContent.innerHTML = `
+                    <div class="alert alert-danger">
+                        <h5><i class="fas fa-exclamation-triangle me-2"></i>Error</h5>
+                        <p>${result.error}</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = `
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h5><i class="fas fa-phone me-2"></i>Phone Information</h5>
+                        <p><strong>Input:</strong> ${result.input}</p>
+                        <p><strong>Valid:</strong> <span class="badge bg-success">Yes</span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <h5><i class="fas fa-tools me-2"></i>Scanners Used</h5>
+                        <p>${result.scanners_used.map(s => '<span class="badge bg-primary me-1">' + s + '</span>').join('')}</p>
+                    </div>
+                </div>
+            `;
+            
+            // Display results for each scanner
+            for (const [scanner, data] of Object.entries(result.results)) {
+                html += `
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h6 class="mb-0"><i class="fas fa-search me-2"></i>${scanner}</h6>
+                        </div>
+                        <div class="card-body">
+                            ${formatScannerResult(scanner, data)}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            resultsContent.innerHTML = html;
+        }
+        
+        function formatScannerResult(scanner, data) {
+            if (data.error) {
+                return `<div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    ${data.error}
+                </div>`;
+            }
+            
+            switch(scanner) {
+                case 'basic':
+                    return `
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Country:</strong> ${data.country || 'Unknown'}</p>
+                                <p><strong>Carrier:</strong> ${data.carrier || 'Unknown'}</p>
+                                <p><strong>Country Code:</strong> +${data.country_code}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>International:</strong> ${data.international_format}</p>
+                                <p><strong>National:</strong> ${data.national_format}</p>
+                                <p><strong>E164:</strong> ${data.e164_format}</p>
+                            </div>
+                        </div>
+                    `;
+                
+                case 'google_search':
+                    return `
+                        <p><strong>Search Query:</strong> ${data.search_query}</p>
+                        <p><strong>Google Dorks:</strong></p>
+                        <ul>
+                            ${data.google_dorks.map(dork => `<li><code>${dork}</code></li>`).join('')}
+                        </ul>
+                    `;
+                
+                case 'numverify':
+                case 'ovh':
+                    return `
+                        <p><strong>Service:</strong> ${data.service}</p>
+                        <p><strong>Requires API Key:</strong> ${data.requires_api_key ? 'Yes' : 'No'}</p>
+                        <p><strong>Endpoint:</strong> <code>${data.endpoint}</code></p>
+                        <p><strong>Note:</strong> ${data.note}</p>
+                    `;
+                
+                default:
+                    return `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+            }
+        }
+    </script>
+</body>
+</html>

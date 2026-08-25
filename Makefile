@@ -19,6 +19,10 @@ GIT_COMMIT=$(shell git rev-parse --short HEAD)
 .PHONY: all
 all: fmt lint test build go.mod
 
+.PHONY: telegram-bot
+telegram-bot:
+	python osint_cli.py telegram-bot
+
 .PHONY: build
 build:
 	go generate ./...

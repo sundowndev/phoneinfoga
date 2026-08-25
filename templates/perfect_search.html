@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfect Universal Search System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .search-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .result-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .loading-spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid white;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .tab-active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .result-item {
+            transition: all 0.3s ease;
+        }
+        
+        .result-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        
+        .status-online { background-color: #10b981; }
+        .status-error { background-color: #ef4444; }
+        .status-warning { background-color: #f59e0b; }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <!-- Header -->
+    <header class="glass-effect text-white p-6 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <i class="fas fa-search text-2xl"></i>
+                <h1 class="text-2xl font-bold">Perfect Universal Search</h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span id="status-indicator" class="status-indicator status-online"></span>
+                <span id="status-text" class="text-sm">Online</span>
+                <button onclick="clearCache()" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition">
+                    <i class="fas fa-trash mr-2"></i>Clear Cache
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-6">
+        <!-- Search Tabs -->
+        <div class="flex space-x-2 mb-6">
+            <button id="phone-tab" onclick="switchTab('phone')" class="tab-active px-6 py-3 rounded-lg font-medium transition">
+                <i class="fas fa-phone mr-2"></i>Phone Search
+            </button>
+            <button id="fio-tab" onclick="switchTab('fio')" class="glass-effect text-white px-6 py-3 rounded-lg font-medium hover:bg-white/20 transition">
+                <i class="fas fa-user mr-2"></i>FIO Search
+            </button>
+        </div>
+
+        <!-- Phone Search Panel -->
+        <div id="phone-panel" class="search-card rounded-2xl shadow-2xl p-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-phone-alt text-purple-600 mr-3"></i>Phone Number Search
+            </h2>
+            
+            <form id="phone-form" class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                    <div class="relative">
+                        <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                            <i class="fas fa-phone"></i>
+                        </span>
+                        <input type="text" id="phone-input" placeholder="+79991234567" 
+                               class="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none transition">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Search Types</label>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" name="phone-search-types" value="basic" checked class="w-4 h-4 text-purple-600">
+                            <span class="text-sm">Basic Info</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" name="phone-search-types" value="search_engines" checked class="w-4 h-4 text-purple-600">
+                            <span class="text-sm">Search Engines</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" name="phone-search-types" value="social" checked class="w-4 h-4 text-purple-600">
+                            <span class="text-sm">Social Media</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" name="phone-search-types" value="owlsint" checked class="w-4 h-4 text-purple-600">
+                            <span class="text-sm">Owl-sint</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" name="phone-search-types" value="data_breaches" class="w-4 h-4 text-purple-600">
+                            <span class="text-sm">Data Breaches</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" name="phone-search-types" value="sherlock" class="w-4 h-4 text-purple-600">
+                            <span class="text-sm">Sherlock Report</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-3 rounded-lg font-medium hover:from-purple-700 hover:to-blue-700 transition transform hover:scale-105">
+                    <i class="fas fa-search mr-2"></i>Search Phone Number
+                </button>
+            </form>
+        </div>
+
+        <!-- FIO Search Panel -->
+        <div id="fio-panel" class="search-card rounded-2xl shadow-2xl p-8 hidden">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-user text-purple-600 mr-3"></i>FIO Search
+            </h2>
+            
+            <form id="fio-form" class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Full Name (FIO)</label>
+                    <div class="relative">
+                        <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                            <i class="fas fa-user"></i>
+                        </span>
+                        <input type="text" id="fio-input" placeholder="Иванов Иван Иванович" 
+                               class="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none transition">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Search Types</label>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" name="fio-search-types" value="search_engines" checked class="w-4 h-4 text-purple-600">
+                            <span class="text-sm">Search Engines</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" name="fio-search-types" value="social" checked class="w-4 h-4 text-purple-600">
+                            <span class="text-sm">Social Media</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" name="fio-search-types" value="data_breaches" class="w-4 h-4 text-purple-600">
+                            <span class="text-sm">Data Breaches</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" name="fio-search-types" value="all" class="w-4 h-4 text-purple-600">
+                            <span class="text-sm">All Sources</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-3 rounded-lg font-medium hover:from-purple-700 hover:to-blue-700 transition transform hover:scale-105">
+                    <i class="fas fa-search mr-2"></i>Search FIO
+                </button>
+            </form>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div id="loading" class="hidden text-center py-12">
+            <div class="loading-spinner mx-auto mb-4"></div>
+            <p class="text-white text-lg">Searching...</p>
+        </div>
+
+        <!-- Results Section -->
+        <div id="results" class="mt-8 hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-white">
+                    <i class="fas fa-chart-line mr-2"></i>Search Results
+                </h3>
+                <div class="text-white text-sm">
+                    <span id="search-time"></span>
+                    <span id="cache-status" class="ml-4"></span>
+                </div>
+            </div>
+            
+            <div id="results-container" class="space-y-6">
+                <!-- Results will be inserted here -->
+            </div>
+        </div>
+
+        <!-- Error Section -->
+        <div id="error" class="mt-8 hidden">
+            <div class="bg-red-500/90 backdrop-filter backdrop-blur-lg rounded-2xl p-6 text-white">
+                <div class="flex items-center">
+                    <i class="fas fa-exclamation-triangle text-3xl mr-4"></i>
+                    <div>
+                        <h4 class="text-xl font-bold">Error</h4>
+                        <p id="error-message"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass-effect text-white p-6 mt-12">
+        <div class="container mx-auto text-center">
+            <p class="text-sm opacity-80">Perfect Universal Search System v1.0.0</p>
+            <p class="text-xs opacity-60 mt-2">Clean • Efficient • Reliable • Fast</p>
+        </div>
+    </footer>
+
+    <script>
+        let currentTab = 'phone';
+        let searchStartTime;
+
+        // Tab switching
+        function switchTab(tab) {
+            currentTab = tab;
+            
+            // Update tab buttons
+            document.getElementById('phone-tab').classList.remove('tab-active');
+            document.getElementById('fio-tab').classList.remove('tab-active');
+            document.getElementById('phone-tab').classList.add('glass-effect', 'text-white');
+            document.getElementById('fio-tab').classList.add('glass-effect', 'text-white');
+            
+            if (tab === 'phone') {
+                document.getElementById('phone-tab').classList.add('tab-active');
+                document.getElementById('phone-tab').classList.remove('glass-effect', 'text-white');
+                document.getElementById('phone-panel').classList.remove('hidden');
+                document.getElementById('fio-panel').classList.add('hidden');
+            } else {
+                document.getElementById('fio-tab').classList.add('tab-active');
+                document.getElementById('fio-tab').classList.remove('glass-effect', 'text-white');
+                document.getElementById('fio-panel').classList.remove('hidden');
+                document.getElementById('phone-panel').classList.add('hidden');
+            }
+            
+            hideResults();
+        }
+
+        // Show/hide sections
+        function showLoading() {
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('results').classList.add('hidden');
+            document.getElementById('error').classList.add('hidden');
+        }
+
+        function hideLoading() {
+            document.getElementById('loading').classList.add('hidden');
+        }
+
+        function showResults() {
+            document.getElementById('results').classList.remove('hidden');
+            document.getElementById('error').classList.add('hidden');
+        }
+
+        function showError(message) {
+            document.getElementById('error-message').textContent = message;
+            document.getElementById('error').classList.remove('hidden');
+            document.getElementById('results').classList.add('hidden');
+            document.getElementById('loading').classList.add('hidden');
+        }
+
+        function hideResults() {
+            document.getElementById('results').classList.add('hidden');
+            document.getElementById('error').classList.add('hidden');
+        }
+
+        // Get selected search types
+        function getSelectedSearchTypes(formName) {
+            const checkboxes = document.querySelectorAll(`input[name="${formName}-search-types"]:checked`);
+            return Array.from(checkboxes).map(cb => cb.value);
+        }
+
+        // Format time
+        function formatTime(timestamp) {
+            return new Date(timestamp).toLocaleString();
+        }
+
+        // Display results
+        function displayResults(data) {
+            console.log('Displaying results:', data);
+            
+            const container = document.getElementById('results-container');
+            container.innerHTML = '';
+            
+            // Check for API errors first
+            if (data.error) {
+                container.innerHTML = `
+                    <div class="result-card rounded-xl p-6 text-center">
+                        <i class="fas fa-exclamation-triangle text-4xl text-red-400 mb-4"></i>
+                        <h4 class="text-xl font-semibold text-red-700 mb-2">Error</h4>
+                        <p class="text-red-600">${data.error}</p>
+                        ${data.error_type ? `<p class="text-sm text-gray-500 mt-2">Type: ${data.error_type}</p>` : ''}
+                    </div>
+                `;
+                showResults();
+                return;
+            }
+            
+            // Check if no results found
+            if (!data.results || Object.keys(data.results).length === 0) {
+                container.innerHTML = `
+                    <div class="result-card rounded-xl p-6 text-center">
+                        <i class="fas fa-info-circle text-4xl text-gray-400 mb-4"></i>
+                        <h4 class="text-xl font-semibold text-gray-700 mb-2">${data.message || 'No results found'}</h4>
+                        <p class="text-gray-600">${data.note || 'Try different search parameters'}</p>
+                    </div>
+                `;
+                showResults();
+                return;
+            }
+            
+            console.log('Processing results sections:', Object.keys(data.results));
+
+            // Basic info
+            if (data.results.basic) {
+                const basic = data.results.basic;
+                container.innerHTML += `
+                    <div class="result-card rounded-xl p-6 result-item">
+                        <h4 class="text-lg font-semibold mb-4 text-purple-700">
+                            <i class="fas fa-info-circle mr-2"></i>Basic Information
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><strong>Valid:</strong> ${basic.valid ? '✅ Yes' : '❌ No'}</div>
+                            <div><strong>Country:</strong> ${basic.country || 'N/A'}</div>
+                            <div><strong>Carrier:</strong> ${basic.carrier || 'N/A'}</div>
+                            <div><strong>Mobile:</strong> ${basic.is_mobile ? '✅ Yes' : '❌ No'}</div>
+                            <div><strong>E164 Format:</strong> ${basic.e164_format || 'N/A'}</div>
+                            <div><strong>International:</strong> ${basic.international_format || 'N/A'}</div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Search engines
+            if (data.results.search_engines) {
+                let enginesHtml = `
+                    <div class="result-card rounded-xl p-6 result-item">
+                        <h4 class="text-lg font-semibold mb-4 text-purple-700">
+                            <i class="fas fa-search mr-2"></i>Search Engines
+                        </h4>
+                        <div class="space-y-4">
+                `;
+                
+                for (const [engine, data] of Object.entries(data.results.search_engines)) {
+                    enginesHtml += `
+                        <div class="border-l-4 border-purple-500 pl-4">
+                            <h5 class="font-semibold text-gray-800">${data.engine}</h5>
+                            <div class="mt-2 space-y-1">
+                                ${data.search_urls.map((url, index) => `
+                                    <a href="${url}" target="_blank" class="block text-blue-600 hover:text-blue-800 text-sm">
+                                        <i class="fas fa-external-link-alt mr-1"></i>${url}
+                                    </a>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                enginesHtml += '</div></div>';
+                container.innerHTML += enginesHtml;
+            }
+
+            // Social platforms
+            if (data.results.social_platforms) {
+                let socialHtml = `
+                    <div class="result-card rounded-xl p-6 result-item">
+                        <h4 class="text-lg font-semibold mb-4 text-purple-700">
+                            <i class="fas fa-share-alt mr-2"></i>Social Platforms
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                `;
+                
+                for (const [platform, data] of Object.entries(data.results.social_platforms)) {
+                    socialHtml += `
+                        <div class="border rounded-lg p-3 hover:shadow-md transition">
+                            <h5 class="font-semibold text-gray-800">${data.platform}</h5>
+                            <a href="${data.search_url}" target="_blank" class="text-blue-600 hover:text-blue-800 text-sm mt-2 inline-block">
+                                <i class="fas fa-external-link-alt mr-1"></i>Search on ${data.platform}
+                            </a>
+                        </div>
+                    `;
+                }
+                
+                socialHtml += '</div></div>';
+                container.innerHTML += socialHtml;
+            }
+
+            // Sherlock report results
+            if (data.results.sherlock_report) {
+                console.log('Processing Sherlock report:', data.results.sherlock_report);
+                
+                const sherlock = data.results.sherlock_report;
+                if (sherlock.found && sherlock.report) {
+                    const report = sherlock.report;
+                    
+                    try {
+                    
+                    // General Summary
+                    let summaryHtml = `
+                        <div class="result-card rounded-xl p-6 result-item border-l-4 border-blue-500">
+                            <h4 class="text-lg font-semibold mb-4 text-blue-700">
+                                <i class="fas fa-file-alt mr-2"></i>Sherlock Report - General Summary
+                            </h4>
+                            ${report.redacted ? `
+                                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4 text-sm text-yellow-800">
+                                    <i class="fas fa-user-shield mr-2"></i>Персональные данные в отчёте скрыты (redacted)
+                                </div>
+                            ` : ''}
+                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                    <div><strong>Phone:</strong> ${report.phone}</div>
+                                    <div><strong>Total Profiles:</strong> <span class="text-blue-600">${report.total_profiles}</span></div>
+                                    <div><strong>Total Sources:</strong> <span class="text-blue-600">${report.total_sources}</span></div>
+                                    <div><strong>Generated:</strong> ${new Date(report.generated_at).toLocaleString()}</div>
+                                </div>
+                            </div>
+                    `;
+                    
+                    // General summary details
+                    if (report.general_summary) {
+                        summaryHtml += '<div class="grid grid-cols-1 md:grid-cols-2 gap-4">';
+                        for (const [key, value] of Object.entries(report.general_summary)) {
+                            if (value) {
+                                summaryHtml += `<div><strong>${key}:</strong> ${value}</div>`;
+                            }
+                        }
+                        summaryHtml += '</div>';
+                    }
+                    
+                    summaryHtml += '</div>';
+                    container.innerHTML += summaryHtml;
+                    
+                    // Detailed sections
+                    report.sections.forEach(section => {
+                        let sectionHtml = `
+                            <div class="result-card rounded-xl p-6 result-item">
+                                <h4 class="text-lg font-semibold mb-4 text-gray-800">
+                                    <i class="fas fa-layer-group mr-2"></i>${section.title}
+                                </h4>
+                        `;
+                        
+                        if (section.title === 'Отчёты по найденным лицам') {
+                            section.content.forEach(profile => {
+                                sectionHtml += `
+                                    <div class="border rounded-lg p-4 mb-4 bg-gray-50">
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                            ${Object.entries(profile).map(([key, value]) => 
+                                                value ? `<div><strong>${key}:</strong> ${value}</div>` : ''
+                                            ).join('')}
+                                        </div>
+                                    </div>
+                                `;
+                            });
+                        } else if (section.title === 'Профили в интернете') {
+                            section.content.forEach(url => {
+                                sectionHtml += `
+                                    <div class="mb-2">
+                                        <a href="${url}" target="_blank" class="text-blue-600 hover:text-blue-800 text-sm">
+                                            <i class="fas fa-external-link-alt mr-1"></i>${url}
+                                        </a>
+                                    </div>
+                                `;
+                            });
+                        } else if (section.title.startsWith('Возможные имена')) {
+                            section.content.forEach(name => {
+                                sectionHtml += `<div class="mb-2 text-sm">• ${name}</div>`;
+                            });
+                        } else if (section.title.startsWith('Адреса')) {
+                            section.content.forEach(address => {
+                                sectionHtml += `<div class="mb-2 text-sm">• ${address}</div>`;
+                            });
+                        } else if (section.title === 'Сайты, где найдены регистрации') {
+                            section.content.forEach(site => {
+                                sectionHtml += `<div class="mb-2 text-sm">• ${site}</div>`;
+                            });
+                        } else if (section.title === 'Финансовая информация') {
+                            section.content.forEach(fin => {
+                                sectionHtml += `
+                                    <div class="border rounded-lg p-4 mb-4 bg-gray-50">
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                            ${Object.entries(fin).map(([key, value]) => 
+                                                value ? `<div><strong>${key}:</strong> ${value}</div>` : ''
+                                            ).join('')}
+                                        </div>
+                                    </div>
+                                `;
+                            });
+                        } else if (section.title === 'Информация об операторе') {
+                            for (const [key, value] of Object.entries(section.content)) {
+                                sectionHtml += `<div class="mb-2 text-sm"><strong>${key}:</strong> ${value}</div>`;
+                            }
+                        }
+                        
+                        sectionHtml += '</div>';
+                        container.innerHTML += sectionHtml;
+                    });
+                    
+                    // Download TXT report button
+                    container.innerHTML += `
+                        <div class="result-card rounded-xl p-6 result-item">
+                            <button onclick="downloadSherlockReport('${report.phone}')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition">
+                                <i class="fas fa-download mr-2"></i>Download TXT Report
+                            </button>
+                        </div>
+                    `;
+                } catch (error) {
+                    console.error('Error processing Sherlock report:', error);
+                    container.innerHTML += `
+                        <div class="result-card rounded-xl p-6 result-item">
+                            <h4 class="text-lg font-semibold mb-4 text-red-700">
+                                <i class="fas fa-exclamation-triangle mr-2"></i>Sherlock Report Error
+                            </h4>
+                            <div class="bg-red-50 rounded-lg p-4">
+                                <p class="text-red-800">Error processing Sherlock report: ${error.message}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+
+            // Data breaches results
+            if (data.results.data_breaches) {
+                const breaches = data.results.data_breaches;
+                if (breaches.found) {
+                    container.innerHTML += `
+                        <div class="result-card rounded-xl p-6 result-item border-l-4 border-red-500">
+                            <h4 class="text-lg font-semibold mb-4 text-red-700">
+                                <i class="fas fa-database mr-2"></i>Data Breaches Found
+                            </h4>
+                            <div class="bg-red-50 rounded-lg p-4 mb-4">
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                                    <div><strong>Records Found:</strong> <span class="text-red-600">${breaches.matches}</span></div>
+                                    <div><strong>Risk Level:</strong> <span class="text-red-600">${breaches.risk_assessment.highest_risk}</span></div>
+                                    <div><strong>Platforms:</strong> ${breaches.risk_assessment.platforms_affected.join(', ')}</div>
+                                </div>
+                            </div>
+                            ${(breaches.data_redacted || (breaches.data && breaches.data.length === 0)) ? `
+                                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4 text-sm text-yellow-800">
+                                    <i class="fas fa-user-shield mr-2"></i>Детальные записи утечек скрыты (redacted)
+                                </div>
+                            ` : ''}
+                            <div class="space-y-4">
+                                ${breaches.data.map(record => `
+                                    <div class="border rounded-lg p-4 bg-gray-50">
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div>
+                                                <h5 class="font-semibold text-gray-800 mb-2">${record.name || 'N/A'}</h5>
+                                                <div class="space-y-1 text-sm">
+                                                    <div><strong>Phone:</strong> ${record.phone || 'N/A'}</div>
+                                                    <div><strong>Email:</strong> ${record.email || 'N/A'}</div>
+                                                    <div><strong>Username:</strong> ${record.username || 'N/A'}</div>
+                                                    <div><strong>Platform:</strong> ${record.platform || 'N/A'}</div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="space-y-1 text-sm">
+                                                    <div><strong>Country:</strong> ${record.country || 'N/A'}</div>
+                                                    <div><strong>City:</strong> ${record.city || 'N/A'}</div>
+                                                    <div><strong>Birth Date:</strong> ${record.birth_date || 'N/A'}</div>
+                                                    <div><strong>Breach Date:</strong> ${record.breach_date || 'N/A'}</div>
+                                                    <div><strong>Risk Level:</strong> <span class="px-2 py-1 rounded text-xs font-semibold ${
+                                                        record.risk_level === 'HIGH' ? 'bg-red-100 text-red-800' :
+                                                        record.risk_level === 'MEDIUM' ? 'bg-yellow-100 text-yellow-800' :
+                                                        'bg-green-100 text-green-800'
+                                                    }">${record.risk_level}</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        ${record.address ? `<div class="mt-2 text-sm"><strong>Address:</strong> ${record.address}</div>` : ''}
+                                        ${record.password_hash ? `<div class="mt-2 text-sm text-red-600"><strong>Password Hash:</strong> ${record.password_hash}</div>` : ''}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    container.innerHTML += `
+                        <div class="result-card rounded-xl p-6 result-item">
+                            <h4 class="text-lg font-semibold mb-4 text-green-700">
+                                <i class="fas fa-shield-alt mr-2"></i>Data Breaches - Clean
+                            </h4>
+                            <div class="bg-green-50 rounded-lg p-4">
+                                <p class="text-green-800">No records found in breach databases. This appears to be clean.</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+
+            // Owl-sint advanced tracking
+            if (data.results.advanced_tracking && data.results.advanced_tracking.owlsint) {
+                const owlsint = data.results.advanced_tracking.owlsint;
+                container.innerHTML += `
+                    <div class="result-card rounded-xl p-6 result-item">
+                        <h4 class="text-lg font-semibold mb-4 text-purple-700">
+                            <i class="fas fa-owl mr-2"></i>Owl-sint Advanced Tracking
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h5 class="font-semibold text-gray-800 mb-3">Basic Info</h5>
+                                <div class="space-y-2 text-sm">
+                                    <div><strong>Valid:</strong> ${owlsint.basic_info?.valid_number ? '✅ Yes' : '❌ No'}</div>
+                                    <div><strong>Country:</strong> ${owlsint.basic_info?.country_code || 'N/A'}</div>
+                                    <div><strong>Location:</strong> ${owlsint.basic_info?.location || 'N/A'}</div>
+                                    <div><strong>Carrier:</strong> ${owlsint.basic_info?.carrier || 'N/A'}</div>
+                                    <div><strong>Mobile:</strong> ${owlsint.basic_info?.is_mobile ? '✅ Yes' : '❌ No'}</div>
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="font-semibold text-gray-800 mb-3">Social Links</h5>
+                                <div class="space-y-2">
+                                    ${Object.entries(owlsint.social_links || {}).map(([platform, url]) => `
+                                        <a href="${url}" target="_blank" class="block text-blue-600 hover:text-blue-800 text-sm">
+                                            <i class="fab fa-${platform} mr-1"></i>${platform.charAt(0).toUpperCase() + platform.slice(1)}
+                                        </a>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Update metadata
+            document.getElementById('search-time').textContent = `Searched at: ${formatTime(data.timestamp)}`;
+            document.getElementById('cache-status').textContent = data.cached ? '📦 From Cache' : '🔴 Live Search';
+            
+            showResults();
+        }
+
+        // Phone form submission
+        document.getElementById('phone-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const phone = document.getElementById('phone-input').value.trim();
+            const searchTypes = getSelectedSearchTypes('phone');
+            
+            console.log('Phone search:', { phone, searchTypes });
+            
+            if (!phone) {
+                showError('Please enter a phone number');
+                return;
+            }
+            
+            if (searchTypes.length === 0) {
+                showError('Please select at least one search type');
+                return;
+            }
+            
+            searchStartTime = Date.now();
+            showLoading();
+            
+            try {
+                const response = await fetch('/api/phone_search', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        phone: phone,
+                        search_types: searchTypes
+                    })
+                });
+                
+                console.log('Response status:', response.status);
+                
+                const data = await response.json();
+                console.log('Response data:', data);
+                
+                if (response.ok) {
+                    displayResults(data);
+                } else {
+                    console.error('API Error:', data);
+                    showError(data.error || 'Search failed');
+                }
+            } catch (error) {
+                console.error('Network error:', error);
+                showError('Network error. Please try again.');
+            } finally {
+                hideLoading();
+            }
+        });
+
+        // FIO form submission
+        document.getElementById('fio-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const fio = document.getElementById('fio-input').value.trim();
+            const searchTypes = getSelectedSearchTypes('fio');
+            
+            if (!fio) {
+                showError('Please enter a full name');
+                return;
+            }
+            
+            searchStartTime = Date.now();
+            showLoading();
+            
+            try {
+                const response = await fetch('/api/fio_search', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        fio: fio,
+                        search_types: searchTypes
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    displayResults(data);
+                } else {
+                    showError(data.error || 'Search failed');
+                }
+            } catch (error) {
+                showError('Network error. Please try again.');
+            } finally {
+                hideLoading();
+            }
+        });
+
+        // Download Sherlock report
+        function downloadSherlockReport(phone) {
+            window.open(`/api/sherlock/txt_report?phone=${encodeURIComponent(phone)}`, '_blank');
+        }
+
+        // Clear cache
+        async function clearCache() {
+            try {
+                const response = await fetch('/api/cache/clear', {
+                    method: 'POST'
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    alert('Cache cleared successfully!');
+                }
+            } catch (error) {
+                alert('Failed to clear cache');
+            }
+        }
+
+        // Check system status
+        async function checkStatus() {
+            try {
+                const response = await fetch('/api/status');
+                const data = await response.json();
+                
+                document.getElementById('status-indicator').className = 'status-indicator status-online';
+                document.getElementById('status-text').textContent = 'Online';
+            } catch (error) {
+                document.getElementById('status-indicator').className = 'status-indicator status-error';
+                document.getElementById('status-text').textContent = 'Offline';
+            }
+        }
+
+        // Initialize
+        checkStatus();
+        setInterval(checkStatus, 30000); // Check status every 30 seconds
+    </script>
+</body>
+</html>

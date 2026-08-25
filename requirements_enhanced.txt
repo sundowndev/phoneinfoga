@@ -1,0 +1,6 @@
+flask==2.3.3
+phonenumbers==8.13.11
+requests==2.31.0
+Pillow==12.1.0
+pathlib2==2.3.7
+python-telegram-bot==21.10

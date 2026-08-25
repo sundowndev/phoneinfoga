@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Универсальная Система Поиска</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 0;
+        }
+        .search-card {
+            border: none;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-radius: 15px;
+            transition: transform 0.3s;
+        }
+        .search-card:hover {
+            transform: translateY(-5px);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .nav-tabs .nav-link {
+            border: 2px solid #e0e0e0;
+            border-radius: 10px 10px 0 0;
+            margin-right: 5px;
+            transition: all 0.3s;
+        }
+        .nav-tabs .nav-link.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+        }
+        .source-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+        }
+        .source-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .source-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .result-section {
+            display: none;
+        }
+        .loading-spinner {
+            display: none;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .stats-card {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .search-url {
+            background-color: #f8f9fa;
+            padding: 0.5rem;
+            border-radius: 5px;
+            font-family: monospace;
+            word-break: break-all;
+            margin: 0.5rem 0;
+        }
+        .file-upload-area {
+            border: 2px dashed #667eea;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .file-upload-area:hover {
+            background-color: #f8f9ff;
+            border-color: #764ba2;
+        }
+        .file-upload-area.dragover {
+            background-color: #e8eaff;
+            border-color: #4a5fc1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold mb-4">
+                        <i class="fas fa-globe-americas me-3"></i>
+                        Универсальная Система Поиска
+                    </h1>
+                    <p class="lead mb-4">
+                        Комплексный OSINT инструмент для поиска по номерам телефонов и фотографиям
+                    </p>
+                    <p class="mb-0">
+                        Использует все возможные источники информации
+                    </p>
+                </div>
+                <div class="col-lg-4">
+                    <div class="text-center">
+                        <i class="fas fa-search" style="font-size: 8rem; opacity: 0.7;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <!-- Search Tabs -->
+        <ul class="nav nav-tabs mb-4" id="searchTabs">
+            <li class="nav-item">
+                <a class="nav-link active" href="#" data-tab="phone">
+                    <i class="fas fa-phone me-2"></i>Поиск по номеру
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-tab="telegram">
+                    <i class="fab fa-telegram me-2"></i>Поиск по нику Telegram
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-tab="photo">
+                    <i class="fas fa-image me-2"></i>Поиск по фото
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-tab="sources">
+                    <i class="fas fa-list me-2"></i>Источники
+                </a>
+            </li>
+        </ul>
+
+        <!-- Phone Search Tab -->
+        <div id="phone-tab" class="tab-content active">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="card search-card">
+                        <div class="card-body p-4">
+                            <h3 class="card-title mb-4">
+                                <i class="fas fa-phone me-2"></i>Поиск по номеру телефона
+                            </h3>
+                            
+                            <form id="phoneSearchForm">
+                                <div class="mb-4">
+                                    <label for="phoneNumber" class="form-label fw-bold">
+                                        Номер телефона
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="phoneNumber" 
+                                        placeholder="+7 (999) 123-45-67"
+                                        required
+                                    >
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold">
+                                        <i class="fas fa-cogs me-2"></i>Типы поиска
+                                    </label>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" 
+                                                       id="phone-basic" value="basic" checked>
+                                                <label class="form-check-label" for="phone-basic">
+                                                    <i class="fas fa-info-circle me-2"></i>Базовая информация
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" 
+                                                       id="phone-search-engines" value="search_engines" checked>
+                                                <label class="form-check-label" for="phone-search-engines">
+                                                    <i class="fas fa-search me-2"></i>Поисковые системы
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" 
+                                                       id="phone-social" value="social" checked>
+                                                <label class="form-check-label" for="phone-social">
+                                                    <i class="fas fa-users me-2"></i>Социальные сети
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" 
+                                                       id="phone-api" value="api">
+                                                <label class="form-check-label" for="phone-api">
+                                                    <i class="fas fa-key me-2"></i>API сервисы
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" 
+                                                       id="phone-all" value="all">
+                                                <label class="form-check-label" for="phone-all">
+                                                    <i class="fas fa-globe me-2"></i>Все источники
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary btn-lg w-100">
+                                    <i class="fas fa-search me-2"></i>Начать поиск
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Telegram Username Search Tab -->
+        <div id="telegram-tab" class="tab-content">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="card search-card">
+                        <div class="card-body p-4">
+                            <h3 class="card-title mb-4">
+                                <i class="fab fa-telegram me-2"></i>Поиск по нику Telegram
+                            </h3>
+                            
+                            <form id="telegramSearchForm">
+                                <div class="mb-4">
+                                    <label for="telegramUsername" class="form-label fw-bold">
+                                        Ник Telegram
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="telegramUsername" 
+                                        placeholder="@username"
+                                        required
+                                    >
+                                    <div class="form-text">
+                                        Введите ник пользователя Telegram (с @ или без)
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold">
+                                        <i class="fas fa-cogs me-2"></i>Типы поиска
+                                    </label>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" 
+                                                       id="telegram-social" value="social" checked>
+                                                <label class="form-check-label" for="telegram-social">
+                                                    <i class="fas fa-users me-2"></i>Социальные сети
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" 
+                                                       id="telegram-search-engines" value="search_engines">
+                                                <label class="form-check-label" for="telegram-search-engines">
+                                                    <i class="fas fa-search me-2"></i>Поисковые системы
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" 
+                                                       id="telegram-all" value="all">
+                                                <label class="form-check-label" for="telegram-all">
+                                                    <i class="fas fa-globe me-2"></i>Все источники
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary btn-lg w-100">
+                                    <i class="fab fa-telegram me-2"></i>Найти информацию
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Photo Search Tab -->
+        <div id="photo-tab" class="tab-content">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="card search-card">
+                        <div class="card-body p-4">
+                            <h3 class="card-title mb-4">
+                                <i class="fas fa-image me-2"></i>Поиск по фотографии
+                            </h3>
+                            
+                            <form id="photoSearchForm">
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold">
+                                        Загрузить изображение
+                                    </label>
+                                    <div class="file-upload-area" id="fileUploadArea">
+                                        <i class="fas fa-cloud-upload-alt fa-3x mb-3"></i>
+                                        <p class="mb-2">Нажмите для выбора файла или перетащите сюда</p>
+                                        <p class="text-muted">Поддерживаются: PNG, JPG, JPEG, GIF, BMP, WebP (макс. 16MB)</p>
+                                        <input type="file" id="photoFile" accept="image/*" style="display: none;">
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold">
+                                        <i class="fas fa-cogs me-2"></i>Типы анализа
+                                    </label>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" 
+                                                       id="photo-metadata" value="metadata" checked>
+                                                <label class="form-check-label" for="photo-metadata">
+                                                    <i class="fas fa-info-circle me-2"></i>Метаданные
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" 
+                                                       id="photo-search-engines" value="search_engines" checked>
+                                                <label class="form-check-label" for="photo-search-engines">
+                                                    <i class="fas fa-search me-2"></i>Поиск изображений
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" 
+                                                       id="photo-facial" value="facial">
+                                                <label class="form-check-label" for="photo-facial">
+                                                    <i class="fas fa-user me-2"></i>Распознавание лиц
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" 
+                                                       id="photo-all" value="all">
+                                                <label class="form-check-label" for="photo-all">
+                                                    <i class="fas fa-globe me-2"></i>Все источники
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary btn-lg w-100" id="photoSubmitBtn" disabled>
+                                    <i class="fas fa-search me-2"></i>Анализировать изображение
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sources Tab -->
+        <div id="sources-tab" class="tab-content">
+            <div class="row">
+                <div class="col-12">
+                    <h3 class="mb-4">
+                        <i class="fas fa-list me-2"></i>Доступные источники поиска
+                    </h3>
+                    
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <h4 class="mb-3"><i class="fas fa-search me-2"></i>Поисковые системы</h4>
+                            <div id="searchEnginesList">
+                                <!-- Will be populated by JavaScript -->
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <h4 class="mb-3"><i class="fas fa-users me-2"></i>Социальные сети</h4>
+                            <div id="socialPlatformsList">
+                                <!-- Will be populated by JavaScript -->
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <h4 class="mb-3"><i class="fas fa-image me-2"></i>Поиск изображений</h4>
+                            <div id="photoSearchEnginesList">
+                                <!-- Will be populated by JavaScript -->
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <h4 class="mb-3"><i class="fas fa-user me-2"></i>Распознавание лиц</h4>
+                            <div id="facialServicesList">
+                                <!-- Will be populated by JavaScript -->
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <h4 class="mb-3"><i class="fas fa-key me-2"></i>API сервисы</h4>
+                            <div id="apiServicesList">
+                                <!-- Will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Section -->
+        <div class="row mb-5 loading-spinner">
+            <div class="col-lg-8 mx-auto text-center">
+                <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+                    <span class="visually-hidden">Загрузка...</span>
+                </div>
+                <p class="mt-3 fs-5">Выполняется универсальный поиск...</p>
+                <div class="progress mt-3">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                         role="progressbar" style="width: 100%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="row result-section">
+            <div class="col-lg-12">
+                <!-- Stats Cards -->
+                <div class="stats-grid" id="statsCards">
+                    <!-- Stats will be populated here -->
+                </div>
+
+                <!-- Results Cards -->
+                <div id="resultsContent">
+                    <!-- Results will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h5>Универсальная Система Поиска</h5>
+                    <p class="mb-0">Комплексный OSINT инструмент</p>
+                </div>
+                <div class="col-lg-4 text-end">
+                    <p class="mb-0">
+                        <i class="fab fa-python me-2"></i>Universal Search System
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let selectedFile = null;
+
+        // Tab switching
+        document.querySelectorAll('[data-tab]').forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetTab = this.dataset.tab;
+                
+                // Update nav tabs
+                document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Update tab content
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                document.getElementById(targetTab + '-tab').classList.add('active');
+            });
+        });
+
+        // File upload handling
+        const fileUploadArea = document.getElementById('fileUploadArea');
+        const photoFile = document.getElementById('photoFile');
+        const photoSubmitBtn = document.getElementById('photoSubmitBtn');
+
+        fileUploadArea.addEventListener('click', () => photoFile.click());
+        
+        fileUploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileUploadArea.classList.add('dragover');
+        });
+        
+        fileUploadArea.addEventListener('dragleave', () => {
+            fileUploadArea.classList.remove('dragover');
+        });
+        
+        fileUploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileUploadArea.classList.remove('dragover');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileSelect(files[0]);
+            }
+        });
+        
+        photoFile.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFileSelect(e.target.files[0]);
+            }
+        });
+
+        function handleFileSelect(file) {
+            const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/bmp', 'image/webp'];
+            const maxSize = 16 * 1024 * 1024; // 16MB
+            
+            if (!allowedTypes.includes(file.type)) {
+                alert('Неподдерживаемый тип файла. Пожалуйста, выберите изображение.');
+                return;
+            }
+            
+            if (file.size > maxSize) {
+                alert('Файл слишком большой. Максимальный размер: 16MB');
+                return;
+            }
+            
+            selectedFile = file;
+            fileUploadArea.innerHTML = `
+                <i class="fas fa-check-circle fa-3x mb-3 text-success"></i>
+                <p class="mb-2"><strong>Выбран файл:</strong> ${file.name}</p>
+                <p class="text-muted">Размер: ${(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                <button type="button" class="btn btn-outline-secondary btn-sm mt-2" onclick="clearFile()">
+                    <i class="fas fa-times me-1"></i>Удалить файл
+                </button>
+            `;
+            photoSubmitBtn.disabled = false;
+        }
+
+        function clearFile() {
+            selectedFile = null;
+            photoFile.value = '';
+            fileUploadArea.innerHTML = `
+                <i class="fas fa-cloud-upload-alt fa-3x mb-3"></i>
+                <p class="mb-2">Нажмите для выбора файла или перетащите сюда</p>
+                <p class="text-muted">Поддерживаются: PNG, JPG, JPEG, GIF, BMP, WebP (макс. 16MB)</p>
+            `;
+            photoSubmitBtn.disabled = true;
+        }
+
+        // Telegram username search form
+        document.getElementById('telegramSearchForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('telegramUsername').value;
+            if (!username) {
+                alert('Пожалуйста, введите ник Telegram');
+                return;
+            }
+            
+            const searchTypes = [];
+            document.querySelectorAll('#telegramSearchForm input[type="checkbox"]:checked').forEach(checkbox => {
+                searchTypes.push(checkbox.value);
+            });
+            
+            if (searchTypes.length === 0) {
+                alert('Пожалуйста, выберите хотя бы один тип поиска');
+                return;
+            }
+            
+            await performTelegramSearch(username, searchTypes);
+        });
+
+        async function performTelegramSearch(username, searchTypes) {
+            showLoading();
+            
+            try {
+                const response = await fetch('/api/telegram_username_search', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: username, search_types: searchTypes })
+                });
+                
+                const result = await response.json();
+                hideLoading();
+                displayTelegramResults(result);
+            } catch (error) {
+                hideLoading();
+                alert('Ошибка: ' + error.message);
+            }
+        }
+
+        function displayTelegramResults(result) {
+            const resultsContent = document.getElementById('resultsContent');
+            const statsCards = document.getElementById('statsCards');
+            
+            if (result.error) {
+                resultsContent.innerHTML = `
+                    <div class="alert alert-danger">
+                        <h5><i class="fas fa-exclamation-triangle me-2"></i>Ошибка</h5>
+                        <p>${result.error}</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Display stats
+            const stats = {
+                social_platforms: result.results.social_platforms ? Object.keys(result.results.social_platforms).length : 0,
+                search_engines: result.results.search_engines ? Object.keys(result.results.search_engines).length : 0
+            };
+            
+            statsCards.innerHTML = `
+                <div class="stats-card">
+                    <i class="fab fa-telegram fa-2x mb-2"></i>
+                    <h4>${stats.social_platforms}</h4>
+                    <small>Социальные сети</small>
+                </div>
+                <div class="stats-card">
+                    <i class="fas fa-search fa-2x mb-2"></i>
+                    <h4>${stats.search_engines}</h4>
+                    <small>Поисковые системы</small>
+                </div>
+                <div class="stats-card">
+                    <i class="fas fa-user fa-2x mb-2"></i>
+                    <h4>${result.cleaned_username}</h4>
+                    <small>Ник пользователя</small>
+                </div>
+                <div class="stats-card">
+                    <i class="fas fa-check-circle fa-2x mb-2"></i>
+                    <h4>${result.valid ? 'Да' : 'Нет'}</h4>
+                    <small>Валидный</small>
+                </div>
+            `;
+            
+            // Display results
+            let html = `
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h4 class="mb-0">
+                            <i class="fab fa-telegram me-2"></i>Результаты поиска по нику Telegram
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <h5><i class="fab fa-telegram me-2"></i>Информация о нике</h5>
+                                <p><strong>Ввод:</strong> ${result.input}</p>
+                                <p><strong>Очищенный:</strong> ${result.cleaned_username}</p>
+                                <p><strong>Валидный:</strong> <span class="badge bg-success">Да</span></p>
+                                <p><strong>Профиль:</strong> <a href="https://t.me/${result.cleaned_username}" target="_blank">https://t.me/${result.cleaned_username}</a></p>
+                            </div>
+                            <div class="col-md-6">
+                                <h5><i class="fas fa-cogs me-2"></i>Использованные типы</h5>
+                                <p>${result.search_types.map(t => '<span class="badge bg-primary me-1">' + t + '</span>').join('')}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            for (const [category, data] of Object.entries(result.results)) {
+                html += formatTelegramResultsCategory(category, data);
+            }
+            
+            resultsContent.innerHTML = html;
+        }
+
+        function formatTelegramResultsCategory(category, data) {
+            const titles = {
+                'social_platforms': 'Социальные сети',
+                'search_engines': 'Поисковые системы'
+            };
+            
+            let html = `
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h6 class="mb-0">${titles[category] || category}</h6>
+                    </div>
+                    <div class="card-body">
+            `;
+            
+            if (category === 'social_platforms') {
+                for (const [source, info] of Object.entries(data)) {
+                    html += `
+                        <div class="source-card mb-3">
+                            <h6>
+                                <i class="fab fa-telegram me-2"></i>
+                                ${info.platform || source}
+                            </h6>
+                            ${info.profile_url ? `
+                                <div class="search-url">
+                                    <strong>Профиль:</strong> 
+                                    <a href="${info.profile_url}" target="_blank">${info.profile_url}</a>
+                                </div>
+                            ` : ''}
+                            ${info.api_url ? `
+                                <div class="search-url">
+                                    <strong>API URL:</strong> 
+                                    <code>${info.api_url.replace('<BOT_TOKEN>', '[BOT_TOKEN]')}</code>
+                                </div>
+                            ` : ''}
+                            ${info.note ? `<p class="text-muted"><small>${info.note}</small></p>` : ''}
+                            ${info.phone_extraction_methods ? `
+                                <p><strong>Методы извлечения номера:</strong></p>
+                                <ul>
+                                    ${info.phone_extraction_methods.map(method => `
+                                        <li>
+                                            <strong>${method.method}:</strong> ${method.description}
+                                            ${method.url ? `<br><a href="${method.url}" target="_blank">${method.url}</a>` : ''}
+                                            ${method.platforms ? `
+                                                <br><strong>Платформы:</strong>
+                                                <ul>
+                                                    ${method.platforms.map(platform => `<li><a href="${platform}" target="_blank">${platform}</a></li>`).join('')}
+                                                </ul>
+                                            ` : ''}
+                                            ${method.dorks ? `
+                                                <br><strong>Поисковые запросы:</strong>
+                                                <ul>
+                                                    ${method.dorks.map(dork => `<li><code>${dork}</code></li>`).join('')}
+                                                </ul>
+                                            ` : ''}
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                            ` : ''}
+                        </div>
+                    `;
+                }
+            } else if (category === 'search_engines') {
+                for (const [source, info] of Object.entries(data)) {
+                    html += `
+                        <div class="source-card mb-3">
+                            <h6>
+                                <i class="fas fa-search me-2"></i>
+                                ${info.engine || source}
+                            </h6>
+                            ${info.search_url ? `
+                                <div class="search-url">
+                                    <strong>URL:</strong> 
+                                    <a href="${info.search_url}" target="_blank">${info.search_url}</a>
+                                </div>
+                            ` : ''}
+                            ${info.queries ? `
+                                <p><strong>Поисковые запросы:</strong></p>
+                                <ul>
+                                    ${info.queries.map(query => `<li><code>${query}</code></li>`).join('')}
+                                </ul>
+                            ` : ''}
+                        </div>
+                    `;
+                }
+            }
+            
+            html += `
+                    </div>
+                </div>
+            `;
+            
+            return html;
+        }
+
+        // Phone search form
+        document.getElementById('phoneSearchForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            if (!phoneNumber) {
+                alert('Пожалуйста, введите номер телефона');
+                return;
+            }
+            
+            const searchTypes = [];
+            document.querySelectorAll('#phoneSearchForm input[type="checkbox"]:checked').forEach(checkbox => {
+                searchTypes.push(checkbox.value);
+            });
+            
+            if (searchTypes.length === 0) {
+                alert('Пожалуйста, выберите хотя бы один тип поиска');
+                return;
+            }
+            
+            await performPhoneSearch(phoneNumber, searchTypes);
+        });
+
+        // Photo search form
+        document.getElementById('photoSearchForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            if (!selectedFile) {
+                alert('Пожалуйста, выберите изображение');
+                return;
+            }
+            
+            const searchTypes = [];
+            document.querySelectorAll('#photoSearchForm input[type="checkbox"]:checked').forEach(checkbox => {
+                searchTypes.push(checkbox.value);
+            });
+            
+            if (searchTypes.length === 0) {
+                alert('Пожалуйста, выберите хотя бы один тип анализа');
+                return;
+            }
+            
+            await performPhotoSearch(selectedFile, searchTypes);
+        });
+
+        async function performPhoneSearch(phoneNumber, searchTypes) {
+            showLoading();
+            
+            try {
+                const response = await fetch('/api/phone_search', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ phone: phoneNumber, search_types: searchTypes })
+                });
+                
+                const result = await response.json();
+                hideLoading();
+                displayPhoneResults(result);
+            } catch (error) {
+                hideLoading();
+                alert('Ошибка: ' + error.message);
+            }
+        }
+
+        async function performPhotoSearch(file, searchTypes) {
+            showLoading();
+            
+            const formData = new FormData();
+            formData.append('file', file);
+            searchTypes.forEach(type => formData.append('search_types', type));
+            
+            try {
+                const response = await fetch('/api/photo_search', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                hideLoading();
+                displayPhotoResults(result);
+            } catch (error) {
+                hideLoading();
+                alert('Ошибка: ' + error.message);
+            }
+        }
+
+        function showLoading() {
+            document.querySelector('.loading-spinner').style.display = 'block';
+            document.querySelector('.result-section').style.display = 'none';
+        }
+
+        function hideLoading() {
+            document.querySelector('.loading-spinner').style.display = 'none';
+            document.querySelector('.result-section').style.display = 'block';
+        }
+
+        function displayPhoneResults(result) {
+            const resultsContent = document.getElementById('resultsContent');
+            const statsCards = document.getElementById('statsCards');
+            
+            if (result.error) {
+                resultsContent.innerHTML = `
+                    <div class="alert alert-danger">
+                        <h5><i class="fas fa-exclamation-triangle me-2"></i>Ошибка</h5>
+                        <p>${result.error}</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Display stats
+            const stats = {
+                basic: result.results.basic ? 1 : 0,
+                search_engines: result.results.search_engines ? Object.keys(result.results.search_engines).length : 0,
+                social_platforms: result.results.social_platforms ? Object.keys(result.results.social_platforms).length : 0,
+                api_services: result.results.api_services ? Object.keys(result.results.api_services).length : 0
+            };
+            
+            statsCards.innerHTML = `
+                <div class="stats-card">
+                    <i class="fas fa-info-circle fa-2x mb-2"></i>
+                    <h4>${stats.basic}</h4>
+                    <small>Базовая информация</small>
+                </div>
+                <div class="stats-card">
+                    <i class="fas fa-search fa-2x mb-2"></i>
+                    <h4>${stats.search_engines}</h4>
+                    <small>Поисковые системы</small>
+                </div>
+                <div class="stats-card">
+                    <i class="fas fa-users fa-2x mb-2"></i>
+                    <h4>${stats.social_platforms}</h4>
+                    <small>Социальные сети</small>
+                </div>
+                <div class="stats-card">
+                    <i class="fas fa-key fa-2x mb-2"></i>
+                    <h4>${stats.api_services}</h4>
+                    <small>API сервисы</small>
+                </div>
+            `;
+            
+            // Display results
+            let html = `
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="mb-0">
+                            <i class="fas fa-check-circle me-2"></i>Результаты поиска по номеру
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <h5><i class="fas fa-phone me-2"></i>Информация о номере</h5>
+                                <p><strong>Ввод:</strong> ${result.input}</p>
+                                <p><strong>Формат:</strong> ${result.formatted}</p>
+                                <p><strong>Валидный:</strong> <span class="badge bg-success">Да</span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <h5><i class="fas fa-cogs me-2"></i>Использованные типы</h5>
+                                <p>${result.search_types.map(t => '<span class="badge bg-primary me-1">' + t + '</span>').join('')}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            for (const [category, data] of Object.entries(result.results)) {
+                html += formatResultsCategory(category, data);
+            }
+            
+            resultsContent.innerHTML = html;
+        }
+
+        function displayPhotoResults(result) {
+            const resultsContent = document.getElementById('resultsContent');
+            const statsCards = document.getElementById('statsCards');
+            
+            if (result.error) {
+                resultsContent.innerHTML = `
+                    <div class="alert alert-danger">
+                        <h5><i class="fas fa-exclamation-triangle me-2"></i>Ошибка</h5>
+                        <p>${result.error}</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Display stats
+            const stats = {
+                metadata: result.results.metadata ? 1 : 0,
+                image_search: result.results.image_search ? Object.keys(result.results.image_search).length : 0,
+                facial_recognition: result.results.facial_recognition ? Object.keys(result.results.facial_recognition).length : 0
+            };
+            
+            statsCards.innerHTML = `
+                <div class="stats-card">
+                    <i class="fas fa-info-circle fa-2x mb-2"></i>
+                    <h4>${stats.metadata}</h4>
+                    <small>Метаданные</small>
+                </div>
+                <div class="stats-card">
+                    <i class="fas fa-image fa-2x mb-2"></i>
+                    <h4>${stats.image_search}</h4>
+                    <small>Поиск изображений</small>
+                </div>
+                <div class="stats-card">
+                    <i class="fas fa-user fa-2x mb-2"></i>
+                    <h4>${stats.facial_recognition}</h4>
+                    <small>Распознавание лиц</small>
+                </div>
+            `;
+            
+            // Display results
+            let html = `
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="mb-0">
+                            <i class="fas fa-check-circle me-2"></i>Результаты анализа изображения
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <h5><i class="fas fa-image me-2"></i>Информация о файле</h5>
+                                <p><strong>Имя файла:</strong> ${result.filename}</p>
+                                <p><strong>Размер:</strong> ${(result.file_size / 1024 / 1024).toFixed(2)} MB</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h5><i class="fas fa-cogs me-2"></i>Использованные типы</h5>
+                                <p>${result.search_types.map(t => '<span class="badge bg-primary me-1">' + t + '</span>').join('')}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            for (const [category, data] of Object.entries(result.results)) {
+                html += formatResultsCategory(category, data);
+            }
+            
+            resultsContent.innerHTML = html;
+        }
+
+        function formatResultsCategory(category, data) {
+            const titles = {
+                'basic': 'Базовая информация',
+                'search_engines': 'Поисковые системы',
+                'social_platforms': 'Социальные сети',
+                'api_services': 'API сервисы',
+                'metadata': 'Метаданные изображения',
+                'image_search': 'Поиск изображений',
+                'facial_recognition': 'Распознавание лиц'
+            };
+            
+            let html = `
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h6 class="mb-0">${titles[category] || category}</h6>
+                    </div>
+                    <div class="card-body">
+            `;
+            
+            if (category === 'basic') {
+                html += `
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Страна:</strong> ${data.country || 'Неизвестно'}</p>
+                            <p><strong>Оператор:</strong> ${data.carrier || 'Неизвестно'}</p>
+                            <p><strong>Код страны:</strong> +${data.country_code}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Международный формат:</strong> ${data.international_format}</p>
+                            <p><strong>Национальный формат:</strong> ${data.national_format}</p>
+                            <p><strong>E164 формат:</strong> ${data.e164_format}</p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // For other categories, display as list of sources
+                for (const [source, info] of Object.entries(data)) {
+                    html += `
+                        <div class="source-card mb-3">
+                            <h6>
+                                ${info.engine || info.platform || info.service || source}
+                            </h6>
+                            ${info.search_url ? `
+                                <div class="search-url">
+                                    <strong>URL:</strong> 
+                                    <a href="${info.search_url}" target="_blank">${info.search_url}</a>
+                                </div>
+                            ` : ''}
+                            ${info.upload_url ? `
+                                <div class="search-url">
+                                    <strong>URL загрузки:</strong> 
+                                    <a href="${info.upload_url}" target="_blank">${info.upload_url}</a>
+                                </div>
+                            ` : ''}
+                            ${info.note ? `<p class="text-muted"><small>${info.note}</small></p>` : ''}
+                            ${info.features ? `
+                                <p><strong>Возможности:</strong></p>
+                                <ul>
+                                    ${info.features.map(f => `<li>${f}</li>`).join('')}
+                                </ul>
+                            ` : ''}
+                        </div>
+                    `;
+                }
+            }
+            
+            html += `
+                    </div>
+                </div>
+            `;
+            
+            return html;
+        }
+
+        // Load sources on page load
+        async function loadSources() {
+            try {
+                const response = await fetch('/api/sources');
+                const sources = await response.json();
+                
+                // Display search engines
+                const searchEnginesHtml = sources.phone_search_engines.map(engine => 
+                    `<div class="source-card">
+                        <i class="fas fa-search source-icon"></i>
+                        <strong>${engine}</strong>
+                    </div>`
+                ).join('');
+                document.getElementById('searchEnginesList').innerHTML = searchEnginesHtml;
+                
+                // Display social platforms
+                const socialPlatformsHtml = sources.social_platforms.map(platform => 
+                    `<div class="source-card">
+                        <i class="fab fa-${platform === 'instagram' ? 'instagram' : platform === 'facebook' ? 'facebook' : 'users'} source-icon"></i>
+                        <strong>${platform}</strong>
+                    </div>`
+                ).join('');
+                document.getElementById('socialPlatformsList').innerHTML = socialPlatformsHtml;
+                
+                // Display photo search engines
+                const photoSearchEnginesHtml = sources.photo_search_engines.map(engine => 
+                    `<div class="source-card">
+                        <i class="fas fa-image source-icon"></i>
+                        <strong>${engine}</strong>
+                    </div>`
+                ).join('');
+                document.getElementById('photoSearchEnginesList').innerHTML = photoSearchEnginesHtml;
+                
+                // Display facial services
+                const facialServicesHtml = sources.facial_services.map(service => 
+                    `<div class="source-card">
+                        <i class="fas fa-user source-icon"></i>
+                        <strong>${service}</strong>
+                    </div>`
+                ).join('');
+                document.getElementById('facialServicesList').innerHTML = facialServicesHtml;
+                
+                // Display API services
+                const apiServicesHtml = sources.api_services.map(service => 
+                    `<div class="source-card">
+                        <i class="fas fa-key source-icon"></i>
+                        <strong>${service}</strong>
+                    </div>`
+                ).join('');
+                document.getElementById('apiServicesList').innerHTML = apiServicesHtml;
+                
+            } catch (error) {
+                console.error('Failed to load sources:', error);
+            }
+        }
+
+        // Load sources when page loads
+        loadSources();
+    </script>
+</body>
+</html>

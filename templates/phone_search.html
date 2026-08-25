@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Система Поиска Информации по Номеру Телефона</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 0;
+        }
+        .search-card {
+            border: none;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-radius: 15px;
+        }
+        .result-section {
+            display: none;
+        }
+        .loading-spinner {
+            display: none;
+        }
+        .phone-input {
+            font-size: 1.3rem;
+            padding: 1.2rem;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+            transition: border-color 0.3s;
+        }
+        .phone-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        .search-type-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 1rem;
+        }
+        .search-type-card:hover {
+            border-color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .search-type-card.selected {
+            border-color: #667eea;
+            background-color: #f8f9ff;
+        }
+        .result-card {
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+        }
+        .search-url {
+            background-color: #f8f9fa;
+            padding: 0.5rem;
+            border-radius: 5px;
+            font-family: monospace;
+            word-break: break-all;
+        }
+        .badge-custom {
+            font-size: 0.8rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+        .stats-card {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold mb-4">
+                        <i class="fas fa-search-location me-3"></i>
+                        Система Поиска по Номеру Телефона
+                    </h1>
+                    <p class="lead mb-4">
+                        Комплексный анализ и поиск информации по номеру телефона
+                    </p>
+                    <p class="mb-0">
+                        Поиск в социальных сетях, поисковых системах и API сервисах
+                    </p>
+                </div>
+                <div class="col-lg-4">
+                    <div class="text-center">
+                        <i class="fas fa-phone-alt" style="font-size: 8rem; opacity: 0.7;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <!-- Search Form -->
+        <div class="row mb-5">
+            <div class="col-lg-10 mx-auto">
+                <div class="card search-card">
+                    <div class="card-body p-4">
+                        <h3 class="card-title mb-4">
+                            <i class="fas fa-search me-2"></i>Поиск информации
+                        </h3>
+                        
+                        <form id="searchForm">
+                            <div class="mb-4">
+                                <label for="phoneNumber" class="form-label fw-bold fs-5">
+                                    Номер телефона
+                                </label>
+                                <input 
+                                    type="text" 
+                                    class="form-control phone-input" 
+                                    id="phoneNumber" 
+                                    placeholder="+7 (999) 123-45-67 или +1234567890"
+                                    required
+                                >
+                                <div class="form-text mt-2">
+                                    <i class="fas fa-info-circle me-1"></i>
+                                    Введите номер телефона с кодом страны
+                                </div>
+                            </div>
+
+                            <!-- Search Types -->
+                            <div class="mb-4">
+                                <label class="form-label fw-bold fs-5">
+                                    <i class="fas fa-cogs me-2"></i>Типы поиска
+                                </label>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="search-type-card p-3" data-type="basic">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" 
+                                                       id="type-basic" value="basic" checked>
+                                                <label class="form-check-label w-100" for="type-basic">
+                                                    <i class="fas fa-info-circle fa-2x text-primary mb-2 d-block"></i>
+                                                    <strong>Базовая информация</strong>
+                                                    <small class="d-block text-muted">Страна, оператор, формат</small>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="search-type-card p-3" data-type="google">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" 
+                                                       id="type-google" value="google" checked>
+                                                <label class="form-check-label w-100" for="type-google">
+                                                    <i class="fab fa-google fa-2x text-danger mb-2 d-block"></i>
+                                                    <strong>Поисковые системы</strong>
+                                                    <small class="d-block text-muted">Google, Bing, Yandex</small>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="search-type-card p-3" data-type="social">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" 
+                                                       id="type-social" value="social" checked>
+                                                <label class="form-check-label w-100" for="type-social">
+                                                    <i class="fas fa-users fa-2x text-info mb-2 d-block"></i>
+                                                    <strong>Социальные сети</strong>
+                                                    <small class="d-block text-muted">VK, OK, Facebook, Instagram, Telegram</small>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-6">
+                                        <div class="search-type-card p-3" data-type="api">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" 
+                                                       id="type-api" value="api">
+                                                <label class="form-check-label w-100" for="type-api">
+                                                    <i class="fas fa-key fa-2x text-warning mb-2 d-block"></i>
+                                                    <strong>API сервисы</strong>
+                                                    <small class="d-block text-muted">Numverify, Abstract API</small>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="search-type-card p-3" data-type="all">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" 
+                                                       id="type-all" value="all">
+                                                <label class="form-check-label w-100" for="type-all">
+                                                    <i class="fas fa-globe fa-2x text-success mb-2 d-block"></i>
+                                                    <strong>Все типы поиска</strong>
+                                                    <small class="d-block text-muted">Максимальная информация</small>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-lg w-100">
+                                <i class="fas fa-search me-2"></i>Начать поиск
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Section -->
+        <div class="row mb-5 loading-spinner">
+            <div class="col-lg-8 mx-auto text-center">
+                <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+                    <span class="visually-hidden">Загрузка...</span>
+                </div>
+                <p class="mt-3 fs-5">Выполняется поиск информации...</p>
+                <div class="progress mt-3">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                         role="progressbar" style="width: 100%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="row result-section">
+            <div class="col-lg-12">
+                <!-- Stats Cards -->
+                <div class="row mb-4" id="statsCards">
+                    <!-- Stats will be populated here -->
+                </div>
+
+                <!-- Results Cards -->
+                <div id="resultsContent">
+                    <!-- Results will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h5>Система Поиска по Номеру Телефона</h5>
+                    <p class="mb-0">Комплексный анализ номеров телефонов</p>
+                </div>
+                <div class="col-lg-4 text-end">
+                    <p class="mb-0">
+                        <i class="fab fa-python me-2"></i>Python Version
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Search type card selection
+        document.querySelectorAll('.search-type-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const checkbox = this.querySelector('input[type="checkbox"]');
+                checkbox.checked = !checkbox.checked;
+                this.classList.toggle('selected', checkbox.checked);
+                
+                // Handle "All" option
+                if (checkbox.value === 'all') {
+                    document.querySelectorAll('.search-type-card input[type="checkbox"]').forEach(cb => {
+                        if (cb.value !== 'all') {
+                            cb.checked = false;
+                            cb.closest('.search-type-card').classList.remove('selected');
+                        }
+                    });
+                } else if (checkbox.checked) {
+                    // Uncheck "All" if other options are selected
+                    const allCheckbox = document.getElementById('type-all');
+                    if (allCheckbox) {
+                        allCheckbox.checked = false;
+                        allCheckbox.closest('.search-type-card').classList.remove('selected');
+                    }
+                }
+            });
+            
+            // Initialize selected state
+            const checkbox = card.querySelector('input[type="checkbox"]');
+            card.classList.toggle('selected', checkbox.checked);
+        });
+
+        document.getElementById('searchForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            if (!phoneNumber) {
+                alert('Пожалуйста, введите номер телефона');
+                return;
+            }
+            
+            // Get selected search types
+            const searchTypes = [];
+            document.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
+                searchTypes.push(checkbox.value);
+            });
+            
+            if (searchTypes.length === 0) {
+                alert('Пожалуйста, выберите хотя бы один тип поиска');
+                return;
+            }
+            
+            // Show loading
+            document.querySelector('.loading-spinner').style.display = 'block';
+            document.querySelector('.result-section').style.display = 'none';
+            
+            try {
+                const response = await fetch('/api/search', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        phone: phoneNumber,
+                        search_types: searchTypes
+                    })
+                });
+                
+                const result = await response.json();
+                
+                // Hide loading, show results
+                document.querySelector('.loading-spinner').style.display = 'none';
+                document.querySelector('.result-section').style.display = 'block';
+                
+                // Display results
+                displayResults(result);
+                
+            } catch (error) {
+                document.querySelector('.loading-spinner').style.display = 'none';
+                alert('Ошибка: ' + error.message);
+            }
+        });
+        
+        function displayResults(result) {
+            const resultsContent = document.getElementById('resultsContent');
+            const statsCards = document.getElementById('statsCards');
+            
+            if (result.error) {
+                resultsContent.innerHTML = `
+                    <div class="alert alert-danger">
+                        <h5><i class="fas fa-exclamation-triangle me-2"></i>Ошибка</h5>
+                        <p>${result.error}</p>
+                        ${result.suggestions ? `
+                            <h6>Рекомендации:</h6>
+                            <ul>
+                                ${result.suggestions.map(s => `<li>${s}</li>`).join('')}
+                            </ul>
+                        ` : ''}
+                    </div>
+                `;
+                return;
+            }
+            
+            // Display stats
+            const stats = {
+                basic: result.results.basic ? 1 : 0,
+                search_engines: result.results.search_engines ? Object.keys(result.results.search_engines).length : 0,
+                social_platforms: result.results.social_platforms ? Object.keys(result.results.social_platforms).length : 0,
+                api_services: result.results.api_services ? Object.keys(result.results.api_services).length : 0
+            };
+            
+            statsCards.innerHTML = `
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <i class="fas fa-info-circle fa-2x mb-2"></i>
+                        <h4>${stats.basic}</h4>
+                        <small>Базовая информация</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <i class="fas fa-search fa-2x mb-2"></i>
+                        <h4>${stats.search_engines}</h4>
+                        <small>Поисковые системы</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <i class="fas fa-users fa-2x mb-2"></i>
+                        <h4>${stats.social_platforms}</h4>
+                        <small>Социальные сети</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <i class="fas fa-key fa-2x mb-2"></i>
+                        <h4>${stats.api_services}</h4>
+                        <small>API сервисы</small>
+                    </div>
+                </div>
+            `;
+            
+            let html = `
+                <div class="card result-card">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="mb-0">
+                            <i class="fas fa-check-circle me-2"></i>Результаты поиска
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <h5><i class="fas fa-phone me-2"></i>Информация о номере</h5>
+                                <p><strong>Ввод:</strong> ${result.input}</p>
+                                <p><strong>Формат:</strong> ${result.formatted}</p>
+                                <p><strong>Валидный:</strong> <span class="badge bg-success">Да</span></p>
+                                <p><strong>Время поиска:</strong> ${result.timestamp}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h5><i class="fas fa-cogs me-2"></i>Использованные типы поиска</h5>
+                                <p>${result.search_types.map(t => '<span class="badge bg-primary me-1">' + t + '</span>').join('')}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Display results for each category
+            for (const [category, data] of Object.entries(result.results)) {
+                html += `
+                    <div class="card result-card">
+                        <div class="card-header">
+                            <h5 class="mb-0">
+                                ${getCategoryIcon(category)}${getCategoryTitle(category)}
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            ${formatCategoryResult(category, data)}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            resultsContent.innerHTML = html;
+        }
+        
+        function getCategoryIcon(category) {
+            const icons = {
+                'basic': '<i class="fas fa-info-circle me-2"></i>',
+                'search_engines': '<i class="fas fa-search me-2"></i>',
+                'social_platforms': '<i class="fas fa-users me-2"></i>',
+                'api_services': '<i class="fas fa-key me-2"></i>'
+            };
+            return icons[category] || '<i class="fas fa-cog me-2"></i>';
+        }
+        
+        function getCategoryTitle(category) {
+            const titles = {
+                'basic': 'Базовая информация',
+                'search_engines': 'Поисковые системы',
+                'social_platforms': 'Социальные сети',
+                'api_services': 'API сервисы'
+            };
+            return titles[category] || category;
+        }
+        
+        function formatCategoryResult(category, data) {
+            if (category === 'basic') {
+                return `
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Страна:</strong> ${data.country || 'Неизвестно'}</p>
+                            <p><strong>Оператор:</strong> ${data.carrier || 'Неизвестно'}</p>
+                            <p><strong>Код страны:</strong> +${data.country_code}</p>
+                            <p><strong>Тип:</strong> ${data.type}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Международный формат:</strong> ${data.international_format}</p>
+                            <p><strong>Национальный формат:</strong> ${data.national_format}</p>
+                            <p><strong>E164 формат:</strong> ${data.e164_format}</p>
+                            <p><strong>Часовой пояс:</strong> ${data.timezone}</p>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            if (category === 'search_engines') {
+                let html = '';
+                for (const [engine, info] of Object.entries(data)) {
+                    html += `
+                        <div class="mb-4">
+                            <h6><i class="fab fa-${engine === 'google' ? 'google' : engine === 'yandex' ? 'yandex' : 'microsoft'} me-2"></i>${info.engine}</h6>
+                            <div class="search-url mb-2">
+                                <strong>URL поиска:</strong> 
+                                <a href="${info.search_url}" target="_blank">${info.search_url}</a>
+                            </div>
+                            ${info.advanced_dorks ? `
+                                <p><strong>Google Dorks:</strong></p>
+                                <ul>
+                                    ${info.advanced_dorks.map(dork => `<li><code>${dork}</code></li>`).join('')}
+                                </ul>
+                            ` : ''}
+                            ${info.queries ? `
+                                <p><strong>Запросы:</strong></p>
+                                <ul>
+                                    ${info.queries.map(q => `<li><code>${q}</code></li>`).join('')}
+                                </ul>
+                            ` : ''}
+                        </div>
+                    `;
+                }
+                return html;
+            }
+            
+            if (category === 'social_platforms') {
+                let html = '';
+                for (const [platform, info] of Object.entries(data)) {
+                    const iconClass = platform === 'vk' ? 'fa-vk' : 
+                                   platform === 'ok' ? 'fa-odnoklassniki' :
+                                   platform === 'instagram' ? 'fa-instagram' : 
+                                   platform === 'facebook' ? 'fa-facebook' : 
+                                   platform === 'twitter' ? 'fa-twitter' : 'fa-users';
+                    
+                    html += `
+                        <div class="mb-4">
+                            <h6><i class="fab ${iconClass} me-2"></i>${info.platform}</h6>
+                            <div class="search-url mb-2">
+                                <strong>URL поиска:</strong> 
+                                <a href="${info.search_url}" target="_blank">${info.search_url}</a>
+                            </div>
+                            ${info.people_search ? `
+                                <div class="search-url mb-2">
+                                    <strong>Поиск людей:</strong> 
+                                    <a href="${info.people_search}" target="_blank">${info.people_search}</a>
+                                </div>
+                            ` : ''}
+                            ${info.direct_url ? `
+                                <div class="search-url mb-2">
+                                    <strong>Прямая ссылка:</strong> 
+                                    <a href="${info.direct_url}" target="_blank">${info.direct_url}</a>
+                                </div>
+                            ` : ''}
+                            ${info.groups_search ? `
+                                <div class="search-url mb-2">
+                                    <strong>Поиск групп:</strong> 
+                                    <a href="${info.groups_search}" target="_blank">${info.groups_search}</a>
+                                </div>
+                            ` : ''}
+                            ${info.mobile_app_search ? `
+                                <div class="search-url mb-2">
+                                    <strong>Мобильное приложение:</strong> 
+                                    <code>${info.mobile_app_search}</code>
+                                </div>
+                            ` : ''}
+                            ${info.advanced_search ? `
+                                <div class="search-url mb-2">
+                                    <strong>Расширенный поиск:</strong> 
+                                    <a href="${info.advanced_search}" target="_blank">${info.advanced_search}</a>
+                                </div>
+                            ` : ''}
+                            ${info.search_tips ? `
+                                <p><strong>Советы по поиску:</strong></p>
+                                <ul>
+                                    ${info.search_tips.map(tip => `<li>${tip}</li>`).join('')}
+                                </ul>
+                            ` : ''}
+                            ${info.note ? `<p class="text-muted"><small>${info.note}</small></p>` : ''}
+                            ${info.privacy_note ? `<p class="text-warning"><small><i class="fas fa-exclamation-triangle me-1"></i>${info.privacy_note}</small></p>` : ''}
+                        </div>
+                    `;
+                }
+                return html;
+            }
+            
+            if (category === 'api_services') {
+                let html = '';
+                for (const [service, info] of Object.entries(data)) {
+                    html += `
+                        <div class="mb-4">
+                            <h6><i class="fas fa-key me-2"></i>${info.service}</h6>
+                            <p><strong>Требуется API ключ:</strong> ${info.requires_api_key ? 'Да' : 'Нет'}</p>
+                            ${info.api_url ? `<p><strong>API URL:</strong> <code>${info.api_url}</code></p>` : ''}
+                            ${info.api_key_required ? `<p><strong>Как получить ключ:</strong> ${info.api_key_required}</p>` : ''}
+                            ${info.sample_request ? `<p><strong>Пример запроса:</strong> <code>${info.sample_request}</code></p>` : ''}
+                            ${info.features ? `
+                                <p><strong>Возможности:</strong></p>
+                                <ul>
+                                    ${info.features.map(f => `<li>${f}</li>`).join('')}
+                                </ul>
+                            ` : ''}
+                        </div>
+                    `;
+                }
+                return html;
+            }
+            
+            return `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+        }
+    </script>
+</body>
+</html>
