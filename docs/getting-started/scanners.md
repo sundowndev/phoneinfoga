@@ -235,6 +235,42 @@ Follow the steps below to create a new search engine :
         URL: https://example.com/1241325xxxx
     ```
 
+## Xquik
+
+The Xquik scanner searches public X posts for the scanned phone number. It
+searches exact E.164, international, national, and local display forms in one
+bounded request. This provides direct results where Googlesearch only creates a
+link for manual review.
+
+The scanner uses Xquik's read-only Twitter search API. It skips the request when
+`XQUIK_API_KEY` is absent. Each returned post may consume account credits.
+
+??? info "Configuration"
+
+    | Environment variable | Option | Default | Description |
+    |----------------------|--------|---------|-------------|
+    | XQUIK_API_KEY | XQUIK_API_KEY | | API key for the Xquik Tweet Search endpoint. |
+    | XQUIK_MAX_RESULTS | XQUIK_MAX_RESULTS | 20 | Maximum posts per scan. Use a value from 1 through 100. |
+
+??? example "Output example"
+
+    ```shell
+    $ XQUIK_API_KEY=<key> phoneinfoga scan -n +1241325xxxx
+
+    Results for xquik
+    Results shown: 1
+    More results available: false
+    Tweets:
+        ID: 1893456789012345678
+        Text: Public listing for +1241325xxxx
+        Created at: 2026-08-27T10:00:00Z
+        URL: https://x.com/example/status/1893456789012345678
+    ```
+
+Review the [Xquik API documentation](https://docs.xquik.com/api-reference/x/search-tweets)
+before enabling the scanner. Xquik is an independent third-party service. Not
+affiliated with X Corp. "Twitter" and "X" are trademarks of X Corp.
+
 ## OVH
 
 OVH, besides being a web and cloud hosting company, is a telecom provider with several VoIP numbers in Europe. Thanks to their API-key free REST API, we are able to tell if a number is owned by OVH Telecom or not.
