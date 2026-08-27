@@ -1,121 +1,122 @@
-To install PhoneInfoga, you'll need to download the binary or build the software from its source code.
+#!/usr/bin/env python3
+"""
+phone_lookup.py
 
-!!! info
-    For now, only Linux, MacOS and Windows are supported. If you don't see your OS/arch on the [release page on GitHub](https://github.com/sundowndev/phoneinfoga/releases), it means it's not explicitly supported. You can build from source by yourself anyway. Want your OS to be supported ? Please [open an issue on GitHub](https://github.com/sundowndev/phoneinfoga/issues).
+Public, non-invasive phone number information lookup.
 
-## Binary installation (recommended)
+Requirements:
+  pip install phonenumbers requests
 
-Follow the instructions :
+Usage:
+  - Fill in API credentials for Twilio or Numverify if you want to use them.
+  - Run: python phone_lookup.py +8801793526778
+"""
 
-- Go to [release page on GitHub](https://github.com/sundowndev/phoneinfoga/releases)
-- Choose your OS and architecture
-- Download the archive, extract the binary then run it in a terminal
+import os
+import sys
+import json
+import phonenumbers
+from phonenumbers import geocoder, carrier, timezone, NumberParseException
+import requests
+from typing import Optional
 
-You can also do it from the terminal (UNIX systems only) :
+def basic_libphonenumber_lookup(number: str, default_region: Optional[str]=None) -> dict:
+    """Parse a phone number with libphonenumber and return public metadata."""
+    out = {"input": number}
+    try:
+        if default_region:
+            pn = phonenumbers.parse(number, default_region)
+        else:
+            pn = phonenumbers.parse(number, None)
+    except NumberParseException as e:
+        out["error"] = f"parse error: {e}"
+        return out
 
-1. Download the latest release in the current directory
+    out.update({
+        "e164": phonenumbers.format_number(pn, phonenumbers.PhoneNumberFormat.E164),
+        "international": phonenumbers.format_number(pn, phonenumbers.PhoneNumberFormat.INTERNATIONAL),
+        "national": phonenumbers.format_number(pn, phonenumbers.PhoneNumberFormat.NATIONAL),
+        "country_code": pn.country_code,
+        "national_number": pn.national_number,
+        "valid": phonenumbers.is_valid_number(pn),
+        "possible": phonenumbers.is_possible_number(pn),
+        "number_type": phonenumbers.number_type(pn).name,  # e.g., MOBILE, FIXED_LINE
+        "region": geocoder.description_for_number(pn, "en"),  # rough region/country
+        "carrier": carrier.name_for_number(pn, "en") or None,
+        "time_zones": timezone.time_zones_for_number(pn) or [],
+    })
+    return out
 
-```
-# Add --help at the end of the command for a list of install options
-bash <( curl -sSL https://raw.githubusercontent.com/sundowndev/phoneinfoga/master/support/scripts/install )
-```
+def twilio_lookup(e164_number: str, account_sid: str, auth_token: str, types=("carrier", "caller-name")) -> dict:
+    """
+    Query Twilio Lookup API.
+    Requires a Twilio account with Lookup product enabled. This is a paid endpoint for some data.
+    Returns JSON or raises for network/errors.
+    """
+    base = f"https://lookups.twilio.com/v1/PhoneNumbers/{e164_number}"
+    params = []
+    for t in types:
+        params.append(("Type", t))
+    # requests will encode repeated params properly if given list of tuples
+    resp = requests.get(base, params=params, auth=(account_sid, auth_token), timeout=10)
+    resp.raise_for_status()
+    return resp.json()
 
-2. Install it globally
-```
-sudo install ./phoneinfoga /usr/local/bin/phoneinfoga
-```
+def numverify_lookup(number: str, access_key: str) -> dict:
+    """
+    Example for Numverify (apilayer). Replace endpoint and param names if service changes.
+    Note: This API is paid/limited. Returns country_code, carrier (sometimes), line_type, etc.
+    """
+    url = "http://apilayer.net/api/validate"
+    params = {
+        "access_key": access_key,
+        "number": number,
+        "format": 1,
+    }
+    resp = requests.get(url, params=params, timeout=10)
+    resp.raise_for_status()
+    return resp.json()
 
-3. Test to ensure the version you installed is up-to-date
-```
-./phoneinfoga version
-```
+def pretty_print(d: dict):
+    print(json.dumps(d, indent=2, sort_keys=True, ensure_ascii=False))
 
-To ensure your system is supported, please check the output of `echo "$(uname -s)_$(uname -m)"` in your terminal and see if it's available on the [GitHub release page](https://github.com/sundowndev/phoneinfoga/releases).
+def main():
+    if len(sys.argv) < 2:
+        print("Usage: python phone_lookup.py <phone-number> [default_region]")
+        print("Example: python phone_lookup.py +8801793526778")
+        sys.exit(1)
 
-## Homebrew
+    number = sys.argv[1]
+    default_region = sys.argv[2] if len(sys.argv) > 2 else None
 
-PhoneInfoga is now available on Homebrew. Homebrew is a free and open-source package management system for Mac OS X. Install the official phoneinfoga formula from the terminal.
+    print("=== libphonenumber (local) lookup ===")
+    local_info = basic_libphonenumber_lookup(number, default_region)
+    pretty_print(local_info)
 
-```shell
-brew install phoneinfoga
-```
+    # Optional: Twilio Lookup example (commented out unless you provide credentials)
+    TWILIO_SID = os.getenv("TWILIO_ACCOUNT_SID")
+    TWILIO_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
+    if TWILIO_SID and TWILIO_TOKEN and local_info.get("e164"):
+        try:
+            print("\n=== Twilio Lookup (carrier & caller-name) ===")
+            tw = twilio_lookup(local_info["e164"], TWILIO_SID, TWILIO_TOKEN, types=("carrier","caller-name"))
+            pretty_print(tw)
+        except Exception as e:
+            print("Twilio lookup error:", e)
+    else:
+        print("\nSkipping Twilio lookup (set TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN env vars to enable)")
 
-## Docker
+    # Optional: Numverify (apilayer) example
+    NUMVERIFY_KEY = os.getenv("NUMVERIFY_ACCESS_KEY")
+    if NUMVERIFY_KEY:
+        try:
+            print("\n=== Numverify Lookup ===")
+            nv = numverify_lookup(number, NUMVERIFY_KEY)
+            pretty_print(nv)
+        except Exception as e:
+            print("Numverify lookup error:", e)
+    else:
+        print("\nSkipping Numverify lookup (set NUMVERIFY_ACCESS_KEY env var to enable)")
 
-!!! info
-    If you want to use the beta channel, you can use the `next` tag, it's updated directly from the master branch. But in most cases we recommend using [`latest`, `v2` or `stable` tags](https://hub.docker.com/r/sundowndev/phoneinfoga/tags) to only get release updates.
-
-### From docker hub
-
-You can pull the repository directly from Docker hub
-
-```shell
-docker pull sundowndev/phoneinfoga:latest
-```
-
-Then run the tool
-
-```shell
-docker run --rm -it sundowndev/phoneinfoga version
-```
-
-### Docker-compose
-
-You can use a single docker-compose file to run the tool without downloading the source code.
-
-```
-version: '3.7'
-
-services:
-    phoneinfoga:
-      container_name: phoneinfoga
-      restart: on-failure
-      image: sundowndev/phoneinfoga:latest
-      command:
-        - "serve"
-      ports:
-        - "80:5000"
-```
-
-### Build from source
-
-You can download the source code, then build the docker images
-
-#### Build
-
-Build the image 
-
-```shell
-docker-compose build
-```
-
-#### CLI usage
-
-```shell
-docker-compose run --rm phoneinfoga --help
-```
-
-#### Run web services
-
-```shell
-docker-compose up -d
-```
-
-##### Disable web client
-
-Edit `docker-compose.yml` and add the `--no-client` option
-
-```yaml
-# docker-compose.yml
-command:
-  - "serve"
-  - "--no-client"
-```
-
-#### Troubleshooting
-
-All the output is sent to stdout, so it can be inspected by running:
-
-```shell
-docker logs -f <container-id|container-name>
-```
+if __name__ == "__main__":
+    main()
