@@ -31,7 +31,7 @@ When using the **REST API**, you can also specify those values on a per-request 
 PhoneInfoga can now be extended with plugins! You can build your own scanner and PhoneInfoga will use it to scan the given phone number.
 
 ```shell
-$ phoneinfoga scan -n +4176418xxxx --plugin ./custom_scanner.so
+$ phoneinfoga scan -n +91 8368203432 --plugin ./custom_scanner.so
 ```
 
 !!! info
