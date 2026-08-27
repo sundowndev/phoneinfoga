@@ -29,8 +29,8 @@ func TestNumverifySupplierSuccessCustomApiKey(t *testing.T) {
 	}
 
 	gock.New("https://api.apilayer.com").
-		Get("/number_verification/validate").
-		MatchHeader("Apikey", apikey).
+		Get("/api/validate").
+		MatchParam("access_key", apikey).
 		MatchParam("number", number).
 		Reply(200).
 		JSON(expectedResult)
@@ -54,8 +54,8 @@ func TestNumverifySupplierError(t *testing.T) {
 	}
 
 	gock.New("https://api.apilayer.com").
-		Get("/number_verification/validate").
-		MatchHeader("Apikey", apikey).
+		Get("/api/validate").
+		MatchParam("access_key", apikey).
 		MatchParam("number", number).
 		Reply(429).
 		JSON(expectedResult)
@@ -78,7 +78,7 @@ func TestNumverifySupplierHTTPError(t *testing.T) {
 	dummyError := errors.New("test")
 
 	gock.New("https://api.apilayer.com").
-		Get("/number_verification/validate").
+		Get("/api/validate").
 		ReplyError(dummyError)
 
 	s := NewNumverifySupplier()
@@ -87,7 +87,7 @@ func TestNumverifySupplierHTTPError(t *testing.T) {
 	assert.Nil(t, got)
 	assert.Equal(t, &url.Error{
 		Op:  "Get",
-		URL: "https://api.apilayer.com/number_verification/validate?number=11115551212",
+		URL: "https://api.apilayer.com/api/validate?number=11115551212",
 		Err: dummyError,
 	}, err)
 }

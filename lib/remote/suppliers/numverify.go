@@ -64,7 +64,7 @@ func (r *NumverifyRequest) ValidateNumber(internationalNumber string) (res *Numv
 		WithField("number", internationalNumber).
 		Debug("Running validate operation through Numverify API")
 
-	url := fmt.Sprintf("%s/number_verification/validate?number=%s", r.uri, internationalNumber)
+	url := fmt.Sprintf("%s/api/validate?number=%s", r.uri, internationalNumber)
 
 	// Build the request
 	client := &http.Client{}
