@@ -67,6 +67,46 @@ func TestNumverifySupplierError(t *testing.T) {
 	assert.Equal(t, errors.New("You have exceeded your daily\\/monthly API rate limit. Please review and upgrade your subscription plan at https:\\/\\/apilayer.com\\/subscriptions to continue."), err)
 }
 
+func TestNumverifySupplierFallsBackToLegacyEndpointOn401(t *testing.T) {
+	defer gock.Off() // Flush pending mocks after test execution
+
+	number := "17027515054"
+	apikey := "legacy-style-free-key"
+
+	gock.New("https://api.apilayer.com").
+		Get("/number_verification/validate").
+		MatchParam("number", number).
+		Reply(401).
+		JSON(map[string]string{"message": "Invalid authentication credentials"})
+
+	expectedResult := &NumverifyValidateResponse{
+		Valid:               true,
+		Number:              "17027515054",
+		LocalFormat:         "7027515054",
+		InternationalFormat: "+17027515054",
+		CountryPrefix:       "+1",
+		CountryCode:         "US",
+		CountryName:         "United States of America",
+		Location:            "Indian Spg",
+		Carrier:             "",
+		LineType:            "landline",
+	}
+
+	gock.New("http://apilayer.net").
+		Get("/api/validate").
+		MatchParam("access_key", apikey).
+		MatchParam("number", number).
+		Reply(200).
+		JSON(expectedResult)
+
+	s := NewNumverifySupplier()
+
+	got, err := s.Request().SetApiKey(apikey).ValidateNumber(number)
+	assert.Nil(t, err)
+
+	assert.Equal(t, expectedResult, got)
+}
+
 func TestNumverifySupplierHTTPError(t *testing.T) {
 	defer gock.Off() // Flush pending mocks after test execution
 

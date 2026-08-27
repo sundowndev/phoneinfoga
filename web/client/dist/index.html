@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PhoneInfoga</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #0f1115;
+    --panel: #171a21;
+    --panel-border: #262b36;
+    --text: #e8eaed;
+    --muted: #8b93a3;
+    --accent: #6cf;
+    --green: #4caf7d;
+    --yellow: #d9b44a;
+    --red: #e05a5a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  header {
+    padding: 2rem 1.5rem 1rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  h1 { margin: 0 0 .25rem; font-size: 1.5rem; }
+  .subtitle { color: var(--muted); font-size: .9rem; margin: 0; }
+  form {
+    display: flex;
+    gap: .5rem;
+    max-width: 900px;
+    margin: 1.5rem auto 0;
+    padding: 0 1.5rem;
+  }
+  input[type=text] {
+    flex: 1;
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    color: var(--text);
+    padding: .7rem .9rem;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+  input[type=text]:focus { outline: 2px solid var(--accent); border-color: transparent; }
+  button {
+    background: var(--accent);
+    color: #06202e;
+    border: none;
+    font-weight: 600;
+    padding: .7rem 1.4rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  button:hover { opacity: .9; }
+  button:disabled { opacity: .5; cursor: not-allowed; }
+  main {
+    max-width: 900px;
+    margin: 1.5rem auto 4rem;
+    padding: 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: .9rem;
+  }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+  }
+  .card-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+    margin-bottom: .5rem;
+  }
+  .card-title h2 {
+    font-size: 1rem;
+    margin: 0;
+    text-transform: none;
+  }
+  .status {
+    font-size: .78rem;
+    padding: .15rem .5rem;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .status.pending { color: var(--muted); }
+  .status.skipped { background: #262b36; color: var(--muted); }
+  .status.error { background: rgba(224,90,90,.15); color: var(--red); }
+  .status.ok { background: rgba(76,175,125,.15); color: var(--green); }
+  .kv { font-size: .92rem; line-height: 1.7; }
+  .kv .row { display: flex; gap: .5rem; flex-wrap: wrap; }
+  .kv .k { color: var(--muted); min-width: 11rem; }
+  .kv .v { word-break: break-word; }
+  .kv .v a { color: var(--accent); }
+  .kv ul { margin: .2rem 0 .6rem; padding-left: 1.1rem; }
+  .kv li { margin-bottom: .4rem; }
+  .badge {
+    display: inline-block;
+    padding: .1rem .5rem;
+    border-radius: 999px;
+    font-size: .8rem;
+    font-weight: 600;
+  }
+  .badge.risk-elevated { background: rgba(224,90,90,.18); color: var(--red); }
+  .badge.risk-uncertain { background: rgba(217,180,74,.18); color: var(--yellow); }
+  .badge.risk-low { background: rgba(76,175,125,.18); color: var(--green); }
+  .badge.risk-unknown { background: #262b36; color: var(--muted); }
+  .empty { color: var(--muted); font-style: italic; }
+  footer { text-align: center; color: var(--muted); font-size: .8rem; padding-bottom: 2rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>PhoneInfoga</h1>
+  <p class="subtitle">OSINT scan + scam-check for a phone number</p>
+</header>
+
+<form id="scan-form">
+  <input type="text" id="number-input" placeholder="+16502530000" autocomplete="off" autofocus>
+  <button type="submit" id="scan-btn">Scan</button>
+</form>
+
+<main id="results"></main>
+
+<footer>Runs entirely against this server's own scanners - no data leaves it except to each scanner's own API.</footer>
+
+<script>
+const resultsEl = document.getElementById('results');
+const form = document.getElementById('scan-form');
+const input = document.getElementById('number-input');
+const btn = document.getElementById('scan-btn');
+
+const humanize = (key) => key
+  .replace(/([a-z])([A-Z])/g, '$1 $2')
+  .replace(/_/g, ' ')
+  .replace(/^./, c => c.toUpperCase());
+
+const urlRe = /^https?:\/\/\S+$/;
+
+function renderValue(val) {
+  if (val === null || val === undefined || val === '') return null;
+
+  if (Array.isArray(val)) {
+    if (val.length === 0) return null;
+    const ul = document.createElement('ul');
+    val.forEach(item => {
+      const li = document.createElement('li');
+      if (typeof item === 'object') {
+        li.appendChild(renderObject(item));
+      } else {
+        li.appendChild(renderScalar(String(item)));
+      }
+      ul.appendChild(li);
+    });
+    return ul;
+  }
+
+  if (typeof val === 'object') {
+    return renderObject(val);
+  }
+
+  return renderScalar(val);
+}
+
+function renderScalar(val) {
+  const str = String(val);
+  if (urlRe.test(str)) {
+    const a = document.createElement('a');
+    a.href = str;
+    a.textContent = str;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    return a;
+  }
+  const span = document.createElement('span');
+  span.textContent = str;
+  return span;
+}
+
+function riskClass(risk) {
+  const r = String(risk).toLowerCase();
+  if (r.startsWith('elevated')) return 'risk-elevated';
+  if (r.startsWith('uncertain')) return 'risk-uncertain';
+  if (r.startsWith('low')) return 'risk-low';
+  return 'risk-unknown';
+}
+
+function renderObject(obj) {
+  const wrap = document.createElement('div');
+  wrap.className = 'kv';
+
+  Object.keys(obj).forEach(key => {
+    const val = obj[key];
+    const rendered = renderValue(val);
+    if (rendered === null) return;
+
+    const row = document.createElement('div');
+    row.className = 'row';
+
+    const k = document.createElement('div');
+    k.className = 'k';
+    k.textContent = humanize(key);
+    row.appendChild(k);
+
+    const v = document.createElement('div');
+    v.className = 'v';
+
+    if (key.toLowerCase().includes('risk') && typeof val === 'string') {
+      const badge = document.createElement('span');
+      badge.className = 'badge ' + riskClass(val);
+      badge.textContent = val;
+      v.appendChild(badge);
+    } else {
+      v.appendChild(rendered);
+    }
+
+    row.appendChild(v);
+    wrap.appendChild(row);
+  });
+
+  return wrap;
+}
+
+async function api(path, opts) {
+  const res = await fetch('/api' + path, {
+    method: opts && opts.body ? 'POST' : 'GET',
+    headers: { 'Content-Type': 'application/json' },
+    body: opts && opts.body ? JSON.stringify(opts.body) : undefined,
+  });
+  const data = await res.json().catch(() => ({}));
+  return { ok: res.ok, data };
+}
+
+// google* scanners just emit long lists of search-dork links - same rule as the
+// CLI console output: sort them after everything else.
+function sortScanners(scanners) {
+  return scanners.slice().sort((a, b) => {
+    const aGoogle = a.name.startsWith('google');
+    const bGoogle = b.name.startsWith('google');
+    if (aGoogle !== bGoogle) return aGoogle ? 1 : -1;
+    return a.name.localeCompare(b.name);
+  });
+}
+
+function makeCard(scanner) {
+  const card = document.createElement('div');
+  card.className = 'card';
+
+  const title = document.createElement('div');
+  title.className = 'card-title';
+
+  const h2 = document.createElement('h2');
+  h2.textContent = scanner.name;
+  title.appendChild(h2);
+
+  const status = document.createElement('span');
+  status.className = 'status pending';
+  status.textContent = 'checking…';
+  title.appendChild(status);
+
+  card.appendChild(title);
+
+  const body = document.createElement('div');
+  card.appendChild(body);
+
+  resultsEl.appendChild(card);
+  return { card, status, body };
+}
+
+async function runScanner(number, scanner) {
+  const { status, body } = makeCard(scanner);
+
+  const dry = await api('/v2/scanners/' + scanner.name + '/dryrun', { body: { number } });
+  if (!dry.ok || !dry.data.success) {
+    status.className = 'status skipped';
+    status.textContent = 'skipped';
+    const p = document.createElement('p');
+    p.className = 'empty';
+    p.textContent = (dry.data && dry.data.error) || 'not applicable to this number';
+    body.appendChild(p);
+    return;
+  }
+
+  const run = await api('/v2/scanners/' + scanner.name + '/run', { body: { number } });
+  if (!run.ok) {
+    status.className = 'status error';
+    status.textContent = 'error';
+    const p = document.createElement('p');
+    p.className = 'empty';
+    p.textContent = (run.data && run.data.error) || 'request failed';
+    body.appendChild(p);
+    return;
+  }
+
+  status.className = 'status ok';
+  status.textContent = 'done';
+  const rendered = renderValue(run.data.result);
+  if (rendered) {
+    body.appendChild(rendered);
+  } else {
+    const p = document.createElement('p');
+    p.className = 'empty';
+    p.textContent = 'no data returned';
+    body.appendChild(p);
+  }
+}
+
+async function scan(number) {
+  resultsEl.innerHTML = '';
+  btn.disabled = true;
+
+  try {
+    const { ok, data } = await api('/v2/scanners');
+    if (!ok || !data.scanners) {
+      resultsEl.innerHTML = '<p class="empty">Could not load scanner list.</p>';
+      return;
+    }
+
+    const scanners = sortScanners(data.scanners);
+    await Promise.all(scanners.map(s => runScanner(number, s)));
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const number = input.value.trim();
+  if (!number) return;
+  scan(number);
+});
+</script>
+
+</body>
+</html>

@@ -98,12 +98,22 @@ func (o *ConsoleOutput) displayResult(val interface{}, prefix string) {
 	}
 }
 
+// google-prefixed scanners (googlesearch, googlecse) just emit long lists of
+// search-dork links - sort them after everything else so the more concise,
+// higher-signal results (numverify, nomorobo, shouldianswer, local...) show first.
 func getSortedResultKeys(m map[string]interface{}) []string {
 	keys := make([]string, 0, len(m))
 	for k := range m {
 		keys = append(keys, k)
 	}
-	sort.Strings(keys)
+	sort.Slice(keys, func(i, j int) bool {
+		iGoogle := strings.HasPrefix(keys[i], "google")
+		jGoogle := strings.HasPrefix(keys[j], "google")
+		if iGoogle != jGoogle {
+			return jGoogle
+		}
+		return keys[i] < keys[j]
+	})
 	return keys
 }
 

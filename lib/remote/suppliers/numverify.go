@@ -64,48 +64,74 @@ func (r *NumverifyRequest) ValidateNumber(internationalNumber string) (res *Numv
 		WithField("number", internationalNumber).
 		Debug("Running validate operation through Numverify API")
 
+	res, statusCode, err := r.validateViaMarketplace(internationalNumber)
+	if err != nil {
+		return nil, err
+	}
+	if res != nil {
+		return res, nil
+	}
+
+	// A 401 here means the key isn't an apilayer.com marketplace key - most free
+	// keys from numverify.com's own signup are the older style, which only this
+	// legacy endpoint accepts (and only over plain HTTP - HTTPS is a paid feature
+	// on that plan). Only fall back on 401 so real marketplace-key errors
+	// (rate limit, bad number, etc.) still surface normally.
+	if statusCode == http.StatusUnauthorized {
+		logrus.Debug("Numverify marketplace auth failed, retrying against legacy numverify.com endpoint")
+		return r.validateViaLegacyEndpoint(internationalNumber)
+	}
+
+	return nil, errors.New("numverify request failed")
+}
+
+func (r *NumverifyRequest) validateViaMarketplace(internationalNumber string) (res *NumverifyValidateResponse, statusCode int, err error) {
 	url := fmt.Sprintf("%s/number_verification/validate?number=%s", r.uri, internationalNumber)
 
-	// Build the request
 	client := &http.Client{}
 	req, _ := http.NewRequest("GET", url, nil)
 	req.Header.Set("Apikey", r.apiKey)
 
 	response, err := client.Do(req)
+	if err != nil {
+		return nil, 0, err
+	}
+	defer response.Body.Close()
 
+	if response.StatusCode >= 400 {
+		if response.StatusCode == http.StatusUnauthorized {
+			return nil, response.StatusCode, nil
+		}
+		errorResponse := NumverifyErrorResponse{}
+		if err := json.NewDecoder(response.Body).Decode(&errorResponse); err != nil {
+			return nil, response.StatusCode, err
+		}
+		return nil, response.StatusCode, errors.New(errorResponse.Message)
+	}
+
+	var result NumverifyValidateResponse
+	if err := json.NewDecoder(response.Body).Decode(&result); err != nil {
+		return nil, response.StatusCode, err
+	}
+
+	return &result, response.StatusCode, nil
+}
+
+// validateViaLegacyEndpoint talks to the original numverify.com free-tier API:
+// plain HTTP only, auth via access_key query param instead of a header.
+func (r *NumverifyRequest) validateViaLegacyEndpoint(internationalNumber string) (res *NumverifyValidateResponse, err error) {
+	url := fmt.Sprintf("http://apilayer.net/api/validate?access_key=%s&number=%s", r.apiKey, internationalNumber)
+
+	response, err := http.Get(url)
 	if err != nil {
 		return nil, err
 	}
 	defer response.Body.Close()
 
-	// Fill the response with the data from the JSON
 	var result NumverifyValidateResponse
-
-	if response.StatusCode >= 400 {
-		errorResponse := NumverifyErrorResponse{}
-		if err := json.NewDecoder(response.Body).Decode(&errorResponse); err != nil {
-			return nil, err
-		}
-		return nil, errors.New(errorResponse.Message)
-	}
-
-	// Use json.Decode for reading streams of JSON data
 	if err := json.NewDecoder(response.Body).Decode(&result); err != nil {
 		return nil, err
 	}
 
-	res = &NumverifyValidateResponse{
-		Valid:               result.Valid,
-		Number:              result.Number,
-		LocalFormat:         result.LocalFormat,
-		InternationalFormat: result.InternationalFormat,
-		CountryPrefix:       result.CountryPrefix,
-		CountryCode:         result.CountryCode,
-		CountryName:         result.CountryName,
-		Location:            result.Location,
-		Carrier:             result.Carrier,
-		LineType:            result.LineType,
-	}
-
-	return res, nil
+	return &result, nil
 }

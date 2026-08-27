@@ -1,6 +1,9 @@
 .DS_Store
 node_modules
-/dist
+/dist/*
+# dist/index.html is hand-written now (the Vue toolchain here doesn't build on
+# Windows - native module compile failure), not generated - keep it tracked.
+!/dist/index.html
 
 /tests/e2e/videos/
 /tests/e2e/screenshots/

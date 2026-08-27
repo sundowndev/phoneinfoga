@@ -155,7 +155,7 @@ func TestApi(t *testing.T) {
 
 				assert.Equal(t, nil, err)
 				assert.Equal(t, 200, res.Result().StatusCode)
-				assert.Equal(t, `{"success":true,"result":{"valid":true,"number":"79516566591","local_format":"9516566591","international_format":"+79516566591","country_prefix":"+7","country_code":"RU","country_name":"Russian Federation","location":"Saint Petersburg and Leningrad Oblast","carrier":"OJSC St. Petersburg Telecom (OJSC Tele2-Saint-Petersburg)","line_type":"mobile"}}`, string(body))
+				assert.Equal(t, `{"success":true,"result":{"valid":true,"number":"79516566591","local_format":"9516566591","international_format":"+79516566591","country_prefix":"+7","country_code":"RU","country_name":"Russian Federation","location":"Saint Petersburg and Leningrad Oblast","carrier":"OJSC St. Petersburg Telecom (OJSC Tele2-Saint-Petersburg)","line_type":"mobile","spoof_risk":"low - mobile line with a named carrier"}}`, string(body))
 
 				assert.Equal(t, gock.IsDone(), true, "there should have no pending mocks")
 			})

@@ -21,3 +21,6 @@ coverage
 coverage.*
 unit-tests.xml
 .idea
+
+# API keys for local testing (NUMVERIFY_API_KEY etc.) - never commit these
+.env
