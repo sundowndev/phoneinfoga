@@ -1,0 +1,11 @@
+# Formatting phone numbers
+
+## Basics
+
+The tool only accepts E164 and International formats as input.
+
+- E164: +56944551578
+- International: +56 9 44 55 15 78
+- National: 09 44 55 15 78
+- RFC3966: tel:+56-9-44-55-15-78
+- Out-of-country format from US: 011 56 9 44 55 15 78
