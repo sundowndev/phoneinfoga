@@ -37,4 +37,5 @@ func main() {
 		fmt.Println(link.URL) // Google search link to scan
 	}
 }
-```
+clear command
+
