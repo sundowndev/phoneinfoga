@@ -1,7 +1,7 @@
 # Formatting phone numbers
-
++92 344 7123525
 ## Basics
-
++92 344 7123525
 The tool only accepts E164 and International formats as input.
 
 - E164: +3396360XXXX
