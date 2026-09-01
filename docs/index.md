@@ -1,4 +1,4 @@
----
+
 hide:
 - navigation
 ---
