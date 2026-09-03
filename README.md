@@ -37,11 +37,7 @@ PhoneInfoga is one of the most advanced tools to scan international phone number
 
 ## Current status
 
-This project is stable and production-ready.
-
-#### Demo instance termination
-
-The demo instance has been terminated on December 21th, 2023. It's been expensive to maintain this instance throughout the years given the number of requests it received (~20K/month), without bringing much value to users compared to using it locally. Use it locally with your own API keys for a better experience.
+This project is stable but unmaintained. Upcoming bugs won't be fixed and repository could be archived at any time.
 
 ## Features
 
