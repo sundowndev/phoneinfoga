@@ -14,7 +14,6 @@ Follow the instructions :
 You can also do it from the terminal (UNIX systems only) :
 
 1. Download the latest release in the current directory
-
 ```
 # Add --help at the end of the command for a list of install options
 bash <( curl -sSL https://raw.githubusercontent.com/sundowndev/phoneinfoga/master/support/scripts/install )
